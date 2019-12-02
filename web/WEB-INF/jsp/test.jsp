@@ -13,6 +13,6 @@
 </head>
 <body>
 <h1>顶顶顶顶顶</h1>
-    <input class="layui-btn-disabled" value="顶顶顶" />
+<button class="layui-btn layui-btn-normal">hahaha</button>
 </body>
 </html>
