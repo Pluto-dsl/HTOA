@@ -1,8 +1,14 @@
 package com.inid.jack.controller;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+ @RequestMapping("test")
 public class test {
-    public static void main(String[] args) {
-        System.out.println("dsfdsfds");
-        System.out.println("dsfdsfdsfds");
+
+    @RequestMapping("toTest")
+    public String toTest(){
+        return "test";
     }
 }
