@@ -2,7 +2,7 @@ package com.wtt.vo;
 
 public class StudentVo {
     private int id;
-    private String name;
+    private String names;
 
     public int getId() {
         return id;
@@ -13,10 +13,10 @@ public class StudentVo {
     }
 
     public String getName() {
-        return name;
+        return names;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.names = name;
     }
 }
