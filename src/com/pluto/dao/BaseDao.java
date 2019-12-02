@@ -89,7 +89,6 @@ public class BaseDao {
 
     /**
      * 保存对象
-     *
      * @param obj
      */
     public void addObject(Object obj) {
