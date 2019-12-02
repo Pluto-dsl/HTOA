@@ -11,7 +11,6 @@
     <title>$Title$</title>
   </head>
   <body>
-  $END$
-  fasdf
+  saasa
   </body>
 </html>
