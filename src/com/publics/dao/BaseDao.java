@@ -1,4 +1,4 @@
-package com.zero.dao;
+package com.publics.dao;
 
 import org.hibernate.*;
 import org.springframework.transaction.annotation.Transactional;
