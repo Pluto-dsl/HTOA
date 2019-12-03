@@ -248,4 +248,37 @@ public class EmpVo {//员工
     public void setPostName(String postName) {
         this.postName = postName;
     }
+
+    @Override
+    public String toString() {
+        return "EmpVo{" +
+                "empId=" + empId +
+                ", empName='" + empName + '\'' +
+                ", depId=" + depId +
+                ", Sex='" + Sex + '\'' +
+                ", Birthday=" + Birthday +
+                ", Cardno='" + Cardno + '\'' +
+                ", nation='" + nation + '\'' +
+                ", Phone='" + Phone + '\'' +
+                ", QQcode='" + QQcode + '\'' +
+                ", Weixin='" + Weixin + '\'' +
+                ", Email='" + Email + '\'' +
+                ", married='" + married + '\'' +
+                ", University='" + University + '\'' +
+                ", Major='" + Major + '\'' +
+                ", Education='" + Education + '\'' +
+                ", Address='" + Address + '\'' +
+                ", remark='" + remark + '\'' +
+                ", Bank='" + Bank + '\'' +
+                ", accountName='" + accountName + '\'' +
+                ", bankNumber='" + bankNumber + '\'' +
+                ", alipay='" + alipay + '\'' +
+                ", hireDay=" + hireDay +
+                ", fireDay=" + fireDay +
+                ", password='" + password + '\'' +
+                ", status=" + status +
+                ", postId=" + postId +
+                ", postName='" + postName + '\'' +
+                '}';
+    }
 }
