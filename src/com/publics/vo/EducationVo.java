@@ -1,9 +1,12 @@
 package com.publics.vo;
 
+import javax.persistence.*;
 import java.sql.Date;
-
+@Entity
+@Table(name = "education")
 public class EducationVo {//教育背景
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int collegeid;//主键，标识列，自动生成
     private int Empid;//关联Emp表empid字段
     private String collegeName;//学校名称

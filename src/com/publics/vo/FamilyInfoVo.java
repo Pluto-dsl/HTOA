@@ -1,6 +1,12 @@
 package com.publics.vo;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "familyInfo")
 public class FamilyInfoVo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int familyid;//主键，标识列，自动生成
     private String Empid;//关联Emp表empid字段
     private String contactName;//联系人名称

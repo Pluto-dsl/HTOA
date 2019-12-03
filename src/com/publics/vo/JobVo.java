@@ -1,8 +1,12 @@
 package com.publics.vo;
 
+import javax.persistence.*;
 import java.sql.Date;
-
+@Entity
+@Table(name = "Weeklog")
 public class JobVo {//工作经历
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Jobid;//主键，标识列，自动生成
     private int Empid;//关联Emp表empid字段
     private String companyName;//公司名称
