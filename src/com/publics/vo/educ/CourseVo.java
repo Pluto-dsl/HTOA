@@ -1,15 +1,14 @@
-package com.publics.vo;
+package com.publics.vo.educ;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.TableGenerator;
+import javax.persistence.*;
 
 /**
  * 课程管理
  *      课程管理主要功能有新增课程资料，修改课程资料，删除课程资料，
  *      查看课程资料,专业学期课程对应,课程教员对应
  * */
+@Entity
+@Table(name="course")
 public class CourseVo {
     @Id
     @GeneratedValue(strategy=GenerationType.TABLE,generator="tableGenerator")
