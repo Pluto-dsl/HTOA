@@ -1,4 +1,4 @@
-package com.publics.vo;
+package com.publics.vo.empModel.emp;
 
 
 import javax.persistence.*;

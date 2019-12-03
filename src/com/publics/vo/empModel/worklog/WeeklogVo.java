@@ -1,4 +1,4 @@
-package com.publics.vo;
+package com.publics.vo.empModel.worklog;
 
 import javax.persistence.*;
 import java.sql.Date;

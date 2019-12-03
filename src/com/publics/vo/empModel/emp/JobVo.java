@@ -1,7 +1,11 @@
-package com.publics.vo;
+package com.publics.vo.empModel.emp;
 
 import javax.persistence.*;
 import java.sql.Date;
+
+/**
+ *
+ * */
 @Entity
 @Table(name = "Weeklog")
 public class JobVo {//工作经历
