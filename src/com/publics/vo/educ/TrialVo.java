@@ -1,16 +1,14 @@
-package com.publics.vo;
+package com.publics.vo.educ;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.TableGenerator;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * 试讲与培训计划
  *  针对员工发起一个试讲与培训计划
  * */
-
+@Entity
+@Table(name="trial")
 public class TrialVo {
     @Id
     @GeneratedValue(strategy= GenerationType.TABLE,generator="tableGenerator")

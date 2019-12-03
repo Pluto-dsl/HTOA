@@ -1,15 +1,13 @@
-package com.publics.vo;
+package com.publics.vo.educ;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.TableGenerator;
+import javax.persistence.*;
 
 /**
  * 值班管理
  *  员工值班安排主要实现新增，修改，删除和查询功能
  * */
-
+@Entity
+@Table(name="weekArrange")
 public class WeekArrangeVo {
     @Id
     @GeneratedValue(strategy= GenerationType.TABLE,generator="tableGenerator")
