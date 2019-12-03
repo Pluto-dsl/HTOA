@@ -7,6 +7,7 @@ import java.sql.Date;
 @Entity
 @Table(name = "exam")
 public class EmpVo {//员工
+    @Id
     @GeneratedValue(strategy=GenerationType.TABLE,generator="tableGenerator")
     @TableGenerator(name="tableGenerator",initialValue=100,allocationSize=1)
     private int empId;//主键,员工编号手动输入
