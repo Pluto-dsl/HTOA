@@ -1,7 +1,8 @@
 package com.publics.vo.empModel.emp;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
+
 @Entity
 @Table(name = "education")
 public class EducationVo {//教育背景

@@ -1,7 +1,8 @@
 package com.publics.vo.empModel.emp;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
+
 /**
  *工作经历主要功能是实现员工的工作过的单位及岗位职责等描述，要求实现新增，修改，删除与查询操作；
  * */
