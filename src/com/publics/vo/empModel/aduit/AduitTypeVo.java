@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "aduitType")
-public class aduitTypeVo {
+public class AduitTypeVo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int aduitTypeid;//主键，标识列，自动生成
