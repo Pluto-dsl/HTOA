@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 import java.sql.Date;
 @Entity
-@Table(name = "exam")
+@Table(name = "emp")
 public class EmpVo {//员工
     @Id
     @GeneratedValue(strategy=GenerationType.TABLE,generator="tableGenerator")
