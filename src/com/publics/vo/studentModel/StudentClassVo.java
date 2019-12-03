@@ -17,7 +17,7 @@ public class StudentClassVo {
     private String className;//班级名称
     private int count;//班级人数
     private String teacher;//授课老师    员工表外键
-    private String classTeacher;//班主任员  工表外键
+    private String classTeacher;//班主任   员工表外键
     private int classType;//班级类别  关联班级类别表
     private String remark;//备注
     private int falled;//关联班级类别

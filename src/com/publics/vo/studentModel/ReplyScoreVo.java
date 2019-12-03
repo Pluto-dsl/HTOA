@@ -14,7 +14,7 @@ public class ReplyScoreVo {
 
     private int replyId;//成绩主键id
     private int StudentId;//学生表外键
-    private int projectId;//关联答辩项目
+    private int projectId;//关联 答辩项目
     private int empId;//打分老师管理员工表外键
     private float score1;//功能完善50
     private float Score2;//技术难度10
