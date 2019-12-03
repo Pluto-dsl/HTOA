@@ -1,37 +1,48 @@
 package com.publics.vo;
 
-import org.hibernate.annotations.Table;
+
+import javax.persistence.*;
 
 import java.sql.Date;
-
+@Entity
+@Table(name = "exam")
 public class EmpVo {//员工
-     private int empId;//主键,员工编号手动输入
-     private String empName;//员工姓名
-     private int depId;//关联dep表depid字段
-     private String  Sex;//性别（男，女）
-     private Date Birthday;//出生日期
-     private String Cardno;//身份证号码（唯一）
-     private String nation;//籍贯
-     private String Phone;//手机号码
-     private String QQcode;//QQ号码
-     private String Weixin;//微信号码
-     private String Email;//邮箱地址
-     private String married;//婚姻状况（已婚，单身，离异，丧偶）
-     private String University;//毕业学校
-     private String Major;//专业
-     private String Education;//学历
-     private String Address;//家庭地址
-     private String remark;//说明
-     private String Bank;//开户银行
-     private String accountName;//账户名称
-     private String bankNumber;//账号
-     private String alipay;//支付宝账号(唯一）
-     private Date hireDay;//入职日期
-     private Date fireDay;//离职日期
-     private String password;//登录密码
-     private int status;//状态
-     private int postId;//职务id
-     private String  postName;//职务名称
+    @GeneratedValue(strategy=GenerationType.TABLE,generator="tableGenerator")
+    @TableGenerator(name="tableGenerator",initialValue=100,allocationSize=1)
+    private int empId;//主键,员工编号手动输入
+    private String empName;//员工姓名
+    private int depId;//关联dep表depid字段
+
+    private String  Sex;//性别（男，女）
+    private Date Birthday;//出生日期
+    /*@Table(
+            uniqueConstraints = {
+                    @UniqueConstraint(columnNames = "uid"),
+                    @UniqueConstraint(columnNames = {"tid","username"}),
+            })*/
+    private String Cardno;//身份证号码（唯一）
+    private String nation;//籍贯
+    private String Phone;//手机号码
+    private String QQcode;//QQ号码
+    private String Weixin;//微信号码
+    private String Email;//邮箱地址
+    private String married;//婚姻状况（已婚，单身，离异，丧偶）
+    private String University;//毕业学校
+    private String Major;//专业
+    private String Education;//学历
+    private String Address;//家庭地址
+    private String remark;//说明
+    private String Bank;//开户银行
+    private String accountName;//账户名称
+    private String bankNumber;//账号
+    //@Table(name="alipay_unique",uniqueConstraints = {@UniqueConstraint(columnNames="alipay")})
+    private String alipay;//支付宝账号(唯一）
+    private Date hireDay;//入职日期
+    private Date fireDay;//离职日期
+    private String password;//登录密码
+    private int status;//状态
+    private int postId;//职务id
+    private String  postName;//职务名称
 
     public int getEmpId() {
         return empId;
