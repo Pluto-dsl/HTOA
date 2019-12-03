@@ -3,7 +3,7 @@ package com.publics.vo.empModel;
 import javax.persistence.*;
 import java.sql.Date;
 @Entity
-@Table(name = "Weeklog")
+@Table(name = "weeklog")
 public class WeeklogVo {//周报
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

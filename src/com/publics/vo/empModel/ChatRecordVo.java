@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "chatRecord")
-public class chatRecordVo {
+public class ChatRecordVo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Chatid;//谈心主键id
@@ -59,7 +59,7 @@ public class chatRecordVo {
 
     @Override
     public String toString() {
-        return "chatRecordVo{" +
+        return "ChatRecordVo{" +
                 "Chatid=" + Chatid +
                 ", sayface=" + sayface +
                 ", teacher=" + teacher +
