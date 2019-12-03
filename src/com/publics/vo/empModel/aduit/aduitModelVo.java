@@ -1,7 +1,9 @@
 package com.publics.vo.empModel.aduit;
 
 import javax.persistence.*;
-
+/**
+ * 考核指标表
+ * */
 @Entity
 @Table(name = "aduitModel")
 public class aduitModelVo {

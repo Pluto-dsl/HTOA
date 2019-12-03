@@ -35,7 +35,7 @@
         <!--引入数据源-->
         <property name="dataSource" ref="dSource"/>
         <!---扫描实体类-->
-        <property name="packagesToScan" value="com.pluto.vo"/>
+        <property name="packagesToScan" value="com.publics.vo"/>
         <!--hibernate 参数-->
         <property name="hibernateProperties">
             <props>

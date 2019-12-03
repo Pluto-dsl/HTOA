@@ -1,7 +1,8 @@
 package com.publics.vo.empModel;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
+
 @Entity
 @Table(name = "weeklog")
 public class WeeklogVo {//周报
