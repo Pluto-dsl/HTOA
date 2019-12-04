@@ -74,7 +74,7 @@
                 case 'LAYTABLE_TIPS':
                     layer.alert('这是工具栏右侧自定义的一个图标按钮');
                     break;
-            };
+            }
         });
 
         //监听行工具事件
@@ -85,7 +85,6 @@
                 layer.confirm('真的删除行么', function(index){
                     obj.del();
                     layer.close(index);
-                    console.log(obj.data.chatid);
                     delChatRecord(obj.data.chatid)
                 });
             } else if(obj.event === 'edit'){
