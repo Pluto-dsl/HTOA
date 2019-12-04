@@ -16,6 +16,12 @@
         .first-tab .layui-tab-close{
             display:none!important;
         }
+        .layui-nav-child a{
+            font-size: 12px;
+        }
+        .layui-layout-admin .layui-logo{
+            font-size: 30px;
+        }
 
     </style>
 </head>
@@ -55,6 +61,9 @@
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/test1/toTest1"
                                data-id="员工资料" data-title="员工资料" >员工资料</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/emp/toEmppaper"
+                               data-id="我的周报" data-title="我的周报" >我的周报</a></dd>
                         <dd><a href="javascript:void(0);">周报管理</a></dd>
                         <dd><a href="javascript:void(0);">周报审阅</a></dd>
                         <dd><a href="javascript:void(0);">谈心记录</a></dd>
@@ -139,7 +148,7 @@
     </div>
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <div style="padding: 15px;width: 100%;">
+        <div style="padding:5px;width: 100%;">
             <div class="layui-tab layui-tab-brief" lay-filter="demo" lay-allowClose="true">
                 <ul class="layui-tab-title">
                     <li style="" class="first-tab" lay-id="首页"  >首页</li>
