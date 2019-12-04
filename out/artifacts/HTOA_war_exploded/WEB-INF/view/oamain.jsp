@@ -16,6 +16,12 @@
         .first-tab .layui-tab-close{
             display:none!important;
         }
+        .layui-nav-child a{
+            font-size: 12px;
+        }
+        .layui-layout-admin .layui-logo{
+            font-size: 30px;
+        }
 
     </style>
 </head>
@@ -139,7 +145,7 @@
     </div>
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <div style="padding: 15px;width: 100%;">
+        <div style="padding:5px;width: 100%;">
             <div class="layui-tab layui-tab-brief" lay-filter="demo" lay-allowClose="true">
                 <ul class="layui-tab-title">
                     <li style="" class="first-tab" lay-id="首页"  >首页</li>
