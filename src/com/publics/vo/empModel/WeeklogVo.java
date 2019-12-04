@@ -8,7 +8,7 @@ import java.util.Date;
 public class WeeklogVo {//周报
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int worklogid;//主键，标识列，自动生成
+    private int weeklogid;//主键，标识列，自动生成
     private int Empid;//关联Emp表empid字段
     private Date Workday;//填写日期
     private String weekCur;//本周情况描述
@@ -17,11 +17,11 @@ public class WeeklogVo {//周报
     private String weekNext;//下周工作计划
 
     public int getWorklogid() {
-        return worklogid;
+        return weeklogid;
     }
 
     public void setWorklogid(int worklogid) {
-        this.worklogid = worklogid;
+        this.weeklogid = worklogid;
     }
 
     public int getEmpid() {
@@ -75,7 +75,7 @@ public class WeeklogVo {//周报
     @Override
     public String toString() {
         return "WeeklogVo{" +
-                "worklogid=" + worklogid +
+                "worklogid=" + weeklogid +
                 ", Empid=" + Empid +
                 ", Workday=" + Workday +
                 ", weekCur='" + weekCur + '\'' +
