@@ -2,5 +2,5 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css">
 <script src="${pageContext.request.contextPath}/layui/layui.js" ></script>
-<script src="${pageContext.request.contextPath}/echarts/echarts.min.js"></script>
-<script src="${pageContext.request.contextPath}/jquery/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/echarts/echarts.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery/jquery.min.js"></script>

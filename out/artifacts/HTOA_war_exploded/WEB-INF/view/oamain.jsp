@@ -62,7 +62,7 @@
                                data-url="${pageContext.request.contextPath}/test1/toTest1"
                                data-id="员工资料" data-title="员工资料" >员工资料</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/emp/toEmppaper"
+                               data-url="${pageContext.request.contextPath}/emp/toEmpPaper"
                                data-id="我的周报" data-title="我的周报" >我的周报</a></dd>
                         <dd><a href="javascript:void(0);">周报管理</a></dd>
                         <dd><a href="javascript:void(0);">周报审阅</a></dd>
@@ -180,7 +180,7 @@
                 //关于tabAdd的方法所传入的参数可看layui的开发文档中基础方法部分
                 element.tabAdd('demo', {
                     title: name,
-                    content: '<iframe data-frameid="'+id+'" scrolling="no" frameborder="0" src="'+url+'" style="width:100%;"></iframe>',
+                    content: '<iframe data-frameid="'+id+'" scrolling="no" frameborder="0" src="'+url+'" style="width:100%;" id="test"></iframe>',
                     id: id //规定好的id
                 });
                 element.render('tab');
@@ -227,8 +227,20 @@
             //最后不管是否新增tab，最后都转到要打开的选项页面上
             active.tabChange(dataid.attr("data-id"));
         });
-
     });
+
+    <!--高度自适应-->
+        function reinitIframe(){
+            var iframe = document.getElementById("test");
+            try{
+                var bHeight = iframe.contentWindow.document.body.scrollHeight;
+                var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+                var height = Math.max(bHeight, dHeight);
+                iframe.height = height;
+            }catch (ex){}
+        }
+    <!--每200毫秒加载一次-->
+    window.setInterval("reinitIframe()",200);
 </script>
 </body>
 </html>
