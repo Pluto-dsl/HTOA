@@ -182,7 +182,7 @@
                 //关于tabAdd的方法所传入的参数可看layui的开发文档中基础方法部分
                 element.tabAdd('demo', {
                     title: name,
-                    content: '<iframe data-frameid="'+id+'" scrolling="no" frameborder="0" src="'+url+'" style="width:100%;"></iframe>',
+                    content: '<iframe data-frameid="'+id+'" scrolling="no" frameborder="0" src="'+url+'" style="height:100%;width:100%;"></iframe>',
                     id: id //规定好的id
                 });
                 element.render('tab');

@@ -30,16 +30,11 @@
 <script>
     layui.use('table', function(){
         var table = layui.table;
-
         table.render({
             elem: '#chatRecordList'
             ,url:'/test/table/demo1.json'
             ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
-            ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
-                title: '提示'
-                ,layEvent: 'LAYTABLE_TIPS'
-                ,icon: 'layui-icon-tips'
-            }]
+            ,defaultToolbar: ['filter', 'exports', 'print']
             ,title: '用户数据表'
             ,cols: [[
                 {type: 'checkbox', fixed: 'left'}
