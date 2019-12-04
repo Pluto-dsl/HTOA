@@ -7,4 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/empLeave")
 public class Pluto_LeaveController {
 
+    @RequestMapping("/toleave")
+    public String toLeave(){
+        return "emp_pluto/leave";
+    }
+
 }
