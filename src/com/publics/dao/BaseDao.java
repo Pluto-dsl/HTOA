@@ -10,6 +10,7 @@ import java.util.List;
  * Created by Administrator on 2019/10/21.
  */
 
+
 @Transactional
 public class BaseDao {
     @Resource
