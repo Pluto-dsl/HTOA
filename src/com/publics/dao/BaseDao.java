@@ -88,6 +88,18 @@ public class BaseDao {
     }
 
     /**
+     * HQL查询总行数
+     */
+    //select count(*) from newemp
+    public int getCountByHql(String hql) {
+        Session session = getSession();
+        Query query = session.createQuery(hql);
+        int i = Integer.parseInt(query.uniqueResult()+"");
+        session.close();
+        return i;
+    }
+
+    /**
      * 保存对象
      * @param obj
      */

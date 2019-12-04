@@ -8,11 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/ljw")
@@ -24,28 +27,23 @@ public class Ljw_EmpController {
     public String toChatRecordPage(){
         return "emp_ljw/chatRecord";
     }
+
     @ResponseBody
     @RequestMapping(value = "/getChatRecordData")
-    public String getChatRecordData(HttpServletResponse response) throws IOException {
-        /*List list = new ArrayList();
-        ChatRecordVo c1 = new ChatRecordVo();
-        c1.setChatid(1);
-        c1.setSayface(2);
-        c1.setTeacher(3);
-        c1.setAddr("地址");
-        c1.setSayscon("内容");
-        list.add(c1);*/
+    public String getChatRecordData(HttpServletResponse response, HttpServletRequest request) throws IOException {
+        int page = Integer.parseInt(request.getParameter("page"));
+        int limit = Integer.parseInt(request.getParameter("limit"));
 
-        List<ChatRecordVo> list = empService.getChatRecordList();
         JSONObject jsonObject = new JSONObject();
+        List<ChatRecordVo> list = empService.getChatRecordList();
+        int count =empService.getChatRecordSize();
         jsonObject.put("code",0);
         jsonObject.put("msg","提示");
-        jsonObject.put("count",1);
+        jsonObject.put("count",count);
         jsonObject.put("data",list);
 
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();
-        System.out.println(jsonObject.toJSONString());
         out.print(jsonObject.toJSONString());
         out.flush();
         out.close();

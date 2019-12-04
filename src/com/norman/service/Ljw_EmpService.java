@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface Ljw_EmpService {
     List<ChatRecordVo> getChatRecordList();
+    int getChatRecordSize();
 }

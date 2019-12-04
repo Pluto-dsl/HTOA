@@ -13,4 +13,9 @@ public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
     public List<ChatRecordVo> getChatRecordList() {
         return listByHql("FROM ChatRecordVo");
     }
+
+    @Override
+    public int getChatRecordSize() {
+        return getCountByHql("select count(*) from ChatRecordVo");
+    }
 }
