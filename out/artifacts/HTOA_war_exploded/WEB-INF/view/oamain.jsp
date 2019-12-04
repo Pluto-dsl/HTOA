@@ -16,6 +16,12 @@
         .first-tab .layui-tab-close{
             display:none!important;
         }
+        .layui-nav-child a{
+            font-size: 12px;
+        }
+        .layui-layout-admin .layui-logo{
+            font-size: 30px;
+        }
 
     </style>
 </head>
@@ -47,7 +53,7 @@
                     <a>员工管理</a>
                     <dl class="layui-nav-child">
                         <dd>
-                            <%-- 例子  --%>
+                            <%-- 例子  可修改 照着写就行了 --%>
                             <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/test1/toTest1"
                                data-id="部门管理" data-title="部门管理">部门管理</a>
@@ -139,7 +145,7 @@
     </div>
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <div style="padding: 15px;width: 100%;">
+        <div style="padding:5px;width: 100%;">
             <div class="layui-tab layui-tab-brief" lay-filter="demo" lay-allowClose="true">
                 <ul class="layui-tab-title">
                     <li style="" class="first-tab" lay-id="首页"  >首页</li>
