@@ -50,6 +50,7 @@ public class BaseDao {
         SQLQuery sqlquery = session.createSQLQuery(sql);
         sqlquery.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);//把结果变形为 List<Map>
         List list = sqlquery.list();
+        System.out.println("list:"+list);
         session.close();
         return list;
     }
