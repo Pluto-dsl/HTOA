@@ -12,4 +12,9 @@ public class Test1 {
         return "test1";
     }
 
+    @RequestMapping("/toMain")
+    public String toMain(){
+        return "oamain";
+    }
+
 }
