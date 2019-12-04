@@ -11,6 +11,6 @@
     <title>$Title$</title>
   </head>
   <body>
-  aaaaa
+  <img src="../imgs/test/成功.jpg" alt="大家加油鴨！">
   </body>
 </html>
