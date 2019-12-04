@@ -11,6 +11,8 @@
     <title>$Title$</title>
   </head>
   <body>
-  aaaaa
+    <img src="${pageContext.request.contextPath}/imgs/test/index.jpg" alt="">
+    <br/>
+    欢迎！
   </body>
 </html>

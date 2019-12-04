@@ -25,6 +25,9 @@
         a{
             cursor:pointer;
         }
+        .layui-tab-content {
+            padding: 0px;
+        }
 
     </style>
 </head>
@@ -54,25 +57,18 @@
                 <li class="layui-nav-item">
                     <a href="#">员工管理</a>
                     <dl class="layui-nav-child">
-                        <dd>
-                            <%-- 例子  可修改 照着写就行了 --%>
-                            <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/toPage/dep"
-                               data-id="部门管理" data-title="部门管理">部门管理</a>
-                        </dd>
-                        <dd>
-                            <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/test1/toTest1"
-                               data-id="员工资料" data-title="员工资料" >员工资料</a>
-                        </dd>
+                        <%-- 例子  可修改 照着写就行了 --%>
+                        <dd><a href="javascript:void(0);">部门管理</a></dd>
+                        <dd><a href="javascript:void(0);" >员工资料</a></dd>
                         <dd><a href="javascript:void(0);">周报管理</a></dd>
+                        <dd><a href="javascript:void(0);">我的周报</a></dd>
                         <dd><a href="javascript:void(0);">周报审阅</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/ljw/toChatRecordPage"
                                data-id="谈心记录" data-title="谈心记录" >谈心记录</a></dd>
                         <dd>
                             <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                                   data-url="${pageContext.request.contextPath}/empLeave/toleave"
+                               data-url="${pageContext.request.contextPath}/empLeave/toleave"
                                data-id="员工请假" data-title="员工请假">员工请假</a>
                         </dd>
 
