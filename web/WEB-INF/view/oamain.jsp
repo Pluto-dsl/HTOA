@@ -61,7 +61,7 @@
                                data-id="部门管理" data-title="部门管理">部门管理</a>
                         </dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="<%=request.getContextPath()%>/toemp"
+                               data-url="<%=request.getContextPath()%>/zero/toemp"
                                data-id="员工资料" data-title="员工资料" >员工资料</a></dd>
                         <dd><a href="javascript:void(0);">周报管理</a></dd>
                         <dd><a href="javascript:void(0);">周报审阅</a></dd>

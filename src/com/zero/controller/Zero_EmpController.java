@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 @Controller
@@ -36,7 +37,11 @@ public class Zero_EmpController {
         map.put("msg","");
         map.put("count",1);
         map.put("data",empService.selectEmp());
-        response.getWriter().print(JSONArray.toJSONString(map));
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter writer = response.getWriter();
+        writer.print(JSONArray.toJSONString(map));
+        writer.flush();
+        writer.close();
     }
 
     @RequestMapping(value = "/addemp")
