@@ -1,6 +1,6 @@
 package com.wtt.controller;
 
-import com.wtt.service.EmpService;
+import com.wtt.service.Wtt_EmpService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,13 +10,13 @@ import java.util.List;
 
 @Controller
 @RequestMapping(name = "/emp")
-public class EmpsController {
+public class Wtt_EmpsController {
     @Resource
-    EmpService empService;
+    Wtt_EmpService empService;
     @RequestMapping(value = "/toEmppaper")
     public String toEmpPaper(ModelMap modelMap){
         List list = empService.weekpaper();
-
+        System.out.println(list);
         modelMap.addAttribute("list",list);
         return "mynewpaper";
     }
