@@ -165,7 +165,7 @@
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
-                        xxxx
+
                     </div>
                 </div>
             </div>
