@@ -12,6 +12,9 @@
     <title>员工展示页</title>
 </head>
 <body>
+    <a href=<%=request.getContextPath()%>/zero/addemp">
+        <input type="submit" value="新增"/>
+    </a>
     <table id="demo" lay-filter="test"></table>
 </body>
 <script>
