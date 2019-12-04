@@ -10,8 +10,7 @@ import javax.persistence.*;
 @Table(name = "charModule")
 public class CharModuleVo {
     @Id
-    @GeneratedValue(strategy= GenerationType.TABLE,generator="tableGenerator")
-    @TableGenerator(name="tableGenerator",initialValue=10,allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int charModuleId;//主键，标识列，自动生成
     private int moduleId;//管理系统权限
     private int characterId;//关联角色表

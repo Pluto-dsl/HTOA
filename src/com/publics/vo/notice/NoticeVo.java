@@ -12,9 +12,7 @@ import java.util.Date;
 public class NoticeVo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
-    @TableGenerator(name = "tableGenerator",initialValue =0, allocationSize = 1)
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int noticeId;//主键，标识列，自动生成
     private String title;//标题
     private String content;//通知内容
