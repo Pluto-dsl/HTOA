@@ -12,6 +12,7 @@
   </head>
   <body>
     <img src="${pageContext.request.contextPath}/imgs/test/win.jpg" alt="大家加油鴨！">
-    歡迎！此頁面為index！
+    <br/>
+    欢迎！
   </body>
 </html>
