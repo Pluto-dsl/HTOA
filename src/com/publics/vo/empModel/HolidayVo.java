@@ -8,6 +8,7 @@ import java.util.Date;
 @Entity
 @Table(name = "holiday")
 public class HolidayVo {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int holidayid;//主键，标识列，自动生成
