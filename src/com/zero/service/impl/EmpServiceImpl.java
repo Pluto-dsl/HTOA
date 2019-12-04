@@ -12,4 +12,6 @@ public class EmpServiceImpl extends BaseDao implements EmpService {
         List<Map> mapList=  super.listBySQL("SELECT e.empId,e.empName,d.depName,e.postName,e.Sex,e.Phone,e.Address,e.`status` FROM emp e left join dep d on e.depId = d.depid");
         return mapList;
     }
+
+
 }
