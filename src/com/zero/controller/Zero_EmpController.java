@@ -50,7 +50,7 @@ public class Zero_EmpController {
         empVo.setStatus(1);//设置启用状态
         empVo.setPassword("123456");
         empVo.setPostId(101);
-        System.out.println(empVo);
+        System.out.println("empvo"+empVo);
         empService.addEmp(empVo);
         return "redirect:toemp";
     }
