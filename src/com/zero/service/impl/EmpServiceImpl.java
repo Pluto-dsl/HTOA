@@ -9,7 +9,7 @@ import java.util.Map;
 public class EmpServiceImpl extends BaseDao implements EmpService {
     @Override
     public List<Map> selectEmp() {
-        List<Map> mapList=  super.listBySQL("SELECT * FROM emp left join dep on emp.depId = dep.depid");
+        List<Map> mapList=  super.listBySQL("SELECT e.empId,e.empName,d.depName,e.postName,e.Sex,e.Phone,e.Address,e.`status` FROM emp e left join dep d on e.depId = d.depid");
         return mapList;
     }
 }
