@@ -47,16 +47,31 @@
                     <a>员工管理</a>
                     <dl class="layui-nav-child">
                         <dd>
+                            <%-- 例子  可修改 照着写就行了 --%>
                             <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/test1/toTest1"
                                data-id="部门管理" data-title="部门管理">部门管理</a>
                         </dd>
-                        <dd><a href="javascript:void(0);">员工资料</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/test1/toTest1"
+                               data-id="员工资料" data-title="员工资料" >员工资料</a></dd>
                         <dd><a href="javascript:void(0);">周报管理</a></dd>
                         <dd><a href="javascript:void(0);">周报审阅</a></dd>
                         <dd><a href="javascript:void(0);">谈心记录</a></dd>
                         <dd><a href="javascript:void(0);">请假管理</a></dd>
                         <dd><a href="javascript:void(0);">考勤管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a>学生管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:void(0);">学生请假</a></dd>
+                        <dd><a href="javascript:void(0);">班级管理</a></dd>
+                        <dd><a href="javascript:void(0);">楼栋管理</a></dd>
+                        <dd><a href="javascript:void(0);">宿舍管理</a></dd>
+                        <dd><a href="javascript:void(0);">学生资料</a></dd>
+                        <dd><a href="javascript:void(0);">考试成绩</a></dd>
+                        <dd><a href="javascript:void(0);">答辩成绩</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -66,7 +81,6 @@
                         <dd><a href="javascript:void(0);">课程管理</a></dd>
                         <dd><a href="javascript:void(0);">试讲培训</a></dd>
                         <dd><a href="javascript:void(0);">值班管理</a></dd>
-                        <dd><a href="javascript:void(0);">课程类别</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -86,14 +100,13 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a>后勤管理</a>
+                    <a>问题反馈</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:void(0);">报修申请</a></dd>
-                        <dd><a href="javascript:void(0);">维修管理</a></dd>
+                        <dd><a href="javascript:;">问题反馈</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a>问题反馈</a>
+                    <a>文件管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">资料文档</a></dd>
                     </dl>
