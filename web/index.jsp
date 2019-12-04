@@ -11,6 +11,7 @@
     <title>$Title$</title>
   </head>
   <body>
-  <img src="../imgs/test/成功.jpg" alt="大家加油鴨！">
+    <img src="${pageContext.request.contextPath}/imgs/test/win.jpg" alt="大家加油鴨！">
+    歡迎！此頁面為index！
   </body>
 </html>
