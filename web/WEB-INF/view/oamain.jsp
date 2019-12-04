@@ -60,15 +60,21 @@
                                data-url="${pageContext.request.contextPath}/test1/toTest1"
                                data-id="部门管理" data-title="部门管理">部门管理</a>
                         </dd>
-                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                        <dd>
+                            <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/test1/toTest1"
-                               data-id="员工资料" data-title="员工资料" >员工资料</a></dd>
+                               data-id="员工资料" data-title="员工资料" >员工资料</a>
+                        </dd>
                         <dd><a href="javascript:void(0);">周报管理</a></dd>
                         <dd><a href="javascript:void(0);">周报审阅</a></dd>
                         <dd><a href="javascript:void(0);">谈心记录</a></dd>
 
 
-                        <dd><a href="javascript:void(0);">员工请假</a></dd>
+                        <dd>
+                            <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                                   data-url="${pageContext.request.contextPath}/empLeave/toleave"
+                               data-id="员工请假" data-title="员工请假">员工请假</a>
+                        </dd>
 
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toAtt"
