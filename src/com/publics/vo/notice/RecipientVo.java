@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "recipient")
-public class Recipient {//接收人
+public class RecipientVo {//接收人
 
 
     @Id
