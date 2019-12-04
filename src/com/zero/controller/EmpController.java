@@ -12,7 +12,7 @@ public class EmpController {
     @Resource
     EmpService empService;
 
-    @RequestMapping(value = "allemp")
+    @RequestMapping(value = "/allemp")
     @ResponseBody
     public String allemp() {
         return String.valueOf(empService.selectEmp());
