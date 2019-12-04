@@ -5,6 +5,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/empLeave")
-public class LeaveController {
+public class Pluto_LeaveController {
 
 }
