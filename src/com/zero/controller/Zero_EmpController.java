@@ -2,6 +2,7 @@ package com.zero.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.publics.vo.empModel.emp.EmpVo;
 import com.zero.service.EmpsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,7 +46,12 @@ public class Zero_EmpController {
     }
 
     @RequestMapping(value = "/addemp")
-    public String addemp() {//去新增员工页
-        return "emp/addEmp";
+    public String addemp(EmpVo empVo){
+        empVo.setStatus(1);//设置启用状态
+        empVo.setPassword("123456");
+        empVo.setPostId(101);
+        System.out.println(empVo);
+        empService.addEmp(empVo);
+        return "redirect:toemp";
     }
 }

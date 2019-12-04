@@ -14,7 +14,7 @@
 <body>
 <center>
     <form name="form1" class="layui-form layui-form-pane" id="form1"  action="<%=request.getContextPath()%>/zero/addemp">
-        <table style="height: 370px;width: 700px;margin-top: 10px" border="0">
+        <table style="height: 370px;width: 800px;margin-top: 10px" border="0">
             <input type="hidden" id="empId" name="empId" value=""/>
             <tr style="height: 40px">
                 <td align="right">员工姓名:</td>
@@ -22,27 +22,19 @@
                                         value="" style="width:200px;"></td>
                 <td align="right">部门名称:</td>
                 <td align="left">
-                    <div class="layui-input-block">
-                        <select id="depId" name="depId" lay-verify="required" style="width:205px;">
-                            <option value="101">宏图软件</option>
-                            <option value="102">教研部</option>
-                            <option value="111">行政部</option>
-                            <option value="112">后勤部</option>
-                            <option value="113">学工部</option>
-                            <option value="114">招生部</option>
-                            <option value="120">赣州地区</option>
-                            <option value="121">招生2部</option>
-                            <option value="122">社招部1</option>
-                            <option value="123">社招部2</option>
-                            <option value="124">财务部</option>
-                        </select>
-                        <div class="layui-input-block">
-                            <select name="interest" lay-filter="aihao">
-                                <option value="0">写作</option>
-                                <option value="1">阅读</option>
-                            </select>
-                        </div>
-                    </div>
+                    <select id="depId" name="depId" lay-verify="required" style="width:205px;">
+                        <option value="101">宏图软件</option>
+                        <option value="102">教研部</option>
+                        <option value="111">行政部</option>
+                        <option value="112">后勤部</option>
+                        <option value="113">学工部</option>
+                        <option value="114">招生部</option>
+                        <option value="120">赣州地区</option>
+                        <option value="121">招生2部</option>
+                        <option value="122">社招部1</option>
+                        <option value="123">社招部2</option>
+                        <option value="124">财务部</option>
+                    </select>
                 </td>
             </tr>
             <tr  style="height: 40px">
@@ -58,10 +50,8 @@
             <tr style="height: 40px">
                 <td align="right">性别:</td>
                 <td align="left">
-                    <div class="layui-input-block">
-                        <input type="radio" name="sex" value="男" title="男">
-                        <input type="radio" name="sex" value="女" title="女" checked>
-                    </div>
+                        <input type="radio" name="sex" value="男" title="男" checked>
+                        <input type="radio" name="sex" value="女" title="女">
                 </td>
                 <td align="right">身份证号:</td>
                 <td align="left">
@@ -107,21 +97,13 @@
             <tr style="height: 40px">
                 <td align="right">婚姻状况:</td>
                 <td align="left">
-                    <div class="layui-input-block">
-                        <select id="married" name="married" name="depId" lay-verify="required" style="width:205px;">
-                            <option value="101">宏图软件</option>
-                            <option value="102">教研部</option>
-                            <option value="111">行政部</option>
-                            <option value="112">后勤部</option>
-                            <option value="113">学工部</option>
-                            <option value="114">招生部</option>
-                            <option value="120">赣州地区</option>
-                            <option value="121">招生2部</option>
-                            <option value="122">社招部1</option>
-                            <option value="123">社招部2</option>
-                            <option value="124">财务部</option>
-                        </select>
-                    </div>
+                    <select  id="married" name="married"  style="width:205px;" >
+                        <option value="" >--未选择--</option>
+                        <option value="已婚" >已婚</option>
+                        <option value="单身" >单身</option>
+                        <option value="离异" >离异</option>
+                        <option value="丧偶" >丧偶</option>
+                    </select>
                 </td>
                 <td align="right">毕业学校:</td>
                 <td align="left">
@@ -136,15 +118,13 @@
                 </td>
                 <td align="right">学历:</td>
                 <td align="left">
-                    <div class="layui-input-block">
-                        <select id="education" name="education" name="married" name="depId" lay-verify="required" style="width:205px;">
-                            <option value="" >--未选择--</option>
-                            <option value="高中以下" >高中以下</option>
-                            <option value="专科" >专科</option>
-                            <option value="本科" >本科</option>
-                            <option value="本科以上" >本科以上</option>
-                        </select>
-                    </div>
+                    <select id="education" name="education" name="married" name="depId" style="width:150px">
+                        <option value="" >--未选择--</option>
+                        <option value="高中以下" >高中以下</option>
+                        <option value="专科" >专科</option>
+                        <option value="本科" >本科</option>
+                        <option value="本科以上" >本科以上</option>
+                    </select>
                 </td>
             </tr>
 
@@ -187,26 +167,34 @@
             <tr style="height: 40px">
                 <td align="right">说明:</td>
                 <td align="left" colspan="3">
-                    <textarea name="" required lay-verify="required" placeholder="请输入说明" class="layui-textarea"style="width:500px; height: 60px;"></textarea>
+                    <textarea name="" required  placeholder="请输入说明" class="layui-textarea"style="width:500px; height: 60px;"></textarea>
                 </td>
             </tr>
-            <br><br><br>
-            <tr style="height: 40px">
+            <tr style="height:140px">
                 <td align="right" >
-                    <a class="layui-input layui-icon layui-icon-release"  href="javascript:void(0);">保 存</a>
+                    <button type="button" class="layui-btn layui-btn-normal layui-btn-radius" lay-submit="">保 存</button>
                 </td>
                 <td align="left">
-                    <a class="layui-input layui-icon layui-icon-close-fill"   href="javascript:void(0);"onclick="exit();">返 回</a>
+                    <a href="javascript:void(0);"onclick="exit()">
+                    <button type="button" class="layui-btn layui-btn-primary layui-btn-radius">返 回</button>
+                    </a>
                 </td>
             </tr>
         </table>
     </form>
 </center>
+<%--lay-verify="required"必填项--%>
 <%--<div class="easyui-window" title="选择籍贯" id="editBx" style="width: 320px; height: 245px;" mode="true" closed="true" modal="true"
      href="/htoffice/admin/emp/cityAdd" >
 </div>--%>
 </body>
 <script>
+    //加载表单控件
+    layui.use('form', function(){
+        var form = layui.form;
+        form.render();
+    });
+    //日期
     layui.use('laydate', function(){
         var laydate = layui.laydate;
         //执行一个laydate实例
@@ -214,5 +202,8 @@
             elem: '#joindate' //指定元素
         });
     });
+    function exit() {//返回员工资料页
+
+    }
 </script>
 </html>
