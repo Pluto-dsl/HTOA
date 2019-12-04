@@ -49,4 +49,14 @@ public class Ljw_EmpController {
         out.close();
         return "";
     }
+
+    @RequestMapping(value = "/delChatRecord")
+    public void delChatRecord(HttpServletResponse response,int id) throws IOException {
+        empService.delChatRecord(id);
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter out = response.getWriter();
+        out.print("1");
+        out.flush();
+        out.close();
+    }
 }

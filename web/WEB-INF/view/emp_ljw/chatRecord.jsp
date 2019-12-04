@@ -85,7 +85,8 @@
                 layer.confirm('真的删除行么', function(index){
                     obj.del();
                     layer.close(index);
-                    console.log(obj.data.chatid)
+                    console.log(obj.data.chatid);
+                    delChatRecord(obj.data.chatid)
                 });
             } else if(obj.event === 'edit'){
                 layer.prompt({
@@ -100,5 +101,13 @@
             }
         });
     });
+</script>
+<script language="JavaScript">
+    function delChatRecord(id) {
+        var data = {id:id};
+        $.post("${pageContext.request.contextPath}/ljw/delChatRecord",data,function (data) {
+            console.log(data)
+        },"json");
+    }
 </script>
 </html>

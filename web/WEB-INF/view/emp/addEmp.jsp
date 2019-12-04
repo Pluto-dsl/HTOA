@@ -13,9 +13,14 @@
 </head>
 <body>
 <center>
-    <form name="form1" class="layui-form layui-form-pane" id="form1"  action="<%=request.getContextPath()%>/zero/addemp">
+    <form  class="layui-form layui-form-pane"  accept-charset="UTF-8" οnsubmit="document.charset='UTF-8'"  action="<%=request.getContextPath()%>/zero/addemp" method="post">
+        <input type="hidden" name="">
         <table style="height: 370px;width: 800px;margin-top: 10px" border="0">
-            <input type="hidden" id="empId" name="empId" value=""/>
+            <input type="hidden" id="empId" name="empId" value="0"/>
+            <input type="hidden"  name="fireDay" value="1990-1-1"/>
+            <input type="hidden"  name="password" value="123456"/>
+            <input type="hidden"  name="postId" value="123"/>
+            <input type="hidden"  name="status" value="1"/>
             <tr style="height: 40px">
                 <td align="right">员工姓名:</td>
                 <td align="left"><input class="layui-input" required  id="empName" name="empName" placeholder="请输入员工姓名"
@@ -172,7 +177,7 @@
             </tr>
             <tr style="height:140px">
                 <td align="right" >
-                    <button type="button" class="layui-btn layui-btn-normal layui-btn-radius" lay-submit="">保 存</button>
+                    <button type="submit" class="layui-btn layui-btn-normal layui-btn-radius" lay-submit="">保 存</button>
                 </td>
                 <td align="left">
                     <a href="javascript:void(0);"onclick="exit()">

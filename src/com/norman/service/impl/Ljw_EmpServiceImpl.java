@@ -18,4 +18,11 @@ public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
     public int getChatRecordSize() {
         return getCountByHql("select count(*) from ChatRecordVo");
     }
+
+    @Override
+    public void delChatRecord(int id) {
+        ChatRecordVo chatRecordVo = new ChatRecordVo();
+        chatRecordVo.setChatid(id);
+        delObject(chatRecordVo);
+    }
 }
