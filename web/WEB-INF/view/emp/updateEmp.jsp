@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: 82346
@@ -16,32 +17,34 @@
     <form  class="layui-form layui-form-pane"  accept-charset="UTF-8" οnsubmit="document.charset='UTF-8'"  action="<%=request.getContextPath()%>/zero/addemp" method="post">
         <table style="height: 370px;width: 800px;margin-top: 10px" border="0">
             <tr style="height: 40px">
-                <input type="hidden" value=""/>
+                <input type="hidden" value="${emp.empId}"/>
                 <td align="right">员工姓名:</td>
                 <td align="left"><input class="layui-input" lay-verify="required"  id="empName" name="empName" placeholder="请输入员工姓名"
-                                        value="" style="width:200px;"></td>
+                                        value="${emp.empName}" style="width:200px;"></td>
                 <td align="right">部门名称:</td>
                 <td align="left">
                     <select id="depId" name="depId" lay-verify="required" style="width:205px;">
-                        <option value="3">宏图软件</option>
+                        <c:forEach var="d" items="${dep}">
+                            <option <c:if test="${emp.depName == d.depName}">selected="selected"</c:if> value="${d.depid}">${d.depName}</option>
+                        </c:forEach>
                     </select>
                 </td>
             </tr>
             <tr  style="height: 40px">
                 <td align="right">职务名称:</td>
                 <td align="left">
-                    <input  type="text" class="layui-input" lay-verify="required" name="postName" id="postName" value="" placeholder="请输入职务名称" style="width:200px;">
+                    <input  type="text" class="layui-input" lay-verify="required" name="postName" id="postName" value="${emp.postName}" placeholder="请输入职务名称" style="width:200px;">
                 </td>
                 <td align="right">家庭地址:</td>
                 <td align="left">
-                    <input type="text"  class="layui-input" lay-verify="required" name="address" id="address" value="" placeholder="请输入家庭地址"  style="width:200px;">
+                    <input type="text"  class="layui-input" lay-verify="required" name="address" id="address" value="${emp.Address}" placeholder="请输入家庭地址"  style="width:200px;">
                 </td>
             </tr>
             <tr style="height: 40px">
                 <td align="right">性别:</td>
                 <td align="left">
-                        <input type="radio" name="sex" value="男" title="男" checked>
-                        <input type="radio" name="sex" value="女" title="女">
+                        <input type="radio" name="sex" value="男" title="男"/>
+                        <input type="radio" name="sex" value="女" title="女"/>
                 </td>
                 <td align="right">身份证号:</td>
                 <td align="left">

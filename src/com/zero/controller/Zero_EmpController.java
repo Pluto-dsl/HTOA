@@ -73,6 +73,8 @@ public class Zero_EmpController {
     public String toupdate(@PathVariable("empId") int empId, Model model){
         Map emp = empService.toemp(empId);//查询当前员工
         System.out.println("emp"+emp);
+        //查询所有部门
+        model.addAttribute("dep",empService.allDep());
         model.addAttribute("emp",emp);
         return "emp/updateEmp";
     }
