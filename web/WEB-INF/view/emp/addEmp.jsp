@@ -14,16 +14,15 @@
 <body>
 <center>
     <form  class="layui-form layui-form-pane"  accept-charset="UTF-8" οnsubmit="document.charset='UTF-8'"  action="<%=request.getContextPath()%>/zero/addemp" method="post">
-        <input type="hidden" name="">
         <table style="height: 370px;width: 800px;margin-top: 10px" border="0">
-            <input type="hidden" id="empId" name="empId" value="0"/>
+            <%--<input type="hidden" id="empId" name="empId" value="0"/>
             <input type="hidden"  name="fireDay" value="1990-1-1"/>
             <input type="hidden"  name="password" value="123456"/>
             <input type="hidden"  name="postId" value="123"/>
-            <input type="hidden"  name="status" value="1"/>
+            <input type="hidden"  name="status" value="1"/>--%>
             <tr style="height: 40px">
                 <td align="right">员工姓名:</td>
-                <td align="left"><input class="layui-input" required  id="empName" name="empName" placeholder="请输入员工姓名"
+                <td align="left"><input class="layui-input" lay-verify="required"  id="empName" name="empName" placeholder="请输入员工姓名"
                                         value="" style="width:200px;"></td>
                 <td align="right">部门名称:</td>
                 <td align="left">
@@ -45,11 +44,11 @@
             <tr  style="height: 40px">
                 <td align="right">职务名称:</td>
                 <td align="left">
-                    <input type="text" class="layui-input" name="postName" id="postName" value="" placeholder="请输入职务名称" style="width:200px;">
+                    <input  type="text" class="layui-input" lay-verify="required" name="postName" id="postName" value="" placeholder="请输入职务名称" style="width:200px;">
                 </td>
                 <td align="right">家庭地址:</td>
                 <td align="left">
-                    <input type="text"  class="layui-input" name="address" id="address" value="" placeholder="请输入家庭地址"  style="width:200px;">
+                    <input type="text"  class="layui-input" lay-verify="required" name="address" id="address" value="" placeholder="请输入家庭地址"  style="width:200px;">
                 </td>
             </tr>
             <tr style="height: 40px">
@@ -60,14 +59,14 @@
                 </td>
                 <td align="right">身份证号:</td>
                 <td align="left">
-                    <input type="text" class="layui-input" id="cardNo"  name="cardNo" value=""placeholder="请输入身份证号" style="width:200px;">
+                    <input lay-verify="required" type="text" class="layui-input" id="cardNo"  name="cardNo" value=""placeholder="请输入身份证号" style="width:200px;">
                 </td>
             </tr>
 
             <tr style="height: 40px">
                 <td align="right">出生日期:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="birthday" name="birthday" value="" placeholder="可根据身份证号获取出生日期"  style="width:200px;">
+                    <input lay-verify="required" class="layui-input" type="text" id="birthday" name="birthday" value="" placeholder="可根据身份证号获取出生日期"  style="width:200px;">
                     <%--<input class="layui-input" type="button"  onclick="hqbirthday();" value="获取日期" style="height: 33px;width: 60px;">--%>
                 </td>
                 <td align="right">籍贯:</td>
@@ -80,7 +79,7 @@
             <tr style="height: 40px">
                 <td align="right">手机号码:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="phone" name="phone" value="" placeholder="请输入手机号"  style="width:200px;">
+                    <input lay-verify="required" class="layui-input" type="text" id="phone" name="phone" value="" placeholder="请输入手机号"  style="width:200px;">
                 </td>
                 <td align="right">QQ号码:</td>
                 <td align="left">
@@ -95,7 +94,7 @@
                 </td>
                 <td align="right">邮箱地址:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="email"  name="email" value=""placeholder="请输入邮箱地址" style="width:200px;">
+                    <input class="layui-input" type="text" id="email"  name="email" value="" placeholder="请输入邮箱地址" style="width:200px;">
                 </td>
             </tr>
 
@@ -137,31 +136,29 @@
             <tr style="height: 40px">
                 <td align="right">开户银行:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="bank"  name="bank" value=""placeholder="请输入开户银行" style="width:200px;">
+                    <input class="layui-input" type="text" id="bank"  name="bank" value="" placeholder="请输入开户银行" style="width:200px;">
                 </td>
                 <td align="right">账户名称:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="accountName"  name="accountName" value=""placeholder="请输入账户名称" style="width:200px;">
+                    <input class="layui-input" type="text" id="accountName"  name="accountName" value="" placeholder="请输入账户名称" style="width:200px;">
                 </td>
             </tr>
 
             <tr style="height: 40px">
                 <td align="right">银行账号:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="bankNumber"  name="bankNumber" value=""placeholder="请输入银行账号" style="width:200px;">
+                    <input class="layui-input"  type="text" id="bankNumber"  name="bankNumber" value="" placeholder="请输入银行账号" style="width:200px;">
                 </td>
                 <td align="right">支付宝号:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="alipay"  name="alipay" value=""placeholder="请输入支付宝账号" style="width:200px;">
+                    <input class="layui-input" type="text" id="alipay"  name="alipay" value="" placeholder="请输入支付宝账号" style="width:200px;">
                 </td>
             </tr>
 
             <tr style="height: 40px">
                 <td align="right">入职日期:</td>
                 <td align="left">
-                    <div class="layui-inline"> <!-- 注意：这一层元素并不是必须的 -->
-                        <input type="text" class="layui-input" id="joindate">
-                    </div>
+                    <input type="text" required class="layui-input" id="joindate">
                 </td>
                 <td align="right">登录密码:</td>
                 <td align="left">
@@ -172,7 +169,7 @@
             <tr style="height: 40px">
                 <td align="right">说明:</td>
                 <td align="left" colspan="3">
-                    <textarea name="" required  placeholder="请输入说明" class="layui-textarea"style="width:500px; height: 60px;"></textarea>
+                    <textarea name="remark"  placeholder="请输入说明" class="layui-textarea"style="width:500px; height: 60px;"></textarea>
                 </td>
             </tr>
             <tr style="height:140px">
