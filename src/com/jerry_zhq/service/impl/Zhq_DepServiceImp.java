@@ -14,8 +14,4 @@ public class Zhq_DepServiceImp extends BaseDao implements Zhq_DepService {
         return listByHql("from DepVo");
     }
 
-    @Override
-    public List selEmp() {
-        return listByHql("from EmpVo");
-    }
 }
