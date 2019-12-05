@@ -50,14 +50,17 @@ public class Zero_EmpController {
 
     @RequestMapping(value = "/addemp")//添加修改员工
     public String addemp(EmpVo empVo){
-        if(empVo.getEmpId() == 0){//添加
-            empVo.setStatus(1);//设置启用状态
-            empVo.setPassword("123456");
-            empVo.setPostId(101);
-            empService.addEmp(empVo);
-        }else {//修改
+        empVo.setStatus(1);//设置启用状态
+        empVo.setPassword("123456");
+        empVo.setPostId(101);
+        empService.addEmp(empVo);
+        return "redirect:toemp";
+    }
 
-        }
+    @RequestMapping(value = "/updateEmp")//添加修改员工
+    public String updateEmp(EmpVo empVo){
+        System.out.println("修改的员工:"+empVo);
+        empService.addEmp(empVo);
         return "redirect:toemp";
     }
     @RequestMapping(value = "/deleteEmp")//添加员工
@@ -69,7 +72,7 @@ public class Zero_EmpController {
         return "true";
     }
 
-    @RequestMapping(value = "/toupdate/{empId}")//修改员工
+    @RequestMapping(value = "/toupdate/{empId}")//去修改员页
     public String toupdate(@PathVariable("empId") int empId, Model model){
         Map emp = empService.toemp(empId);//查询当前员工
         System.out.println("emp"+emp);

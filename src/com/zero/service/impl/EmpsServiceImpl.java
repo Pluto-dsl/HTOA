@@ -21,6 +21,11 @@ public class EmpsServiceImpl extends BaseDao implements EmpsService {
     }
 
     @Override
+    public void update(EmpVo empVo) {
+        super.updObject(empVo);
+    }
+
+    @Override
     public List allDep() {
         return super.listByHql("from DepVo");
     }
