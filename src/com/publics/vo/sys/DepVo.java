@@ -11,8 +11,7 @@ import javax.persistence.*;
 public class DepVo {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.TABLE,generator="tableGenerator")
-    @TableGenerator(name="tableGenerator",initialValue=100,allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int depid;//主键，标识列，自动生成
     private String depName;//部门名称
     private int parentId;//父部门名称

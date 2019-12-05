@@ -7,10 +7,7 @@ import javax.persistence.*;
 public class AduitModelVo {//考核指标
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
-    @TableGenerator(name = "tableGenerator",initialValue =0, allocationSize = 1)
-
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int aduitModelid;//主键，标识列，自动生成
     private String aduitName;//考核内容
     private int Scores;//考核分数

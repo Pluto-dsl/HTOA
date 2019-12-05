@@ -11,8 +11,7 @@ import java.util.Date;
 @Table(name = "dataDoc")
 public class DataDocVo {
     @Id
-    @GeneratedValue(strategy= GenerationType.TABLE,generator="tableGenerator")
-    @TableGenerator(name="tableGenerator",initialValue=1000,allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int docId;//主键，标识列，自动生成
     private String dataName;//资料名称
     private String url;//资料地址

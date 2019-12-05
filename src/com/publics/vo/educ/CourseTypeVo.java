@@ -11,8 +11,7 @@ import javax.persistence.*;
 @Table(name="courseType")
 public class CourseTypeVo {
     @Id
-    @GeneratedValue(strategy=GenerationType.TABLE,generator="tableGenerator")
-    @TableGenerator(name="tableGenerator",initialValue=10,allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int courseTypeId;//主键，标识列，自动生成
     private String courseTypeName;//类别名称(公共课，专业课)
     private String remark;//说明
