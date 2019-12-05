@@ -12,14 +12,19 @@
     <title>员工展示页</title>
 </head>
 <body>
-    <a class="layui-btn layui-btn-primary layui-btn-xs layui-icon-add-1" lay-event="detail" href="<%=request.getContextPath()%>/zero/toaddemp">新增</a>
+    <script type="text/html" id="top">
+        <a class="layui-btn layui-btn-primary layui-btn-xs layui-icon-add-1" lay-event="detail" href="<%=request.getContextPath()%>/zero/toaddemp">新增</a>
+    </script>
     <table id="demo" lay-filter="test"></table>
+    <script type="text/html" id="shezhi">
+        <input type="checkbox" id="state" lay-skin="switch" lay-text="启用|禁用"/>
+    </script>
     <script type="text/html" id="pwd">
         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">重置密码</a>
     </script>
     <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <%--<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>--%>
+        <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script>
 </body>
@@ -31,6 +36,7 @@
             elem: '#demo'
             ,height: 312
             ,url: '<%=request.getContextPath()%>/zero/allemp' //数据接口
+            ,toolbar: '#top' //开启头部工具栏，并为其绑定左侧模板
             ,page: true //开启分页
             ,cols: [[ //表头
                 {field: 'empId', title: '编号', width:80, sort: true, fixed: 'left'}
@@ -40,11 +46,12 @@
                 ,{field: 'Sex', title: '性别', width:80,sort: true}
                 ,{field: 'Phone', title: '手机号码', width: 150}
                 ,{field: 'Address', title: '家庭地址', width: 200}
-                ,{field: 'status', title: '状态', width: 80,templet:'#state'}
+                ,{field: 'status', title: '状态', width: 80}
+                ,{field: 'stat', title: '设置状态', width: 100,toolbar:'#shezhi'}
                 ,{field: 'reset', title: '初始密码',toolbar:'#pwd',width: 100}
-                ,{field: 'caozuo', title: '操作',toolbar:'#barDemo', width: 200}/*
-                ,{field: '',toolbar:'#add', width: 200,align:'center'}*/
+                ,{field: 'caozuo', title: '操作',toolbar:'#barDemo', width: 150}
             ]]
+            ,page: {limit:10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
             ,done: function(res, page, count){
                 //如果是异步请求数据方式，res即为你接口返回的信息。
                 //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
@@ -52,8 +59,10 @@
                 $("[data-field='status']").children().each(function(){
                     if($(this).text()=='1'){
                         $(this).text("启用")
+                        $("#state").attr("checked",true);
                     }else if($(this).text()=='0'){
                         $(this).text("禁用")
+                        $("#state").attr("checked",false);
                     }
                 })
             }
@@ -64,25 +73,30 @@
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的DOM对象
 
-            if(layEvent === 'detail'){ //添加
-                layer.msg('查看');
+            if(layEvent === 'detail'){ //重置密码
+                //layer.msg('查看');
+                layer.confirm('确定重置此用户的密码吗?', function(index){
+                    //向服务端发送修改指令
+                    layer.close(index);
+                    $.post("<%=request.getContextPath()%>/zero/resetPwd/"+data.empId,{},function (d) {
+                    },"text")
+                });
             } else if(layEvent === 'del'){ //删除
-                layer.confirm('真的删除行么', function(index){
+                layer.confirm('真的删除此条数据吗?', function(index){
                     obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
                     layer.close(index);
                     //向服务端发送删除指令
-                    $.post("<%=request.getContextPath()%>/zero/deleteEmp","empId:"+data.empId,function (d) {
+                    $.post("<%=request.getContextPath()%>/zero/deleteEmp",{empId:data.empId},function (d) {
                     },"text")
                 });
             } else if(layEvent === 'edit'){ //修改
-                //do something
-                console.log(data);
-                layer.msg('编辑');
+                //layer.msg('编辑');
                 //同步更新缓存对应的值
-                obj.update({
+                /*obj.update({
                     username: '123'
                     ,title: 'xxx'
-                });
+                });*/
+                window.location.href="<%=request.getContextPath()%>/zero/toupdate/"+data.empId;
             }
         });
     });
