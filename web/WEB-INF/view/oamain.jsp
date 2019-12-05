@@ -59,7 +59,7 @@
                     <dl class="layui-nav-child">
                         <%-- 例子  可修改 照着写就行了 --%>
                         <dd><a href="javascript:void(0);">部门管理</a></dd>
-                        <dd><a href="javascript:void(0);" >员工资料</a></dd>
+                        <dd><a href="javascript:void(0);">员工资料</a></dd>
                         <dd><a href="javascript:void(0);">周报管理</a></dd>
                         <dd><a href="javascript:void(0);">我的周报</a></dd>
                         <dd><a href="javascript:void(0);">周报审阅</a></dd>

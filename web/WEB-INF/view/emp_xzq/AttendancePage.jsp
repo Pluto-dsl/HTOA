@@ -12,7 +12,7 @@
     <jsp:include page="../include.jsp" />
 </head>
 <body>
-<div id="windows" style="margin-left: 5%;display: none;">
+<div id="windows" style="margin-left: 5%;display:none;">
     <form class="layui-form" action="${pageContext.request.contextPath}/jack/Attadd" method="post" >
         <h2 style="margin-left: 35%" >未打卡说明</h2>
         <br><br>

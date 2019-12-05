@@ -34,9 +34,10 @@ public class Jack_AttController {
 
     @RequestMapping("/Attadd")
     public String Attadd(AttendanceVo att,String timeing){
-        System.out.println(att);
+        System.out.println("进来了");
+        System.out.println(att.toString()+"--------------");
         System.out.println(timeing);
-        return "";
+        return "emp_xzq/xxx";
     }
     @RequestMapping("/Att")
     @ResponseBody
