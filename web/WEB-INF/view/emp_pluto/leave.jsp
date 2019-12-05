@@ -12,8 +12,29 @@
     <jsp:include page="../include.jsp" />
 </head>
 <body>
+<div id="windows" style="margin-left: 5%;display: none;">
+    <form class="layui-form" action="${pageContext.request.contextPath}/jack/Attadd" method="post" >
+        <h2 style="margin-left: 35%" >未打卡说明</h2>
+        <br><br>
+        未打卡日期：<div style="margin-right:10px" class="layui-inline">
+        <input type="text" name="punckClockTime" class="layui-input" id="clockDate">
+    </div>
+        时间点:
+        <div class="layui-input-inline">
+            <select name="timeing" lay-filter="type">
+                <option value="8:00">8:00</option>
+                <option value="14:00">14:00</option>
+                <option value="17:00">17:00</option>
+                <option value="21:00">21:00</option>
+            </select>
+        </div>
+        <br><br>说明原因:<input type="text" name="cause" required lay-verify="required" placeholder="请输入说明原因" autocomplete="off" class="layui-input">
+        <br><br><br><button style="margin-left: 25%"  align="center" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
+    </form>
+</div>
+<table class="layui-hide" id="test" lay-filter="test" style="text-align: center;"></table>
 
-<table class="layui-hide" id="demo" lay-filter="test"></table>
+<div id="page"></div>
 
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
@@ -21,100 +42,97 @@
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
+<script type="text/html" id="topBar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="add">添加</a>
+</script>
+<%-------------------------------------------------------------%>
 <script>
-    layui.config({
-        version: '1575404972583' //为了更新 js 缓存，可忽略
-    });
+    layui.use([ 'element', 'table', 'layer', 'form' ,'laydate'],function() {
+        var element = layui.element;
+        var layer = layui.layer;
+        var table = layui.table;
+        var form = layui.form;
+        var laydate = layui.laydate;
 
-    layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function(){
-        var laypage = layui.laypage //分页
-            ,layer = layui.layer //弹层
-            ,table = layui.table //表格
 
-        //分页
-        laypage.render({
-            elem: 'pageDemo' //分页容器的id
-            ,count: 100 //总页数
-            ,skin: '#1E9FFF' //自定义选中色值
-            //,skip: true //开启跳页
-            ,jump: function(obj, first){
-                if(!first){
-                    layer.msg('第'+ obj.curr +'页', {offset: 'b'});
-                }
-            }
-        });
-
-        //执行一个 table 实例
         table.render({
-            elem: '#demo'
-            ,height: 420
-            ,url: '${pageContext.request.contextPath}/empLeave/returnData' //数据接口
-            ,title: '用户表'
-            ,page: true //开启分页
-            ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
-            ,totalRow: true //开启合计行
-            ,cols: [[ //表头
-                {type: 'checkbox', fixed: 'left'}
-                ,{field: 'holidayid', title: 'ID', width:80, sort: true, fixed: 'left', totalRowText: '合计：'}
-                ,{field: 'Empid', title: '请假人', width:80}
-                ,{field: 'holidayDay', title: '请假时长', width: 90, sort: true, totalRow: true}
-                ,{field: 'startTime', title: '开始时间', width:80, sort: true}
-                ,{field: 'endTime', title: '结束时间', width: 80, sort: true, totalRow: true}
+            elem: '#test'
+            ,url:'${pageContext.request.contextPath}/empLeave/returnData'
+            ,toolbar: '#topBar' //开启头部工具栏，并为其绑定左侧模板
+            ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                title: '提示'
+                ,layEvent: 'LAYTABLE_TIPS'
+                ,icon: 'layui-icon-tips'
+            }]
+            ,title: '用户数据表'
+            ,cols: [[
+                {field: 'holidayid', title: 'ID', width:200, sort: true, fixed: 'left', totalRowText: '合计：'}
+                ,{field: 'Empid', title: '请假人', width:200}
+                ,{field: 'holidayDay', title: '请假时长', width: 200, sort: true, totalRow: true}
+                ,{field: 'startTime', title: '开始时间', width:200, sort: true}
+                ,{field: 'endTime', title: '结束时间', width: 200, sort: true, totalRow: true}
                 ,{field: 'status', title: '状态', width: 200}
-                ,{field: 'Remark', title: '内容', width: 100}
-                ,{fixed: '', width: 165, align:'center', toolbar: '#barDemo'}
+                ,{field: 'Remark', title: '内容', width: 200}
+                ,{fixed: '', title:'操作', width: 270, align:'center', toolbar: '#barDemo'}
             ]]
+            ,page: true
         });
 
-        //监听头工具栏事件
+        //头工具栏事件
         table.on('toolbar(test)', function(obj){
-            var checkStatus = table.checkStatus(obj.config.id)
-                ,data = checkStatus.data; //获取选中的数据
+            var checkStatus = table.checkStatus(obj.config.id);
             switch(obj.event){
                 case 'add':
-                    layer.msg('添加');
+                    layer.open({
+                        type: 1,
+                        title:'添加未打卡说明',
+                        skin: 'layui-layer-demo', //样式类名
+                        closeBtn: 1, //不显示关闭按钮
+                        area: ['700px', '450px'],
+                        fixed: false, //不固定
+                        maxmin: true,
+                        shadeClose: true, //开启遮罩关闭
+                        //content: ['${pageContext.request.contextPath}/jack/test','no']
+                        content: $('#windows')
+                    });
                     break;
-                case 'update':
-                    if(data.length === 0){
-                        layer.msg('请选择一行');
-                    } else if(data.length > 1){
-                        layer.msg('只能同时编辑一个');
-                    } else {
-                        layer.alert('编辑 [id]：'+ checkStatus.data[0].id);
-                    }
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：'+ data.length + ' 个');
                     break;
-                case 'delete':
-                    if(data.length === 0){
-                        layer.msg('请选择一行');
-                    } else {
-                        layer.msg('删除');
-                    }
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选': '未全选');
+                    break;
+
+                //自定义头工具栏右侧图标 - 提示
+                case 'LAYTABLE_TIPS':
+                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
                     break;
             };
         });
 
         //监听行工具事件
-        table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
-            var data = obj.data //获得当前行数据
-                ,layEvent = obj.event; //获得 lay-event 对应的值
-            if(layEvent === 'detail'){
-                layer.msg('查看操作');
-            } else if(layEvent === 'del'){
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            //console.log(obj)
+            if(obj.event === 'del'){
                 layer.confirm('真的删除行么', function(index){
-                    obj.del(); //删除对应行（tr）的DOM结构
+                    obj.del();
                     layer.close(index);
-                    //向服务端发送删除指令
                 });
-            } else if(layEvent === 'edit'){
-                layer.msg('编辑操作');
+            } else if(obj.event === 'edit'){
+                layer.prompt({
+                    formType: 2
+                    ,value: data.email
+                }, function(value, index){
+                    obj.update({
+                        email: value
+                    });
+                    layer.close(index);
+                });
             }
-        });
-
-        //底部信息
-        var footerTpl = lay('#footer')[0].innerHTML;
-        lay('#footer').html(layui.laytpl(footerTpl).render({}))
-            .removeClass('layui-hide');
-    });
+        })
+    })
 </script>
 </body>
 </html>

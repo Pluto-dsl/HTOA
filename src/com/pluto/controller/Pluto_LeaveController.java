@@ -29,6 +29,7 @@ public class Pluto_LeaveController {
     @RequestMapping("/returnData")
     @ResponseBody
     public void responseData(HttpServletResponse response){
+        response.setContentType("text/html;charset=utf-8");
         List<Map> list = service.getLeaveList("select * from holiday");
         JSONObject json = new JSONObject();
         json.put("code",0);
