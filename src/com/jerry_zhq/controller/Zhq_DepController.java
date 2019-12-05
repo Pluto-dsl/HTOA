@@ -48,8 +48,7 @@ public class Zhq_DepController {
         PrintWriter out = response.getWriter();
 
         if("tree".equals(type)){
-
-            JSONObject jsonObject = new JSONObject();//装部门
+            JSONObject jsonObject = new JSONObject();//总部门
             JSONArray depJsonArray1 = new JSONArray();//子部门
             JSONArray depJsonArray2 = new JSONArray();//子部门
             //部门
@@ -72,8 +71,11 @@ public class Zhq_DepController {
 
             System.out.println(depJsonArray1.toJSONString());
             out.print(depJsonArray1.toJSONString());
-
         }
+    }
 
+    @RequestMapping("/selDepAll")
+    public String selDepAll(){
+        return "emp_zhq/depSel";
     }
 }
