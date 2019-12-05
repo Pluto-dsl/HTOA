@@ -68,6 +68,11 @@
                         <dd><a href="javascript:void(0);">周报审阅</a></dd>
                         <dd><a href="javascript:void(0);">谈心记录</a></dd>
                         <dd><a href="javascript:void(0);">请假管理</a></dd>
+
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/empLeave/toleave"
+                               data-id="员工请假" data-title="员工请假">员工请假</a></dd>
+
                         <dd><a href="javascript:void(0);">考勤管理</a></dd>
                     </dl>
                 </li>
