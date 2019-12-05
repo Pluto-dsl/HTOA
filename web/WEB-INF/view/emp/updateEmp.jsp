@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: 82346
@@ -17,15 +16,14 @@
     <form  class="layui-form layui-form-pane"  accept-charset="UTF-8" οnsubmit="document.charset='UTF-8'"  action="<%=request.getContextPath()%>/zero/addemp" method="post">
         <table style="height: 370px;width: 800px;margin-top: 10px" border="0">
             <tr style="height: 40px">
+
                 <td align="right">员工姓名:</td>
                 <td align="left"><input class="layui-input" lay-verify="required"  id="empName" name="empName" placeholder="请输入员工姓名"
                                         value="" style="width:200px;"></td>
                 <td align="right">部门名称:</td>
                 <td align="left">
                     <select id="depId" name="depId" lay-verify="required" style="width:205px;">
-                        <c:forEach var="d" items="${dep}">
-                            <option value="${d.depid}">${d.depName}</option>
-                        </c:forEach>
+                        <option value="3">宏图软件</option>
                     </select>
                 </td>
             </tr>
@@ -173,6 +171,10 @@
         </table>
     </form>
 </center>
+<%--lay-verify="required"必填项--%>
+<%--<div class="easyui-window" title="选择籍贯" id="editBx" style="width: 320px; height: 245px;" mode="true" closed="true" modal="true"
+     href="/htoffice/admin/emp/cityAdd" >
+</div>--%>
 </body>
 <script>
     //加载表单控件
