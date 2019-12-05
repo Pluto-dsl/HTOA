@@ -79,7 +79,6 @@ public class Wtt_EmpsController {
         }
     }
 
-
     //删除
     @RequestMapping(value = "/deleteEmpPaper")
     public String deleteEmpPaperPage(HttpServletResponse response,int id){
