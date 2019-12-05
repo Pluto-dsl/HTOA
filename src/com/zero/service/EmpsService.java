@@ -14,4 +14,5 @@ public interface EmpsService {
     List allDep();//查询所有部门
     void deleteEmp(EmpVo empVo);//删除员工
     Map toemp(int empId);//查找需要修改的员工
+    void resetPwd(int empId);//重置员工密码
 }

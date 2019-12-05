@@ -81,4 +81,11 @@ public class Zero_EmpController {
         model.addAttribute("emp",emp);
         return "emp/updateEmp";
     }
+
+    @RequestMapping(value = "/resetPwd/{empId}")//重置密码
+    @ResponseBody
+    public String resetPwd(@PathVariable("empId") int empId, Model model){
+        empService.resetPwd(empId);
+        return "true";
+    }
 }

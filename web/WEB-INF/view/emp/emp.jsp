@@ -17,7 +17,7 @@
     </script>
     <table id="demo" lay-filter="test"></table>
     <script type="text/html" id="shezhi">
-        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="stop">禁用</a>
+        <input type="checkbox" id="state" lay-skin="switch" lay-text="启用|禁用"/>
     </script>
     <script type="text/html" id="pwd">
         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">重置密码</a>
@@ -47,11 +47,11 @@
                 ,{field: 'Phone', title: '手机号码', width: 150}
                 ,{field: 'Address', title: '家庭地址', width: 200}
                 ,{field: 'status', title: '状态', width: 80}
-                ,{field: 'statue', title: '设置状态', width: 100,toolbar:'#shezhi'}
+                ,{field: 'stat', title: '设置状态', width: 100,toolbar:'#shezhi'}
                 ,{field: 'reset', title: '初始密码',toolbar:'#pwd',width: 100}
-                ,{field: 'caozuo', title: '操作',toolbar:'#barDemo', width: 150}/*
-                ,{field: '',toolbar:'#add', width: 200,align:'center'}*/
+                ,{field: 'caozuo', title: '操作',toolbar:'#barDemo', width: 150}
             ]]
+            ,page: {limit:10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
             ,done: function(res, page, count){
                 //如果是异步请求数据方式，res即为你接口返回的信息。
                 //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
@@ -59,8 +59,10 @@
                 $("[data-field='status']").children().each(function(){
                     if($(this).text()=='1'){
                         $(this).text("启用")
+                        $("#state").attr("checked",true);
                     }else if($(this).text()=='0'){
                         $(this).text("禁用")
+                        $("#state").attr("checked",false);
                     }
                 })
             }
@@ -71,8 +73,14 @@
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的DOM对象
 
-            if(layEvent === 'detail'){ //添加
-                layer.msg('查看');
+            if(layEvent === 'detail'){ //重置密码
+                //layer.msg('查看');
+                layer.confirm('确定重置此用户的密码吗?', function(index){
+                    //向服务端发送修改指令
+                    layer.close(index);
+                    $.post("<%=request.getContextPath()%>/zero/resetPwd/"+data.empId,{},function (d) {
+                    },"text")
+                });
             } else if(layEvent === 'del'){ //删除
                 layer.confirm('真的删除此条数据吗?', function(index){
                     obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
