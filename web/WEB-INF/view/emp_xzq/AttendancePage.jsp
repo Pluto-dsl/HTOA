@@ -12,9 +12,28 @@
     <jsp:include page="../include.jsp" />
 </head>
 <body>
+<div id="windows" style="margin-left: 5%;display:none;">
+    <form class="layui-form" action="${pageContext.request.contextPath}/jack/Attadd" method="post" >
+        <h2 style="margin-left: 35%" >未打卡说明</h2>
+        <br><br>
+        未打卡日期：<div style="margin-right:10px" class="layui-inline">
+        <input type="text" name="punckClockTime" class="layui-input" id="clockDate">
+    </div>
+        时间点:
+        <div class="layui-input-inline">
+            <select name="timeing" lay-filter="type">
+                <option value="8:00">8:00</option>
+                <option value="14:00">14:00</option>
+                <option value="17:00">17:00</option>
+                <option value="21:00">21:00</option>
+            </select>
+        </div>
+        <br><br>说明原因:<input type="text" name="cause" required lay-verify="required" placeholder="请输入说明原因" autocomplete="off" class="layui-input">
+        <br><br><br><button style="margin-left: 25%"  align="center" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
+    </form>
+</div>
 
 <table class="layui-hide" id="test" lay-filter="test"></table>
-
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
         <button lay-event="punching" class="layui-btn layui-btn-sm" ><i class="layui-icon layui-icon-add-1" style="font-size: 30px;"></i>未打卡说明</button>
@@ -22,12 +41,18 @@
     </div>
 </script>
 
-<script src="//res.layui.com/layui/dist/layui.js" charset="utf-8"></script>
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
-
 <script>
-    layui.use('table', function(){
+    layui.use([ 'element', 'table', 'layer', 'form' ,'laydate'],function() {
+        var element = layui.element;
+        var layer = layui.layer;
         var table = layui.table;
+        var form = layui.form;
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#clockDate' //指定元素
+        });
 
         table.render({
             elem: '#test'
@@ -58,18 +83,25 @@
 
         });
 
-        //头部工具按钮监听
         table.on('toolbar(test)', function(obj){
             var data = obj.data;
             if(obj.event == 'punching'){
                 layer.open({
-                    type: 1,
-                    content: '传入任意的文本或html' //这里content是一个普通的String
+                type: 1,
+                title:'添加未打卡说明',
+                skin: 'layui-layer-demo', //样式类名
+                closeBtn: 1, //不显示关闭按钮
+                area: ['700px', '450px'],
+                fixed: false, //不固定
+                maxmin: true,
+                shadeClose: true, //开启遮罩关闭
+                //content: ['${pageContext.request.contextPath}/jack/test','no']
+                content: $('#windows')
                 });
-            }else if(obj.event == 'punching'){
+            }else if(obj.event == 'MyApproval'){
                 layer.open({
                     type: 1,
-                    content: '传入任意的文本或html' //这里content是一个普通的String
+                    content:['内容', '#id'] //这里content是一个普通的String
                 });
             }
         });
