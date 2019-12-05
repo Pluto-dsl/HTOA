@@ -11,28 +11,58 @@
 <jsp:include page="../include.jsp"/>
 <head>
     <title>员工展示页</title>
+    <style>
+        .layui-form-item{
+            width: 120px;
+        }
+        .layui-form-select{
+            width: 120px;
+        }
+        .layui-input-inline {
+            width: 120px;
+        }
+        .layui-input{
+            width: 120px;
+        }
+        .layui-form-item .layui-input-inline {
+            width: 118px;
+        }
+    </style>
 </head>
 <body>
     <script type="text/html" id="top">
-        <form class="layui-form layui-form-pane"  accept-charset="UTF-8" οnsubmit="document.charset='UTF-8'"  action="<%=request.getContextPath()%>/zero/seek" method="post">
-            部门名称:
-            <select id="depId" name="depId" lay-verify="required" style="width:205px;">
-                <c:forEach var="d" items="${dep}">
-                    <option value="${d.depid}">${d.depName}</option>
-                </c:forEach>
-            </select>
-            员工姓名:
-            <input class="layui-input" name="empName" value="" style="width:200px;">
-            手机号码:
-            <input class="layui-input"  name="Phone" value="" style="width:200px;">
-            状态:
-            <select  name="status" lay-verify="required" style="width:205px;">
-                <option value="100">--未选择--</option>
-                <option value="1">启用</option>
-                <option value="0">禁用</option>
-            </select>
-        </form>
         <a class="layui-btn layui-btn-primary layui-btn-xs layui-icon-add-1" lay-event="detail" href="<%=request.getContextPath()%>/zero/toaddemp">新增</a>
+        <form class="layui-form"  accept-charset="UTF-8" οnsubmit="document.charset='UTF-8'"  action="<%=request.getContextPath()%>/zero/seek" method="post">
+            <label  class="layui-form-item">
+                <label class="layui-form-label" style="width: 90px">部门名称:</label>
+                <div class="layui-input-inline">
+                    <select id="depId" name="depId" lay-verify="required">
+                        <c:forEach var="d" items="${dep}">
+                            <option value="${d.depid}">${d.depName}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <label class="layui-form-label" style="width: 90px">员工姓名:</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" name="empName" value="">
+                </div>
+                <label class="layui-form-label" style="width: 90px">手机号码:</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input"  name="Phone" value="">
+                </div>
+                <label class="layui-form-label">状态:</label>
+                <div class="layui-input-inline">
+                    <select  name="status" lay-verify="required">
+                        <option value="100">--未选择--</option>
+                        <option value="1">启用</option>
+                        <option value="0">禁用</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline">
+                    <button type="submit" class="layui-btn" >搜索</button>
+                </div>
+            </label>
+        </form>
     </script>
     <table id="demo" lay-filter="test"></table>
     <script type="text/html" id="shezhi">
