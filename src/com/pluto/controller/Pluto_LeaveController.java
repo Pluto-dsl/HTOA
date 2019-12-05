@@ -23,8 +23,6 @@ public class Pluto_LeaveController {
 
     @RequestMapping("/toleave")
     public String toLeave(){
-
-
         return "emp_pluto/leave";
     }
 
@@ -47,6 +45,4 @@ public class Pluto_LeaveController {
             e.printStackTrace();
         }
     }
-
-
 }
