@@ -10,8 +10,7 @@ import javax.persistence.*;
 @Table(name = "feedback")
 public class FeedbackVo {
     @Id
-    @GeneratedValue(strategy= GenerationType.TABLE,generator="tableGenerator")
-    @TableGenerator(name="tableGenerator",initialValue=1000,allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int feedbackId;//主键，标识列，自动生成
     private int feedBackType;//1：员工，2学生
     private int empId;//部门编号

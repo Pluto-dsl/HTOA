@@ -10,8 +10,7 @@ import javax.persistence.*;
 @Table(name="weekArrange")
 public class WeekArrangeVo {
     @Id
-    @GeneratedValue(strategy= GenerationType.TABLE,generator="tableGenerator")
-    @TableGenerator(name="tableGenerator",initialValue=1000,allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int weekArrangeId;//主键，标识列，自动生成
     private String weekArrangeName;//排班名称
     private String ranges;//值班要求

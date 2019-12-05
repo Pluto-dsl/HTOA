@@ -16,12 +16,12 @@ public class WeeklogVo {//周报
     private String Idea;//意见建议
     private String weekNext;//下周工作计划
 
-    public int getWorklogid() {
+    public int getWeeklogid() {
         return weeklogid;
     }
 
-    public void setWorklogid(int worklogid) {
-        this.weeklogid = worklogid;
+    public void setWeeklogid(int weeklogid) {
+        this.weeklogid = weeklogid;
     }
 
     public int getEmpid() {
