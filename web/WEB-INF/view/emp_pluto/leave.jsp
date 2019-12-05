@@ -13,24 +13,57 @@
 </head>
 <body>
 <div id="windows" style="margin-left: 5%;display: none;">
-    <form class="layui-form" action="${pageContext.request.contextPath}/jack/Attadd" method="post" >
-        <h2 style="margin-left: 35%" >未打卡说明</h2>
-        <br><br>
-        未打卡日期：<div style="margin-right:10px" class="layui-inline">
-        <input type="text" name="punckClockTime" class="layui-input" id="clockDate">
-    </div>
-        时间点:
-        <div class="layui-input-inline">
-            <select name="timeing" lay-filter="type">
-                <option value="8:00">8:00</option>
-                <option value="14:00">14:00</option>
-                <option value="17:00">17:00</option>
-                <option value="21:00">21:00</option>
-            </select>
-        </div>
-        <br><br>说明原因:<input type="text" name="cause" required lay-verify="required" placeholder="请输入说明原因" autocomplete="off" class="layui-input">
-        <br><br><br><button style="margin-left: 25%"  align="center" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
-    </form>
+        <table align="center" style="margin-top: -2%;border-collapse:separate; border-spacing:0px 20px;">
+            <tr>
+                <th colspan="2">
+                    <font style="text-align: center">员工请假</font>
+                </th>
+            </tr>
+            <tr>
+                <th>请假类型：</th>
+                <td class="layui-form">
+                    <select name="" lay-filter="请假事由" lay-search>
+                        <option value="事假">事假</option>
+                        <option value="病假">病假</option>
+                        <option value="四小时带薪假">四小时带薪假</option>
+                        <option value="婚假">婚假</option>
+                        <option value="产假">产假</option>
+                        <option value="陪产">陪产假</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>开始时间：</th>
+                <td>
+                    <input type="text" name="startDate"  autocomplete="off" class="layui-input shij">                </td>
+            </tr>
+            <tr>
+                <th>结束时间：</th>
+                <td>
+                    <input type="text" name="endDate"  autocomplete="off" class="layui-input shij">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    请假时长：<input type="text" style="width: 50px">,
+                    <select name="" id="a"></select>小时
+                </td>
+            </tr>
+            <tr>
+                <th>请假事由：</th>
+                <td>
+                    <textarea rows="3" cols="10"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="button" class="layui-btn" style="width: 100px;">提交</button>
+                    <button type="button" class="layui-btn layui-btn-normal" style="width: 100px;">取消</button>
+                </td>
+            </tr>
+        </table>
+
 </div>
 <table class="layui-hide" id="test" lay-filter="test" style="text-align: center;"></table>
 
@@ -47,12 +80,24 @@
 </script>
 <%-------------------------------------------------------------%>
 <script>
+    // laydate.render({
+    //     elem: '#date'
+    // });
+
     layui.use([ 'element', 'table', 'layer', 'form' ,'laydate'],function() {
         var element = layui.element;
         var layer = layui.layer;
         var table = layui.table;
         var form = layui.form;
         var laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '.shij'
+        });
+        laydate.render({
+            elem: '.shij'
+        });
 
 
         table.render({
