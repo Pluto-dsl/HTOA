@@ -67,7 +67,7 @@
 
 
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/empLeave/leave"
+                               data-url="${pageContext.request.contextPath}/empLeave/toleave"
                                data-id="员工请假" data-title="员工请假">员工请假</a></dd>
 
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
