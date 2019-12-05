@@ -48,8 +48,7 @@ public class Zhq_DepController {
         PrintWriter out = response.getWriter();
 
         if("tree".equals(type)){
-            System.out.println("dsad");
-            System.out.println("进来判断了");
+
             JSONObject jsonObject = new JSONObject();//装部门
             JSONArray depJsonArray1 = new JSONArray();//子部门
             JSONArray depJsonArray2 = new JSONArray();//子部门
