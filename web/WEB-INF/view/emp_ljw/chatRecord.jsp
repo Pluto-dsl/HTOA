@@ -18,16 +18,22 @@
 </head>
 <body>
     <table id="chatRecordList" lay-filter="test"></table>
+    <div id="test1"></div>
 
     <script type="text/html" id="toolbarDemo">
         <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
-            <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-            <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+            <button class="layui-btn layui-btn-sm">删除所选数据</button>
+            <button class="layui-btn layui-btn-sm">新增谈心记录</button>
         </div>
+    </script>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script>
 </body>
 <script>
+    $.post("");
     layui.use('table', function(){
         var table = layui.table;
         table.render({
@@ -42,10 +48,10 @@
                 ,{field:'sayface', title:'学生', width:80, fixed: 'left'}
                 ,{field:'teacher', title:'员工', width:80, fixed: 'left'}
                 ,{field:'addr', title:'地址', width:80, fixed: 'left'}
-                ,{field:'sayscon', title:'谈心内容', width:80, fixed: 'left'}
-                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+                ,{field:'sayscon', title:'谈心内容',width: '56%', minWidth: 200, fixed: 'left'}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200}
             ]]
-            ,page: true
+            ,page: {limit:5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
 
         //头工具栏事件
@@ -68,17 +74,17 @@
                 case 'LAYTABLE_TIPS':
                     layer.alert('这是工具栏右侧自定义的一个图标按钮');
                     break;
-            };
+            }
         });
 
         //监听行工具事件
         table.on('tool(test)', function(obj){
             var data = obj.data;
-            //console.log(obj)
             if(obj.event === 'del'){
                 layer.confirm('真的删除行么', function(index){
                     obj.del();
                     layer.close(index);
+                    delChatRecord(obj.data.chatid)
                 });
             } else if(obj.event === 'edit'){
                 layer.prompt({
@@ -93,5 +99,13 @@
             }
         });
     });
+</script>
+<script language="JavaScript">
+    function delChatRecord(id) {
+        var data = {id:id};
+        $.post("${pageContext.request.contextPath}/ljw/delChatRecord",data,function (data) {
+            console.log(data)
+        },"json");
+    }
 </script>
 </html>

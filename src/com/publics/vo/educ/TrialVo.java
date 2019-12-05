@@ -11,8 +11,7 @@ import java.util.Date;
 @Table(name="trial")
 public class TrialVo {
     @Id
-    @GeneratedValue(strategy= GenerationType.TABLE,generator="tableGenerator")
-    @TableGenerator(name="tableGenerator",initialValue=1000,allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int trialId;//主键，标识列，自动生成
     private Date date;//日期
     private String time;//时间(星期一---星期日)

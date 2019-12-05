@@ -8,9 +8,7 @@ public class RecipientVo {//接收人
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
-    @TableGenerator(name = "tableGenerator",initialValue =0, allocationSize = 1)
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int receiverId;//主键，标识列，自动生成
     private int noticeId;//关联管理通知公告
     private int receiver;//接收人

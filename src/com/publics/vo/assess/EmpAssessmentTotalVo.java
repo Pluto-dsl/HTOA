@@ -7,9 +7,7 @@ import javax.persistence.*;
 public class EmpAssessmentTotalVo {//员工考核总表
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE,generator="tableGenerator")
-    @TableGenerator(name = "tableGenerator",initialValue =0, allocationSize = 1)
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int empAssTotalId;//主键，标识列，自动生成
     private int empId;//关联员工表
     private int totalScores;//总得分

@@ -13,7 +13,6 @@ import java.sql.Date;
 public class StudentScoreVo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private int scoreId;//成绩主键id
     private int stuid;//学生表外键
     private int score;//学生成绩
