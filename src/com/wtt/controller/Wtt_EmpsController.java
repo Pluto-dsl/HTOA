@@ -92,7 +92,6 @@ public class Wtt_EmpsController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return "redirect:/emp/selectEmpPaper";
     }
 }
