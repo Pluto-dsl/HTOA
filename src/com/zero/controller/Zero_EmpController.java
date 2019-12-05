@@ -59,8 +59,8 @@ public class Zero_EmpController {
 
     @RequestMapping(value = "/updateEmp")//添加修改员工
     public String updateEmp(EmpVo empVo){
-        System.out.println("修改的员工:"+empVo);
-        empService.addEmp(empVo);
+        //System.out.println("修改的员工:"+empVo);
+        empService.update(empVo);
         return "redirect:toemp";
     }
     @RequestMapping(value = "/deleteEmp")//添加员工

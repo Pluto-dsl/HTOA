@@ -18,6 +18,7 @@
         <table style="height: 370px;width: 800px;margin-top: 10px" border="0">
             <tr style="height: 40px">
                 <input name="empId" type="hidden" value="${emp.empId}"/>
+                <input name="status" type="hidden" value="${emp.status}"/>
                 <td align="right">员工姓名:</td>
                 <td align="left"><input class="layui-input" lay-verify="required"  id="empName" name="empName" placeholder="请输入员工姓名"
                                         value="${emp.empName}" style="width:200px;"></td>
@@ -147,11 +148,11 @@
             <tr style="height: 40px">
                 <td align="right">入职日期:</td>
                 <td align="left">
-                    <input type="text" required class="layui-input" value="${emp.hireDay}" name="hireDay" id="joindate">
+                    <input type="text" required class="layui-input" value="${emp.fireDay}" name="fireDay" id="joindate"/>
                 </td>
                 <td align="right">登录密码:</td>
                 <td align="left">
-                    <input type="text" class="layui-input" disabled placeholder="默认密码为123456" style="width:200px;">
+                    <input type="text" class="layui-input" disabled placeholder="默认密码为123456" style="width:200px;"/>
                 </td>
             </tr>
 
