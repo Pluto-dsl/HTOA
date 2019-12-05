@@ -22,7 +22,9 @@ public class Zero_EmpController {
     EmpsService empService;
 
     @RequestMapping(value = "/toemp")//所有员工资料页
-    public String toemp() {//去员工资料页
+    public String toemp(Model model) {//去员工资料页
+        //查询所有部门
+        model.addAttribute("dep",empService.allDep());
         return "emp/emp";
     }
 
@@ -85,5 +87,11 @@ public class Zero_EmpController {
     public String resetPwd(@PathVariable("empId") int empId, Model model){
         empService.resetPwd(empId);
         return "true";
+    }
+    @RequestMapping(value = "/resetPwd/seek")
+    @ResponseBody
+    public String seek(int depId,String empName,String Phone,int status){
+
+        return "";
     }
 }

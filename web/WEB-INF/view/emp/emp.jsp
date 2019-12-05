@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: 82346
@@ -13,11 +14,29 @@
 </head>
 <body>
     <script type="text/html" id="top">
+        <form class="layui-form layui-form-pane"  accept-charset="UTF-8" οnsubmit="document.charset='UTF-8'"  action="<%=request.getContextPath()%>/zero/seek" method="post">
+            部门名称:
+            <select id="depId" name="depId" lay-verify="required" style="width:205px;">
+                <c:forEach var="d" items="${dep}">
+                    <option value="${d.depid}">${d.depName}</option>
+                </c:forEach>
+            </select>
+            员工姓名:
+            <input class="layui-input" name="empName" value="" style="width:200px;">
+            手机号码:
+            <input class="layui-input"  name="Phone" value="" style="width:200px;">
+            状态:
+            <select  name="status" lay-verify="required" style="width:205px;">
+                <option value="100">--未选择--</option>
+                <option value="1">启用</option>
+                <option value="0">禁用</option>
+            </select>
+        </form>
         <a class="layui-btn layui-btn-primary layui-btn-xs layui-icon-add-1" lay-event="detail" href="<%=request.getContextPath()%>/zero/toaddemp">新增</a>
     </script>
     <table id="demo" lay-filter="test"></table>
     <script type="text/html" id="shezhi">
-        <input type="checkbox" id="state" lay-skin="switch" lay-text="启用|禁用"/>
+        <input checked="true" type="checkbox" id="state" lay-skin="switch" lay-text="启用|禁用"/>
     </script>
     <script type="text/html" id="pwd">
         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">重置密码</a>
@@ -46,8 +65,8 @@
                 ,{field: 'Sex', title: '性别', width:80,sort: true}
                 ,{field: 'Phone', title: '手机号码', width: 150}
                 ,{field: 'Address', title: '家庭地址', width: 200}
-                ,{field: 'status', title: '状态', width: 80}
-                ,{field: 'stat', title: '设置状态', width: 100,toolbar:'#shezhi'}
+                //,{field: 'status', title: '状态', width: 80}
+                ,{field: 'status', title: '设置状态', width: 100,toolbar:'#shezhi'}
                 ,{field: 'reset', title: '初始密码',toolbar:'#pwd',width: 100}
                 ,{field: 'caozuo', title: '操作',toolbar:'#barDemo', width: 150}
             ]]
