@@ -1,10 +1,11 @@
 package com.zero.controller;
 
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.zero.service.EmpsService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -20,17 +21,19 @@ public class Zero_EmpController {
     @Resource
     EmpsService empService;
 
-    @RequestMapping(value = "/toemp")
+    @RequestMapping(value = "/toemp")//所有员工资料页
     public String toemp() {//去员工资料页
         return "emp/emp";
     }
 
-    @RequestMapping(value = "/toaddemp")
-    public String toaddemp() {//去新增员工页
+    @RequestMapping(value = "/toaddemp")//去员工修改页
+    public String toaddemp(Model model) {//去新增员工页
+        //查询所有部门
+        model.addAttribute("dep",empService.allDep());
         return "emp/addEmp";
     }
 
-    @RequestMapping(value = "/allemp")
+    @RequestMapping(value = "/allemp")//展示所有员工
     @ResponseBody
     public void allemp(HttpServletResponse response) throws IOException {
         Map map = new TreeMap();
@@ -45,12 +48,34 @@ public class Zero_EmpController {
         writer.close();
     }
 
-    @RequestMapping(value = "/addemp")
+    @RequestMapping(value = "/addemp")//添加修改员工
     public String addemp(EmpVo empVo){
-        empVo.setStatus(1);//设置启用状态
-        empVo.setPassword("123456");
-        empVo.setPostId(101);
-        empService.addEmp(empVo);
+        if(empVo.getEmpId() == 0){//添加
+            empVo.setStatus(1);//设置启用状态
+            empVo.setPassword("123456");
+            empVo.setPostId(101);
+            empService.addEmp(empVo);
+        }else {//修改
+
+        }
         return "redirect:toemp";
+    }
+    @RequestMapping(value = "/deleteEmp")//添加员工
+    @ResponseBody
+    public String delete(int empId){
+        EmpVo empVo = new EmpVo();
+        empVo.setEmpId(empId);
+        empService.deleteEmp(empVo);
+        return "true";
+    }
+
+    @RequestMapping(value = "/toupdate/{empId}")//修改员工
+    public String toupdate(@PathVariable("empId") int empId, Model model){
+        Map emp = empService.toemp(empId);//查询当前员工
+        System.out.println("emp"+emp);
+        //查询所有部门
+        model.addAttribute("dep",empService.allDep());
+        model.addAttribute("emp",emp);
+        return "emp/updateEmp";
     }
 }
