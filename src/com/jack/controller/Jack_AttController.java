@@ -3,6 +3,7 @@ package com.jack.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jack.service.AttService;
+import com.publics.vo.empModel.AttendanceVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,6 +27,18 @@ public class Jack_AttController {
         return "emp_xzq/AttendancePage";
     }
 
+    @RequestMapping("/test")
+    public String test(){
+        return "emp_xzq/xxx";
+    }
+
+    @RequestMapping("/Attadd")
+    public String Attadd(AttendanceVo att,String timeing){
+        System.out.println("进来了");
+        System.out.println(att.toString()+"--------------");
+        System.out.println(timeing);
+        return "emp_xzq/xxx";
+    }
     @RequestMapping("/Att")
     @ResponseBody
     public void Att(HttpServletResponse response, HttpServletRequest request) throws IOException {
