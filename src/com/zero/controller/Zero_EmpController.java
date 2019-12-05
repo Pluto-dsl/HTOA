@@ -1,7 +1,6 @@
 package com.zero.controller;
 
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.zero.service.EmpsService;
 import org.springframework.stereotype.Controller;
@@ -20,17 +19,17 @@ public class Zero_EmpController {
     @Resource
     EmpsService empService;
 
-    @RequestMapping(value = "/toemp")
+    @RequestMapping(value = "/toemp")//去员工资料页
     public String toemp() {//去员工资料页
         return "emp/emp";
     }
 
-    @RequestMapping(value = "/toaddemp")
+    @RequestMapping(value = "/toaddemp")//去员工修改页
     public String toaddemp() {//去新增员工页
         return "emp/addEmp";
     }
 
-    @RequestMapping(value = "/allemp")
+    @RequestMapping(value = "/allemp")//展示所有员工
     @ResponseBody
     public void allemp(HttpServletResponse response) throws IOException {
         Map map = new TreeMap();
@@ -45,12 +44,20 @@ public class Zero_EmpController {
         writer.close();
     }
 
-    @RequestMapping(value = "/addemp")
+    @RequestMapping(value = "/addemp")//添加员工
     public String addemp(EmpVo empVo){
         empVo.setStatus(1);//设置启用状态
         empVo.setPassword("123456");
         empVo.setPostId(101);
         empService.addEmp(empVo);
         return "redirect:toemp";
+    }
+    @RequestMapping(value = "/deleteEmp")//添加员工
+    @ResponseBody
+    public String delete(int empId){
+        EmpVo empVo = new EmpVo();
+        empVo.setEmpId(empId);
+        empService.deleteEmp(empVo);
+        return "true";
     }
 }

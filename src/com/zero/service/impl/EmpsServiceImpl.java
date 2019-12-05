@@ -19,5 +19,10 @@ public class EmpsServiceImpl extends BaseDao implements EmpsService {
         super.addObject(empVo);
     }
 
+    @Override
+    public void deleteEmp(EmpVo empVo) {
+        super.delObject(empVo);
+    }
+
 
 }

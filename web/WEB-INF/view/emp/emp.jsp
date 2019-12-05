@@ -35,11 +35,11 @@
             ,cols: [[ //表头
                 {field: 'empId', title: '编号', width:80, sort: true, fixed: 'left'}
                 ,{field: 'empName', title: '员工姓名', width:100}
-                ,{field: 'depName', title: '部门', width:100, sort: true}
+                ,{field: 'depName', title: '部门', width:100}
                 ,{field: 'postName', title: '职务', width:160}
-                ,{field: 'Sex', title: '性别', width:80}
-                ,{field: 'Phone', title: '手机号码', width: 150, sort: true}
-                ,{field: 'Address', title: '家庭地址', width: 200, sort: true}
+                ,{field: 'Sex', title: '性别', width:80,sort: true}
+                ,{field: 'Phone', title: '手机号码', width: 150}
+                ,{field: 'Address', title: '家庭地址', width: 200}
                 ,{field: 'status', title: '状态', width: 80,templet:'#state'}
                 ,{field: 'reset', title: '初始密码',toolbar:'#pwd',width: 100}
                 ,{field: 'caozuo', title: '操作',toolbar:'#barDemo', width: 200}/*
@@ -58,8 +58,35 @@
                 })
             }
         });
+        //监听工具条
+        table.on('tool(test)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
 
+            if(layEvent === 'detail'){ //添加
+                layer.msg('查看');
+            } else if(layEvent === 'del'){ //删除
+                layer.confirm('真的删除行么', function(index){
+                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                    layer.close(index);
+                    //向服务端发送删除指令
+                    $.post("<%=request.getContextPath()%>/zero/deleteEmp","empId:"+data.empId,function (d) {
+                    },"text")
+                });
+            } else if(layEvent === 'edit'){ //修改
+                //do something
+                console.log(data);
+                layer.msg('编辑');
+                //同步更新缓存对应的值
+                obj.update({
+                    username: '123'
+                    ,title: 'xxx'
+                });
+            }
+        });
     });
+
 
 </script>
 </html>
