@@ -16,7 +16,7 @@
     <form  class="layui-form layui-form-pane"  accept-charset="UTF-8" οnsubmit="document.charset='UTF-8'"  action="<%=request.getContextPath()%>/zero/addemp" method="post">
         <table style="height: 370px;width: 800px;margin-top: 10px" border="0">
             <tr style="height: 40px">
-
+                <input type="hidden" value=""/>
                 <td align="right">员工姓名:</td>
                 <td align="left"><input class="layui-input" lay-verify="required"  id="empName" name="empName" placeholder="请输入员工姓名"
                                         value="" style="width:200px;"></td>

@@ -32,7 +32,8 @@ public class EmpsServiceImpl extends BaseDao implements EmpsService {
 
     @Override
     public Map toemp(int empId) {
-        return (Map) super.listBySQL("SELECT e.empId,e.empName,d.depName,e.postName,e.Sex,e.Phone,e.Address,e.`status` FROM emp e left join dep d on e.depId = d.depid where e.empId = "+empId);
+        return (Map) super.listBySQL("SELECT e.*,d.depName FROM emp e left join dep d on e.depId = d.depid where e.empId = "+empId).get(0);
+
     }
 
 
