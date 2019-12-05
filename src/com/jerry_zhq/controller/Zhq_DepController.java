@@ -40,7 +40,7 @@ public class Zhq_DepController {
     }
 
     @RequestMapping("/tree")
-    @ResponseBody
+    @ResponseBody//部门管理，查询部门
     public void seldep(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String type =request.getParameter("type");
         System.out.println("获取到的type是:"+ type);
@@ -48,8 +48,7 @@ public class Zhq_DepController {
         PrintWriter out = response.getWriter();
 
         if("tree".equals(type)){
-            System.out.println("进来判断了");
-            JSONObject jsonObject = new JSONObject();//装部门
+            JSONObject jsonObject = new JSONObject();//总部门
             JSONArray depJsonArray1 = new JSONArray();//子部门
             JSONArray depJsonArray2 = new JSONArray();//子部门
             //部门
@@ -57,29 +56,26 @@ public class Zhq_DepController {
             System.out.println(depList);
 
             System.out.println("部门长度是"+depList.size());
-            /*Map map = new HashMap();
-            Map map2 = new HashMap();*/
-
             for (int i = 0; i < depList.size(); i++) {
                 DepVo dep = (DepVo) depList.get(i);
                 if(dep.getParentId() == 0){
-                    depJsonArray1.add(dep);
-                    jsonObject.put("title",depJsonArray1);
+                    jsonObject.put("title",dep.getDepName());
                 }else if(dep.getParentId() == 1){
-                    depJsonArray2.add(dep);
+                    Map map = new HashMap();
+                    map.put("title",dep.getDepName());
+                    depJsonArray2.add(map);
                 }
             }
-          /*  map.put("children",depJsonArray2);*/
             jsonObject.put("children",depJsonArray2);
-            depJsonArray1.add(depJsonArray2);
-
-
-
+            depJsonArray1.add(jsonObject);
 
             System.out.println(depJsonArray1.toJSONString());
             out.print(depJsonArray1.toJSONString());
-
         }
+    }
 
+    @RequestMapping("/selDepAll")
+    public String selDepAll(){
+        return "emp_zhq/depSel";
     }
 }
