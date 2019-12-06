@@ -50,7 +50,6 @@ public class BaseDao {
         SQLQuery sqlquery = session.createSQLQuery(sql);
         sqlquery.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);//把结果变形为 List<Map>
         List list = sqlquery.list();
-        System.out.println("list:"+list);
         session.close();
         return list;
     }
@@ -90,6 +89,18 @@ public class BaseDao {
     }
 
     /**
+     * HQL查询总行数
+     */
+    //select count(*) from newemp
+    public int getCountByHql(String hql) {
+        Session session = getSession();
+        Query query = session.createQuery(hql);
+        int i = Integer.parseInt(query.uniqueResult()+"");
+        session.close();
+        return i;
+    }
+
+    /**
      * 保存对象
      * @param obj
      */
@@ -110,6 +121,7 @@ public class BaseDao {
     public Object getObject(Class clazz, Integer id) {
         Session session = getSession();
         Object obj=  session.get(clazz, id);
+        System.out.println("根据id获取对象："+obj);
         session.close();
         return obj;
     }

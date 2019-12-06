@@ -23,14 +23,20 @@ public class Pluto_LeaveController {
 
     @RequestMapping("/toleave")
     public String toLeave(){
-
-
         return "emp_pluto/leave";
+    }
+
+    @RequestMapping("/addLeave")
+    @ResponseBody
+    public void addLeave(){
+
+
     }
 
     @RequestMapping("/returnData")
     @ResponseBody
     public void responseData(HttpServletResponse response){
+        response.setContentType("text/html;charset=utf-8");
         List<Map> list = service.getLeaveList("select * from holiday");
         JSONObject json = new JSONObject();
         json.put("code",0);
@@ -47,6 +53,4 @@ public class Pluto_LeaveController {
             e.printStackTrace();
         }
     }
-
-
 }

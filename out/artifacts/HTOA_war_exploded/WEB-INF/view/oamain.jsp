@@ -67,12 +67,10 @@
 
 
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/empLeave/leave"
+                               data-url="${pageContext.request.contextPath}/empLeave/toleave"
                                data-id="员工请假" data-title="员工请假">员工请假</a></dd>
 
-                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/jack/toAtt"
-                               data-id="考勤管理" data-title="考勤管理">考勤管理</a></dd>
+                        <dd><a href="javascript:void(0);">考勤管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -128,7 +126,7 @@
                     <a>系统报表</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);">日常考核</a></dd>
-                        <dd><a href="javascript:void(0);">请假管理</a></dd>
+                        <dd><a href="javascript:void(0);">员工请假</a></dd>
                         <dd><a href="javascript:void(0);">未打卡说明</a></dd>
                         <dd><a href="javascript:void(0);">宿舍统计报表</a></dd>
                         <dd><a href="javascript:void(0);">学生请假</a></dd>
@@ -155,7 +153,7 @@
         <div style="padding:5px;width: 100%;">
             <div class="layui-tab layui-tab-brief" lay-filter="demo" lay-allowClose="true">
                 <ul class="layui-tab-title">
-                    <li style="" class="first-tab" lay-id="首页">首页</li>
+                    <li style="" class="first-tab" lay-id="首页"  >首页</li>
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
@@ -231,8 +229,20 @@
             //最后不管是否新增tab，最后都转到要打开的选项页面上
             active.tabChange(dataid.attr("data-id"));
         });
-
     });
+
+    <!--高度自适应-->
+        function reinitIframe(){
+            var iframe = document.getElementById("test");
+            try{
+                var bHeight = iframe.contentWindow.document.body.scrollHeight;
+                var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+                var height = Math.max(bHeight, dHeight);
+                iframe.height = height;
+            }catch (ex){}
+        }
+    <!--每200毫秒加载一次-->
+    window.setInterval("reinitIframe()",200);
 </script>
 </body>
 </html>
