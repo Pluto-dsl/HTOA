@@ -50,5 +50,10 @@ public class EmpsServiceImpl extends BaseDao implements EmpsService {
         return super.listBySQL("SELECT e.*,d.depName FROM emp e left join dep d on e.depId = d.depid "+sql);
     }
 
+    @Override
+    public void status(int state, int empId) {
+        super.executeSQL("update emp set status = "+state+" where empId = "+empId);
+    }
+
 
 }
