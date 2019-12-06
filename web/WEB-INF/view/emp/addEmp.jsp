@@ -14,7 +14,7 @@
 </head>
 <body>
 <center>
-    <form  class="layui-form layui-form-pane"  accept-charset="UTF-8" οnsubmit="document.charset='UTF-8'"  action="<%=request.getContextPath()%>/zero/addemp" method="post">
+    <form  class="layui-form layui-form-pane"  accept-charset="UTF-8" οnsubmit="document.charset='UTF-8'"  action="<%=request.getContextPath()%>/zeroEmp/addemp" method="post">
         <table style="height: 370px;width: 800px;margin-top: 10px" border="0">
             <tr style="height: 40px">
                 <td align="right">员工姓名:</td>
@@ -189,7 +189,7 @@
         });
     });
     function exit() {//返回员工资料页
-
+        window.location.href="<%=request.getContextPath()%>/zeroEmp/toemp";
     }
 </script>
 </html>

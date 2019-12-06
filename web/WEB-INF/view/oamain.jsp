@@ -165,7 +165,7 @@
         <div style="width: 100%;">
             <div class="layui-tab layui-tab-brief" lay-filter="demo" lay-allowClose="true">
                 <ul class="layui-tab-title">
-                    <li style="" class="first-tab" lay-id="首页">首页</li>
+                    <li style="" class="first-tab" lay-id="首页"  >首页</li>
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
@@ -194,7 +194,7 @@
                 //关于tabAdd的方法所传入的参数可看layui的开发文档中基础方法部分
                 element.tabAdd('demo', {
                     title: name,
-                    content: '<iframe data-frameid="'+id+'" scrolling="no" frameborder="0" src="'+url+'" style="width:100%;height:100%;"></iframe>',
+                    content: '<iframe data-frameid="'+id+'" scrolling="no" frameborder="0" src="'+url+'" style="width:100%;height: 100%" id="test"></iframe>',
                     id: id //规定好的id
                 });
                 element.render('tab');
@@ -241,8 +241,20 @@
             //最后不管是否新增tab，最后都转到要打开的选项页面上
             active.tabChange(dataid.attr("data-id"));
         });
-
     });
+
+    <!--高度自适应-->
+        function reinitIframe(){
+            var iframe = document.getElementById("test");
+            try{
+                var bHeight = iframe.contentWindow.document.body.scrollHeight;
+                var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+                var height = Math.max(bHeight, dHeight);
+                iframe.height = height;
+            }catch (ex){}
+        }
+    <!--每200毫秒加载一次-->
+    window.setInterval("reinitIframe()",200);
 </script>
 </body>
 </html>
