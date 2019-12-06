@@ -22,6 +22,12 @@
         .layui-layout-admin .layui-logo{
             font-size: 30px;
         }
+        a{
+            cursor:pointer;
+        }
+        .layui-tab-content {
+            padding: 0px;
+        }
 
     </style>
 </head>
@@ -31,9 +37,8 @@
         <div class="layui-logo">HTOA</div>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
-                <a href="javascript:;">
-                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    贤心
+                <a href="javascript:void(0);">
+                    未登入
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">切换账号</a></dd>
@@ -50,8 +55,11 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                 <li class="layui-nav-item">
-                    <a>员工管理</a>
+                    <a href="#">员工管理</a>
                     <dl class="layui-nav-child">
+                        <%-- 例子  可修改 照着写就行了 --%>
+                        <dd><a href="javascript:void(0);">部门管理</a></dd>
+                        <dd><a href="javascript:void(0);" >员工资料</a></dd>
                         <dd>
                             <%-- 例子  可修改 照着写就行了 --%>
                             <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
@@ -66,10 +74,10 @@
                                data-id="我的周报" data-title="我的周报" >我的周报</a></dd>
 
                         <dd><a href="javascript:void(0);">周报管理</a></dd>
+                        <dd><a href="javascript:void(0);">我的周报</a></dd>
                         <dd><a href="javascript:void(0);">周报审阅</a></dd>
                         <dd><a href="javascript:void(0);">谈心记录</a></dd>
 
-                        <dd><a href="javascript:void(0);">请假管理</a></dd>
 
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/empLeave/toleave"

@@ -26,6 +26,13 @@ public class Pluto_LeaveController {
         return "emp_pluto/leave";
     }
 
+    @RequestMapping("/addLeave")
+    @ResponseBody
+    public void addLeave(){
+
+
+    }
+
     @RequestMapping("/returnData")
     @ResponseBody
     public void responseData(HttpServletResponse response){
