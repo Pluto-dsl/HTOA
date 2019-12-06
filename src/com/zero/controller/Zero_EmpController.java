@@ -120,7 +120,17 @@ public class Zero_EmpController {
     }
     @RequestMapping(value = "/status")
     @ResponseBody
-    public void status(int state,int empId){
+    public void status(int empId){
+        //先查询当前用户的状态
+        int state = 0;
+        state = empService.statue(empId);
+        //state == 1?0:1;
+        if(state == 1){
+            state = 0;
+        }else if(state == 0){
+            state = 1;
+        }
+        //修改状态
         empService.status(state,empId);
     }
 }

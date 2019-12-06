@@ -157,13 +157,8 @@
                 });*/
                 window.location.href="<%=request.getContextPath()%>/zeroEmp/toupdate/"+data.empId;
             } else if(layEvent === 'switch'){//设置状态
-                //获取当前是禁用还是启用 0或1
-                var state = alert(data.status);
-                if (state == 1){
-                    state =0;
-                }else if(state == 0){state=1}
-                layer.close(index);//更新表格
-                $.post("<%=request.getContextPath()%>/zeroEmp/status",{state:state,empId:data.empId},function (d) {
+                //去数据库里修改状态
+                $.post("<%=request.getContextPath()%>/zeroEmp/status",{empId:data.empId},function (d) {
                 },"text")
             }
         });
