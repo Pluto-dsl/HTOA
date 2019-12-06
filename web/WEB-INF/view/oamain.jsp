@@ -10,7 +10,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>OA-HT系统</title>
+    <title>HT-OA</title>
     <jsp:include page="include.jsp" />
     <style>
         .first-tab .layui-tab-close{
