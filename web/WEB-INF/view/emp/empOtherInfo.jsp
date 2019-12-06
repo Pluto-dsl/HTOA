@@ -92,12 +92,13 @@
             ,height: 500
             ,url: '<%=request.getContextPath()%>/zeroEmpInfo/familyInfo?empId=${empId}' //数据接口
             ,cols: [[ //表头
-                {field: 'collegeName', title: '联系人名称', width:150}
+                {field: 'contactName', title: '联系人名称', width:150}
                 ,{field: 'relationship', title: '与员工关系', width:100}
-                ,{field: 'Phone', title: '联系电话', width:100}
+                ,{field: 'Phone', title: '联系电话', width:120}
                 ,{field: 'Remark', title: '说明', width:200}
             ]]
         })
+        //时间处理
         //员工考核
 
         //证件上传

@@ -62,7 +62,8 @@ public class Zero_EmpOtherInfo {
         map.put("code",0);
         map.put("msg","");
         map.put("count",1);
-        map.put("data",service.education(empId));
+        map.put("data",service.familyInfo(empId));
+        System.out.println("联系人"+service.familyInfo(empId));
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter writer = response.getWriter();
         writer.print(JSONArray.toJSONString(map));
