@@ -100,10 +100,10 @@ public class Zero_EmpController {
             tiaojian +=" and e.empName = "+empName;
         }
         if(!"".equals(Phone)){
-            tiaojian +=" and e.Phone like ‘%"+Phone+"%'";
+            tiaojian +=" and e.Phone like '%"+Phone+"%'";
         }
         if(status!=100){
-            tiaojian += "and e.status = "+status;
+            tiaojian += " and e.status = "+status;
         }
         Map map = new TreeMap();
         map.put("code",0);
