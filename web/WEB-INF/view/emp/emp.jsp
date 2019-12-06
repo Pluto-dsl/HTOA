@@ -63,7 +63,6 @@
                 </div>
             </label>
     </script>
-    <table id="demo" lay-filter="test"></table>
     <script type="text/html" id="shezhi">
         {{#  if(d.status==1){ }}
         <a lay-event="switch">
@@ -79,10 +78,11 @@
         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">重置密码</a>
     </script>
     <script type="text/html" id="barDemo">
-        <%--<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>--%>
+        <a class="layui-btn layui-btn-xs" lay-event="other">其他信息</a>
         <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script>
+    <table id="demo" lay-filter="test"></table>
 </body>
 <script>
     var table;
@@ -110,7 +110,7 @@
                 //,{field: 'status', title: '状态', width: 80}
                 ,{field: 'status', title: '设置状态', width: 100,toolbar:'#shezhi'}
                 ,{field: 'reset', title: '初始密码',toolbar:'#pwd',width: 100}
-                ,{field: 'caozuo', title: '操作',toolbar:'#barDemo', width: 150}
+                ,{field: 'caozuo', title: '操作',toolbar:'#barDemo', width: 200}
             ]]
             ,page: {limit:10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
             ,done: function(res, page, count){
@@ -160,6 +160,8 @@
                 //去数据库里修改状态
                 $.post("<%=request.getContextPath()%>/zeroEmp/status",{empId:data.empId},function (d) {
                 },"text")
+            } else if(layEvent === 'other'){//当前员工的其他信息
+                window.location.href="<%=request.getContextPath()%>/zeroEmpInfo/topage?empId="+data.empId;
             }
         });
     });
