@@ -45,5 +45,10 @@ public class EmpsServiceImpl extends BaseDao implements EmpsService {
         super.executeSQL("update emp set password = '123456' where empId = "+empId);
     }
 
+    @Override
+    public List<Map> seekEmp(String sql) {
+        return super.listBySQL("SELECT e.*,d.depName FROM emp e left join dep d on e.depId = d.depid "+sql);
+    }
+
 
 }

@@ -31,12 +31,14 @@
 </head>
 <body>
     <script type="text/html" id="top">
+        <%--移到最右边--%>
         <a class="layui-btn layui-btn-primary layui-btn-xs layui-icon-add-1" lay-event="detail" href="<%=request.getContextPath()%>/zero/toaddemp">新增</a>
-        <form class="layui-form"  accept-charset="UTF-8" οnsubmit="document.charset='UTF-8'"  action="<%=request.getContextPath()%>/zero/seek" method="post">
+        <%--<form class="layui-form"  accept-charset="UTF-8" οnsubmit="document.charset='UTF-8'"  action="<%=request.getContextPath()%>/zero/seek" method="post">--%>
             <label  class="layui-form-item">
                 <label class="layui-form-label" style="width: 90px">部门名称:</label>
                 <div class="layui-input-inline">
                     <select id="depId" name="depId" lay-verify="required">
+                        <option value="0">--未选择--</option>
                         <c:forEach var="d" items="${dep}">
                             <option value="${d.depid}">${d.depName}</option>
                         </c:forEach>
@@ -44,25 +46,25 @@
                 </div>
                 <label class="layui-form-label" style="width: 90px">员工姓名:</label>
                 <div class="layui-input-inline">
-                    <input class="layui-input" name="empName" value="">
+                    <input class="layui-input" id="empName" name="empName" value=""/>
                 </div>
                 <label class="layui-form-label" style="width: 90px">手机号码:</label>
                 <div class="layui-input-inline">
-                    <input class="layui-input"  name="Phone" value="">
+                    <input class="layui-input"  name="Phone" id="Phone" value=""/>
                 </div>
                 <label class="layui-form-label">状态:</label>
                 <div class="layui-input-inline">
-                    <select  name="status" lay-verify="required">
+                    <select id="status"  name="status" lay-verify="required">
                         <option value="100">--未选择--</option>
                         <option value="1">启用</option>
                         <option value="0">禁用</option>
                     </select>
                 </div>
                 <div class="layui-input-inline">
-                    <button type="submit" class="layui-btn" >搜索</button>
+                    <button id="seek" type="submit" class="layui-btn" onclick="seek()">搜索</button>
                 </div>
             </label>
-        </form>
+        <%--</form>--%>
     </script>
     <table id="demo" lay-filter="test"></table>
     <script type="text/html" id="shezhi">
@@ -78,13 +80,18 @@
     </script>
 </body>
 <script>
+    var table;
     layui.use('table', function(){
-        var table = layui.table;
+        table = layui.table;
         //第一个实例
         table.render({
             elem: '#demo'
             ,height: 312
             ,url: '<%=request.getContextPath()%>/zero/allemp' //数据接口
+            /*,where:{//设定异步数据接口的额外参数
+
+            }*/
+            ,id:"clientId"
             ,toolbar: '#top' //开启头部工具栏，并为其绑定左侧模板
             ,page: true //开启分页
             ,cols: [[ //表头
@@ -146,10 +153,40 @@
                     ,title: 'xxx'
                 });*/
                 window.location.href="<%=request.getContextPath()%>/zero/toupdate/"+data.empId;
+            } else if(layEvent === ''){//搜索
+
             }
         });
     });
-
-
+    //多条搜索
+    function seek() {
+        console.log("进入!");
+        //部门id
+        var depId = $("#depId").val();
+        //员工姓名
+        var empName = $("#empName").val();
+        //手机号码
+        var Phone = $("#Phone").val();
+        //状态
+        var status = $("#status").val();
+        //layer.alert("部门id"+empId+"员工姓名"+empName+"手机号"+Phone+"状态"+status);
+        table.reload('clientId',{
+            url:'<%=request.getContextPath()%>/zero/seek',
+            where:{
+                depId:depId,
+                empName:empName,
+                Phone:Phone,
+                status:status
+            }
+        })
+        //部门id
+        $("#depId").val(depId);
+        //员工姓名
+        $("#empName").val(empName);
+        //手机号码
+        $("#Phone").val(Phone);
+        //状态
+        $("#status").val(status);
+    }
 </script>
 </html>
