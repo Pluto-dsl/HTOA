@@ -10,10 +10,7 @@ import java.util.Date;
 public class EquipmentRepairVo {//维修设备申请
 
     @Id
-    @GeneratedValue(strategy= GenerationType.TABLE,generator="tableGenerator")
-    @TableGenerator(name="tableGenerator",initialValue=0,allocationSize=1)
-
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int equipmentId;//主键，标识列，自动生成
     private String  equipmentType;//维修设备名称
     private int  status;//维修状态0未完成,1已完成

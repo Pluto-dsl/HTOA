@@ -1,8 +1,8 @@
 package com.jack.controller;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jack.service.AttService;
+import com.publics.vo.empModel.AttendanceVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -10,9 +10,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("/jack")
@@ -21,19 +27,90 @@ public class Jack_AttController {
     @Resource
     private AttService service;
 
+    @RequestMapping("/xxx")
+    public String xxx(){
+        return "emp_xzq/xxx";
+    }
+
     @RequestMapping("/toAtt")
-    public String toTest1(){
+    public String toTest1(HttpSession session){
+        session.setAttribute("user","赖国荣");
+        return "emp_xzq/AttendancePage";
+    }
+
+    @RequestMapping("/AttUpdata")
+    public String AttUpdata(String eid,String state,String specification){
+        System.out.println(state);
+        System.out.println(eid);
+        System.out.println(specification);
+        AttendanceVo avo = new AttendanceVo();
+        avo.setExamineTime(new Date());
+        avo.setAttId(Integer.parseInt(eid));
+        avo.setState(Integer.parseInt(state));
+        avo.setExamineExplain(specification);
+        service.updataAtt(avo);
+
+        return "emp_xzq/AttendancePage";
+    }
+
+    //查询要审批的数据
+    @RequestMapping("/Approver")
+    public void Approver(HttpSession session,HttpServletResponse response) throws IOException {
+        String user = (String) session.getAttribute("user");
+        List list = service.selApprover("裴钱");
+        response.setContentType("text/json;charset=utf-8");
+        PrintWriter out = response.getWriter();
+        JSONObject json = new JSONObject();
+        json.put("msg","提示");
+        json.put("code","0");
+        json.put("data",list);
+        System.out.println(json.toJSONString());
+        out.print(json);
+        out.close();
+
+    }
+
+    //添加未打卡申请
+    @RequestMapping("/Attadd")
+    public String Attadd(HttpSession session,String punckClockTime,String cause,String timeing) throws ParseException {
+        System.out.println("进来了");
+
+        String user = (String) session.getAttribute("user");
+        String ptime = punckClockTime +" "+ timeing;
+
+        System.out.println(ptime);
+        //日期转换
+        DateFormat format  = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date date = null;
+        date = format.parse(ptime);
+
+        System.out.println(date+"--------");
+        AttendanceVo attVo = new AttendanceVo();
+        attVo.setEmpName(user);
+
+        String Auditor =  service.selDepChairman(user); //查询审核人
+        System.out.println(Auditor+"---------------");
+        attVo.setAuditor(Auditor);
+        attVo.setCause(cause);
+        attVo.setPunckClockTime(date);
+        attVo.setState(2); //待审核
+        attVo.setExamineTime(null);
+
+        service.insertAtt(attVo); //添加未打卡说明
+
+        System.out.println(attVo.toString());
+
         return "emp_xzq/AttendancePage";
     }
 
     @RequestMapping("/Att")
-    @ResponseBody
-    public void Att(HttpServletResponse response, HttpServletRequest request) throws IOException {
+    public void Att(HttpSession session,HttpServletResponse response, HttpServletRequest request) throws IOException {
         int currPage = Integer.parseInt(request.getParameter("page"));
         int pageSize = Integer.parseInt(request.getParameter("limit"));
-        List list = service.selAtt(currPage,pageSize);
-        int pageCount = service.selAttCount();
-
+        String user = (String) session.getAttribute("user");//获取当前登入的名称
+        response.setContentType("text/html;charset=utf-8");
+        List list = service.selAtt(user,currPage,pageSize);
+        int pageCount = service.selAttCount(user);
         response.setContentType("text/json;charset=utf-8");
         PrintWriter out = response.getWriter();
         JSONObject json = new JSONObject();
@@ -43,6 +120,7 @@ public class Jack_AttController {
         json.put("count",pageCount);
         System.out.println(json.toJSONString());
         out.print(json);
+        out.close();
 
     }
 

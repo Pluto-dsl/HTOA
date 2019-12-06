@@ -1,7 +1,11 @@
 package com.jerry_zhq.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.jerry_zhq.service.Zhq_DepService;
+import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.sys.DepVo;
 import javafx.print.Printer;
 import org.springframework.stereotype.Controller;
@@ -14,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +40,7 @@ public class Zhq_DepController {
     }
 
     @RequestMapping("/tree")
-    @ResponseBody
+    @ResponseBody//部门管理，查询部门
     public void seldep(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String type =request.getParameter("type");
         System.out.println("获取到的type是:"+ type);
@@ -42,25 +48,34 @@ public class Zhq_DepController {
         PrintWriter out = response.getWriter();
 
         if("tree".equals(type)){
-            System.out.println("进来判断了");
-            JSONArray depJsonArray= new JSONArray();//装部门
+            JSONObject jsonObject = new JSONObject();//总部门
+            JSONArray depJsonArray1 = new JSONArray();//子部门
+            JSONArray depJsonArray2 = new JSONArray();//子部门
             //部门
             List depList = zhqDepService.selDep();
-            //员工
-            List empList = zhqDepService.selEmp();
+            System.out.println(depList);
 
+            System.out.println("部门长度是"+depList.size());
             for (int i = 0; i < depList.size(); i++) {
                 DepVo dep = (DepVo) depList.get(i);
-                JSONArray empJsonArray = new JSONArray();//装员工
-                for (int j = 0; j <empList.size() ; j++) {
-
+                if(dep.getParentId() == 0){
+                    jsonObject.put("title",dep.getDepName());
+                }else if(dep.getParentId() == 1){
+                    Map map = new HashMap();
+                    map.put("title",dep.getDepName());
+                    depJsonArray2.add(map);
                 }
-                depJsonArray.add(empJsonArray);
             }
+            jsonObject.put("children",depJsonArray2);
+            depJsonArray1.add(jsonObject);
 
-            System.out.println(depJsonArray.toJSONString());
-            out.print(depJsonArray.toJSONString());
+            System.out.println(depJsonArray1.toJSONString());
+            out.print(depJsonArray1.toJSONString());
         }
+    }
 
+    @RequestMapping("/selDepAll")
+    public String selDepAll(){
+        return "emp_zhq/depSel";
     }
 }

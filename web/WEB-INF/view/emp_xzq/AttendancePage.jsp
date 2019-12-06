@@ -12,9 +12,30 @@
     <jsp:include page="../include.jsp" />
 </head>
 <body>
+<%--未打卡弹出层--%>
+<div id="windows1" style="margin-left: 5%;display:none;">
+    <form id="Wfrom" class="layui-form" action="${pageContext.request.contextPath}/jack/Attadd" method="post" >
+        <br><br>
+        未打卡日期：<div style="margin-right:10px" class="layui-inline">
+        <input type="text" name="punckClockTime" class="layui-input" id="clockDate">
+    </div>
+        时间点:
+        <div class="layui-input-inline">
+            <select name="timeing" lay-filter="type">
+                <option value="8:00">8:00</option>
+                <option value="14:00">14:00</option>
+                <option value="17:00">17:00</option>
+                <option value="21:00">21:00</option>
+            </select>
+        </div>
+        <br><br>说明原因:<input type="text" name="cause" required lay-verify="required" placeholder="请输入说明原因" autocomplete="off" class="layui-input">
+        <br><br><br><button style="margin-left: 25%"  align="center" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
+    </form>
+</div>
 
 <table class="layui-hide" id="test" lay-filter="test"></table>
 
+<%--表格头部按钮--%>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
         <button lay-event="punching" class="layui-btn layui-btn-sm" ><i class="layui-icon layui-icon-add-1" style="font-size: 30px;"></i>未打卡说明</button>
@@ -22,13 +43,20 @@
     </div>
 </script>
 
-<script src="//res.layui.com/layui/dist/layui.js" charset="utf-8"></script>
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
-
 <script>
-    layui.use('table', function(){
+    layui.use([ 'element', 'table', 'layer', 'form' ,'laydate'],function() {
+        var element = layui.element;
+        var layer = layui.layer;
         var table = layui.table;
+        var form = layui.form;
+        var laydate = layui.laydate;
 
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#clockDate' //指定元素
+        });
+
+        //考勤列表
         table.render({
             elem: '#test'
             ,url:'${pageContext.request.contextPath}/jack/Att'
@@ -36,15 +64,23 @@
             ,defaultToolbar:{}//自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
             ,title: '用户数据表'
             ,cols: [[
-                {type: 'checkbox', fixed: 'left'},
                 {field:'attId', title:'编号', width:80, fixed: 'left', unresize:true,sort: true}
                 ,{field:'empName', title:'员工姓名', width:120}
-                ,{field:'punckClockTime',templet:'<div>{{ layui.util.toDateString(d.punckClockTime,"yyyy-MM-dd HH:mm:ss")}}</div>', title:'打卡时间', width:200, }
+                //日期转换
+                ,{field:'punckClockTime',templet:'<div>{{layui.util.toDateString(d.punckClockTime,"yyyy-MM-dd HH:mm:ss")}}</div>', title:'打卡时间', width:200, }
                 ,{field:'cause', title:'原因说明', width:120}
                 ,{field:'auditor', title:'审核人', width:100}
-                ,{field:'examineTime',templet:'<div>{{ layui.util.toDateString(d.examineTime,"yyyy-MM-dd HH:mm:ss") }}</div>', title:'审核时间' ,width:200}
+                ,{field:'examineTime',templet:'', title:'审核时间' ,width:200}
                 ,{field:'examineExplain', title:'审核说明', width:120}
-                ,{field:'state', title:'状态', width:120}
+                ,{field:'state',templet:function (d) {
+                        if (d.state === 1) {
+                            return '通过审核'
+                        }else if(d.state === 2) {
+                            return '待审核'
+                        }else if(d.state === 3){
+                            return '申请失败'
+                        }
+                    },title:'状态', width:120}
             ]]
             ,page: true
             ,limits: [5, 15, 20, 30, 40, 50]
@@ -58,18 +94,40 @@
 
         });
 
-        //头部工具按钮监听
+        //未打卡说明、我的审核
         table.on('toolbar(test)', function(obj){
             var data = obj.data;
             if(obj.event == 'punching'){
                 layer.open({
-                    type: 1,
-                    content: '传入任意的文本或html' //这里content是一个普通的String
+                type: 1,
+                title:'未打卡说明',
+                skin: 'layui-layer-demo', //样式类名
+                closeBtn: 1, //不显示关闭按钮
+                area: ['700px', '450px'],
+                fixed: false, //不固定
+                maxmin: true,
+                shadeClose: false, //开启遮罩关闭
+                //content: ['${pageContext.request.contextPath}/jack/test','no']
+                content: $('#windows1'),
+                cancel: function(index, layero){
+                        $("#Wfrom")[0].reset();
+                        layui.form.render();
+                        layer.close(index);
+                        return false;
+                    }
                 });
-            }else if(obj.event == 'punching'){
+            }else if(obj.event == 'MyApproval'){
                 layer.open({
                     type: 1,
-                    content: '传入任意的文本或html' //这里content是一个普通的String
+                    title:'我的审核',
+                    skin: 'layui-layer-demo', //样式类名
+                    closeBtn: 1, //不显示关闭按钮
+                    area: ['800px', '450px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    shadeClose: true, //开启遮罩关闭
+                    content: ['${pageContext.request.contextPath}/jack/xxx','no']
+                    // content: $('#windows2')
                 });
             }
         });

@@ -14,13 +14,12 @@
     <jsp:include page="../include.jsp"/>
 </head>
 <body>
-    <ul id="tt">
-    </ul>
+    <div id="tt"></div>
 </body>
 <script>
     var param = {
 
-    }
+    };
     var backdata = function(d){
         layui.use('tree', function(){
             var tree = layui.tree;
@@ -30,7 +29,7 @@
                 data:d
             });
         });
-    }
+    };
     $.post('${pageContext.request.contextPath}/tree?type=tree',param,backdata,"json")
 
 </script>
