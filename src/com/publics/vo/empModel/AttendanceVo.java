@@ -16,7 +16,7 @@ public class AttendanceVo { //考勤管理
     private String auditor; //审核人
     private Date examineTime; //审核时间
     private String examineExplain; //审核说明
-    private String state; //状态
+    private int state; //状态 1通过 2待审 3审核通过
 
     @Override
     public String toString() {
@@ -88,11 +88,11 @@ public class AttendanceVo { //考勤管理
         this.examineExplain = examineExplain;
     }
 
-    public String getState() {
+    public int getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(int state) {
         this.state = state;
     }
 }

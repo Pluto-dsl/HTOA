@@ -22,6 +22,12 @@
         .layui-layout-admin .layui-logo{
             font-size: 30px;
         }
+        a{
+            cursor:pointer;
+        }
+        .layui-tab-content {
+            padding: 0px;
+        }
 
     </style>
 </head>
@@ -31,9 +37,8 @@
         <div class="layui-logo">HTOA</div>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
-                <a href="javascript:;">
-                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    贤心
+                <a href="javascript:void(0);">
+                    未登入
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">切换账号</a></dd>
@@ -50,7 +55,7 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                 <li class="layui-nav-item">
-                    <a>员工管理</a>
+                    <a href="#">员工管理</a>
                     <dl class="layui-nav-child">
                         <dd>
                             <%-- 例子  可修改 照着写就行了 --%>
@@ -75,7 +80,9 @@
                                data-url="${pageContext.request.contextPath}/empLeave/toleave"
                                data-id="员工请假" data-title="员工请假">员工请假</a></dd>
 
-                        <dd><a href="javascript:void(0);">考勤管理</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/jack/toAtt"
+                               data-id="考勤管理" data-title="考勤管理">考勤管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -131,7 +138,7 @@
                     <a>系统报表</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);">日常考核</a></dd>
-                        <dd><a href="javascript:void(0);">员工请假</a></dd>
+                        <dd><a href="javascript:void(0);">请假管理</a></dd>
                         <dd><a href="javascript:void(0);">未打卡说明</a></dd>
                         <dd><a href="javascript:void(0);">宿舍统计报表</a></dd>
                         <dd><a href="javascript:void(0);">学生请假</a></dd>
@@ -153,9 +160,9 @@
             </ul>
         </div>
     </div>
-    <div class="layui-body">
+    <div class="layui-body" style="height:90%">
         <!-- 内容主体区域 -->
-        <div style="padding:5px;width: 100%;">
+        <div style="width: 100%;">
             <div class="layui-tab layui-tab-brief" lay-filter="demo" lay-allowClose="true">
                 <ul class="layui-tab-title">
                     <li style="" class="first-tab" lay-id="首页"  >首页</li>
