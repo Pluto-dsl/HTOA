@@ -10,6 +10,6 @@ public interface AttService {
     String selDepChairman(String AName); //查询部门负责人
     void insertAtt(AttendanceVo attVo); //插入未打卡说明
     void updataAtt(AttendanceVo attendanceVo); //审批修改
-    List selApprover(String Aname);
+    List selApprover(String Aname,int state);
 
 }

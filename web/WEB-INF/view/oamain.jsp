@@ -10,7 +10,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>HT-OA</title>
+    <title>OA-HT系统</title>
     <jsp:include page="include.jsp" />
     <style>
         .first-tab .layui-tab-close{
@@ -22,6 +22,12 @@
         .layui-layout-admin .layui-logo{
             font-size: 30px;
         }
+        a{
+            cursor:pointer;
+        }
+        .layui-tab-content {
+            padding: 0px;
+        }
 
     </style>
 </head>
@@ -31,9 +37,8 @@
         <div class="layui-logo">HTOA</div>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
-                <a href="javascript:;">
-                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    贤心
+                <a href="javascript:void(0);">
+                    未登入
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">切换账号</a></dd>
@@ -50,7 +55,7 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                 <li class="layui-nav-item">
-                    <a>员工管理</a>
+                    <a href="#">员工管理</a>
                     <dl class="layui-nav-child">
                         <dd>
                             <%-- 例子  可修改 照着写就行了 --%>
@@ -75,7 +80,9 @@
                                data-url="${pageContext.request.contextPath}/empLeave/toleave"
                                data-id="员工请假" data-title="员工请假">员工请假</a></dd>
 
-                        <dd><a href="javascript:void(0);">考勤管理</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/jack/toAtt"
+                               data-id="考勤管理" data-title="考勤管理">考勤管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -131,7 +138,7 @@
                     <a>系统报表</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);">日常考核</a></dd>
-                        <dd><a href="javascript:void(0);">员工请假</a></dd>
+                        <dd><a href="javascript:void(0);">请假管理</a></dd>
                         <dd><a href="javascript:void(0);">未打卡说明</a></dd>
                         <dd><a href="javascript:void(0);">宿舍统计报表</a></dd>
                         <dd><a href="javascript:void(0);">学生请假</a></dd>
@@ -153,12 +160,12 @@
             </ul>
         </div>
     </div>
-    <div class="layui-body">
+    <div class="layui-body" style="height:90%">
         <!-- 内容主体区域 -->
-        <div style="padding:5px;width: 100%;">
+        <div style="width: 100%;">
             <div class="layui-tab layui-tab-brief" lay-filter="demo" lay-allowClose="true">
                 <ul class="layui-tab-title">
-                    <li style="" class="first-tab" lay-id="首页"  >首页</li>
+                    <li style="" class="first-tab" lay-id="首页">首页</li>
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
@@ -187,7 +194,7 @@
                 //关于tabAdd的方法所传入的参数可看layui的开发文档中基础方法部分
                 element.tabAdd('demo', {
                     title: name,
-                    content: '<iframe data-frameid="'+id+'" scrolling="no" frameborder="0" src="'+url+'" style="width:100%;height: 100%" id="test"></iframe>',
+                    content: '<iframe data-frameid="'+id+'" scrolling="no" frameborder="0" src="'+url+'" style="width:100%;height:100%;"></iframe>',
                     id: id //规定好的id
                 });
                 element.render('tab');
@@ -234,20 +241,8 @@
             //最后不管是否新增tab，最后都转到要打开的选项页面上
             active.tabChange(dataid.attr("data-id"));
         });
-    });
 
-    <!--高度自适应-->
-        function reinitIframe(){
-            var iframe = document.getElementById("test");
-            try{
-                var bHeight = iframe.contentWindow.document.body.scrollHeight;
-                var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
-                var height = Math.max(bHeight, dHeight);
-                iframe.height = height;
-            }catch (ex){}
-        }
-    <!--每200毫秒加载一次-->
-    window.setInterval("reinitIframe()",200);
+    });
 </script>
 </body>
 </html>

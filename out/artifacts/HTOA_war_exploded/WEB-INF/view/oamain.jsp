@@ -57,20 +57,32 @@
                 <li class="layui-nav-item">
                     <a href="#">员工管理</a>
                     <dl class="layui-nav-child">
-                        <%-- 例子  可修改 照着写就行了 --%>
-                        <dd><a href="javascript:void(0);">部门管理</a></dd>
-                        <dd><a href="javascript:void(0);" >员工资料</a></dd>
+                        <dd>
+                            <%-- 例子  可修改 照着写就行了 --%>
+                            <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/toPage/dep"
+                               data-id="部门管理" data-title="部门管理">部门管理</a>
+                        </dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="<%=request.getContextPath()%>/zero/toemp"
+                               data-id="员工资料" data-title="员工资料" >员工资料</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/emp/toEmpPaper"
+                               data-id="我的周报" data-title="我的周报" >我的周报</a></dd>
+
                         <dd><a href="javascript:void(0);">周报管理</a></dd>
-                        <dd><a href="javascript:void(0);">我的周报</a></dd>
                         <dd><a href="javascript:void(0);">周报审阅</a></dd>
                         <dd><a href="javascript:void(0);">谈心记录</a></dd>
 
+                        <dd><a href="javascript:void(0);">请假管理</a></dd>
 
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/empLeave/toleave"
                                data-id="员工请假" data-title="员工请假">员工请假</a></dd>
 
-                        <dd><a href="javascript:void(0);">考勤管理</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/jack/toAtt"
+                               data-id="考勤管理" data-title="考勤管理">考勤管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -126,7 +138,7 @@
                     <a>系统报表</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);">日常考核</a></dd>
-                        <dd><a href="javascript:void(0);">员工请假</a></dd>
+                        <dd><a href="javascript:void(0);">请假管理</a></dd>
                         <dd><a href="javascript:void(0);">未打卡说明</a></dd>
                         <dd><a href="javascript:void(0);">宿舍统计报表</a></dd>
                         <dd><a href="javascript:void(0);">学生请假</a></dd>
@@ -148,12 +160,12 @@
             </ul>
         </div>
     </div>
-    <div class="layui-body">
+    <div class="layui-body" style="height:90%">
         <!-- 内容主体区域 -->
-        <div style="padding:5px;width: 100%;">
+        <div style="width: 100%;">
             <div class="layui-tab layui-tab-brief" lay-filter="demo" lay-allowClose="true">
                 <ul class="layui-tab-title">
-                    <li style="" class="first-tab" lay-id="首页"  >首页</li>
+                    <li style="" class="first-tab" lay-id="首页">首页</li>
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
@@ -229,20 +241,8 @@
             //最后不管是否新增tab，最后都转到要打开的选项页面上
             active.tabChange(dataid.attr("data-id"));
         });
-    });
 
-    <!--高度自适应-->
-        function reinitIframe(){
-            var iframe = document.getElementById("test");
-            try{
-                var bHeight = iframe.contentWindow.document.body.scrollHeight;
-                var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
-                var height = Math.max(bHeight, dHeight);
-                iframe.height = height;
-            }catch (ex){}
-        }
-    <!--每200毫秒加载一次-->
-    window.setInterval("reinitIframe()",200);
+    });
 </script>
 </body>
 </html>

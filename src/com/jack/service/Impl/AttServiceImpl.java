@@ -35,11 +35,11 @@ public class AttServiceImpl extends BaseDao implements AttService {
 
     @Override
     public void updataAtt(AttendanceVo att) {
-         executeSQL("UPDATE attendance set examineTime = "+att.getExamineTime()+" examineExplain = '"+att.getExamineExplain()+"',state= "+att.getState()+" where attId= "+att.getAttId()+"");
+         executeSQL("UPDATE attendance set examineTime = sysdate() , examineExplain = '"+att.getExamineExplain()+"',state= "+att.getState()+" where attId= "+att.getAttId()+"");
     }
 
     @Override
-    public List selApprover(String Aname) {
-       return listByHql("from AttendanceVo where auditor = '"+Aname+"'");
+    public List selApprover(String Aname,int state) {
+       return listByHql("from AttendanceVo where auditor = '"+Aname+"' and state = "+state+"");
     }
 }
