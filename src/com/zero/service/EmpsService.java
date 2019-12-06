@@ -15,4 +15,6 @@ public interface EmpsService {
     void deleteEmp(EmpVo empVo);//删除员工
     Map toemp(int empId);//查找需要修改的员工
     void resetPwd(int empId);//重置员工密码
+    List<Map> seekEmp(String sql);//条件搜索员工
+    void status(int state,int empId);//修改员工状态
 }

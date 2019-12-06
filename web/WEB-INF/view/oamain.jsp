@@ -59,7 +59,7 @@
                                data-id="部门管理" data-title="部门管理">部门管理</a>
                         </dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="<%=request.getContextPath()%>/zero/toemp"
+                               data-url="<%=request.getContextPath()%>/zeroEmp/toemp"
                                data-id="员工资料" data-title="员工资料" >员工资料</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/emp/toEmpPaper"
@@ -153,9 +153,9 @@
             </ul>
         </div>
     </div>
-    <div class="layui-body">
+    <div class="layui-body" style=" height:92%">
         <!-- 内容主体区域 -->
-        <div style="padding:5px;width: 100%;">
+        <div style="height: 93%;width: 100%;">
             <div class="layui-tab layui-tab-brief" lay-filter="demo" lay-allowClose="true">
                 <ul class="layui-tab-title">
                     <li style="" class="first-tab" lay-id="首页"  >首页</li>

@@ -2,6 +2,7 @@ package com.zero.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.publics.vo.empModel.emp.EmpVo;
+import com.publics.utills.StringUtill;
 import com.zero.service.EmpsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +17,7 @@ import java.io.PrintWriter;
 import java.util.*;
 
 @Controller
-@RequestMapping("zero")
+@RequestMapping("zeroEmp")
 public class Zero_EmpController {
     @Resource
     EmpsService empService;
@@ -88,10 +89,38 @@ public class Zero_EmpController {
         empService.resetPwd(empId);
         return "true";
     }
-    @RequestMapping(value = "/resetPwd/seek")
+    @RequestMapping(value = "/seek")
     @ResponseBody
-    public String seek(int depId,String empName,String Phone,int status){
-
-        return "";
+    public void seek(int depId,String empName,String Phone,int status,HttpServletResponse response) throws IOException {
+        String tiaojian = "where 1=1 ";
+        empName = StringUtill.tostring(empName);
+        //拼装搜索条件
+        if (depId!=0){
+            tiaojian += " and e.depId = "+depId;
+        }
+        if(!"".equals(empName)){
+            tiaojian +=" and e.empName = '"+empName+"'";
+        }
+        if(!"".equals(Phone)){
+            tiaojian +=" and e.Phone like '%"+Phone+"%'";
+        }
+        if(status!=100){
+            tiaojian += " and e.status = "+status;
+        }
+        Map map = new TreeMap();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",1);
+        map.put("data",empService.seekEmp(tiaojian));
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter writer = response.getWriter();
+        writer.print(JSONArray.toJSONString(map));
+        writer.flush();
+        writer.close();
+    }
+    @RequestMapping(value = "/status")
+    @ResponseBody
+    public void status(int state,int empId){
+        empService.status(state,empId);
     }
 }
