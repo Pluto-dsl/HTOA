@@ -1,11 +1,10 @@
 package com.jack.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.jack.service.AttService;
+import com.jack.service.Jack_Service;
 import com.publics.vo.empModel.AttendanceVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -18,14 +17,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
+
+/**  考勤管理  */
 
 @Controller
 @RequestMapping("/jack")
 public class Jack_AttController {
 
     @Resource
-    private AttService service;
+    private Jack_Service service;
 
     @RequestMapping("/xxx")
     public String xxx(){
@@ -122,7 +122,6 @@ public class Jack_AttController {
         System.out.println(currPage+"----"+pageSize);
         List list = service.selAtt(user,currPage,pageSize);
         int pageCount = service.selAttCount(user);
-        response.setContentType("text/json;charset=utf-8");
         PrintWriter out = response.getWriter();
         JSONObject json = new JSONObject();
         json.put("msg","提示");

@@ -74,7 +74,6 @@
     </form>
 </div>
 <table id="chatRecordList" lay-filter="test"></table>
-<div id="test1"></div>
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
