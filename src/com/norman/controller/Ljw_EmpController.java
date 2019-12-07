@@ -8,6 +8,7 @@ import com.publics.vo.empModel.WeeklogVo;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.studentModel.StudentVo;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +37,8 @@ public class Ljw_EmpController {
     }
 
     @RequestMapping(value = "/toWeekLogPage")
-    public String toWeekLogPage(){
+    public String toWeekLogPage(Model model){
+        model.addAttribute("depList",empService.getDepList());
         return "emp_ljw/weekLog";
     }
     @ResponseBody
@@ -60,13 +62,13 @@ public class Ljw_EmpController {
     @ResponseBody
     @RequestMapping(value = "/getWeekLogData")
     public void getWeekLogData(HttpServletResponse response, HttpServletRequest request,int page,int limit) throws IOException {
+        System.out.println(request.getParameter("empName"));
         JSONObject jsonObject = new JSONObject();
-
         int count =empService.getWeekLogSize();
         jsonObject.put("code",0);
         jsonObject.put("msg","提示");
         jsonObject.put("count",count);
-        jsonObject.put("data",empService.getWeekLogData(page,limit));
+        jsonObject.put("data",empService.getWeekLogData(request,page,limit));
 
         response.setContentType("text/html;charset=utf-8");
         System.out.println("发送到前台");

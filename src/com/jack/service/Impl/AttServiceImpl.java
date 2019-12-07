@@ -12,13 +12,23 @@ import java.util.Map;
 public class AttServiceImpl extends BaseDao implements AttService {
 
     @Override
-    public List selAtt(String Aname,int currPage,int pageSize) {
-        return pageByHql("from AttendanceVo where empName = '"+Aname+"'",currPage,pageSize);
+    public List selAtt(int currPage,int pageSize) {
+        return null;
+    }
+
+    @Override
+    public int selAttCount() {
+        return 0;
+    }
+
+    @Override
+    public List selAtt(String Aname, int currPage, int pageSize) {
+        return null;
     }
 
     @Override
     public int selAttCount(String Aname) {
-        return selTotalRow("select count(*) from attendance where empName = '"+Aname+"'");
+        return 0;
     }
 
     @Override

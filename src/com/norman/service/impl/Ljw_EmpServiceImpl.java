@@ -11,9 +11,12 @@ import com.publics.vo.studentModel.StudentVo;
 import com.publics.vo.sys.DepVo;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -75,14 +78,44 @@ public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
     }
 
     @Override
-    public JSONArray getWeekLogData(int page, int limit) {
+    public JSONArray getWeekLogData(HttpServletRequest request, int page, int limit) {
+        try {
+            request.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         JSONArray data = new JSONArray();
-        List<WeeklogVo> list = pageByHql("FROM WeeklogVo",page,limit);
+        String empName = request.getParameter("empName");
+        String depIdStr = request.getParameter("depId");
+        int depId = 0;
+        if ("".equals(depIdStr) || null == depIdStr){
+            depId = 0;
+        }else {
+            depId = Integer.parseInt(depIdStr);
+        }
+        System.out.println(depId);
+        String startDay = request.getParameter("startDay");
+        String endDay = request.getParameter("endDay");
+        String hql = "FROM WeeklogVo where 1=1";
+        if (!("".equals(empName) || null == empName)){
+            int id = getEmpName(empName);
+            hql +=" and Empid ="+id;
+        }
+        if (depId!=0){
+            hql +=" and Empid in (SELECT empId FROM EmpVo where depId="+depId+")";
+        }
+        if (!("".equals(startDay) || null == startDay)){
+            hql +=" and Workday>='"+startDay+"'";
+        }
+        if (!("".equals(endDay) || null == endDay)){
+            hql +=" and Workday<='"+endDay+"'";
+        }
+        System.out.println(hql);
+        List<WeeklogVo> list = pageByHql(hql,page,limit);
         for (WeeklogVo vo:list) {
             //查询员工姓名
             EmpVo emp = (EmpVo) getObject(EmpVo.class,vo.getEmpid());
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-
             JSONObject wlJO = new JSONObject();
             wlJO.put("worklogid",vo.getWeeklogid());
             wlJO.put("empName",emp.getEmpName());
@@ -99,7 +132,7 @@ public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
 
     @Override
     public int getWeekLogSize() {
-        return getCountByHql("select count(*) from WeekLogVo");
+        return getCountByHql("select count(*) from WeeklogVo");
     }
 
     @Override
@@ -119,5 +152,10 @@ public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
         jsonObject.put("idea",weeklogVo.getIdea());
         jsonObject.put("weekNext",weeklogVo.getWeekNext());
         return jsonObject;
+    }
+
+    @Override
+    public List<DepVo> getDepList() {
+        return listByHql("from DepVo");
     }
 }
