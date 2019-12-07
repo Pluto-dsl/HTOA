@@ -21,6 +21,13 @@
             <li>证件上传</li>
         </ul>
         <div class="layui-tab-content">
+            <script type="text/html" id="top">
+                <label  class="layui-form-item">
+                    <div class="layui-input-inline">
+                        <button id="seek" type="submit" class="layui-btn" onclick="seek()">搜索</button>
+                    </div>
+                </label>
+            </script>
             <div class="layui-tab-item">
                 <table id="job" lay-filter="test"></table>
             </div>
@@ -65,10 +72,10 @@
             ,height: 500
             ,url: '<%=request.getContextPath()%>/zeroEmpInfo/job?empId=${empId}' //数据接口
             ,cols: [[ //表头
-                {field: 'companyName', title: '公司名称', width:100/*, fixed: 'left'向右靠*/}
+                {field: 'companyName', title: '公司名称', width:100, fixed: 'center'/*向右靠*/}
                 ,{field: 'degree', title: '岗位', width:100}
-                ,{field: 'startDate', title: '入职时间', width:100}
-                ,{field: 'endDate', title: '离职时间', width:100}
+                ,{field: 'startDate', title: '入职时间', width:150,templet : "<div>{{layui.util.toDateString(d.startDate, 'yyyy年MM月dd日')}}</div>"}
+                ,{field: 'endDate', title: '离职时间', width:150,templet : "<div>{{layui.util.toDateString(d.endDate, 'yyyy年MM月dd日')}}</div>"}
                 ,{field: 'reason', title: '离职原因', width:160}
                 ,{field: 'Remark', title: '说明', width:200}
             ]]
@@ -81,9 +88,9 @@
             ,cols: [[ //表头
                 {field: 'collegeName', title: '学校名称', width:150/*, fixed: 'left'向右靠*/}
                 ,{field: 'degree', title: '学历', width:100}
-                ,{field: 'startDate', title: '入校时间', width:100}
-                ,{field: 'endDate', title: '毕业时间', width:100}
-                ,{field: 'Remark', title: '奖惩情况', width:200}
+                ,{field: 'startDate', title: '入校时间', width:150,templet : "<div>{{layui.util.toDateString(d.startDate, 'yyyy年MM月dd日')}}</div>"}
+                ,{field: 'endDate', title: '毕业时间', width:150,templet : "<div>{{layui.util.toDateString(d.endDate, 'yyyy年MM月dd日')}}</div>"}
+                ,{field: 'remark', title: '奖惩情况', width:200}
             ]]
         })
         //家庭联系人
@@ -94,11 +101,10 @@
             ,cols: [[ //表头
                 {field: 'contactName', title: '联系人名称', width:150}
                 ,{field: 'relationship', title: '与员工关系', width:100}
-                ,{field: 'Phone', title: '联系电话', width:120}
-                ,{field: 'Remark', title: '说明', width:200}
+                ,{field: 'phone', title: '联系电话', width:120}
+                ,{field: 'remark', title: '说明', width:200}
             ]]
         })
-        //时间处理
         //员工考核
 
         //证件上传
