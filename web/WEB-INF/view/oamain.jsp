@@ -65,6 +65,13 @@
                                data-id="周报管理" data-title="周报管理" >周报管理</a></dd>
                         <dd>
                         <dd><a href="javascript:void(0);">我的周报</a></dd>
+                               data-url="<%=request.getContextPath()%>/zero/toemp"
+                               data-id="员工资料" data-title="员工资料" >员工资料</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/emp/toEmpPaper"
+                               data-id="我的周报" data-title="我的周报" >我的周报</a></dd>
+
+                        <dd><a href="javascript:void(0);">周报管理</a></dd>
                         <dd><a href="javascript:void(0);">周报审阅</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/ljw/toChatRecordPage"
@@ -133,7 +140,7 @@
                     <a>系统报表</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);">日常考核</a></dd>
-                        <dd><a href="javascript:void(0);">员工请假</a></dd>
+                        <dd><a href="javascript:void(0);">请假管理</a></dd>
                         <dd><a href="javascript:void(0);">未打卡说明</a></dd>
                         <dd><a href="javascript:void(0);">宿舍统计报表</a></dd>
                         <dd><a href="javascript:void(0);">学生请假</a></dd>

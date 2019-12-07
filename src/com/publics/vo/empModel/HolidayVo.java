@@ -16,6 +16,7 @@ public class HolidayVo {
     private float holidayDay;//假期天数
     private Date startTime;//开始时间
     private Date endTime;//结束时间
+    private int hour;//请假小时
     private String Title;//标题
     private int status;//状态 1:审批中 2：已完成 3：不批准
     private String Remark;//内容
@@ -84,6 +85,14 @@ public class HolidayVo {
         Remark = remark;
     }
 
+    public int getHour() {
+        return hour;
+    }
+
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
+
     @Override
     public String toString() {
         return "HolidayVo{" +
@@ -92,6 +101,7 @@ public class HolidayVo {
                 ", holidayDay=" + holidayDay +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
+                ", hour=" + hour +
                 ", Title='" + Title + '\'' +
                 ", status=" + status +
                 ", Remark='" + Remark + '\'' +

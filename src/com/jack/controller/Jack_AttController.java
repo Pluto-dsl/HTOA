@@ -38,6 +38,9 @@ public class Jack_AttController {
         return "emp_xzq/AttendancePage";
     }
 
+    /**
+     * 修改审批
+     * */
     @RequestMapping("/AttUpdata")
     public String AttUpdata(String eid,String state,String specification){
         System.out.println(state);
@@ -50,14 +53,15 @@ public class Jack_AttController {
         avo.setExamineExplain(specification);
         service.updataAtt(avo);
 
-        return "emp_xzq/AttendancePage";
+        return "emp_xzq/xxx";
     }
 
     //查询要审批的数据
     @RequestMapping("/Approver")
     public void Approver(HttpSession session,HttpServletResponse response) throws IOException {
+        //获取当前登入的用户 查询是否有审核申请
         String user = (String) session.getAttribute("user");
-        List list = service.selApprover("裴钱");
+        List list = service.selApprover("裴钱",2);
         response.setContentType("text/json;charset=utf-8");
         PrintWriter out = response.getWriter();
         JSONObject json = new JSONObject();
@@ -70,11 +74,14 @@ public class Jack_AttController {
 
     }
 
-    //添加未打卡申请
+    /**
+     *
+     * 添加未打卡申请
+     * 获取当前登入的用户获取填写的申请信息添加到数据库
+     * **/
     @RequestMapping("/Attadd")
     public String Attadd(HttpSession session,String punckClockTime,String cause,String timeing) throws ParseException {
         System.out.println("进来了");
-
         String user = (String) session.getAttribute("user");
         String ptime = punckClockTime +" "+ timeing;
 
@@ -103,12 +110,16 @@ public class Jack_AttController {
         return "emp_xzq/AttendancePage";
     }
 
+    /**
+     * 查询未打卡说明列表
+     * */
     @RequestMapping("/Att")
     public void Att(HttpSession session,HttpServletResponse response, HttpServletRequest request) throws IOException {
         int currPage = Integer.parseInt(request.getParameter("page"));
         int pageSize = Integer.parseInt(request.getParameter("limit"));
         String user = (String) session.getAttribute("user");//获取当前登入的名称
         response.setContentType("text/html;charset=utf-8");
+        System.out.println(currPage+"----"+pageSize);
         List list = service.selAtt(user,currPage,pageSize);
         int pageCount = service.selAttCount(user);
         response.setContentType("text/json;charset=utf-8");
