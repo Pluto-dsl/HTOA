@@ -21,19 +21,27 @@
             <li>证件上传</li>
         </ul>
         <div class="layui-tab-content">
-            <script type="text/html" id="top">
-                <label  class="layui-form-item">
-                    <div class="layui-input-inline">
-                        <button id="seek" type="submit" class="layui-btn" onclick="seek()">搜索</button>
-                    </div>
-                </label>
+            <script type="text/html" id="jobTop"><%--工具栏--%>
+                    <a class="layui-btn layui-btn-primary layui-btn-sm"> <i class="layui-icon">&#xe654;</i></a>
+                    <a class="layui-btn layui-btn-primary layui-btn-sm"> <i class="layui-icon">&#xe642;</i></a>
+                    <a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
             </script>
-            <div class="layui-tab-item">
+            <div class="layui-tab-item layui-show">
                 <table id="job" lay-filter="test"></table>
             </div>
+            <script type="text/html" id="educationTop">
+                <a class="layui-btn layui-btn-primary layui-btn-sm"> <i class="layui-icon">&#xe654;</i></a>
+                <a class="layui-btn layui-btn-primary layui-btn-sm"> <i class="layui-icon">&#xe642;</i></a>
+                <a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
+            </script>
             <div class="layui-tab-item">
                 <table id="education" lay-filter="test"></table>
             </div>
+            <script type="text/html" id="familyInfoTop">
+                <a class="layui-btn layui-btn-primary layui-btn-sm"> <i class="layui-icon">&#xe654;</i></a>
+                <a class="layui-btn layui-btn-primary layui-btn-sm"> <i class="layui-icon">&#xe642;</i></a>
+                <a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
+            </script>
             <div class="layui-tab-item">
                 <table id="familyInfo" lay-filter="test"></table>
             </div>
@@ -71,13 +79,16 @@
             elem: '#job'
             ,height: 500
             ,url: '<%=request.getContextPath()%>/zeroEmpInfo/job?empId=${empId}' //数据接口
+            ,toolbar: '#jobTop' //开启头部工具栏，并为其绑定左侧模板
+            //,totalRow: true //开启合计行
             ,cols: [[ //表头
-                {field: 'companyName', title: '公司名称', width:100, fixed: 'center'/*向右靠*/}
+                {type: 'checkbox', fixed: 'left'}
+                ,{field: 'companyName', title: '公司名称', width:100, fixed: 'center'/*向右靠*/}
                 ,{field: 'degree', title: '岗位', width:100}
                 ,{field: 'startDate', title: '入职时间', width:150,templet : "<div>{{layui.util.toDateString(d.startDate, 'yyyy年MM月dd日')}}</div>"}
                 ,{field: 'endDate', title: '离职时间', width:150,templet : "<div>{{layui.util.toDateString(d.endDate, 'yyyy年MM月dd日')}}</div>"}
                 ,{field: 'reason', title: '离职原因', width:160}
-                ,{field: 'Remark', title: '说明', width:200}
+                ,{field: 'remark', title: '说明', width:200}
             ]]
         })
         //教育背景
