@@ -13,5 +13,4 @@ public interface AttService {
     void insertAtt(AttendanceVo attVo); //插入未打卡说明
     void updataAtt(AttendanceVo attendanceVo); //审批修改
     List selApprover(String Aname,int state);
-
 }

@@ -33,7 +33,7 @@ public class Pluto_LeaveController {
 
     }
 
-    @RequestMapping("/returnData")
+    /*@RequestMapping("/returnData")
     @ResponseBody
     public void responseData(HttpServletResponse response){
         response.setContentType("text/html;charset=utf-8");
@@ -52,5 +52,5 @@ public class Pluto_LeaveController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }
