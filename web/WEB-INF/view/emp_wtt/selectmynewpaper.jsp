@@ -33,9 +33,7 @@
             <button style="text-align: center" style="margin-left: 25%"  align="center" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
         </form>
     </div>
-<%--
-    <button type="button" id="checkpapers" lay-event="select" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon layui-icon-search"></i>查看周报</button>
---%>
+
     <button id="addpaper" class="layui-btn layui-btn-normal layui-btn-sm" style="margin-left: 50%"><i class="layui-icon layui-icon-add-circle"></i>添加</button>
     <table class="layui-hide" lay-filter="test" id="test">
 

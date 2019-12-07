@@ -115,7 +115,7 @@
 
         });
 
-        //未打卡说明、我的审核
+        //未打卡说明、我的审核   监听表格头的按钮'toolbar(test)'
         table.on('toolbar(test)', function(obj){
             var data = obj.data;
             if(obj.event == 'punching'){
