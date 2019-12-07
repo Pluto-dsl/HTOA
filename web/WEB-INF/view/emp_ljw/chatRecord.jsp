@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: norman
@@ -17,23 +18,75 @@
     <jsp:include page="${pageContext.request.contextPath}/toPage/include"/>
 </head>
 <body>
-    <table id="chatRecordList" lay-filter="test"></table>
-    <div id="test1"></div>
-
-    <script type="text/html" id="toolbarDemo">
-        <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-sm">删除所选数据</button>
-            <button class="layui-btn layui-btn-sm">新增谈心记录</button>
+<div id="windows" style="margin-left: 5%;display: none;">
+    <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/ljw/newChatRecord" method="post">
+        <br><br>
+        <input id="chatId" type="hidden" name="Chatid">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">日期选择</label>
+                <div class="layui-input-block">
+                    <input type="text" id="chatDate" name="chatDate" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">输入地址</label>
+                <div class="layui-input-block">
+                    <input id="addr" type="text" name="addr" placeholder="请输入" autocomplete="off" class="layui-input">
+                </div>
+            </div>
         </div>
-    </script>
-    <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    </script>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">选择学生</label>
+                <div class="layui-input-inline">
+                    <select id="sayface" name="sayface" class="layui-select">
+                        <c:forEach items="${requestScope.stuList}" var="stu">
+                            <option value="${stu.studid}">${stu.stuname}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">选择员工</label>
+                <div class="layui-input-inline">
+                    <select id="teacher" name="teacher" class="layui-select">
+                        <c:forEach items="${requestScope.empList}" var="emp">
+                            <option value="${emp.empId}">${emp.empName}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">谈心内容</label>
+            <div class="layui-input-block" style="width: 515px">
+                <textarea id="sayscon" name="sayscon" placeholder="在此输入谈心的内容" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <br>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<table id="chatRecordList" lay-filter="test"></table>
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="delChatRecordList">删除所选数据</button>
+        <button class="layui-btn layui-btn-sm" lay-event="newChatRecord">新增谈心记录</button>
+    </div>
+</script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
 </body>
 <script>
-    $.post("");
     layui.use('table', function(){
         var table = layui.table;
         table.render({
@@ -44,35 +97,58 @@
             ,title: '用户数据表'
             ,cols: [[
                 {type: 'checkbox', fixed: 'left'}
-                ,{field:'chatid', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
-                ,{field:'sayface', title:'学生', width:80, fixed: 'left'}
-                ,{field:'teacher', title:'员工', width:80, fixed: 'left'}
-                ,{field:'addr', title:'地址', width:80, fixed: 'left'}
-                ,{field:'sayscon', title:'谈心内容',width: '56%', minWidth: 200, fixed: 'left'}
-                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200}
+                ,{field:'chatId', title:'ID', width:60, fixed: 'left', unresize: true, sort: true}
+                ,{field:'sayFace', title:'学生名称', width:90, fixed: 'left'}
+                ,{field:'teacher', title:'员工名称', width:90, fixed: 'left'}
+                ,{field:'chatDate', title:'时间', width:120, fixed: 'left'}
+                ,{field:'addr', title:'地址', width:170, fixed: 'left'}
+                ,{field:'sayscon', title:'谈心内容',width: '45%', minWidth: 200, fixed: 'left'}
+                ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:120}
             ]]
-            ,page: {limit:5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
+            ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
 
         //头工具栏事件
         table.on('toolbar(test)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id);
             switch(obj.event){
-                case 'getCheckData':
+                case 'newChatRecord':
+                    layer.open({
+                        type: 1,
+                        title:'添加谈心记录',
+                        skin: 'layui-layer-demo', //样式类名
+                        closeBtn: 1, //是否显示关闭按钮
+                        area: ['700px', '420px'],
+                        fixed: false, //不固定
+                        maxmin: true,
+                        shadeClose: false, //是否点击遮罩时关闭
+                        content: $('#windows'),
+                        cancel: function(index, layero){
+                            $("#MyForm")[0].reset();
+                            layui.form.render();
+                            layer.close(index);
+                            return false;
+                        }
+                    });
+                    break;
+                case 'delChatRecordList':
                     var data = checkStatus.data;
-                    layer.alert(JSON.stringify(data));
-                    break;
-                case 'getCheckLength':
-                    var data = checkStatus.data;
-                    layer.msg('选中了：'+ data.length + ' 个');
-                    break;
-                case 'isAll':
-                    layer.msg(checkStatus.isAll ? '全选': '未全选');
-                    break;
+                    var msg = "是要删除ID为：";
+                    $(data).each(function (index,elemnt) {
+                        console.log(elemnt.chatId);
+                        msg +=elemnt.chatId+"、";
+                    });
+                    msg = msg.substr(0,msg.length-1);
+                    msg +="的记录吗?";
+                    layer.confirm(msg, {
+                        btn: ['是的','取消'] //按钮
+                    }, function(){
+                        $(data).each(function (index,elemnt) {
+                            delChatRecord(elemnt.chatId)
+                        });
+                    }, function(){
 
-                //自定义头工具栏右侧图标 - 提示
-                case 'LAYTABLE_TIPS':
-                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
+                    });
                     break;
             }
         });
@@ -87,20 +163,69 @@
                     delChatRecord(obj.data.chatid)
                 });
             } else if(obj.event === 'edit'){
-                layer.prompt({
-                    formType: 2
-                    ,value: data.email
-                }, function(value, index){
-                    obj.update({
-                        email: value
-                    });
-                    layer.close(index);
+                console.log(data);
+                //重置表单数据
+                $("#MyForm")[0].reset();
+                layui.form.render();
+                //为表单赋值
+                $("#chatId").val(data.chatId);
+                $("#chatDate").val(data.chatDate);
+                $("#addr").val(data.addr);
+                $("#sayscon").val(data.sayscon);
+                $("#teacher").children().each(function (index,element) {
+                    if ($(element).text() === data.teacher) {
+                        $(element).attr("selected","selected");
+                    }else {
+                        $(element).removeAttr("selected")
+                    }
+                });
+
+                $("#sayface").children().each(function (index,element) {
+                    if ($(element).text() === data.sayface) {
+                        $(element).attr("selected","selected");
+                    }else {
+                        $(element).removeAttr("selected")
+                    }
+                });
+
+                //重新渲染表单
+                layui.use('form', function() {
+                    var element = layui.form;
+                    element.render();
+                });
+
+                //打开窗口
+                layer.open({
+                    type: 1,
+                    title:'添加谈心记录',
+                    skin: 'layui-layer-demo', //样式类名
+                    closeBtn: 1, //是否显示关闭按钮
+                    area: ['700px', '420px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    shadeClose: false, //是否点击遮罩时关闭
+                    content: $('#windows'),
+                    cancel: function(index, layero){//点击关闭按钮时触发
+                        //重置表单数据
+                        $("#MyForm")[0].reset();
+                        layui.form.render();
+                        layer.close(index);
+                        return false;
+                    }
                 });
             }
         });
     });
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#chatDate' //指定元素
+            ,format:'yyyy/MM/dd'
+        });
+    });
 </script>
-<script language="JavaScript">
+<script>
     function delChatRecord(id) {
         var data = {id:id};
         $.post("${pageContext.request.contextPath}/ljw/delChatRecord",data,function (data) {

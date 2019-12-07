@@ -13,7 +13,7 @@
 </head>
 <body>
 <div id="windows" style="margin-left: 5%;display: none;">
-        <table align="center" style="margin-top: -2%;border-collapse:separate; border-spacing:0px 20px;">
+        <table align="center" style="width:55%;margin-top: -2%;border-collapse:separate; border-spacing:0px 20px;">
             <tr>
                 <th colspan="2">
                     <font style="text-align: center">员工请假</font>
@@ -22,7 +22,7 @@
             <tr>
                 <th>请假类型：</th>
                 <td class="layui-form">
-                    <select name="" lay-filter="请假事由" lay-search>
+                    <select name="Title" id="Title" lay-filter="请假事由" lay-search>
                         <option value="事假">事假</option>
                         <option value="病假">病假</option>
                         <option value="四小时带薪假">四小时带薪假</option>
@@ -36,34 +36,47 @@
             <tr>
                 <th>开始时间：</th>
                 <td>
-                    <input type="text" name="startDate"  autocomplete="off" class="layui-input shij">                </td>
+                    <input type="text" class="layui-input" name="startTime" id="startDate" placeholder="选择开始时间">
+<%--                    <input type="text" name="startDate"  autocomplete="off" class="layui-input shij">--%>
+                </td>
             </tr>
             <tr>
                 <th>结束时间：</th>
                 <td>
-                    <input type="text" name="endDate"  autocomplete="off" class="layui-input shij">
+                    <input type="text" class="layui-input" name="endTime" id="endDate" placeholder="选择结束时间">
+<%--                    <input type="text" name="startDate"  autocomplete="off" class="layui-input shij">--%>
                 </td>
             </tr>
             <tr>
-                <td colspan="2">
-                    请假时长：<input type="text" style="width: 50px">,
-                    <select name="" id="a"></select>小时
+                <th>
+                    请假时长：
+                </th>
+                <td style="">
+                    <input type="text" id="days" name="holidayDay" style="width: 50px;height: 30px;" >天,
+                    <select name="hour" id="hour" style="width: 50px;height: 30px;">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                    </select>小时
                 </td>
             </tr>
             <tr>
                 <th>请假事由：</th>
                 <td>
-                    <textarea rows="3" cols="10"></textarea>
+                    <textarea name="Remark" id="Remark" rows="3" cols="25"></textarea>
                 </td>
             </tr>
             <tr>
-                <td colspan="2">
-                    <button type="button" class="layui-btn" style="width: 100px;">提交</button>
+                <td colspan="2" style="text-align: center;">
+                    <button type="button" class="layui-btn" style="width: 100px;" onclick="submitleave()">提交</button>
                     <button type="button" class="layui-btn layui-btn-normal" style="width: 100px;">取消</button>
                 </td>
             </tr>
         </table>
-
 </div>
 <table class="layui-hide" id="test" lay-filter="test" style="text-align: center;"></table>
 
@@ -80,9 +93,27 @@
 </script>
 <%-------------------------------------------------------------%>
 <script>
-    // laydate.render({
-    //     elem: '#date'
-    // });
+    function submitleave(){
+        params = {
+            Title:document.getElementById("Title").value,
+            startTime:$("#startDate").val(),
+            endTime:$("#endDate").val(),
+            holidayDay:$("#days").val(),
+            hour:$("#hour").val(),
+            Remark:$("#Remark").val()
+
+        }
+
+        back = function(data){
+            $("#windows").css("display","none")
+        }
+
+        $.post("${pageContext.request.contextPath}/empLeave/addLeave",params,back,"text");
+    }
+
+
+    var startdate = "";
+    var enddate = "";
 
     layui.use([ 'element', 'table', 'layer', 'form' ,'laydate'],function() {
         var element = layui.element;
@@ -93,12 +124,29 @@
 
         //日期
         laydate.render({
-            elem: '.shij'
-        });
-        laydate.render({
-            elem: '.shij'
+            elem: '#startDate',
+            type: 'datetime',
+            done: function (value) {
+                startdate=value;
+            }
         });
 
+        laydate.render({
+            elem: '#endDate',
+            type: 'datetime',
+            done: function (value) {
+                enddate = value;
+                var day = getDaysBetween(startdate,enddate);
+                day = Math.ceil(day)
+                document.getElementById("days").value=day;
+            }
+        })
+        function  getDaysBetween(dateString1,dateString2){
+            var  startDate = Date.parse(dateString1);
+            var  endDate = Date.parse(dateString2);
+            var days=(endDate - startDate)/(1*24*60*60*1000);
+            return  days;
+        }
 
         table.render({
             elem: '#test'
@@ -130,7 +178,7 @@
                 case 'add':
                     layer.open({
                         type: 1,
-                        title:'添加未打卡说明',
+                        title:'员工请假',
                         skin: 'layui-layer-demo', //样式类名
                         closeBtn: 1, //不显示关闭按钮
                         area: ['700px', '450px'],
@@ -178,6 +226,7 @@
             }
         })
     })
+
 </script>
 </body>
 </html>

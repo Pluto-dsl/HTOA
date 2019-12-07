@@ -1,18 +1,25 @@
 package com.norman.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.norman.service.Ljw_EmpService;
 import com.publics.dao.BaseDao;
 import com.publics.vo.empModel.ChatRecordVo;
+import com.publics.vo.empModel.WeeklogVo;
+import com.publics.vo.empModel.emp.EmpVo;
+import com.publics.vo.studentModel.StudentVo;
+import com.publics.vo.sys.DepVo;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
+@Transactional
 public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
-    @Override
-    public List<ChatRecordVo> getChatRecordList() {
-        return listByHql("FROM ChatRecordVo");
-    }
 
     @Override
     public int getChatRecordSize() {
@@ -24,5 +31,93 @@ public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
         ChatRecordVo chatRecordVo = new ChatRecordVo();
         chatRecordVo.setChatid(id);
         delObject(chatRecordVo);
+    }
+
+    @Override
+    public void addChatRecord(ChatRecordVo vo) {
+        addObject(vo);
+    }
+
+    @Override
+    public List<EmpVo> getEmpList() {
+        return listByHql("FROM EmpVo");
+    }
+
+    @Override
+    public List<StudentVo> getStudentList() {
+        return listByHql("FROM StudentVo");
+    }
+
+    @Override
+    public JSONArray getData(int page,int limit) {
+        JSONArray data = new JSONArray();
+        List<ChatRecordVo> list = pageByHql("FROM ChatRecordVo",page,limit);
+        for (ChatRecordVo chatRecordVo:list) {
+            EmpVo emp = (EmpVo) getObject(EmpVo.class,chatRecordVo.getTeacher());
+            StudentVo stu = (StudentVo) getObject(StudentVo.class,chatRecordVo.getSayface());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+            JSONObject crJO = new JSONObject();
+            crJO.put("chatId",chatRecordVo.getChatid());
+            crJO.put("sayFace",stu.getStuname());
+            crJO.put("teacher",emp.getEmpName());
+            crJO.put("chatDate",sdf.format(chatRecordVo.getChatDate()));
+            crJO.put("addr",chatRecordVo.getAddr());
+            crJO.put("sayscon",chatRecordVo.getSayscon());
+            System.out.println(crJO);
+            data.add(crJO);
+        }
+        return data;
+    }
+
+    @Override
+    public void setChatRecord(ChatRecordVo vo) {
+        updObject(vo);
+    }
+
+    @Override
+    public JSONArray getWeekLogData(int page, int limit) {
+        JSONArray data = new JSONArray();
+        List<WeeklogVo> list = pageByHql("FROM WeeklogVo",page,limit);
+        for (WeeklogVo vo:list) {
+            //查询员工姓名
+            EmpVo emp = (EmpVo) getObject(EmpVo.class,vo.getEmpid());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+
+            JSONObject wlJO = new JSONObject();
+            wlJO.put("worklogid",vo.getWeeklogid());
+            wlJO.put("empName",emp.getEmpName());
+            wlJO.put("weekDay",sdf.format(vo.getWorkday()));
+            wlJO.put("weekCur",vo.getWeekCur());
+            wlJO.put("studentQuestion",vo.getStudentQuestion());
+            wlJO.put("idea",vo.getIdea());
+            wlJO.put("weekNext",vo.getWeekNext());
+            System.out.println(wlJO);
+            data.add(wlJO);
+        }
+        return data;
+    }
+
+    @Override
+    public int getWeekLogSize() {
+        return getCountByHql("select count(*) from WeekLogVo");
+    }
+
+    @Override
+    public JSONObject getWeekLog(int id) {
+        WeeklogVo weeklogVo = (WeeklogVo) getObject(WeeklogVo.class,id);
+        EmpVo empVo = (EmpVo) getObject(EmpVo.class,weeklogVo.getEmpid());
+        DepVo dep = (DepVo) getObject(DepVo.class,empVo.getDepId());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("depName",dep.getDepName());
+        jsonObject.put("empName",empVo.getEmpName());
+        jsonObject.put("workDay",sdf.format(weeklogVo.getWorkday()));
+        jsonObject.put("weekCur",weeklogVo.getWeekCur());
+        jsonObject.put("studentQuestion",weeklogVo.getStudentQuestion());
+        jsonObject.put("idea",weeklogVo.getIdea());
+        jsonObject.put("weekNext",weeklogVo.getWeekNext());
+        return jsonObject;
     }
 }

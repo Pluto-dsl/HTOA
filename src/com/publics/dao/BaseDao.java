@@ -11,7 +11,6 @@ import java.util.List;
  */
 
 
-@Transactional
 public class BaseDao {
     @Resource
     private SessionFactory sessionFactory;
@@ -121,7 +120,7 @@ public class BaseDao {
     public Object getObject(Class clazz, Integer id) {
         Session session = getSession();
         Object obj=  session.get(clazz, id);
-        System.out.println("根据id获取对象："+obj);
+        /*System.out.println("根据id获取对象："+obj);*/
         session.close();
         return obj;
     }

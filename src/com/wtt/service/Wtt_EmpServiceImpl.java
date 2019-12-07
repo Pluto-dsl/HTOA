@@ -10,8 +10,8 @@ import java.util.Map;
 @Service
 public class Wtt_EmpServiceImpl extends BaseDao implements Wtt_EmpService {
     @Override
-    public List<Map> weekpaper() {
-        return listBySQL("select * from weeklog");
+    public List<Map> weekpaper(int currpage,int pagesize) {
+        return pageBySQL("select * from weeklog",currpage,pagesize);
     }
 
     @Override
@@ -34,5 +34,10 @@ public class Wtt_EmpServiceImpl extends BaseDao implements Wtt_EmpService {
         WeeklogVo weeklogVo = new WeeklogVo();
         weeklogVo.setWeeklogid(id);
         delObject(weeklogVo);
+    }
+
+    @Override
+    public int pagecount() {
+        return selTotalRow("select count(*) from weeklog");
     }
 }
