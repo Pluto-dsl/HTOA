@@ -66,7 +66,6 @@
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/ljw/toWeekLogPage"
                                data-id="周报管理" data-title="周报管理" >周报管理</a></dd>
-                        <dd>
                         <dd><a href="javascript:void(0);">周报审阅</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/ljw/toChatRecordPage"
