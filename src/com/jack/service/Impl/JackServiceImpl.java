@@ -12,28 +12,6 @@ import java.util.Map;
 @Service
 public class JackServiceImpl extends BaseDao implements Jack_Service {
 
-    /**  考勤管理 */
-
-    @Override
-    public List selAtt(int currPage, int pageSize) {
-        return null;
-    }
-
-    @Override
-    public int selAttCount() {
-        return 0;
-    }
-
-    @Override
-    public List selAtt(int currPage,int pageSize) {
-        return null;
-    }
-
-    @Override
-    public int selAttCount() {
-        return 0;
-    }
-
     @Override
     public List selAtt(String Aname, int currPage, int pageSize) {
         return null;

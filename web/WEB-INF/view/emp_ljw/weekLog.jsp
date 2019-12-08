@@ -16,13 +16,25 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>谈心记录</title>
     <jsp:include page="${pageContext.request.contextPath}/toPage/include"/>
+    <style>
+        .menu{
+            margin-top: 8px;
+            margin-left: 15px;
+            float: left;
+        }
+        .layui-table-view{
+            float: left;
+        }
+    </style>
 </head>
 <body>
-<form class="layui-form" style="width: 100%;height: 40px;padding-top: 10px;padding-left: 20px;">
+<div class="menu">
     员工姓名:
     <div class="layui-inline" style="padding-right: 15px">
         <input class="layui-input" name="empName" id="empName" autocomplete="off">
     </div>
+</div>
+<form class="layui-form menu" <%--style="width: 85%;height: 40px;padding-top: 10px;padding-left: 20px;"--%>>
     部门名称:
     <div class="layui-inline" style="padding-right: 15px">
         <select name="depId" lay-verify="required" lay-search="">
@@ -32,19 +44,23 @@
             </c:forEach>
         </select>
     </div>
+</form>
+<div class="menu">
     开始日期:
     <div class="layui-inline" style="padding-right: 15px">
         <input type="text" id="startDay" name="startDay" autocomplete="off" class="layui-input">
     </div>
+</div>
+<div class="menu">
     结束日期:
     <div class="layui-inline" style="padding-right: 15px">
         <input type="text" id="endDay" name="endDay" autocomplete="off" class="layui-input">
     </div>
-</form>
-<button class="layui-btn" id="btn">搜索</button>
-<table id="weekLog" lay-filter="test"></table>
+</div>
+<button class="layui-btn menu" id="btn">搜索</button>
+<table id="weekLog" lay-filter="test" style="float: left"></table>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="info">查看详情</a>
+    <a class="layui-btn layui-btn-xs" lay-event="info" style="float: left">查看详情</a>
 </script>
 </body>
 <script>
@@ -79,12 +95,15 @@
                 window.location.href='<%=request.getContextPath()%>/ljw/lookEmpPaperPage/'+data.worklogid;
             }
         });
+        //重载表格
         $("#btn").click(function () {
             console.log("fasfd");
+            //获取条件
             var empName = $('input[name="empName"]').val();
             var depId = $('select[name="depId"] option:selected').val();
             var startDay = $('input[name="startDay"]').val();
             var endDay = $('input[name="endDay"]').val();
+            //调用重载方法
             tableIns.reload({
                 where: { //设定异步数据接口的额外参数，任意设
                     empName:empName,

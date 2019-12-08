@@ -21,7 +21,7 @@ public interface Ljw_EmpService {
     JSONArray getData(int page,int limit);//获取表格数据
     void setChatRecord(ChatRecordVo vo);//获取谈心记录列表
     JSONArray getWeekLogData(HttpServletRequest request,int page, int limit);//获取周报列表
-    int getWeekLogSize();//获取周报记录数
+    int getWeekLogSize(HttpServletRequest request);//获取周报记录数
     JSONObject getWeekLog(int id);//获取谈心记录
     List<DepVo> getDepList();
 }

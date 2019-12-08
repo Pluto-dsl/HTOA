@@ -79,11 +79,6 @@ public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
 
     @Override
     public JSONArray getWeekLogData(HttpServletRequest request, int page, int limit) {
-        try {
-            request.setCharacterEncoding("utf-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
         JSONArray data = new JSONArray();
         String empName = request.getParameter("empName");
         String depIdStr = request.getParameter("depId");
@@ -131,8 +126,34 @@ public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
     }
 
     @Override
-    public int getWeekLogSize() {
-        return getCountByHql("select count(*) from WeeklogVo");
+    public int getWeekLogSize(HttpServletRequest request) {
+        String empName = request.getParameter("empName");
+        String depIdStr = request.getParameter("depId");
+        int depId = 0;
+        if ("".equals(depIdStr) || null == depIdStr){
+            depId = 0;
+        }else {
+            depId = Integer.parseInt(depIdStr);
+        }
+        System.out.println(depId);
+        String startDay = request.getParameter("startDay");
+        String endDay = request.getParameter("endDay");
+        String hql = "select count(*) from WeeklogVo where 1=1";
+        if (!("".equals(empName) || null == empName)){
+            int id = getEmpName(empName);
+            hql +=" and Empid ="+id;
+        }
+        if (depId!=0){
+            hql +=" and Empid in (SELECT empId FROM EmpVo where depId="+depId+")";
+        }
+        if (!("".equals(startDay) || null == startDay)){
+            hql +=" and Workday>='"+startDay+"'";
+        }
+        if (!("".equals(endDay) || null == endDay)){
+            hql +=" and Workday<='"+endDay+"'";
+        }
+        System.out.println(hql);
+        return getCountByHql(hql);
     }
 
     @Override

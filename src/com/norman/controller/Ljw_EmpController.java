@@ -64,11 +64,12 @@ public class Ljw_EmpController {
     public void getWeekLogData(HttpServletResponse response, HttpServletRequest request,int page,int limit) throws IOException {
         System.out.println(request.getParameter("empName"));
         JSONObject jsonObject = new JSONObject();
-        int count =empService.getWeekLogSize();
+        int count =empService.getWeekLogSize(request);
+        JSONArray data = empService.getWeekLogData(request,page,limit);
         jsonObject.put("code",0);
         jsonObject.put("msg","提示");
         jsonObject.put("count",count);
-        jsonObject.put("data",empService.getWeekLogData(request,page,limit));
+        jsonObject.put("data",data);
 
         response.setContentType("text/html;charset=utf-8");
         System.out.println("发送到前台");

@@ -87,7 +87,9 @@
                 <li class="layui-nav-item">
                     <a>学生管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:void(0);">学生请假</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/student/leave"
+                               data-id="学生请假" data-title="学生请假" >学生请假</a></dd>
                         <dd><a href="javascript:void(0);">班级管理</a></dd>
                         <dd><a href="javascript:void(0);">楼栋管理</a></dd>
                         <dd><a href="javascript:void(0);">宿舍管理</a></dd>
@@ -99,9 +101,13 @@
                 <li class="layui-nav-item">
                     <a>教务管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:void(0);">课程类别</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/jack/toCourseList"
+                               data-id="课程类别" data-title="课程类别">课程类别</a></dd>
                         <dd><a href="javascript:void(0);">课程管理</a></dd>
-                        <dd><a href="javascript:void(0);">试讲培训</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/training/rehearsal_trainingPage"
+                               data-id="试讲培训" data-title="试讲培训" >试讲培训</a></dd>
                         <dd><a href="javascript:void(0);">值班管理</a></dd>
                     </dl>
                 </li>
@@ -164,7 +170,7 @@
         <div style="height: 93%;width: 100%;">
             <div class="layui-tab layui-tab-brief" lay-filter="demo" lay-allowClose="true">
                 <ul class="layui-tab-title">
-                    <li style="" class="first-tab" lay-id="首页"  >首页</li>
+                    <li style="" class="first-tab" lay-id="首页">首页</li>
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
