@@ -193,3 +193,25 @@
     }
 </script>
 </html>
+
+<%--
+        //重载数据表格
+        table.reload('test',{  });
+
+        //表初始化
+        var createTable = function () {
+            table.init('EditListTable', tableOptions);
+        };
+        //表刷新方法
+        var reloadTable = function (item) {
+            table.reload("listReload", { //此处是上文提到的 初始化标识id
+                where: {
+                    //key: { //该写法上文已经提到
+                        type: item.type, id: item.id
+                    //}
+                }
+            });
+        };
+
+
+--%>

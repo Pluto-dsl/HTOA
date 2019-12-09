@@ -64,7 +64,14 @@
                                data-url="${pageContext.request.contextPath}/ljw/toWeekLogPage"
                                data-id="周报管理" data-title="周报管理" >周报管理</a></dd>
                         <dd>
-                        <dd><a href="javascript:void(0);">我的周报</a></dd>
+                        <dd><a href="javascript:void(0);">员工资料</a></dd>
+                               data-url="<%=request.getContextPath()%>/zero/toemp"
+                               data-id="员工资料" data-title="员工资料" >员工资料</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/emp/toEmpPaper"
+                               data-id="我的周报" data-title="我的周报" >我的周报</a></dd>
+
+                        <dd><a href="javascript:void(0);">周报管理</a></dd>
                         <dd><a href="javascript:void(0);">周报审阅</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/ljw/toChatRecordPage"
@@ -95,7 +102,9 @@
                 <li class="layui-nav-item">
                     <a>教务管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:void(0);">课程类别</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/jack/toCourseList"
+                               data-id="课程类别" data-title="课程类别">课程类别</a></dd>
                         <dd><a href="javascript:void(0);">课程管理</a></dd>
                         <dd><a href="javascript:void(0);">试讲培训</a></dd>
                         <dd><a href="javascript:void(0);">值班管理</a></dd>
@@ -133,7 +142,7 @@
                     <a>系统报表</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);">日常考核</a></dd>
-                        <dd><a href="javascript:void(0);">员工请假</a></dd>
+                        <dd><a href="javascript:void(0);">请假管理</a></dd>
                         <dd><a href="javascript:void(0);">未打卡说明</a></dd>
                         <dd><a href="javascript:void(0);">宿舍统计报表</a></dd>
                         <dd><a href="javascript:void(0);">学生请假</a></dd>
@@ -160,7 +169,7 @@
         <div style="height: 93%;width: 100%;">
             <div class="layui-tab layui-tab-brief" lay-filter="demo" lay-allowClose="true">
                 <ul class="layui-tab-title">
-                    <li style="" class="first-tab" lay-id="首页"  >首页</li>
+                    <li style="" class="first-tab" lay-id="首页">首页</li>
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">

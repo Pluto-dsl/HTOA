@@ -143,7 +143,7 @@
             } else if(layEvent === 'del'){ //删除
                 layer.confirm('真的删除此条数据吗?', function(index){
                     obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-                    layer.close(index);
+                    layer.close(index);//关闭提示
                     //向服务端发送删除指令
                     $.post("<%=request.getContextPath()%>/zeroEmp/deleteEmp",{empId:data.empId},function (d) {
                     },"text")
