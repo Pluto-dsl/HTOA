@@ -9,12 +9,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import sun.misc.FDBigInteger;
+
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+/*import java.util.Date;*/
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/emp")
@@ -28,32 +37,17 @@ public class Wtt_EmpsController {
     }
     //周报查询
     @RequestMapping(value = "/selectEmpPaper")
-    public void toEmpPaper(HttpServletResponse response,int page,int limit){
+    public void toEmpPaper(HttpServletResponse response, int page, int limit, HttpServletRequest request){
         response.setContentType("text/html;charset=utf-8");
-        System.out.println("aaaaaa");
         //当前页
-        List<WeeklogVo> list = empService.weekpaper(page,limit);
-        System.out.println(list);
-        JSONArray jsonArray = new JSONArray();
-        for(WeeklogVo weeklogVo:list){
-            EmpVo empVo = empService.emp(weeklogVo.getEmpid());
-            System.out.println(empVo);
-            JSONObject jsonObject1 = new JSONObject();
-            jsonObject1.put("weeklogid",weeklogVo.getWeeklogid());
-            jsonObject1.put("Empid",empVo.getEmpName());
-            jsonObject1.put("Workday",weeklogVo.getWorkday());
-            jsonObject1.put("weekCur",weeklogVo.getWeekCur());
-            jsonObject1.put("studentQuestion",weeklogVo.getStudentQuestion());
-            jsonObject1.put("Idea",weeklogVo.getIdea());
-            jsonObject1.put("weekNext",weeklogVo.getWeekNext());
-            jsonArray.add(jsonObject1);
-        }
+        List<WeeklogVo> list = empService.weekpaper(request,page,limit);
         //获取总行数
-        int rows =empService.pagecount();
+        int rows =empService.pagecount(request);
+        System.out.println("总行数:"+rows);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","提示");
         jsonObject.put("code",0);
-        jsonObject.put("data",jsonArray);
+        jsonObject.put("data",list);
         jsonObject.put("count",rows);
         try {
             PrintWriter pw = response.getWriter();

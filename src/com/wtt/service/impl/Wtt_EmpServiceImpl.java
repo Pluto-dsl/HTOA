@@ -8,14 +8,26 @@ import com.publics.vo.sys.DepVo;
 import com.wtt.service.Wtt_EmpService;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
 public class Wtt_EmpServiceImpl extends BaseDao implements Wtt_EmpService {
     @Override
-    public List<WeeklogVo> weekpaper(int currpage,int pagesize) {
-        return pageByHql("from WeeklogVo",currpage,pagesize);
+    public List<WeeklogVo> weekpaper(HttpServletRequest request,int currpage, int pagesize) {
+        String starttime = request.getParameter("startTime");
+        String endtitme = request.getParameter("endTime");
+        String sql = "select w.weeklogid,e.empName,w.Idea,w.Workday,w.studentQuestion,w.weekCur,w.weekNext from weeklog w\n" +
+                "left join emp e on w.Empid = e.empId\n" +
+                "where w.Workday";
+        if(!("".equals(starttime) || starttime == null)){
+            sql+=" between '"+starttime+"'";
+        }
+        if(!("".equals(endtitme) || endtitme == null)){
+            sql+=" and '"+endtitme+"'";
+        }
+        return pageBySQL(sql,currpage,pagesize);
     }
 
     @Override
@@ -60,8 +72,17 @@ public class Wtt_EmpServiceImpl extends BaseDao implements Wtt_EmpService {
     }
 
     @Override
-    public int pagecount() {
-        return selTotalRow("select count(*) from weeklog");
+    public int pagecount(HttpServletRequest request) {
+        String starttime = request.getParameter("startTime");
+        String endtitme = request.getParameter("endTime");
+        String sql = "select count(*) from weeklog w left join emp e on w.Empid = e.empId where w.Workday";
+        if(!("".equals(starttime) || starttime == null)){
+            sql+=" between '"+starttime+"'";
+        }
+        if(!("".equals(endtitme) || endtitme == null)){
+            sql+=" and '"+endtitme+"'";
+        }
+        System.out.println(sql);
+        return selTotalRow(sql);
     }
-
 }
