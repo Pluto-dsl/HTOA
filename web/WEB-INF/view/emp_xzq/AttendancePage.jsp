@@ -12,9 +12,9 @@
     <jsp:include page="../include.jsp" />
 </head>
 <body>
-<div id="windows" style="margin-left: 5%;display:none;">
-    <form class="layui-form" action="${pageContext.request.contextPath}/jack/Attadd" method="post" >
-        <h2 style="margin-left: 35%" >未打卡说明</h2>
+<%--未打卡弹出层--%>
+<div id="windows1" style="margin-left: 5%;display:none;">
+    <form id="Wfrom" class="layui-form" action="${pageContext.request.contextPath}/jack/Attadd" method="post" >
         <br><br>
         未打卡日期：<div style="margin-right:10px" class="layui-inline">
         <input type="text" name="punckClockTime" class="layui-input" id="clockDate">
@@ -34,13 +34,35 @@
 </div>
 
 <table class="layui-hide" id="test" lay-filter="test"></table>
+
+<%--表格头部按钮--%>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
         <button lay-event="punching" class="layui-btn layui-btn-sm" ><i class="layui-icon layui-icon-add-1" style="font-size: 30px;"></i>未打卡说明</button>
-        <button lay-event="MyApproval"  class="layui-btn layui-btn-sm" ><i class="layui-icon layui-icon-notice" style="font-size: 30px;"></i>我的审批</button>
+        <button lay-event="MyApproval" class="layui-btn layui-btn-sm" ><i class="layui-icon layui-icon-notice" style="font-size: 30px;"></i>我的审批</button>
     </div>
 </script>
-
+<script type="text/javascript">
+    function createTime(v){
+        console.log(v);
+        if(v == undefined || v ==''){
+            return "";
+        }else {
+            var date = new Date(v);
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            m = m < 10 ? '0' + m : m;
+            var d = date.getDate();
+            d = d < 10 ? ("0" + d) : d;
+            var h = date.getHours();
+            h = h < 10 ? ("0" + h) : h;
+            var M = date.getMinutes();
+            M = M < 10 ? ("0" + M) : M;
+            var str = y + "-" + m + "-" + d + " " + h + ":" + M;
+            return str;
+        }
+    }
+</script>
 <script>
     layui.use([ 'element', 'table', 'layer', 'form' ,'laydate'],function() {
         var element = layui.element;
@@ -54,6 +76,7 @@
             elem: '#clockDate' //指定元素
         });
 
+        //考勤列表
         table.render({
             elem: '#test'
             ,url:'${pageContext.request.contextPath}/jack/Att'
@@ -61,17 +84,26 @@
             ,defaultToolbar:{}//自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
             ,title: '用户数据表'
             ,cols: [[
-                {type: 'checkbox', fixed: 'left'},
                 {field:'attId', title:'编号', width:80, fixed: 'left', unresize:true,sort: true}
                 ,{field:'empName', title:'员工姓名', width:120}
-                ,{field:'punckClockTime',templet:'<div>{{ layui.util.toDateString(d.punckClockTime,"yyyy-MM-dd HH:mm:ss")}}</div>', title:'打卡时间', width:200, }
+                //日期转换
+                ,{field:'punckClockTime',templet:'<div>{{layui.util.toDateString(d.punckClockTime,"yyyy-MM-dd HH:mm:ss")}}</div>', title:'打卡时间', width:200, }
                 ,{field:'cause', title:'原因说明', width:120}
                 ,{field:'auditor', title:'审核人', width:100}
-                ,{field:'examineTime',templet:'<div>{{ layui.util.toDateString(d.examineTime,"yyyy-MM-dd HH:mm:ss") }}</div>', title:'审核时间' ,width:200}
+                ,{field:'examineTime',templet:function (d){return createTime(d.examineTime);},title:'审核时间' ,width:200}
                 ,{field:'examineExplain', title:'审核说明', width:120}
-                ,{field:'state', title:'状态', width:120}
+                ,{field:'state',templet:function (d) {
+                        if (d.state === 1) {
+                            return '通过审核'
+                        }else if(d.state === 2) {
+                            return '待审核'
+                        }else if(d.state === 3){
+                            return '申请失败'
+                        }
+                    },title:'状态', width:120}
             ]]
             ,page: true
+            ,limit:5
             ,limits: [5, 15, 20, 30, 40, 50]
             // ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
             //     layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
@@ -83,25 +115,43 @@
 
         });
 
+        //未打卡说明、我的审核   监听表格头的按钮'toolbar(test)'
         table.on('toolbar(test)', function(obj){
             var data = obj.data;
             if(obj.event == 'punching'){
                 layer.open({
                 type: 1,
-                title:'添加未打卡说明',
+                title:'未打卡说明',
                 skin: 'layui-layer-demo', //样式类名
                 closeBtn: 1, //不显示关闭按钮
                 area: ['700px', '450px'],
                 fixed: false, //不固定
                 maxmin: true,
-                shadeClose: true, //开启遮罩关闭
+                shadeClose: false, //开启遮罩关闭
                 //content: ['${pageContext.request.contextPath}/jack/test','no']
-                content: $('#windows')
+                content: $('#windows1'),
+                cancel: function(index, layero){
+                        $("#Wfrom")[0].reset();
+                        layui.form.render();
+                        layer.close(index);
+                        table.reload('test');
+                        return false;
+                    }
                 });
             }else if(obj.event == 'MyApproval'){
                 layer.open({
-                    type: 1,
-                    content:['内容', '#id'] //这里content是一个普通的String
+                    type: 2,
+                    title:'我的审核',
+                    skin: 'layui-layer-demo', //样式类名
+                    closeBtn: 1, //不显示关闭按钮
+                    area: ['1000px', '450px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    shadeClose: false, //开启遮罩关闭
+                    content: ['${pageContext.request.contextPath}/jack/xxx','no'],
+                    cancel: function(index, layero){
+                        table.reload('test');
+                    }
                 });
             }
         });

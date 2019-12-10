@@ -12,7 +12,6 @@ import java.util.List;
  */
 
 
-@Transactional
 public class BaseDao {
     @Resource
     private SessionFactory sessionFactory;
@@ -113,6 +112,22 @@ public class BaseDao {
     }
 
     /**
+     * 根据员工名称查找id
+     * */
+
+    public int getEmpName(String empName){
+        Session session = getSession();
+        SQLQuery sqlQuery = session.createSQLQuery("select empId from emp where empName = '"+empName+"'");
+        List list = sqlQuery.list();
+        int id=0;
+        for (Object obj:list) {
+            id = Integer.parseInt(obj.toString());
+        }
+        return id;
+    }
+
+
+    /**
      * 根据ID获取对象
      *
      * @param clazz
@@ -122,7 +137,7 @@ public class BaseDao {
     public Object getObject(Class clazz, Integer id) {
         Session session = getSession();
         Object obj=  session.get(clazz, id);
-        System.out.println("根据id获取对象："+obj);
+        /*System.out.println("根据id获取对象："+obj);*/
         session.close();
         return obj;
     }

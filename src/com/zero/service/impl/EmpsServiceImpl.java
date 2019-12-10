@@ -19,5 +19,41 @@ public class EmpsServiceImpl extends BaseDao implements EmpsService {
         super.addObject(empVo);
     }
 
+    @Override
+    public void update(EmpVo empVo) {
+        super.updObject(empVo);
+    }
+
+    @Override
+    public List allDep() {
+        return super.listByHql("from DepVo");
+    }
+
+    @Override
+    public void deleteEmp(EmpVo empVo) {
+        super.delObject(empVo);
+    }
+
+    @Override
+    public Map toemp(int empId) {
+        return (Map) super.listBySQL("SELECT e.*,d.depName FROM emp e left join dep d on e.depId = d.depid where e.empId = "+empId).get(0);
+
+    }
+
+    @Override
+    public void resetPwd(int empId) {
+        super.executeSQL("update emp set password = '123456' where empId = "+empId);
+    }
+
+    @Override
+    public List<Map> seekEmp(String sql) {
+        return super.listBySQL("SELECT e.*,d.depName FROM emp e left join dep d on e.depId = d.depid "+sql);
+    }
+
+    @Override
+    public void status(int state, int empId) {
+        super.executeSQL("update emp set status = "+state+" where empId = "+empId);
+    }
+
 
 }
