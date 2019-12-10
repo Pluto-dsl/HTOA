@@ -83,8 +83,10 @@
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);">学生请假</a></dd>
                         <dd><a href="javascript:void(0);">班级管理</a></dd>
-                        <dd><a href="javascript:void(0);">楼栋管理</a></dd>
-                        <dd><a href="javascript:void(0);">宿舍管理</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/toPage/stuFloor"
+                               data-id="部门管理" data-title="楼栋管理">楼栋管理</a></dd>
+                        <dd><a href="javascript:void(0);" >宿舍管理</a></dd>
                         <dd><a href="javascript:void(0);">学生资料</a></dd>
                         <dd><a href="javascript:void(0);">考试成绩</a></dd>
                         <dd><a href="javascript:void(0);">答辩成绩</a></dd>
