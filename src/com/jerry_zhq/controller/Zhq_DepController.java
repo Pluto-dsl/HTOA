@@ -8,6 +8,7 @@ import com.jerry_zhq.service.Zhq_DepService;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.sys.DepVo;
 import javafx.print.Printer;
+import org.codehaus.jackson.map.Module;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,39 +44,121 @@ public class Zhq_DepController {
     @ResponseBody//部门管理，查询部门
     public void seldep(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String type =request.getParameter("type");
-        System.out.println("获取到的type是:"+ type);
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();
 
         if("tree".equals(type)){
-            JSONObject jsonObject = new JSONObject();//总部门
-            JSONArray depJsonArray1 = new JSONArray();//子部门
-            JSONArray depJsonArray2 = new JSONArray();//子部门
+            JSONArray depJsonArray = new JSONArray();
+            List<DepVo> depVoList = new ArrayList<>();
+            List<DepVo> depVoList2 = new ArrayList<>();
+            List<DepVo> depVoList3 = new ArrayList<>();
             //部门
-            List depList = zhqDepService.selDep();
-            System.out.println(depList);
+            List<DepVo> depList = zhqDepService.selDep();
 
-            System.out.println("部门长度是"+depList.size());
-            for (int i = 0; i < depList.size(); i++) {
-                DepVo dep = (DepVo) depList.get(i);
-                if(dep.getParentId() == 0){
-                    jsonObject.put("title",dep.getDepName());
-                }else if(dep.getParentId() == 1){
-                    Map map = new HashMap();
-                    map.put("title",dep.getDepName());
-                    depJsonArray2.add(map);
+            for (DepVo depVo1:depList) {//最高部门
+                if(depVo1.getParentId() == 0){
+                    depVoList.add(depVo1);
                 }
             }
-            jsonObject.put("children",depJsonArray2);
-            depJsonArray1.add(jsonObject);
 
-            System.out.println(depJsonArray1.toJSONString());
-            out.print(depJsonArray1.toJSONString());
+            for (DepVo depVo:depVoList) {//最高部门
+                Map map = new HashMap();
+                map.put("title",depVo.getDepName());
+                map.put("id",depVo.getDepid());
+
+                JSONArray jsonArray = new JSONArray();
+
+                for (DepVo depVo1:depList){
+                    if(depVo1.getParentId() == depVo.getDepid()){//第二阶
+                        Map chilDep = new HashMap();
+                        chilDep.put("title",depVo1.getDepName());
+                        chilDep.put("id",depVo1.getDepid());
+                        jsonArray.add(chilDep);
+                    }
+                }
+                map.put("children",jsonArray);
+                depJsonArray.add(map);
+            }
+            out.print(depJsonArray.toJSONString());
+
         }
     }
 
     @RequestMapping("/selDepAll")
-    public String selDepAll(){
-        return "emp_zhq/depSel";
+    public void selDepAll(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String type =request.getParameter("type");
+        String name = request.getParameter("name");
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter out = response.getWriter();
+
+        if("treeOpen".equals(type)){
+            List<DepVo> list = zhqDepService.selDepAll(name);
+            List<DepVo> depVos = zhqDepService.selDep();
+            JSONObject jsonObject = new JSONObject();
+            for (DepVo d :depVos) {
+                System.out.println("进来了");
+                for (DepVo deVo: list) {
+                    if(deVo.getParentId() ==d.getDepid()){
+                        jsonObject.put("parentId",d.getDepName());//父部门名称
+                    }
+                    jsonObject.put("depName",deVo.getDepName());//部门名称
+                    /*jsonObject.put("parentId",deVo.getParentId());*/
+                    jsonObject.put("chaiman",deVo.getChairman());//部门负责人
+                    jsonObject.put("personnel",deVo.getPersonnel());//是否为人事部
+                    jsonObject.put("remark",deVo.getRemark());//备注
+                    request.setAttribute("depName",deVo.getDepName());
+                }
+            }
+
+            out.print(jsonObject);
+        }
     }
+
+    //添加部门
+    @RequestMapping("/selDep")
+    public String selDep(HttpServletRequest request){
+        List<DepVo> depList = zhqDepService.selDep();//查部门
+        List<EmpVo> empList = zhqDepService.selEmp();//查员工
+        request.setAttribute("depList",depList);
+        request.setAttribute("empList",empList);
+        return "emp_zhq/addDep";
+    }
+
+    @RequestMapping("/addDep")
+    @ResponseBody
+    public String addDep(DepVo depVo){
+        System.out.println("点击了添加");
+        zhqDepService.addDep(depVo);
+        return "success";
+    }
+
+    //修改
+    @RequestMapping("/delUpdate")
+    @ResponseBody
+    public String delUpdate(HttpServletRequest request){
+        String depName = request.getParameter("depName");
+        int deptId = Integer.parseInt(request.getParameter("deptId"));
+        DepVo depVo = zhqDepService.selById(deptId);
+
+
+        depVo.setDepName(depName);
+
+        zhqDepService.updateDep(depVo);
+
+        return "success";
+    }
+
+    //删除
+    @RequestMapping("/delDept")
+    @ResponseBody
+    public String delDept(HttpServletRequest request){
+        int depId = Integer.valueOf(request.getParameter("depId"));
+        DepVo depVo1 = new DepVo();
+        depVo1.setDepid(depId);
+        zhqDepService.deleteDep(depVo1);
+
+        return "success";
+    }
+
+
 }

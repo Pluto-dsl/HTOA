@@ -2,6 +2,7 @@ package com.pluto.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.pluto.service.Pluto_LeaveService;
+import com.publics.vo.empModel.HolidayVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,27 +29,22 @@ public class Pluto_LeaveController {
 
     @RequestMapping("/addLeave")
     @ResponseBody
-    public void addLeave(){
-
-
+    public void addLeave(HttpServletResponse response,HttpServletRequest request) throws IOException {
+        service.addLeave(request);
+        PrintWriter out = response.getWriter();
+        out.print("1");
+        out.flush();
+        out.close();
     }
 
-    /*@RequestMapping("/returnData")
+    @RequestMapping("/returnData")
     @ResponseBody
-    public void responseData(HttpServletResponse response){
+    public void responseData(HttpServletResponse response) throws IOException {
         response.setContentType("text/html;charset=utf-8");
-        JSONObject json = new JSONObject();
-        json.put("code",0);
-        json.put("msg","员工请假表");
-        json.put("count",1000);
-        System.out.println(json.toJSONString());
-        try {
-            PrintWriter out = response.getWriter();
-            out.print(json.toJSONString());
-            out.flush();
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
+        String json = service.getLeaveList("select * from holiday");
+        PrintWriter out = response.getWriter();
+        out.print(json);
+        out.close();
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.publics.dao;
 
+import com.publics.vo.sys.DepVo;
 import org.hibernate.*;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -164,5 +165,15 @@ public class BaseDao {
         session.flush();
         session.close();
     }
+
+    //删改dep
+    public DepVo selId(Integer deptId) {
+        Session session = sessionFactory.openSession();
+        DepVo deptVO = (DepVo) session.createQuery("from DepVo where depid = "+deptId).uniqueResult();
+        session.close();
+        return deptVO;
+    }
+
+
 
 }
