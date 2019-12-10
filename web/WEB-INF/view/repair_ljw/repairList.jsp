@@ -1,9 +1,10 @@
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: norman
-  Date: 2019/12/4
-  Time: 11:20
+  Date: 2019/12/8
+  Time: 20:31
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -14,66 +15,12 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>谈心记录</title>
+    <title>维修管理</title>
     <jsp:include page="${pageContext.request.contextPath}/toPage/include"/>
 </head>
 <body>
-<div id="windows" style="margin-left: 5%;display: none;">
-    <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/ljw/newChatRecord" method="post">
-        <br><br>
-        <input id="chatIds" type="hidden" name="Chatid">
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">日期选择</label>
-                <div class="layui-input-block">
-                    <input type="text" id="chatDate" name="chatDate" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">输入地址</label>
-                <div class="layui-input-block">
-                    <input id="addr" type="text" name="addr" placeholder="请输入" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">选择学生</label>
-                <div class="layui-input-inline">
-                    <select id="sayface" name="sayface" class="layui-select">
-                        <c:forEach items="${requestScope.stuList}" var="stu">
-                            <option value="${stu.studid}">${stu.stuname}</option>
-                        </c:forEach>
-                    </select>
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">选择员工</label>
-                <div class="layui-input-inline">
-                    <select id="teacher" name="teacher" class="layui-select">
-                        <c:forEach items="${requestScope.empList}" var="emp">
-                            <option value="${emp.empId}">${emp.empName}</option>
-                        </c:forEach>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">谈心内容</label>
-            <div class="layui-input-block" style="width: 515px">
-                <textarea id="sayscon" name="sayscon" placeholder="在此输入谈心的内容" class="layui-textarea"></textarea>
-            </div>
-        </div>
-        <br>
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-            </div>
-        </div>
-    </form>
-</div>
-<table id="chatRecordList" lay-filter="test"></table>
+
+<table id="repair" lay-filter="test"></table>
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
@@ -90,20 +37,13 @@
     layui.use('table', function(){
         var table = layui.table;
         table.render({
-            elem: '#chatRecordList'
-            ,url:'${pageContext.request.contextPath}/ljw/getChatRecordData'
-            ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
-            ,defaultToolbar: ['filter', 'exports', 'print']
-            ,title: '用户数据表'
+            elem: '#repair'
+            ,url:'${pageContext.request.contextPath}/logs/getRepairData'
+            ,title: '维修管理'
             ,cols: [[
                 {type: 'checkbox', fixed: 'left'}
                 ,{field:'chatId', title:'ID', width:60, fixed: 'left', unresize: true, sort: true}
-                ,{field:'sayFace', title:'学生名称', width:90, fixed: 'left'}
-                ,{field:'teacher', title:'员工名称', width:90, fixed: 'left'}
-                ,{field:'chatDate', title:'时间', width:120, fixed: 'left'}
-                ,{field:'addr', title:'地址', width:170, fixed: 'left'}
-                ,{field:'sayscon', title:'谈心内容',width: '45%', minWidth: 200, fixed: 'left'}
-                ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:120}
+
             ]]
             ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
@@ -146,6 +86,8 @@
                         $(data).each(function (index,elemnt) {
                             delChatRecord(elemnt.chatId)
                         });
+                    }, function(){
+
                     });
                     break;
             }

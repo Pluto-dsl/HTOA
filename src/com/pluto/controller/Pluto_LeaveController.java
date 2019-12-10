@@ -33,16 +33,14 @@ public class Pluto_LeaveController {
 
     }
 
-    @RequestMapping("/returnData")
+    /*@RequestMapping("/returnData")
     @ResponseBody
     public void responseData(HttpServletResponse response){
-        /*response.setContentType("text/html;charset=utf-8");
-        List<Map> list = service.getLeaveList("select * from holiday");
+        response.setContentType("text/html;charset=utf-8");
         JSONObject json = new JSONObject();
         json.put("code",0);
         json.put("msg","员工请假表");
         json.put("count",1000);
-        json.put("data",list);
         System.out.println(json.toJSONString());
         try {
             PrintWriter out = response.getWriter();
@@ -51,6 +49,6 @@ public class Pluto_LeaveController {
             out.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
-    }
+        }
+    }*/
 }

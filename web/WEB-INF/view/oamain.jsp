@@ -100,9 +100,7 @@
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toCourseList"
                                data-id="课程类别" data-title="课程类别">课程类别</a></dd>
-                        <dd><a href="javascript:void(0);"  class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/jack/toCourseManagement"
-                               data-id="课程管理" data-title="课程管理">课程管理</a></dd>
+                        <dd><a href="javascript:void(0);">课程管理</a></dd>
                         <dd><a href="javascript:void(0);">试讲培训</a></dd>
                         <dd><a href="javascript:void(0);">值班管理</a></dd>
                     </dl>
@@ -187,9 +185,6 @@
     layui.use('element', function(){
         var element = layui.element;
         var $ = layui.jquery;
-
-        $(".first-tab").trigger('click');
-
         //触发事件
         var active = {
             //在这里给active绑定几项事件，后面可通过active调用这些事件
