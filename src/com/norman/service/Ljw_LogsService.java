@@ -9,6 +9,8 @@ import java.util.Map;
 
 public interface Ljw_LogsService {
     void newRepair(EquipmentRepairVo repairVo);
-    JSONArray getMyEmpRepairData(HttpServletRequest request,int depId, int page, int limit);
-    int getMyEmpRepairSize(int empId);
+    JSONArray getRepairData(HttpServletRequest request,int userType, int page, int limit);
+    JSONArray getMyEmpRepairData(HttpServletRequest request,int userId,int page,int limit);
+    int getRepairSize(int userType);
+    int getMyEmpRepairSize(int userId);
 }
