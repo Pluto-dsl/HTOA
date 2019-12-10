@@ -59,14 +59,12 @@
                     <dl class="layui-nav-child">
                         <%-- 例子  可修改 照着写就行了 --%>
                         <dd><a href="javascript:void(0);">部门管理</a></dd>
-                        <dd><a href="javascript:void(0);" >员工资料</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/zeroEmp/toemp"
+                               data-id="员工资料" data-title="员工资料" >员工资料</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/ljw/toWeekLogPage"
                                data-id="周报管理" data-title="周报管理" >周报管理</a></dd>
-                        <dd>
-                        <dd><a href="javascript:void(0);">员工资料</a></dd>
-                               data-url="<%=request.getContextPath()%>/zero/toemp"
-                               data-id="员工资料" data-title="员工资料" >员工资料</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/emp/toEmpPaper"
                                data-id="我的周报" data-title="我的周报" >我的周报</a></dd>

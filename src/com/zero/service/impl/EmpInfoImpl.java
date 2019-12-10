@@ -4,10 +4,13 @@ import com.publics.dao.BaseDao;
 import com.publics.vo.empModel.emp.EducationVo;
 import com.publics.vo.empModel.emp.FamilyInfoVo;
 import com.publics.vo.empModel.emp.JobVo;
+import com.publics.vo.file.AnnexVo;
 import com.zero.service.EmpInfo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class EmpInfoImpl extends BaseDao implements EmpInfo {
     @Override
@@ -65,5 +68,21 @@ public class EmpInfoImpl extends BaseDao implements EmpInfo {
     @Override
     public void delfamilyInfo(String allid) {
         super.executeSQL("delete from familyInfo where familyid in ("+allid+")");
+    }
+
+    @Override
+    public List<Map> annex(int empId) {
+        return super.listBySQL("select a.*,e.empName from annex a left join emp e on a.seId = e.empId " +
+                "where e.empId = "+empId);
+    }
+
+    @Override
+    public void addAnnex(AnnexVo annexVo) {
+        super.addObject(annexVo);
+    }
+
+    @Override
+    public void delAnnex(String allid) {
+        super.executeSQL("delete from annex where annexId in ("+allid+")");
     }
 }
