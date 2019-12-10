@@ -1,9 +1,11 @@
 package com.jack.service;
 
 import com.publics.vo.educ.CourseTypeVo;
+import com.publics.vo.educ.CourseVo;
 import com.publics.vo.empModel.AttendanceVo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface Jack_Service {
     /**
@@ -25,5 +27,17 @@ public interface Jack_Service {
     int delCourse(int id);
     int AddCurse(CourseTypeVo courseTypeVo);
 
+    /**
+     *  课程管理业务
+     * */
+    List selCourseMgt(int currPage, int pageSize); //查询课程管理表
+    int selCouCountM(); //获取课程总数
+    List selCourseName();//获取课程类型种类
+    void addCourseMgt(CourseVo courseVo); //添加课程
+    void updateCourseMgt(CourseVo courseVo); //修改课程
+    int delCourseMgt(int cid); //删除课程
 
+    /** 登录 */
+    Map TLoginUser(String user);
+    Map SLoginUser(String user);
 }

@@ -1,5 +1,6 @@
 package com.publics.dao;
 
+import com.publics.vo.empModel.emp.EmpVo;
 import org.hibernate.*;
 import org.springframework.transaction.annotation.Transactional;
 

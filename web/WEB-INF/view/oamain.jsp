@@ -55,18 +55,14 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                 <li class="layui-nav-item">
-                    <a href="#">员工管理</a>
+                    <a href="javascript:;">员工管理</a>
                     <dl class="layui-nav-child">
                         <%-- 例子  可修改 照着写就行了 --%>
                         <dd><a href="javascript:void(0);">部门管理</a></dd>
-                        <dd><a href="javascript:void(0);" >员工资料</a></dd>
+                        <dd><a href="javascript:void(0);">员工资料</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/ljw/toWeekLogPage"
                                data-id="周报管理" data-title="周报管理" >周报管理</a></dd>
-                        <dd>
-                        <dd><a href="javascript:void(0);">我的周报</a></dd>
-                               data-url="<%=request.getContextPath()%>/zero/toemp"
-                               data-id="员工资料" data-title="员工资料" >员工资料</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/emp/toEmpPaper"
                                data-id="我的周报" data-title="我的周报" >我的周报</a></dd>
@@ -79,8 +75,7 @@
                         <dd>
                             <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/empLeave/toleave"
-                               data-id="员工请假" data-title="员工请假">员工请假</a>
-                        </dd>
+                               data-id="员工请假" data-title="员工请假">员工请假</a></dd>
 
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toAtt"
@@ -88,7 +83,7 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a>学生管理</a>
+                    <a href="javascript:;" >学生管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);">学生请假</a></dd>
                         <dd><a href="javascript:void(0);">班级管理</a></dd>
@@ -100,25 +95,27 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a>教务管理</a>
+                    <a href="javascript:;">教务管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toCourseList"
                                data-id="课程类别" data-title="课程类别">课程类别</a></dd>
-                        <dd><a href="javascript:void(0);">课程管理</a></dd>
+                        <dd><a href="javascript:void(0);"  class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/jack/toCourseManagement"
+                               data-id="课程管理" data-title="课程管理">课程管理</a></dd>
                         <dd><a href="javascript:void(0);">试讲培训</a></dd>
                         <dd><a href="javascript:void(0);">值班管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a>后勤管理</a>
+                    <a href="javascript:;">后勤管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);">报修申请</a></dd>
                         <dd><a href="javascript:void(0);">维修管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a>考核管理</a>
+                    <a href="javascript:;">考核管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);">考核指标</a></dd>
                         <dd><a href="javascript:void(0);">考核录入</a></dd>
@@ -127,19 +124,19 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a>问题反馈</a>
+                    <a href="javascript:;">问题反馈</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">问题反馈</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a>文件管理</a>
+                    <a href="javascript:;">文件管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">资料文档</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a>系统报表</a>
+                    <a href="javascript:;">系统报表</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);">日常考核</a></dd>
                         <dd><a href="javascript:void(0);">请假管理</a></dd>
@@ -149,13 +146,13 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a>通知公告</a>
+                    <a href="javascript:;">通知公告</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">通知公告</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a>系统设置</a>
+                    <a href="javascript:;">系统设置</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);">权限管理</a></dd>
                         <dd><a href="javascript:void(0);">流程管理</a></dd>
@@ -190,6 +187,9 @@
     layui.use('element', function(){
         var element = layui.element;
         var $ = layui.jquery;
+
+        $(".first-tab").trigger('click');
+
         //触发事件
         var active = {
             //在这里给active绑定几项事件，后面可通过active调用这些事件
@@ -217,7 +217,6 @@
                 })
             }
         };
-
 
         //当点击有site-demo-active属性的标签时，即左侧菜单栏中内容 ，触发点击事件
         $('.site-demo-active').on('click', function() {
