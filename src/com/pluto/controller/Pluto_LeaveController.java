@@ -30,6 +30,7 @@ public class Pluto_LeaveController {
     @RequestMapping("/addLeave")
     @ResponseBody
     public void addLeave(HttpServletResponse response,HttpServletRequest request) throws IOException {
+        System.out.println("添加请假方法!");
         service.addLeave(request);
         PrintWriter out = response.getWriter();
         out.print("1");
