@@ -12,8 +12,8 @@ import javax.persistence.*;
 public class StudentClassVo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int classId;//主键
-    private String classNo;//班级编号
+    private int classidl;//主键
+    private String classno;//班级编号
     private String className;//班级名称
     private int count;//班级人数
     private String teacher;//授课老师    员工表外键
@@ -23,109 +23,4 @@ public class StudentClassVo {
     private int falled;//关联班级类别
     private int deptId;//关联系
     private int majorId;//关联专业表
-
-    @Override
-    public String toString() {
-        return "StudentClassVo{" +
-                "classId=" + classId +
-                ", classNo='" + classNo + '\'' +
-                ", className='" + className + '\'' +
-                ", count=" + count +
-                ", teacher='" + teacher + '\'' +
-                ", classTeacher='" + classTeacher + '\'' +
-                ", classType=" + classType +
-                ", remark='" + remark + '\'' +
-                ", falled=" + falled +
-                ", deptId=" + deptId +
-                ", majorId=" + majorId +
-                '}';
-    }
-
-    public int getClassId() {
-        return classId;
-    }
-
-    public void setClassId(int classId) {
-        this.classId = classId;
-    }
-
-    public String getClassNo() {
-        return classNo;
-    }
-
-    public void setClassNo(String classNo) {
-        this.classNo = classNo;
-    }
-
-    public String getClassName() {
-        return className;
-    }
-
-    public void setClassName(String className) {
-        this.className = className;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public String getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(String teacher) {
-        this.teacher = teacher;
-    }
-
-    public String getClassTeacher() {
-        return classTeacher;
-    }
-
-    public void setClassTeacher(String classTeacher) {
-        this.classTeacher = classTeacher;
-    }
-
-    public int getClassType() {
-        return classType;
-    }
-
-    public void setClassType(int classType) {
-        this.classType = classType;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public int getFalled() {
-        return falled;
-    }
-
-    public void setFalled(int falled) {
-        this.falled = falled;
-    }
-
-    public int getDeptId() {
-        return deptId;
-    }
-
-    public void setDeptId(int deptId) {
-        this.deptId = deptId;
-    }
-
-    public int getMajorId() {
-        return majorId;
-    }
-
-    public void setMajorId(int majorId) {
-        this.majorId = majorId;
-    }
 }

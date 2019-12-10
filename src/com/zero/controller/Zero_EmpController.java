@@ -90,7 +90,7 @@ public class Zero_EmpController {
         return "true";
     }
     @RequestMapping(value = "/seek")
-    @ResponseBody
+    @ResponseBody//根据条件搜索员工
     public void seek(int depId,String empName,String Phone,int status,HttpServletResponse response) throws IOException {
         String tiaojian = "where 1=1 ";
         empName = StringUtill.tostring(empName);
@@ -120,7 +120,10 @@ public class Zero_EmpController {
     }
     @RequestMapping(value = "/status")
     @ResponseBody
-    public void status(int state,int empId){
+    public void status(int empId){//修改员工状态
+        //先查询当前用户的状态
+        int state = empService.statue(empId) == 1?0:1;
+        //修改状态
         empService.status(state,empId);
     }
 }
