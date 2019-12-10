@@ -22,6 +22,12 @@
         .layui-layout-admin .layui-logo{
             font-size: 30px;
         }
+        a{
+            cursor:pointer;
+        }
+        .layui-tab-content {
+            padding: 0px;
+        }
 
     </style>
 </head>
@@ -31,9 +37,8 @@
         <div class="layui-logo">HTOA</div>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
-                <a href="javascript:;">
-                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    贤心
+                <a href="javascript:void(0);">
+                    未登入
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">切换账号</a></dd>
@@ -45,43 +50,43 @@
         </ul>
     </div>
 
-    <div class="layui-side layui-bg-black">
+    <div class="layui-side layui-bg-black" onselectstart="return flase">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                 <li class="layui-nav-item">
-                    <a>员工管理</a>
+                    <a href="#">员工管理</a>
                     <dl class="layui-nav-child">
-                        <dd>
-                            <%-- 例子  可修改 照着写就行了 --%>
-                            <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/toPage/dep"
-                               data-id="部门管理" data-title="部门管理">部门管理</a>
-                        </dd>
-                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="<%=request.getContextPath()%>/zeroEmp/toemp"
-                               data-id="员工资料" data-title="员工资料" >员工资料</a></dd>
+                        <%-- 例子  可修改 照着写就行了 --%>
+                        <dd><a href="javascript:void(0);">部门管理</a></dd>
+                        <dd><a href="javascript:void(0);" >员工资料</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/emp/toEmpPaper"
                                data-id="我的周报" data-title="我的周报" >我的周报</a></dd>
-
-                        <dd><a href="javascript:void(0);">周报管理</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/ljw/toWeekLogPage"
+                               data-id="周报管理" data-title="周报管理" >周报管理</a></dd>
                         <dd><a href="javascript:void(0);">周报审阅</a></dd>
-                        <dd><a href="javascript:void(0);">谈心记录</a></dd>
-
-                        <dd><a href="javascript:void(0);">请假管理</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/ljw/toChatRecordPage"
+                               data-id="谈心记录" data-title="谈心记录" >谈心记录</a></dd>
+                        <dd>
+                            <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/empLeave/toleave"
+                               data-id="员工请假" data-title="员工请假">员工请假</a>
+                        </dd>
 
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/empLeave/toleave"
-                               data-id="员工请假" data-title="员工请假">员工请假</a></dd>
-
-                        <dd><a href="javascript:void(0);">考勤管理</a></dd>
+                               data-url="${pageContext.request.contextPath}/jack/toAtt"
+                               data-id="考勤管理" data-title="考勤管理">考勤管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a>学生管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:void(0);">学生请假</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/student/leave"
+                               data-id="学生请假" data-title="学生请假" >学生请假</a></dd>
                         <dd><a href="javascript:void(0);">班级管理</a></dd>
                         <dd><a href="javascript:void(0);">楼栋管理</a></dd>
                         <dd><a href="javascript:void(0);">宿舍管理</a></dd>
@@ -93,17 +98,25 @@
                 <li class="layui-nav-item">
                     <a>教务管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:void(0);">课程类别</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/jack/toCourseList"
+                               data-id="课程类别" data-title="课程类别">课程类别</a></dd>
                         <dd><a href="javascript:void(0);">课程管理</a></dd>
-                        <dd><a href="javascript:void(0);">试讲培训</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/training/rehearsal_trainingPage"
+                               data-id="试讲培训" data-title="试讲培训" >试讲培训</a></dd>
                         <dd><a href="javascript:void(0);">值班管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a>后勤管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:void(0);">报修申请</a></dd>
-                        <dd><a href="javascript:void(0);">维修管理</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/logs/toMyRepair"
+                               data-id="报修申请" data-title="报修申请" >报修申请</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/logs/toRepairPage"
+                               data-id="维修管理" data-title="维修管理" >维修管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -131,7 +144,7 @@
                     <a>系统报表</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);">日常考核</a></dd>
-                        <dd><a href="javascript:void(0);">员工请假</a></dd>
+                        <dd><a href="javascript:void(0);">请假管理</a></dd>
                         <dd><a href="javascript:void(0);">未打卡说明</a></dd>
                         <dd><a href="javascript:void(0);">宿舍统计报表</a></dd>
                         <dd><a href="javascript:void(0);">学生请假</a></dd>
@@ -158,7 +171,7 @@
         <div style="height: 93%;width: 100%;">
             <div class="layui-tab layui-tab-brief" lay-filter="demo" lay-allowClose="true">
                 <ul class="layui-tab-title">
-                    <li style="" class="first-tab" lay-id="首页"  >首页</li>
+                    <li style="" class="first-tab" lay-id="首页">首页</li>
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
@@ -187,7 +200,7 @@
                 //关于tabAdd的方法所传入的参数可看layui的开发文档中基础方法部分
                 element.tabAdd('demo', {
                     title: name,
-                    content: '<iframe data-frameid="'+id+'" scrolling="no" frameborder="0" src="'+url+'" style="width:100%;height: 100%" id="test"></iframe>',
+                    content: '<iframe data-frameid="'+id+'" frameborder="0" src="'+url+'" style="width:100%;height: 100%" id="test"></iframe>',
                     id: id //规定好的id
                 });
                 element.render('tab');

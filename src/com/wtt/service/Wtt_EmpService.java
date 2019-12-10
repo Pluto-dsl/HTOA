@@ -1,18 +1,22 @@
 package com.wtt.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.publics.vo.empModel.WeeklogVo;
+import com.publics.vo.empModel.emp.EmpVo;
 
 import java.util.List;
-import java.util.Map;
 
 public interface Wtt_EmpService {
-    List<Map> weekpaper();
+    List<WeeklogVo> weekpaper(int currpage,int pagesize);
     //新增周报
     void add(WeeklogVo weeklogVo);
     //根据id所对应的对象
-    WeeklogVo wekk(int id);
+    JSONObject wekk(int id);
+    EmpVo emp(int id);
     //修改
     void update(WeeklogVo weeklogVo);
     //删除
     void delete(int id);
+    //查询总页数
+    int pagecount();
 }

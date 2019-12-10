@@ -1,21 +1,20 @@
 package com.wtt.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.publics.vo.empModel.WeeklogVo;
+import com.publics.vo.empModel.emp.EmpVo;
 import com.wtt.service.Wtt_EmpService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/emp")
@@ -29,14 +28,33 @@ public class Wtt_EmpsController {
     }
     //周报查询
     @RequestMapping(value = "/selectEmpPaper")
-    public void toEmpPaper(HttpServletResponse response){
+    public void toEmpPaper(HttpServletResponse response,int page,int limit){
         response.setContentType("text/html;charset=utf-8");
-        List<Map> list = empService.weekpaper();
+        System.out.println("aaaaaa");
+        //当前页
+        List<WeeklogVo> list = empService.weekpaper(page,limit);
+        System.out.println(list);
+        JSONArray jsonArray = new JSONArray();
+        for(WeeklogVo weeklogVo:list){
+            EmpVo empVo = empService.emp(weeklogVo.getEmpid());
+            System.out.println(empVo);
+            JSONObject jsonObject1 = new JSONObject();
+            jsonObject1.put("weeklogid",weeklogVo.getWeeklogid());
+            jsonObject1.put("Empid",empVo.getEmpName());
+            jsonObject1.put("Workday",weeklogVo.getWorkday());
+            jsonObject1.put("weekCur",weeklogVo.getWeekCur());
+            jsonObject1.put("studentQuestion",weeklogVo.getStudentQuestion());
+            jsonObject1.put("Idea",weeklogVo.getIdea());
+            jsonObject1.put("weekNext",weeklogVo.getWeekNext());
+            jsonArray.add(jsonObject1);
+        }
+        //获取总行数
+        int rows =empService.pagecount();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","提示");
         jsonObject.put("code",0);
-        jsonObject.put("data",list);
-        jsonObject.put("count",1);
+        jsonObject.put("data",jsonArray);
+        jsonObject.put("count",rows);
         try {
             PrintWriter pw = response.getWriter();
             pw.print(jsonObject.toJSONString());
@@ -61,14 +79,11 @@ public class Wtt_EmpsController {
     }
 
     //根据id查找对象
-    @RequestMapping(value = "/updateEmpPaper")
-    public void updateEmpPaperPage(int id,HttpServletResponse response,ModelMap modelMap){
+   /* @RequestMapping(value = "/updateEmpPaper")
+    public void updateEmpPaperPage(int id,HttpServletResponse response){
         List list = (List) empService.wekk(id);
-        System.out.println(list);/*
-        modelMap.addAttribute("list",list);*/
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("list",list);
-        System.out.println("aaaaaaa");
         try {
             PrintWriter pw = response.getWriter();
             pw.println(jsonObject.toJSONString());
@@ -77,6 +92,13 @@ public class Wtt_EmpsController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+*/
+    //修改操作
+    @RequestMapping(value = "/update")
+    public String update(WeeklogVo weeklogVo){
+        empService.update(weeklogVo);
+        return "redirect:/emp/toEmpPaper";
     }
 
     //删除
@@ -92,5 +114,12 @@ public class Wtt_EmpsController {
             e.printStackTrace();
         }
         return "redirect:/emp/selectEmpPaper";
+    }
+
+    //去到查看周报页面
+    @RequestMapping(value = "/lookEmpPaperPage/{id}")
+    public String lookEmpPaperPage(@PathVariable(value = "id") int id, ModelMap modelMap){
+        modelMap.addAttribute("list",empService.wekk(id));
+        return "emp_wtt/mynewpaper";
     }
 }
