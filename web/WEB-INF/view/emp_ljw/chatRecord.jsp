@@ -15,13 +15,13 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>谈心记录</title>
-    <jsp:include page="${pageContext.request.contextPath}/toPage/include"/>
+    <jsp:include page="../include.jsp"/>
 </head>
 <body>
 <div id="windows" style="margin-left: 5%;display: none;">
     <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/ljw/newChatRecord" method="post">
         <br><br>
-        <input id="chatId" type="hidden" name="Chatid">
+        <input id="chatId" type="hidden" name="chatIds">
         <div class="layui-form-item">
             <div class="layui-inline">
                 <label class="layui-form-label">日期选择</label>
@@ -141,13 +141,16 @@
                     msg = msg.substr(0,msg.length-1);
                     msg +="的记录吗?";
                     layer.confirm(msg, {
-                        btn: ['是的','取消'] //按钮
-                    }, function(){
+                        btn: ['是的','取消']
+                        //按钮
+                    }, function(index){
                         $(data).each(function (index,elemnt) {
                             delChatRecord(elemnt.chatId)
                         });
-                    }, function(){
-
+                        obj.del();
+                        layer.close(index);
+                    },function (index) {
+                        layer.close(index);
                     });
                     break;
             }
@@ -157,7 +160,7 @@
         table.on('tool(test)', function(obj){
             var data = obj.data;
             if(obj.event === 'del'){
-                layer.confirm('真的删除行么', function(index){
+                layer.confirm('是要删除这条记录吗', function(index){
                     obj.del();
                     layer.close(index);
                     delChatRecord(obj.data.chatid)
@@ -197,7 +200,7 @@
                 //打开窗口
                 layer.open({
                     type: 1,
-                    title:'添加谈心记录',
+                    title:'修改谈心记录',
                     skin: 'layui-layer-demo', //样式类名
                     closeBtn: 1, //是否显示关闭按钮
                     area: ['700px', '420px'],

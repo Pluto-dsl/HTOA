@@ -50,7 +50,7 @@
         </ul>
     </div>
 
-    <div class="layui-side layui-bg-black">
+    <div class="layui-side layui-bg-black" onselectstart="return flase">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
@@ -104,15 +104,21 @@
                                data-url="${pageContext.request.contextPath}/jack/toCourseList"
                                data-id="课程类别" data-title="课程类别">课程类别</a></dd>
                         <dd><a href="javascript:void(0);">课程管理</a></dd>
-                        <dd><a href="javascript:void(0);">试讲培训</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/training/rehearsal_trainingPage"
+                               data-id="试讲培训" data-title="试讲培训" >试讲培训</a></dd>
                         <dd><a href="javascript:void(0);">值班管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a>后勤管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:void(0);">报修申请</a></dd>
-                        <dd><a href="javascript:void(0);">维修管理</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/logs/toMyRepair"
+                               data-id="报修申请" data-title="报修申请" >报修申请</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/logs/toRepairPage"
+                               data-id="维修管理" data-title="维修管理" >维修管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -140,7 +146,7 @@
                     <a>系统报表</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);">日常考核</a></dd>
-                        <dd><a href="javascript:void(0);">请假管理</a></dd>
+                        <dd><a href="javascript:void(0);">员工请假</a></dd>
                         <dd><a href="javascript:void(0);">未打卡说明</a></dd>
                         <dd><a href="javascript:void(0);">宿舍统计报表</a></dd>
                         <dd><a href="javascript:void(0);">学生请假</a></dd>
@@ -167,7 +173,7 @@
         <div style="height: 93%;width: 100%;">
             <div class="layui-tab layui-tab-brief" lay-filter="demo" lay-allowClose="true">
                 <ul class="layui-tab-title">
-                    <li style="" class="first-tab" lay-id="首页">首页</li>
+                    <li style="" class="first-tab" lay-id="首页"  >首页</li>
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">

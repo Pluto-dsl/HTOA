@@ -1,6 +1,8 @@
 package com.publics.vo.feedback;
 
 import javax.persistence.*;
+import java.util.Date;
+
 /**
  * 问题反馈管理
  *  反馈管理主要功能有、学生可以对问题进行反馈
@@ -14,18 +16,21 @@ public class FeedbackVo {
     private int feedbackId;//主键，标识列，自动生成
     private int feedBackType;//1：员工，2学生
     private int empId;//部门编号
-    private int empName;//获取session中学生班级及姓名或员工姓名
-    private int feedbackTime;//反馈时间，获取系统时间
-    private int remark;//建议
-    private int image;//图片
+    private String empName;//获取session中学生班级及姓名或员工姓名
+    private Date feedbackTime;//反馈时间，获取系统时间
+    private String remark;//建议
+    private String image;//图片
     private int status;//1 未处理 2 已处理
-    private int depId;//部门
-    private int opinion;//审批意见
+    private String depId;//部门
+    private String opinion;//审批意见
 
     public FeedbackVo() {
+
     }
 
-    public FeedbackVo(int feedBackType, int empId, int empName, int feedbackTime, int remark, int image, int status, int depId, int opinion) {
+
+    public FeedbackVo(int feedbackId,int feedBackType, int empId, String empName, Date feedbackTime, String remark, String image, int status, String depId, String opinion) {
+        this.feedbackId = feedbackId;
         this.feedBackType = feedBackType;
         this.empId = empId;
         this.empName = empName;
@@ -35,22 +40,6 @@ public class FeedbackVo {
         this.status = status;
         this.depId = depId;
         this.opinion = opinion;
-    }
-
-    @Override
-    public String toString() {
-        return "FeedbackVo{" +
-                "feedbackId=" + feedbackId +
-                ", feedBackType=" + feedBackType +
-                ", empId=" + empId +
-                ", empName=" + empName +
-                ", feedbackTime=" + feedbackTime +
-                ", remark=" + remark +
-                ", image=" + image +
-                ", status=" + status +
-                ", depId=" + depId +
-                ", opinion=" + opinion +
-                '}';
     }
 
     public int getFeedbackId() {
@@ -77,35 +66,35 @@ public class FeedbackVo {
         this.empId = empId;
     }
 
-    public int getEmpName() {
+    public String getEmpName() {
         return empName;
     }
 
-    public void setEmpName(int empName) {
+    public void setEmpName(String empName) {
         this.empName = empName;
     }
 
-    public int getFeedbackTime() {
+    public Date getFeedbackTime() {
         return feedbackTime;
     }
 
-    public void setFeedbackTime(int feedbackTime) {
+    public void setFeedbackTime(Date feedbackTime) {
         this.feedbackTime = feedbackTime;
     }
 
-    public int getRemark() {
+    public String getRemark() {
         return remark;
     }
 
-    public void setRemark(int remark) {
+    public void setRemark(String remark) {
         this.remark = remark;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -117,19 +106,35 @@ public class FeedbackVo {
         this.status = status;
     }
 
-    public int getDepId() {
+    public String getDepId() {
         return depId;
     }
 
-    public void setDepId(int depId) {
+    public void setDepId(String depId) {
         this.depId = depId;
     }
 
-    public int getOpinion() {
+    public String getOpinion() {
         return opinion;
     }
 
-    public void setOpinion(int opinion) {
+    public void setOpinion(String opinion) {
         this.opinion = opinion;
+    }
+
+    @Override
+    public String toString() {
+        return "FeedbackVo{" +
+                "feedbackId=" + feedbackId +
+                ", feedBackType=" + feedBackType +
+                ", empId=" + empId +
+                ", empName='" + empName + '\'' +
+                ", feedbackTime=" + feedbackTime +
+                ", remark='" + remark + '\'' +
+                ", image='" + image + '\'' +
+                ", status=" + status +
+                ", depId='" + depId + '\'' +
+                ", opinion='" + opinion + '\'' +
+                '}';
     }
 }

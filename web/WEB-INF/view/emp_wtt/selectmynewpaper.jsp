@@ -33,10 +33,29 @@
             <button style="text-align: center" style="margin-left: 25%"  align="center" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
         </form>
     </div>
-<%--
-    <button type="button" id="checkpapers" lay-event="select" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon layui-icon-search"></i>查看周报</button>
---%>
-    <button id="addpaper" class="layui-btn layui-btn-normal layui-btn-sm" style="margin-left: 50%"><i class="layui-icon layui-icon-add-circle"></i>添加</button>
+
+    <div style="margin-left:10px;margin-top:5px;float: left">
+        开始日期:
+        <div class="layui-inline">
+            <input type="text" id="startTime" class="layui-input" name="startTime" autocomplete="off">
+        </div>
+    </div>
+    <div style="margin-left:10px;margin-top:5px;float: left">
+        结束日期:
+        <div class="layui-inline">
+            <input type="text" id="endTime" class="layui-input" name="endTime" lay-event="end" autocomplete="off">
+        </div>
+    </div>
+    <!--搜索-->
+    <button type="button" id="sousuo" style="margin-left:5%;margin-top:5px;" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon layui-icon-search"></i>搜索</button>
+
+    <button id="addpaper" class="layui-btn layui-btn-normal layui-btn-sm" style="margin-left:43%"><i class="layui-icon layui-icon-add-circle"></i>添加</button>
+    <%--头工具栏的批量删除--%>
+    <script type="text/html" id="toolbar">
+        <!--删除-->
+        <button type="button" lay-event="all" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon"></i>批量删除</button>
+    </script>
+
     <table class="layui-hide" lay-filter="test" id="test">
 
     </table>
@@ -63,16 +82,17 @@
         var form = layui.form;
         var laypage = layui.laypage;
         var laydate = layui.laydate;
-        table.render({
+        var table_overloading =  table.render({
             elem:'#test',
             height:500,
             title:'周报表',
+            toolbar:"#toolbar",
             url:'<%=request.getContextPath()%>/emp/selectEmpPaper',
             cols:[[
                 {type:'checkbox', fixed:'left'}
                 ,{field:'weeklogid',title:'编号', width:100, fixed: 'left', unresize: true, sort: true}
-                ,{field:'Empid', title:'员工名称', width:100}
-                ,{field:'Workday', title:'填写日期', width:170,sort:true ,templet:'<div>{{ layui.util.toDateString(d.Workday,"yyyy-MM-dd HH:mm:ss")}}</div>'}
+                ,{field:'empName', title:'员工名称', width:100}
+                ,{field:'Workday', title:'填写日期', width:170,sort:true ,templet:'<div>{{ layui.util.toDateString(d.Workday,"yyyy-MM-dd")}}</div>'}
                 ,{field:'weekCur', title:'本周情况描述', width:200}
                 ,{field:'studentQuestion', title:'问题学生情况反馈', width:200}
                 ,{field:'Idea', title:'意见建议',width:200}
@@ -82,6 +102,41 @@
             ,page:true,
             limits:[5,10,15,25]
         });
+
+        //头工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            var data =checkStatus.data;
+            switch(obj.event){
+                case 'all':
+                    if(data.length==0){
+                        layer.msg('请先选择要删除的数据行！');
+                        return ;
+                    }
+
+                    var ids = "确定要删除id为:";
+                    if(data.length>0){
+                        for(var i = 0;i<data.length;i++){
+                            ids+=data[i].weeklogid+",";
+                        }
+                    }
+                    ids=ids.substr(0,ids.length-1);
+                    ids+="的用户吗?三思";
+                    layer.confirm(ids,function(index){
+
+                        //JQuery的循环
+                        $(data).each(function (index,element) {
+                            delempnewpaper(element.weeklogid);
+                            reurl();
+                        })
+                        /*obj.del();*/
+                        /*layer.close(index);*/
+                    });
+                    /*obj.del();*/
+            };
+        });
+
+        //行工具栏
         table.on('tool(test)', function(obj){
             var datas = obj.data;//获取当前行数据
             var event = obj.event;//获得lay-event 对应的值（编辑，删除）
@@ -102,7 +157,7 @@
                 layer.confirm('真的删除行么',function(index){
                     obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
                     layer.close(index);
-                    delempnewpaper(obj.data.weeklogid)
+                    delempnewpaper(obj.data.weeklogid);
                 });
             }else if(event=='select'){
                 var id = obj.data.weeklogid;
@@ -121,6 +176,49 @@
             });
             form.render(null,'formTestFilter')
         }
+
+        //刷新
+        function reurl(){
+            url = location.href;
+            self.location.replace(url);
+        }
+
+        //时间选择器
+        laydate.render({
+            elem: '#startTime',
+            type: 'datetime',
+            format:'yyyy/MM/dd',
+            done: function (value) {
+                startdate=value;
+            }
+        });
+        //时间选择器
+        laydate.render({
+            elem: '#endTime',
+            type: 'datetime',
+            format:'yyyy/MM/dd',
+            done: function (value) {
+                startdate=value;
+            }
+        });
+
+        //根据选择的日期查找出数据
+        $("#sousuo").click(function () {
+            //Jquery获取条件
+            var startTime = $('input[name="startTime"]').val();
+            var endTime = $('input[name="endTime"]').val();
+            //调用重载方法
+            table_overloading.reload({
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+                , method:'POST'
+                ,where:{
+                    startTime:startTime,
+                    endTime:endTime
+                }
+            });
+        })
     })
 </script>
 <script language="JavaScript">
@@ -131,5 +229,7 @@
 
         },"json");
     }
+
+    //
 </script>
 </html>

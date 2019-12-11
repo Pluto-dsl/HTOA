@@ -1,18 +1,27 @@
 package com.wtt.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.publics.vo.empModel.WeeklogVo;
+import com.publics.vo.empModel.emp.EmpVo;
 import com.wtt.service.Wtt_EmpService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import sun.misc.FDBigInteger;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+/*import java.util.Date;*/
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,15 +37,13 @@ public class Wtt_EmpsController {
     }
     //周报查询
     @RequestMapping(value = "/selectEmpPaper")
-    public void toEmpPaper(HttpServletResponse response,int page,int limit){
+    public void toEmpPaper(HttpServletResponse response, int page, int limit, HttpServletRequest request){
         response.setContentType("text/html;charset=utf-8");
         //当前页
-        List<Map> list = empService.weekpaper(page,limit);
-        /*System.out.println(list);*/
+        List<WeeklogVo> list = empService.weekpaper(request,page,limit);
         //获取总行数
-        int rows =empService.pagecount();
-        /*System.out.println("总行数"+rows);*/
-
+        int rows =empService.pagecount(request);
+        System.out.println("总行数:"+rows);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","提示");
         jsonObject.put("code",0);
@@ -61,6 +68,7 @@ public class Wtt_EmpsController {
     @RequestMapping(value = "/addEmpPaper")
     public String addEmpPaper(WeeklogVo weeklogVo){
         weeklogVo.setWorkday(new Date());
+        weeklogVo.setEmpid(1);
         empService.add(weeklogVo);
         return "redirect:/emp/toEmpPaper";
     }
@@ -91,6 +99,7 @@ public class Wtt_EmpsController {
     //删除
     @RequestMapping(value = "/deleteEmpPaper")
     public String deleteEmpPaperPage(HttpServletResponse response,int id){
+        System.out.println("id为："+id);
         empService.delete(id);
         try {
             PrintWriter printWriter = response.getWriter();
@@ -106,8 +115,7 @@ public class Wtt_EmpsController {
     //去到查看周报页面
     @RequestMapping(value = "/lookEmpPaperPage/{id}")
     public String lookEmpPaperPage(@PathVariable(value = "id") int id, ModelMap modelMap){
-        WeeklogVo weeklogVo = empService.wekk(id);
-        modelMap.addAttribute("list",weeklogVo);
+        modelMap.addAttribute("list",empService.wekk(id));
         return "emp_wtt/mynewpaper";
     }
 }

@@ -8,6 +8,7 @@ import com.publics.vo.empModel.WeeklogVo;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.studentModel.StudentVo;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.*;
 
 @Controller
@@ -36,7 +38,8 @@ public class Ljw_EmpController {
     }
 
     @RequestMapping(value = "/toWeekLogPage")
-    public String toWeekLogPage(){
+    public String toWeekLogPage(Model model){
+        model.addAttribute("depList",empService.getDepList());
         return "emp_ljw/weekLog";
     }
     @ResponseBody
@@ -61,12 +64,12 @@ public class Ljw_EmpController {
     @RequestMapping(value = "/getWeekLogData")
     public void getWeekLogData(HttpServletResponse response, HttpServletRequest request,int page,int limit) throws IOException {
         JSONObject jsonObject = new JSONObject();
-
-        int count =empService.getWeekLogSize();
+        int count =empService.getWeekLogSize(request);
+        JSONArray data = empService.getWeekLogData(request,page,limit);
         jsonObject.put("code",0);
         jsonObject.put("msg","提示");
         jsonObject.put("count",count);
-        jsonObject.put("data",empService.getWeekLogData(page,limit));
+        jsonObject.put("data",data);
 
         response.setContentType("text/html;charset=utf-8");
         System.out.println("发送到前台");
@@ -106,11 +109,13 @@ public class Ljw_EmpController {
     }
 
     @RequestMapping(value = "/newChatRecord")
-    public String newChatRecord(ChatRecordVo vo){
-        System.out.println(vo);
-        if (vo.getChatid()==0){
+    public String newChatRecord(ChatRecordVo vo,HttpServletRequest request){
+        String chatIds = request.getParameter("chatIds");
+        System.out.println(chatIds);
+        if ("0".equals(chatIds)||"".equals(chatIds) || null == chatIds){
             empService.addChatRecord(vo);
         }else {
+            vo.setChatid(Integer.parseInt(chatIds));
             empService.setChatRecord(vo);
         }
         return "redirect:/ljw/toChatRecordPage";

@@ -23,4 +23,109 @@ public class StudentClassVo {
     private int falled;//关联班级类别
     private int deptId;//关联系
     private int majorId;//关联专业表
+
+    @Override
+    public String toString() {
+        return "StudentClassVo{" +
+                "classidl=" + classidl +
+                ", classno='" + classno + '\'' +
+                ", className='" + className + '\'' +
+                ", count=" + count +
+                ", teacher='" + teacher + '\'' +
+                ", classTeacher='" + classTeacher + '\'' +
+                ", classType=" + classType +
+                ", remark='" + remark + '\'' +
+                ", falled=" + falled +
+                ", deptId=" + deptId +
+                ", majorId=" + majorId +
+                '}';
+    }
+
+    public int getClassidl() {
+        return classidl;
+    }
+
+    public void setClassidl(int classidl) {
+        this.classidl = classidl;
+    }
+
+    public String getClassno() {
+        return classno;
+    }
+
+    public void setClassno(String classno) {
+        this.classno = classno;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public String getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(String teacher) {
+        this.teacher = teacher;
+    }
+
+    public String getClassTeacher() {
+        return classTeacher;
+    }
+
+    public void setClassTeacher(String classTeacher) {
+        this.classTeacher = classTeacher;
+    }
+
+    public int getClassType() {
+        return classType;
+    }
+
+    public void setClassType(int classType) {
+        this.classType = classType;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public int getFalled() {
+        return falled;
+    }
+
+    public void setFalled(int falled) {
+        this.falled = falled;
+    }
+
+    public int getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(int deptId) {
+        this.deptId = deptId;
+    }
+
+    public int getMajorId() {
+        return majorId;
+    }
+
+    public void setMajorId(int majorId) {
+        this.majorId = majorId;
+    }
 }

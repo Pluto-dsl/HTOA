@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: norman
@@ -14,27 +15,61 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>谈心记录</title>
-    <jsp:include page="${pageContext.request.contextPath}/toPage/include"/>
+    <jsp:include page="../include.jsp"/>
+    <style>
+        .menu{
+            margin-top: 8px;
+            margin-left: 15px;
+            float: left;
+        }
+        .layui-table-view{
+            float: left;
+        }
+    </style>
 </head>
 <body>
-<table id="weekLog" lay-filter="test"></table>
-
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-
+<div class="menu">
+    员工姓名:
+    <div class="layui-inline" style="padding-right: 15px">
+        <input class="layui-input" name="empName" id="empName" autocomplete="off">
     </div>
-</script>
+</div>
+<form class="layui-form menu" <%--style="width: 85%;height: 40px;padding-top: 10px;padding-left: 20px;"--%>>
+    部门名称:
+    <div class="layui-inline" style="padding-right: 15px">
+        <select name="depId" lay-verify="required">
+            <option value="0" selected>所有部门</option>
+            <c:forEach items="${requestScope.depList}" var="dep">
+                <option value="${dep.depid}">${dep.depName}</option>
+            </c:forEach>
+        </select>
+    </div>
+</form>
+<div class="menu">
+    开始日期:
+    <div class="layui-inline" style="padding-right: 15px">
+        <input type="text" id="startDay" name="startDay" autocomplete="off" class="layui-input">
+    </div>
+</div>
+<div class="menu">
+    结束日期:
+    <div class="layui-inline" style="padding-right: 15px">
+        <input type="text" id="endDay" name="endDay" autocomplete="off" class="layui-input">
+    </div>
+</div>
+<button class="layui-btn menu" id="btn">搜索</button>
+<table id="weekLog" lay-filter="test" style="float: left"></table>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="info">查看详情</a>
+    <a class="layui-btn layui-btn-xs" lay-event="info" style="float: left">查看详情</a>
 </script>
 </body>
 <script>
     layui.use('table', function(){
         var table = layui.table;
-        table.render({
+        var tableIns = table.render({
             elem: '#weekLog'
+            ,method:"post"
             ,url:'${pageContext.request.contextPath}/ljw/getWeekLogData'
-            ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             ,defaultToolbar: ['filter', 'exports', 'print']
             ,title: '用户数据表'
             ,cols: [[
@@ -59,6 +94,42 @@
                 console.log(data.worklogid);
                 window.location.href='<%=request.getContextPath()%>/ljw/lookEmpPaperPage/'+data.worklogid;
             }
+        });
+        //重载表格
+        $("#btn").click(function () {
+            console.log("fasfd");
+            //获取条件
+            var empName = $('input[name="empName"]').val();
+            var depId = $('select[name="depId"] option:selected').val();
+            var startDay = $('input[name="startDay"]').val();
+            var endDay = $('input[name="endDay"]').val();
+            //调用重载方法
+            tableIns.reload({
+                where: { //设定异步数据接口的额外参数，任意设
+                    empName:empName,
+                    depId:depId,
+                    startDay:startDay,
+                    endDay:endDay
+                }
+                ,method:'post'
+                ,page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+        });
+    });
+
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#startDay' //指定元素
+            ,format:'yyyy/MM/dd'
+        });
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#endDay' //指定元素
+            ,format:'yyyy/MM/dd'
         });
     });
 </script>
