@@ -1,7 +1,5 @@
 package com.publics.vo.sys;
 
-import com.publics.vo.empModel.emp.EmpVo;
-
 import javax.persistence.*;
 
 /**

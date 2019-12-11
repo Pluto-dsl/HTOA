@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.*;
 
 @Controller
@@ -62,7 +63,6 @@ public class Ljw_EmpController {
     @ResponseBody
     @RequestMapping(value = "/getWeekLogData")
     public void getWeekLogData(HttpServletResponse response, HttpServletRequest request,int page,int limit) throws IOException {
-        System.out.println(request.getParameter("empName"));
         JSONObject jsonObject = new JSONObject();
         int count =empService.getWeekLogSize(request);
         JSONArray data = empService.getWeekLogData(request,page,limit);
@@ -109,11 +109,13 @@ public class Ljw_EmpController {
     }
 
     @RequestMapping(value = "/newChatRecord")
-    public String newChatRecord(ChatRecordVo vo){
-        System.out.println(vo);
-        if (vo.getChatid()==0){
+    public String newChatRecord(ChatRecordVo vo,HttpServletRequest request){
+        String chatIds = request.getParameter("chatIds");
+        System.out.println(chatIds);
+        if ("0".equals(chatIds)||"".equals(chatIds) || null == chatIds){
             empService.addChatRecord(vo);
         }else {
+            vo.setChatid(Integer.parseInt(chatIds));
             empService.setChatRecord(vo);
         }
         return "redirect:/ljw/toChatRecordPage";
