@@ -46,15 +46,10 @@
                    <button class="layui-btn" type="submit">
                         <i class="layui-icon">&#xe608;</i>添加
                    </button>
-                    <%--<input type="submit" value="新增"/>--%>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </td>
             </tr>
         </table>
     </form>
-</body><%--
-<script>
-    layui.use('element', function(){
-        var element = layui.element;
-    })
-</script>--%>
+</body>
 </html>

@@ -4,10 +4,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.publics.vo.empModel.WeeklogVo;
 import com.publics.vo.empModel.emp.EmpVo;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface Wtt_EmpService {
-    List<WeeklogVo> weekpaper(int currpage,int pagesize);
+    List<WeeklogVo> weekpaper(HttpServletRequest request,int currpage, int pagesize);
     //新增周报
     void add(WeeklogVo weeklogVo);
     //根据id所对应的对象
@@ -17,6 +18,6 @@ public interface Wtt_EmpService {
     void update(WeeklogVo weeklogVo);
     //删除
     void delete(int id);
-    //查询总页数
-    int pagecount();
+    //查询总行数
+    int pagecount(HttpServletRequest request);
 }

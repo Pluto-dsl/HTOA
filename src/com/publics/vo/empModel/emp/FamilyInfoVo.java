@@ -61,4 +61,16 @@ public class FamilyInfoVo {
     public void setRemark(String remark) {
         Remark = remark;
     }
+
+    @Override
+    public String toString() {
+        return "FamilyInfoVo{" +
+                "familyid=" + familyid +
+                ", Empid='" + Empid + '\'' +
+                ", contactName='" + contactName + '\'' +
+                ", relationship='" + relationship + '\'' +
+                ", Phone='" + Phone + '\'' +
+                ", Remark='" + Remark + '\'' +
+                '}';
+    }
 }
