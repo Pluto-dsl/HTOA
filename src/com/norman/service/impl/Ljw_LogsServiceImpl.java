@@ -20,6 +20,7 @@ import java.util.Map;
 
 @Service
 @Transactional
+
 public class Ljw_LogsServiceImpl extends BaseDao implements Ljw_LogsService {
     @Override
     public void newRepair(EquipmentRepairVo repairVo) {
@@ -65,6 +66,14 @@ public class Ljw_LogsServiceImpl extends BaseDao implements Ljw_LogsService {
         List list = listByHql("FROM EquipmentRepairVo where Student="+userId);
         return list.size();
     }
+
+    @Override
+    public void delRepair(int id) {
+        EquipmentRepairVo vo = new EquipmentRepairVo();
+        vo.setEquipmentId(id);
+        delObject(vo);
+    }
+
     //根据用户类型（员工/学生）获取对应的报修申请数据
     @Override
     public JSONArray getRepairData(HttpServletRequest request, int userType, int page, int limit) {

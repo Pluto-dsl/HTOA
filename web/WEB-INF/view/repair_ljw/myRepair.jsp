@@ -14,7 +14,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>报修申请</title>
-    <jsp:include page="${pageContext.request.contextPath}/toPage/include"/>
+    <jsp:include page="../include.jsp"/>
 </head>
 <body>
 <div id="windows" style="margin-left: 5%;display: none;">
@@ -61,12 +61,12 @@
             ,cols: [[
                 {field:'equipmentId', title:'报修编号', width:120, fixed: 'left', unresize: true, sort: true}
                 ,{field:'equipmentType', title:'保修设备名称',width: 160,fixed: 'left'}
-                ,{field:'depName', title:'部门名称', width:100, fixed: 'left'}
-                ,{field:'empName', title:'员工姓名', width:100, fixed: 'left'}
-                ,{field:'startTime', title:'开始时间', width:160, fixed: 'left'}
-                ,{field:'endTime', title:'结束时间', width:160, fixed: 'left'}
-                ,{field:'remark', title:'备注',width: 320,fixed: 'left'}
-                ,{field:'status', title:'状态',width: 120, minWidth: 200, fixed: 'left'}
+                ,{field:'depName', title:'部门名称', width:100 }
+                ,{field:'empName', title:'员工姓名', width:100 }
+                ,{field:'startTime', title:'开始时间', width:160}
+                ,{field:'endTime', title:'结束时间', width:160}
+                ,{field:'remark', title:'备注',width: 360}
+                ,{field:'status', title:'状态',width: 80, minWidth: 200}
                 ,{fixed:'right', title:'操作',templet:function(d){
                     console.log(d);
                     if (d.status==='未完成'){
@@ -116,8 +116,8 @@
 </script>
 <script>
     function delRepair(id) {
-        var data = {id:id};
-        $.post("${pageContext.request.contextPath}/ljw/delChatRecord",data,function (data) {
+        var data = {delRepairId:id};
+        $.post("${pageContext.request.contextPath}/logs/delRepair",data,function (data) {
             console.log(data)
         },"json");
     }

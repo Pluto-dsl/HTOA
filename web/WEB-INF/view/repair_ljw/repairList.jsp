@@ -15,7 +15,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>报修申请</title>
-    <jsp:include page="${pageContext.request.contextPath}/toPage/include"/>
+    <jsp:include page="../include.jsp"/>
 </head>
 <body>
 <button id="btn" class="layui-btn" style="margin-top: 10px;margin-left: 10px;" value="1">切换学生报修</button>

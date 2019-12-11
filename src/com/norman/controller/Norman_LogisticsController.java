@@ -83,8 +83,8 @@ public class Norman_LogisticsController {
         out.close();
     }
     @RequestMapping(value = "/delRepair")
-    public void delRepair(int delRepair){
-
+    public void delRepair(int delRepairId){
+        logsService.delRepair(delRepairId);
     }
 
     /**
