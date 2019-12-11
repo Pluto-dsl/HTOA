@@ -67,7 +67,7 @@
                 ,{field:'remark', title:'备注',width: 145}
                 ,{field:'empId', title:'处理人',width: 90}
                 ,{field:'endTime', title:'处理时间', width:160}
-                ,{field:'result', title:'结果',width: 145}
+                ,{field:'result', title:'处理详情',width: 145}
                 ,{field:'status', title:'状态',width: 80, minWidth: 200}
                 ,{fixed:'right', title:'操作',templet:function(d){
                     console.log(d);

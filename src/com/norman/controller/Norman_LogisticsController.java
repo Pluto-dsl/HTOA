@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.norman.service.Ljw_LogsService;
 import com.publics.vo.logistics.EquipmentRepairVo;
+import org.hibernate.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
@@ -29,12 +31,16 @@ public class Norman_LogisticsController {
     }
     @RequestMapping(value = "/addRepair")
     public String addRepair(HttpServletRequest request,String equipmentType,String remark){
+        HttpSession session = request.getSession();
+        session.setAttribute("user",1);
+        int user = (int) session.getAttribute("user");
+        int depId = logsService.getEmpVo(user).getDepId();
         EquipmentRepairVo repair = new EquipmentRepairVo();
         repair.setEquipmentType(equipmentType);
         repair.setRemark(remark);
+        repair.setStudent(user);
         repair.setStatus(0);
-        repair.setClasses(1);
-        repair.setDepId(1);
+        repair.setDepId(depId);
         repair.setUserType(2);
         repair.setStartTime(new Date());
         logsService.newRepair(repair);

@@ -1,6 +1,7 @@
 package com.norman.service;
 
 import com.alibaba.fastjson.JSONArray;
+import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.logistics.EquipmentRepairVo;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,4 +15,5 @@ public interface Ljw_LogsService {
     int getRepairSize(int userType);//根据用户类型查找数据条数
     int getMyEmpRepairSize(int userId);//根据用户id查找数据条数
     void delRepair(int id);
+    EmpVo getEmpVo(int empId);
 }

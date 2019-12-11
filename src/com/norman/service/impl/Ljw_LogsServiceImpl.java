@@ -34,6 +34,7 @@ public class Ljw_LogsServiceImpl extends BaseDao implements Ljw_LogsService {
         //遍历结果集
         for (EquipmentRepairVo vo:
                 data) {
+            System.out.println(vo);
             //定义装载数据的容器
             JSONObject jo = new JSONObject();
             //定义时间转换类
@@ -159,6 +160,13 @@ public class Ljw_LogsServiceImpl extends BaseDao implements Ljw_LogsService {
         }
         return resultdata;
     }
+
+    @Override
+    public int getMyEmpRepairSize(int userId) {
+        List list = listByHql("FROM EquipmentRepairVo where Student="+userId);
+        return list.size();
+    }
+
     //根据用户类型（员工/学生）获取对应的报修申请的条数
     @Override
     public int getRepairSize(int userType) {
@@ -174,8 +182,7 @@ public class Ljw_LogsServiceImpl extends BaseDao implements Ljw_LogsService {
     }
 
     @Override
-    public int getMyEmpRepairSize(int userId) {
-        List list = listByHql("FROM EquipmentRepairVo where Student="+userId);
-        return list.size();
+    public EmpVo getEmpVo(int empId) {
+        return (EmpVo) getObject(EmpVo.class,empId);
     }
 }
