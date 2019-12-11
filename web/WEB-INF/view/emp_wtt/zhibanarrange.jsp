@@ -69,12 +69,12 @@
             <tr>
                 <th>开始时间:</th>
                 <td>
-                    <input type="text" id="startTime" class="layui-input" name="startTime">
+                    <input type="text" id="startTime" class="layui-input" name="startTime" autocomplete="off">
                 </td>
 
                 <th>结束时间:</th>
                 <td>
-                    <input type="text" id="endTime" class="layui-input" name="endTime">
+                    <input type="text" id="endTime" class="layui-input" name="endTime" autocomplete="off">
                 </td>
             </tr>
 
@@ -94,6 +94,8 @@
 </div>
 <script type="text/html" id="toolbar">
     <button lay-event="add" class="layui-btn layui-btn-normal layui-btn-sm" style="margin-left: 50%"><i class="layui-icon layui-icon-add-circle"></i>添加</button>
+    <!--删除-->
+    <button type="button" lay-event="all" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon"></i>批量删除</button>
 </script>
 
 <table class="layui-hide" lay-filter="test" id="test"></table>
@@ -143,6 +145,8 @@
 
         //头工具栏事件
         table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            var data =checkStatus.data;
             switch(obj.event){
                 case 'add':
                     layer.open({
@@ -156,6 +160,28 @@
                         shadeClose: true, //开启遮罩关闭
                     });
                     break;
+                case 'all':
+                    if(data.length==0){
+                        layer.msg('请先选择要删除的数据行！');
+                        return ;
+                    }
+
+                    var ids = "确定要删除id为:";
+                    if(data.length>0){
+                        for(var i = 0;i<data.length;i++){
+                            ids+=data[i].weekArrangeId+",";
+                        }
+                    }
+                    ids=ids.substr(0,ids.length-1);
+                    ids+="的用户吗?三思";
+                    layer.confirm(ids,function(){
+                        /*layer.close(index);*/
+                        //JQuery的循环
+                        $(data).each(function (index,element) {
+                            deletearrange(element.weekArrangeId);
+                            reurl();
+                        })
+                    });
             };
         });
 
@@ -183,6 +209,12 @@
             elem:"#endTime",
             type: 'time'
         });
+
+        //刷新
+        function reurl(){
+            url = location.href;
+            self.location.replace(url);
+        }
     })
 
     //删除的方法

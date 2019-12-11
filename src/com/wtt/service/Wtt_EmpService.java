@@ -18,6 +18,6 @@ public interface Wtt_EmpService {
     void update(WeeklogVo weeklogVo);
     //删除
     void delete(int id);
-    //查询总页数
+    //查询总行数
     int pagecount(HttpServletRequest request);
 }

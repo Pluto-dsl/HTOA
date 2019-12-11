@@ -51,6 +51,10 @@
 
     <button id="addpaper" class="layui-btn layui-btn-normal layui-btn-sm" style="margin-left:43%"><i class="layui-icon layui-icon-add-circle"></i>添加</button>
     <%--头工具栏的批量删除--%>
+    <script type="text/html" id="toolbar">
+        <!--删除-->
+        <button type="button" lay-event="all" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon"></i>批量删除</button>
+    </script>
 
     <table class="layui-hide" lay-filter="test" id="test">
 
@@ -82,6 +86,7 @@
             elem:'#test',
             height:500,
             title:'周报表',
+            toolbar:"#toolbar",
             url:'<%=request.getContextPath()%>/emp/selectEmpPaper',
             cols:[[
                 {type:'checkbox', fixed:'left'}
@@ -100,19 +105,34 @@
 
         //头工具栏事件
         table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            var data =checkStatus.data;
             switch(obj.event){
-                /*case 'add':
-                    layer.open({
-                        type: 1,
-                        skin: 'layui-layer-demo', //样式类名
-                        closeBtn: 1, //不显示关闭按钮
-                        area: ['700px', '650px'],
-                        fixed: false, //不固定
-                        maxmin: true,
-                        content: $('#windows'),
-                        shadeClose: true, //开启遮罩关闭
+                case 'all':
+                    if(data.length==0){
+                        layer.msg('请先选择要删除的数据行！');
+                        return ;
+                    }
+
+                    var ids = "确定要删除id为:";
+                    if(data.length>0){
+                        for(var i = 0;i<data.length;i++){
+                            ids+=data[i].weeklogid+",";
+                        }
+                    }
+                    ids=ids.substr(0,ids.length-1);
+                    ids+="的用户吗?三思";
+                    layer.confirm(ids,function(index){
+
+                        //JQuery的循环
+                        $(data).each(function (index,element) {
+                            delempnewpaper(element.weeklogid);
+                            reurl();
+                        })
+                        /*obj.del();*/
+                        /*layer.close(index);*/
                     });
-                    break;*/
+                    /*obj.del();*/
             };
         });
 
@@ -138,7 +158,6 @@
                     obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
                     layer.close(index);
                     delempnewpaper(obj.data.weeklogid);
-                    /*layui.form.render();*/
                 });
             }else if(event=='select'){
                 var id = obj.data.weeklogid;
@@ -185,7 +204,7 @@
 
         //根据选择的日期查找出数据
         $("#sousuo").click(function () {
-            //获取条件
+            //Jquery获取条件
             var startTime = $('input[name="startTime"]').val();
             var endTime = $('input[name="endTime"]').val();
             //调用重载方法
@@ -210,5 +229,7 @@
 
         },"json");
     }
+
+    //
 </script>
 </html>

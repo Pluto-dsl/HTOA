@@ -68,6 +68,7 @@ public class Wtt_EmpsController {
     @RequestMapping(value = "/addEmpPaper")
     public String addEmpPaper(WeeklogVo weeklogVo){
         weeklogVo.setWorkday(new Date());
+        weeklogVo.setEmpid(1);
         empService.add(weeklogVo);
         return "redirect:/emp/toEmpPaper";
     }
@@ -98,6 +99,7 @@ public class Wtt_EmpsController {
     //删除
     @RequestMapping(value = "/deleteEmpPaper")
     public String deleteEmpPaperPage(HttpServletResponse response,int id){
+        System.out.println("id为："+id);
         empService.delete(id);
         try {
             PrintWriter printWriter = response.getWriter();

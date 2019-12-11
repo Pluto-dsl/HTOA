@@ -22,10 +22,10 @@ public class Wtt_EmpServiceImpl extends BaseDao implements Wtt_EmpService {
                 "left join emp e on w.Empid = e.empId\n" +
                 "where w.Workday";
         if(!("".equals(starttime) || starttime == null)){
-            sql+=" between '"+starttime+"'";
+            sql+=" between '"+starttime+" 00:00:00'";
         }
         if(!("".equals(endtitme) || endtitme == null)){
-            sql+=" and '"+endtitme+"'";
+            sql+=" and '"+endtitme+" 23:59:59'";
         }
         return pageBySQL(sql,currpage,pagesize);
     }
@@ -77,12 +77,11 @@ public class Wtt_EmpServiceImpl extends BaseDao implements Wtt_EmpService {
         String endtitme = request.getParameter("endTime");
         String sql = "select count(*) from weeklog w left join emp e on w.Empid = e.empId where w.Workday";
         if(!("".equals(starttime) || starttime == null)){
-            sql+=" between '"+starttime+"'";
+            sql+=" between '"+starttime+" 00:00:00'";
         }
         if(!("".equals(endtitme) || endtitme == null)){
-            sql+=" and '"+endtitme+"'";
+            sql+=" and '"+endtitme+" 23:59:59'";
         }
-        System.out.println(sql);
         return selTotalRow(sql);
     }
 }
