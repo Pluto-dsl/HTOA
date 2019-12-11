@@ -111,7 +111,9 @@
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/training/rehearsal_trainingPage"
                                data-id="试讲培训" data-title="试讲培训" >试讲培训</a></dd>
-                        <dd><a href="javascript:void(0);">值班管理</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/arrange/arrangePage"
+                               data-id="值班管理" data-title="值班管理" >值班管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
