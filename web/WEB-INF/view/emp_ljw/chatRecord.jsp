@@ -89,7 +89,7 @@
 <script>
     layui.use('table', function(){
         var table = layui.table;
-        table.render({
+        var tableIns = table.render({
             elem: '#chatRecordList'
             ,url:'${pageContext.request.contextPath}/ljw/getChatRecordData'
             ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
@@ -110,6 +110,7 @@
 
         //头工具栏事件
         table.on('toolbar(test)', function(obj){
+            console.log(obj);
             var checkStatus = table.checkStatus(obj.config.id);
             switch(obj.event){
                 case 'newChatRecord':
@@ -145,9 +146,11 @@
                         //按钮
                     }, function(index){
                         $(data).each(function (index,elemnt) {
-                            delChatRecord(elemnt.chatId)
+                            delChatRecord(elemnt.chatId);
                         });
-                        obj.del();
+                        tableIns.reload({
+                            method:'post'
+                        });
                         layer.close(index);
                     },function (index) {
                         layer.close(index);

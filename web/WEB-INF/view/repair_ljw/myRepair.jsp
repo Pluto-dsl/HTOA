@@ -61,11 +61,13 @@
             ,cols: [[
                 {field:'equipmentId', title:'报修编号', width:120, fixed: 'left', unresize: true, sort: true}
                 ,{field:'equipmentType', title:'保修设备名称',width: 160,fixed: 'left'}
-                ,{field:'depName', title:'部门名称', width:100 }
-                ,{field:'empName', title:'员工姓名', width:100 }
-                ,{field:'startTime', title:'开始时间', width:160}
-                ,{field:'endTime', title:'结束时间', width:160}
-                ,{field:'remark', title:'备注',width: 360}
+                ,{field:'depName', title:'部门名称', width:90 }
+                ,{field:'empName', title:'员工姓名', width:90 }
+                ,{field:'startTime', title:'申请时间', width:160}
+                ,{field:'remark', title:'备注',width: 145}
+                ,{field:'empId', title:'处理人',width: 90}
+                ,{field:'endTime', title:'处理时间', width:160}
+                ,{field:'result', title:'结果',width: 145}
                 ,{field:'status', title:'状态',width: 80, minWidth: 200}
                 ,{fixed:'right', title:'操作',templet:function(d){
                     console.log(d);
