@@ -1,5 +1,6 @@
 package com.norman.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.norman.service.Ljw_LogsService;
 import com.publics.vo.logistics.EquipmentRepairVo;
@@ -39,6 +40,33 @@ public class Norman_LogisticsController {
         logsService.newRepair(repair);
         return "redirect:/logs/toMyRepair";
     }
+    @ResponseBody
+    @RequestMapping(value = "/getEmpRepairData")
+    public void getEmpRepairData(HttpServletResponse response,HttpServletRequest request,int page,int limit) throws IOException {
+        String userTypeStr = request.getParameter("type");
+        int count;
+        JSONArray data;
+        if ("".equals(userTypeStr)||null == userTypeStr||"2".equals(userTypeStr)){
+            System.out.println("员工");
+            count = logsService.getRepairSize(2);
+            data = logsService.getRepairData(request,2,page,limit);
+        }else {
+            System.out.println("学生");
+            count = logsService.getRepairSize(1);
+            data = logsService.getRepairData(request,1,page,limit);
+        }
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter out = response.getWriter();
+        JSONObject result = new JSONObject();
+        result.put("code",0);
+        result.put("count",count);
+        result.put("msg","提示");
+        result.put("data",data);
+        out.print(result.toJSONString());
+        out.flush();
+        out.close();
+    }
+
     @ResponseBody
     @RequestMapping(value = "/getMyRepairData")
     public void getMyRepairData(HttpServletResponse response,HttpServletRequest request,int page,int limit) throws IOException {

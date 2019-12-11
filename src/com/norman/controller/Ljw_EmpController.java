@@ -111,6 +111,7 @@ public class Ljw_EmpController {
     @RequestMapping(value = "/newChatRecord")
     public String newChatRecord(ChatRecordVo vo,HttpServletRequest request){
         String chatIds = request.getParameter("chatIds");
+        System.out.println(chatIds);
         if ("0".equals(chatIds)||"".equals(chatIds) || null == chatIds){
             empService.addChatRecord(vo);
         }else {
