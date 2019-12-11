@@ -186,10 +186,11 @@ public class Zero_EmpOtherInfo {
         return map;
     }
 
-    @RequestMapping(value = "/addaduit")//新增选中用户考核
+    @RequestMapping(value = "/addaduit")//新增或修改选中用户考核
     @ResponseBody
     public String  addaduit(AduitLogVo aduitLogVo){
-       aduitLogVo.setAuditDate(new java.util.Date());
+        //aduitLogVo.setAuditPerson("");//从session中获取
+        aduitLogVo.setAuditDate(new java.util.Date());
         service.addaduit(aduitLogVo);
         return "ok";
     }

@@ -397,6 +397,7 @@
                         break;
                 }
             });
+
         //新增工作经历
         form.on('submit(jobAction)', function(data){
             $.ajax({
@@ -857,6 +858,7 @@
             return false;//禁止跳转，否则会提交两次，且页面会刷新
         });
     })
+
     //证件上传---------------------------------------------------------------------------------------------------
     layui.use([ 'laydate','element', 'table', 'layer', 'form' ,'laydate','upload'],function() {
         var element = layui.element;
@@ -957,6 +959,7 @@
                     break;
             }
         });
+
         //新增文件上传
         /*form.on('submit(annexAction)', function(data){
             $.ajax({
@@ -979,6 +982,7 @@
             return false;//禁止跳转，否则会提交两次，且页面会刷新
         });*/
     })
+
     //图片回显方法
     function upload(obj){
         var f = obj.files;

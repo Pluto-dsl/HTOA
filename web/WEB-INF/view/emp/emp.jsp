@@ -133,12 +133,12 @@
             var tr = obj.tr; //获得当前行 tr 的DOM对象
 
             if(layEvent === 'detail'){ //重置密码
-                //layer.msg('查看');
                 layer.confirm('确定重置此用户的密码吗?', function(index){
                     //向服务端发送修改指令
                     layer.close(index);
                     $.post("<%=request.getContextPath()%>/zeroEmp/resetPwd/"+data.empId,{},function (d) {
                     },"text")
+                    layer.msg('重置密码成功!');
                 });
             } else if(layEvent === 'del'){ //删除
                 layer.confirm('真的删除此条数据吗?', function(index){
