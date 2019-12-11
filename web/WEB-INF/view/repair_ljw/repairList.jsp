@@ -19,10 +19,28 @@
 </head>
 <body>
 <button id="btn" class="layui-btn" style="margin-top: 10px;margin-left: 10px;" value="1">切换学生报修</button>
-<table id="RepairList" lay-filter="test"></table>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+    <legend>默认风格的Tab</legend>
+</fieldset>
+
+<div class="layui-tab">
+    <ul class="layui-tab-title">
+        <li class="layui-this">网站设置</li>
+        <li>员工维修列表</li>
+        <li>学生维修列表</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <table id="empRepairList" lay-filter="test"></table>
+        </div>
+        <div class="layui-tab-item">
+            <table id="stuRepairList" lay-filter="test"></table>
+        </div>
+    </div>
+</div>
+
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="ok">完成</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="option">处理</a>
 </script>
 </body>
 <script>
@@ -45,15 +63,15 @@
             ,{field:'equipmentType', title:'保修设备名称',width: 160,fixed: 'left'}
             ,{field:'depName', title:'部门名称', width:100, fixed: 'left'}
             ,{field:'empName', title:'员工姓名', width:100, fixed: 'left'}
-            ,{field:'startTime', title:'开始时间', width:160, fixed: 'left'}
-            ,{field:'endTime', title:'结束时间', width:160, fixed: 'left'}
+            ,{field:'startTime', title:'申请时间', width:160, fixed: 'left'}
+            ,{field:'endTime', title:'处理时间', width:160, fixed: 'left'}
             ,{field:'remark', title:'备注',width: 320,fixed: 'left'}
             ,{field:'status', title:'状态',width: 80, minWidth: 200, fixed: 'left'}
             ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:120}
         ]];
         var table = layui.table;
         var tableInt = table.render({
-            elem: '#RepairList'
+            elem: '#empRepairList'
             ,url:'${pageContext.request.contextPath}/logs/getEmpRepairData'
             ,title: '我的报修列表'
             ,cols: empCols
@@ -63,10 +81,8 @@
         table.on('tool(test)',function (obj) {
             var data = obj.data;
             console.log(obj.event);
-            if (obj.event === 'del') {
+            if (obj.event === 'option') {
                 console.log(data);
-            }else if(obj.event === 'ok'){
-
             }
         });
 

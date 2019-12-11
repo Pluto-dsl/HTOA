@@ -160,7 +160,7 @@
         table.on('tool(test)', function(obj){
             var data = obj.data;
             if(obj.event === 'del'){
-                layer.confirm('真的删除行么', function(index){
+                layer.confirm('是要删除这条记录吗', function(index){
                     obj.del();
                     layer.close(index);
                     delChatRecord(obj.data.chatid)

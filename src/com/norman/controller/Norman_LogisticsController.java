@@ -82,6 +82,11 @@ public class Norman_LogisticsController {
         out.flush();
         out.close();
     }
+    @RequestMapping(value = "/delRepair")
+    public void delRepair(int delRepair){
+
+    }
+
     /**
      * 保修管理相关方法
      * */

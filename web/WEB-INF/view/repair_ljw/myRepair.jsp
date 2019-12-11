@@ -27,9 +27,9 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">备注</label>
+            <label class="layui-form-label">描述</label>
             <div class="layui-input-block">
-                <input type="text" name="remark" lay-verify="title" autocomplete="off" placeholder="请输入备注" class="layui-input">
+                <input type="text" name="remark" lay-verify="title" autocomplete="off" placeholder="请输入对维修设备的详情" class="layui-input">
             </div>
         </div>
         <br>
@@ -65,8 +65,16 @@
                 ,{field:'empName', title:'员工姓名', width:100, fixed: 'left'}
                 ,{field:'startTime', title:'开始时间', width:160, fixed: 'left'}
                 ,{field:'endTime', title:'结束时间', width:160, fixed: 'left'}
-                ,{field:'remark', title:'备注',width: 360,fixed: 'left'}
+                ,{field:'remark', title:'备注',width: 320,fixed: 'left'}
                 ,{field:'status', title:'状态',width: 120, minWidth: 200, fixed: 'left'}
+                ,{fixed:'right', title:'操作',templet:function(d){
+                    console.log(d);
+                    if (d.status==='未完成'){
+                        return '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
+                    }else {
+                        return ''
+                    }
+                    }, width:80}
             ]]
             ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
@@ -94,6 +102,24 @@
                 });
             }
         });
+        table.on('tool(test)',function (obj) {
+            var data = obj.data;
+            if ('del' === obj.event){
+                layer.confirm('是要删除此申请吗', function(index){
+                    obj.del();
+                    layer.close(index);
+                    delRepair(obj.data.equipmentId)
+                });
+            }
+        })
     });
+</script>
+<script>
+    function delRepair(id) {
+        var data = {id:id};
+        $.post("${pageContext.request.contextPath}/ljw/delChatRecord",data,function (data) {
+            console.log(data)
+        },"json");
+    }
 </script>
 </html>

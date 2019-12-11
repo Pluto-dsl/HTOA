@@ -1,7 +1,5 @@
 package com.publics.vo.logistics;
 
-import org.joda.time.DateTime;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -14,25 +12,29 @@ public class EquipmentRepairVo {//维修设备申请
     private int equipmentId;//主键，标识列，自动生成
     private String  equipmentType;//维修设备名称
     private int  status;//维修状态0未完成,1已完成
-    private int Classes;//关联班级表主键
-    private int Student;//关联学生表申请人
-    private String remark;//备注
-    private int depId;//部门
     private int userType;//1学生 2员工
-    private Date startTime;//开始时间
-    private Date endTime;
+    private int Classes;//关联班级表主键
+    private int depId;//部门
+    private int Student;//关联学生表申请人
+    private String remark;//描述
+    private Date startTime;//申请时间
+    private Date endTime;//处理时间
+    private int empId;//处理人
+    private String result;//处理结果
 
     @Override
     public String toString() {
-        return "EquipmentRepair{" +
+        return "EquipmentRepairVo{" +
                 "equipmentId=" + equipmentId +
                 ", equipmentType='" + equipmentType + '\'' +
                 ", status=" + status +
+                ", userType=" + userType +
                 ", Classes=" + Classes +
+                ", depId=" + depId +
                 ", Student=" + Student +
                 ", remark='" + remark + '\'' +
-                ", depId=" + depId +
-                ", userType=" + userType +
+                ", empId=" + empId +
+                ", result='" + result + '\'' +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 '}';
@@ -62,12 +64,28 @@ public class EquipmentRepairVo {//维修设备申请
         this.status = status;
     }
 
+    public int getUserType() {
+        return userType;
+    }
+
+    public void setUserType(int userType) {
+        this.userType = userType;
+    }
+
     public int getClasses() {
         return Classes;
     }
 
     public void setClasses(int classes) {
         Classes = classes;
+    }
+
+    public int getDepId() {
+        return depId;
+    }
+
+    public void setDepId(int depId) {
+        this.depId = depId;
     }
 
     public int getStudent() {
@@ -86,20 +104,20 @@ public class EquipmentRepairVo {//维修设备申请
         this.remark = remark;
     }
 
-    public int getDepId() {
-        return depId;
+    public int getEmpId() {
+        return empId;
     }
 
-    public void setDepId(int depId) {
-        this.depId = depId;
+    public void setEmpId(int empId) {
+        this.empId = empId;
     }
 
-    public int getUserType() {
-        return userType;
+    public String getResult() {
+        return result;
     }
 
-    public void setUserType(int userType) {
-        this.userType = userType;
+    public void setResult(String result) {
+        this.result = result;
     }
 
     public Date getStartTime() {
