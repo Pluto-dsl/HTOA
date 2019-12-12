@@ -96,7 +96,6 @@ public class Zhq_DepController {
             List<DepVo> depVos = zhqDepService.selDep();
             JSONObject jsonObject = new JSONObject();
             for (DepVo d :depVos) {
-                System.out.println("进来了");
                 for (DepVo deVo: list) {
                     if(deVo.getParentId() ==d.getDepid()){
                         jsonObject.put("parentId",d.getDepName());//父部门名称
@@ -124,10 +123,10 @@ public class Zhq_DepController {
         return "emp_zhq/addDep";
     }
 
+    //确定添加
     @RequestMapping("/addDep")
     @ResponseBody
     public String addDep(DepVo depVo){
-        System.out.println("点击了添加");
         zhqDepService.addDep(depVo);
         return "success";
     }
@@ -139,8 +138,6 @@ public class Zhq_DepController {
         String depName = request.getParameter("depName");
         int deptId = Integer.parseInt(request.getParameter("deptId"));
         DepVo depVo = zhqDepService.selById(deptId);
-
-
         depVo.setDepName(depName);
 
         zhqDepService.updateDep(depVo);
@@ -156,7 +153,6 @@ public class Zhq_DepController {
         DepVo depVo1 = new DepVo();
         depVo1.setDepid(depId);
         zhqDepService.deleteDep(depVo1);
-
         return "success";
     }
 

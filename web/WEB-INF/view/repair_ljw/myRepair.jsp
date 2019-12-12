@@ -17,7 +17,7 @@
     <jsp:include page="../include.jsp"/>
 </head>
 <body>
-<div id="windows" style="margin-left: 5%;display: none;">
+<div id="windows" style="padding-right: 5%;display: none;">
     <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/logs/addRepair" method="post">
         <br><br>
         <div class="layui-form-item">
@@ -78,7 +78,7 @@
                     }
                     }, width:80}
             ]]
-            ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
+            ,page: {limit: 10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
 
         //头工具栏事件
@@ -90,7 +90,7 @@
                     title:'填写设备申请单',
                     skin: 'layui-layer-demo', //样式类名
                     closeBtn: 1, //是否显示关闭按钮
-                    area: ['700px', '280px'],
+                    area: ['550px', '280px'],
                     fixed: false, //不固定
                     maxmin: true,
                     shadeClose: false, //是否点击遮罩时关闭

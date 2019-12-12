@@ -46,21 +46,36 @@ public class Norman_LogisticsController {
         logsService.newRepair(repair);
         return "redirect:/logs/toMyRepair";
     }
+
     @ResponseBody
     @RequestMapping(value = "/getEmpRepairData")
     public void getEmpRepairData(HttpServletResponse response,HttpServletRequest request,int page,int limit) throws IOException {
-        String userTypeStr = request.getParameter("type");
         int count;
         JSONArray data;
-        if ("".equals(userTypeStr)||null == userTypeStr||"2".equals(userTypeStr)){
-            System.out.println("员工");
-            count = logsService.getRepairSize(2);
-            data = logsService.getRepairData(request,2,page,limit);
-        }else {
-            System.out.println("学生");
-            count = logsService.getRepairSize(1);
-            data = logsService.getRepairData(request,1,page,limit);
-        }
+        System.out.println("员工");
+        count = logsService.getRepairSize(2);
+        data = logsService.getRepairData(request,2,page,limit);
+
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter out = response.getWriter();
+        JSONObject result = new JSONObject();
+        result.put("code",0);
+        result.put("count",count);
+        result.put("msg","提示");
+        result.put("data",data);
+        out.print(result.toJSONString());
+        out.flush();
+        out.close();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getStuRepairData")
+    public void getStuRepairData(HttpServletResponse response,HttpServletRequest request,int page,int limit) throws IOException {
+        int count;
+        JSONArray data;
+        System.out.println("学生");
+        count = logsService.getRepairSize(1);
+        data = logsService.getRepairData(request,1,page,limit);
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();
         JSONObject result = new JSONObject();
@@ -88,6 +103,21 @@ public class Norman_LogisticsController {
         out.flush();
         out.close();
     }
+    @ResponseBody
+    @RequestMapping(value = "/manageRepair")
+    public void updRepair(int repairId,String result){
+        System.out.println(repairId);
+        System.out.println(result);
+        EquipmentRepairVo vo = logsService.getRepair(repairId);
+        System.out.println(vo);
+        vo.setStatus(1);
+        vo.setEndTime(new Date());
+        vo.setResult(result);
+        vo.setEmpId(1);
+        System.out.println(vo);
+        logsService.updRepair(vo);
+    }
+
     @RequestMapping(value = "/delRepair")
     public void delRepair(int delRepairId){
         logsService.delRepair(delRepairId);

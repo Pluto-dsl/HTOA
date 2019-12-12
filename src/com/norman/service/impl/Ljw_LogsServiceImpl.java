@@ -28,13 +28,17 @@ public class Ljw_LogsServiceImpl extends BaseDao implements Ljw_LogsService {
     }
 
     @Override
+    public EquipmentRepairVo getRepair(int id) {
+        return (EquipmentRepairVo) super.getObject(EquipmentRepairVo.class,id);
+    }
+
+    @Override
     public JSONArray getMyEmpRepairData(HttpServletRequest request, int userId, int page, int limit) {
         JSONArray resultData = new JSONArray();
         List<EquipmentRepairVo> data = super.listByHql("from EquipmentRepairVo where Student="+userId);
         //遍历结果集
         for (EquipmentRepairVo vo:
                 data) {
-            System.out.println(vo);
             //定义装载数据的容器
             JSONObject jo = new JSONObject();
             //定义时间转换类
@@ -53,9 +57,9 @@ public class Ljw_LogsServiceImpl extends BaseDao implements Ljw_LogsService {
             }
             //转换状态内容
             if (0 == vo.getStatus()){
-                status="未完成";
+                status="待处理";
             }else {
-                status="已完成";
+                status="已处理";
             }
             //转换处理人
             if (vo.getEmpId()==0){
@@ -92,7 +96,7 @@ public class Ljw_LogsServiceImpl extends BaseDao implements Ljw_LogsService {
     @Override
     public JSONArray getRepairData(HttpServletRequest request, int userType, int page, int limit) {
         JSONArray resultdata = new JSONArray();
-        List<EquipmentRepairVo> data = listByHql("from EquipmentRepairVo where userType="+userType);
+        List<EquipmentRepairVo> data = listByHql("from EquipmentRepairVo where userType="+userType+" and status = 0");
         //遍历结果集
         for (EquipmentRepairVo vo:
                 data) {
@@ -128,9 +132,9 @@ public class Ljw_LogsServiceImpl extends BaseDao implements Ljw_LogsService {
             }
             //转换状态内容
             if (0 == vo.getStatus()){
-                status="未完成";
+                status="待处理";
             }else {
-                status="已完成";
+                status="已处理";
             }
             //转换处理人
             if (vo.getEmpId()==0){
@@ -170,7 +174,7 @@ public class Ljw_LogsServiceImpl extends BaseDao implements Ljw_LogsService {
     //根据用户类型（员工/学生）获取对应的报修申请的条数
     @Override
     public int getRepairSize(int userType) {
-        List list = listByHql("FROM EquipmentRepairVo where userType="+userType);
+        List list = listByHql("FROM EquipmentRepairVo where userType="+userType+" and status = 0");
         return list.size();
     }
 
@@ -184,5 +188,10 @@ public class Ljw_LogsServiceImpl extends BaseDao implements Ljw_LogsService {
     @Override
     public EmpVo getEmpVo(int empId) {
         return (EmpVo) getObject(EmpVo.class,empId);
+    }
+
+    @Override
+    public void updRepair(EquipmentRepairVo vo) {
+        super.updObject(vo);
     }
 }
