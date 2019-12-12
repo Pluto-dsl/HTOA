@@ -139,11 +139,22 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
     }
     @Override
     public List selAduitLog(int currPage,int pageSize) {
-        return listBySQL("select ag.aduitLogid,am.aduitName,e.empName,ag.Scores,ag.auditDate,ag.auditPerson,ag.Remark from (aduitLog ag inner join emp e on ag.Empid = e.empid) INNER JOIN aduitModel am on ag.aduitModelid = am.aduitModelid");
+        return listBySQL("select ag.aduitLogid,am.aduitName,e.empName,ag.Scores,ag.auditDate,ag.Image,ag.auditPerson,ag.Remark from (aduitLog ag inner join emp e on ag.Empid = e.empid) INNER JOIN aduitModel am on ag.aduitModelid = am.aduitModelid ORDER BY aduitLogid desc");
     }
     @Override
     public int selAdCount() {
-       return selTotalRow("select count(*) from auditPerson");
+       return selTotalRow("select count(*) from aduitLog");
+    }
+    @Override
+    public List selAdDetails(int id) {
+        return listBySQL("select ad.aduitName,e.empName,ag.Scores,ag.auditDate,ag.auditPerson,ag.Remark from \n" +
+                "(aduitLog ag inner join aduitModel ad on ag.aduitModelid = ad.aduitModelid) \n" +
+                "inner join emp e on e.Empid = ag.empid where ag.aduitLogid = "+id+"");
+    }
+
+    @Override
+    public void delAduitLog(int id) {
+        executeSQL("DELETE FROM aduitLog where aduitLogid = "+id+"");
     }
 
 

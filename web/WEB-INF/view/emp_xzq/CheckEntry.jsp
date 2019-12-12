@@ -20,11 +20,13 @@
                 <td>考核指标:</td>
                 <td>
                     <select id="aduitModelid" name="aduitModelid" lay-filter="type">
+                        <option>请选择考核指标</option>
                     </select>
                 </td>
                 <td>员工:</td>
                 <td>
                     <select id="Empid" name="Empid" lay-filter="type">
+                        <option>请选择员工</option>
                     </select>
                 </td>
             </tr>
@@ -83,7 +85,7 @@
 
         var uploadInst = upload.render({
             elem: '#upload1' //绑定元素
-            ,url: '${pageContext.request.contextPath}/jack/AduitLogList'
+            ,url: '${pageContext.request.contextPath}/jack/uploadImg'
             ,before: function(obj){
                 //预读本地文件示例，不支持ie8
                 obj.preview(function(index, file, result){

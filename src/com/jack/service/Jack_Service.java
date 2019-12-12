@@ -48,9 +48,11 @@ public interface Jack_Service {
     void delAssessment(int Aid); //删除
 
     /** 考核巡查管理 */
-    List selAss();
-    List selEmp();
-    void addAduit(AduitLogVo aduitLogVo);
-    List selAduitLog(int currPage,int pageSize);
+    List selAss(); //查询所有的考核指标
+    List selEmp();  //查询所有的员工
+    void addAduit(AduitLogVo aduitLogVo); //员工考核录入
+    List selAduitLog(int currPage,int pageSize); //员工考核列表
     int selAdCount();
+    List selAdDetails(int id); //考核详情
+    void delAduitLog(int id);//删除考核
 }

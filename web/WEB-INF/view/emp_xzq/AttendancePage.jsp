@@ -22,6 +22,7 @@
         时间点:
         <div class="layui-input-inline">
             <select name="timeing" lay-filter="type">
+                <option>请选择时间</option>
                 <option value="8:00">8:00</option>
                 <option value="14:00">14:00</option>
                 <option value="17:00">17:00</option>

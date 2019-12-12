@@ -15,8 +15,8 @@
     <table class="layui-hide" id="AduitLoglist" lay-filter="AduitLoglist"></table>
 </body>
 <script type="text/html" id="barDemo">
-    <button class="layui-btn layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</button>
-    <button class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</button>
+    <button class="layui-btn layui-btn-xs layui-btn layui-btn-normal" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</button>
+    <button class="layui-btn layui-btn-xs layui-btn layui-btn-danger" lay-event="sel"><i class="layui-icon layui-icon-edit"></i>图片及详情预览</button>
 </script>
 <script>
     layui.use([ 'element', 'table', 'layer', 'form' ,'laydate','upload'],function() {
@@ -36,20 +36,55 @@
             ,title: '用户数据表'
             ,cols: [[
                 {type: 'checkbox', fixed: 'left'}
-                ,{field:'aduitLogid', title:'编号', width:300,unresize:true,sort: true}
+                ,{field:'aduitLogid', title:'编号', width:80,unresize:true,sort: true}
                 ,{field:'aduitName', title:'考核内容', width:200}
                 ,{field:'empName', title:'员工', width:150}
-                ,{title:'Scores', title:'考核分数  ', width:100}
-                ,{title:'auditDate', title:'考核时间 ', width:200}
-                ,{title:'auditPerson', title:'录入人员', width:120}
-                ,{title:'Remark', title:'说明', width:200}
-                ,{title:'操作',toolbar:'#barDemo',width:200}
+                ,{field:'Scores', title:'考核分数  ', width:100}
+                ,{field:'auditDate', title:'考核时间 ',templet : "<div>{{layui.util.toDateString(d.auditDate, 'yyyy年MM月dd日')}}</div>" , width:150}
+                ,{field:'auditPerson', title:'录入人员', width:120}
+                ,{field:'Remark', title:'说明', width:200}
+                ,{title:'操作',toolbar:'#barDemo',width:250}
             ]]
             ,page: true
             ,limit:15
             ,limits: [15, 20, 30, 40, 50]
 
         });
+
+        table.on('tool(AduitLoglist)',function(obj){
+            var data = obj.data;
+            if(obj.event === 'del'){
+                var cid = data.aduitLogid;
+                layer.confirm('真的删除行么', function(index){
+                    $.get("${pageContext.request.contextPath}/jack/delCourse?cid="+cid,function (d) {
+                        if(d > 0){
+                            layer.msg('删除成功');
+                            table.reload('AduitLoglist');
+                        }else if (d === null){
+                            layer.msg('删除失败');
+                            table.reload('AduitLoglist');
+                        }
+                    });
+                    layer.close(index);
+                });
+            }else if(obj.event === 'sel'){
+                layer.open({
+                    type:2,
+                    title:'考核详情',
+                    skin: 'layui-layer-demo', //样式类名
+                    closeBtn: 1, //不显示关闭按钮
+                    area: ['700px', '400px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    shadeClose: false, //开启遮罩关闭
+                    content: ['${pageContext.request.contextPath}/jack/toSelAduitLog?aduitLogid='+data.aduitLogid,'no'],
+                    cancel: function(index, layero){
+                        layer.close(index);
+                        return false;
+                    }
+                });
+            }
+        })
 
     });
 </script>

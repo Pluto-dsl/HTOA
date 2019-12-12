@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -93,7 +94,7 @@ public class Jack_Assessment {
         session.setAttribute("user","dddd");
         return "emp_xzq/CheckEntry";
     }
-
+    /** 考核指标 */
     @RequestMapping(value = "/Ass")
     @ResponseBody
     public Map Ass(){
@@ -102,6 +103,7 @@ public class Jack_Assessment {
         Amap.put("names",list);
         return Amap;
     }
+    /** 查询员工列表 */
     @RequestMapping(value = "/emp")
     @ResponseBody
     public Map emp(){
@@ -110,7 +112,7 @@ public class Jack_Assessment {
         emap.put("names",list);
         return emap;
     }
-
+    /** 文件上传 */
     @RequestMapping(value = "/uploadImg")
     @ResponseBody
     public Map<String, Object> updatePersonal(@RequestParam(required=false)MultipartFile file,HttpServletRequest request) throws IllegalStateException, IOException{
@@ -171,13 +173,13 @@ public class Jack_Assessment {
         return 0;
     }
 
-    @RequestMapping("/toAduitLogList")
+    @RequestMapping(value = "/toAduitLogList")
     public String toAduitLogList(){
         return "emp_xzq/empAssessment";
     }
 
     /** 员工考核列表 */
-    @RequestMapping("/AduitLogList")
+    @RequestMapping(value = "/AduitLogList")
     @ResponseBody
     public void AduitLogList(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         int currPage = Integer.parseInt(request.getParameter("page"));
@@ -195,6 +197,35 @@ public class Jack_Assessment {
         System.out.println(json.toJSONString());
         out.print(json);
         out.close();
+    }
+
+    @RequestMapping(value = "/toSelAduitLog")
+    public String toSelAduitLog(HttpServletRequest request){
+        System.out.println("进来了----------");
+        String id = request.getParameter("aduitLogid");
+        System.out.println(id);
+        request.setAttribute("id",id);
+        return "emp_xzq/selAduitLog";
+    }
+
+    @RequestMapping(value = "/selAduitLog")
+    public void selAduitLog(String id,HttpServletResponse response,HttpServletRequest request) throws IOException {
+        List list = service.selAdDetails(Integer.parseInt(id));
+        PrintWriter out = response.getWriter();
+        JSONObject json = new JSONObject();
+        json.put("msg","提示");
+        json.put("code","0");
+        json.put("data",list);
+        System.out.println(json.toJSONString());
+        out.print(json);
+        out.close();
+    }
+    @RequestMapping(value = "/delAduitLog")
+    @ResponseBody
+    public int delAduitLog(HttpServletRequest request){
+        int a = Integer.parseInt(request.getParameter("cid"));
+        service.delAduitLog(a);
+        return 0;
     }
 }
 
