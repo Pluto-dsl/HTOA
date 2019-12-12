@@ -17,7 +17,7 @@
     <jsp:include page="../include.jsp"/>
 </head>
 <body>
-<div id="windows" style="margin-left: 5%;display: none;">
+<div id="windows" style="padding-right: 5%;display: none;">
     <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/logs/addRepair" method="post">
         <br><br>
         <div class="layui-form-item">
@@ -61,11 +61,13 @@
             ,cols: [[
                 {field:'equipmentId', title:'报修编号', width:120, fixed: 'left', unresize: true, sort: true}
                 ,{field:'equipmentType', title:'保修设备名称',width: 160,fixed: 'left'}
-                ,{field:'depName', title:'部门名称', width:100 }
-                ,{field:'empName', title:'员工姓名', width:100 }
-                ,{field:'startTime', title:'开始时间', width:160}
-                ,{field:'endTime', title:'结束时间', width:160}
-                ,{field:'remark', title:'备注',width: 360}
+                ,{field:'depName', title:'部门名称', width:90 }
+                ,{field:'empName', title:'员工姓名', width:90 }
+                ,{field:'startTime', title:'申请时间', width:160}
+                ,{field:'remark', title:'备注',width: 145}
+                ,{field:'empId', title:'处理人',width: 90}
+                ,{field:'endTime', title:'处理时间', width:160}
+                ,{field:'result', title:'处理详情',width: 145}
                 ,{field:'status', title:'状态',width: 80, minWidth: 200}
                 ,{fixed:'right', title:'操作',templet:function(d){
                     console.log(d);
@@ -76,7 +78,7 @@
                     }
                     }, width:80}
             ]]
-            ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
+            ,page: {limit: 10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
 
         //头工具栏事件
@@ -88,7 +90,7 @@
                     title:'填写设备申请单',
                     skin: 'layui-layer-demo', //样式类名
                     closeBtn: 1, //是否显示关闭按钮
-                    area: ['700px', '280px'],
+                    area: ['550px', '280px'],
                     fixed: false, //不固定
                     maxmin: true,
                     shadeClose: false, //是否点击遮罩时关闭

@@ -1,9 +1,13 @@
 package com.jack.service;
 
+import com.publics.vo.assess.AduitLogVo;
+import com.publics.vo.assess.AduitModelVo;
 import com.publics.vo.educ.CourseTypeVo;
+import com.publics.vo.educ.CourseVo;
 import com.publics.vo.empModel.AttendanceVo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface Jack_Service {
     /**
@@ -25,5 +29,30 @@ public interface Jack_Service {
     int delCourse(int id);
     int AddCurse(CourseTypeVo courseTypeVo);
 
+    /**
+     *  课程管理业务
+     * */
+    List selCourseMgt(int currPage, int pageSize); //查询课程管理表
+    int selCouCountM(); //获取课程总数
+    List selCourseName();//获取课程类型种类
+    void addCourseMgt(CourseVo courseVo); //添加课程
+    void updateCourseMgt(CourseVo courseVo); //修改课程
+    int delCourseMgt(int cid); //删除课程
 
+    /** 考核管理业务 */
+    List selAssessment(int currPage,int pageSize); //考核指标查询
+    int selAssCount(); //获取数据总数
+    List selDepList(); //查询部门列表
+    void addAssessment(AduitModelVo aduitModelVo); //添加考核
+    void editAssessment(AduitModelVo aduitModelVo);//编辑考核
+    void delAssessment(int Aid); //删除
+
+    /** 考核巡查管理 */
+    List selAss(); //查询所有的考核指标
+    List selEmp();  //查询所有的员工
+    void addAduit(AduitLogVo aduitLogVo); //员工考核录入
+    List selAduitLog(int currPage,int pageSize); //员工考核列表
+    int selAdCount();
+    List selAdDetails(int id); //考核详情
+    void delAduitLog(int id);//删除考核
 }

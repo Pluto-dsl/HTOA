@@ -94,7 +94,7 @@ public class Jack_AttController {
         System.out.println(date+"--------");
         AttendanceVo attVo = new AttendanceVo();
         attVo.setEmpName(user);
-
+        System.out.println(user+"==============");
         String Auditor =  service.selDepChairman(user); //查询审核人
         System.out.println(Auditor+"---------------");
         attVo.setAuditor(Auditor);

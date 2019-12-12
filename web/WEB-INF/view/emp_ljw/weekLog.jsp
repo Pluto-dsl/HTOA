@@ -83,7 +83,7 @@
                 ,{field:'weekNext', title:'下周工作计划',width: 215, minWidth: 200, fixed: 'left'}
                 ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:90}
             ]]
-            ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
+            ,page: {limit: 10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
 
         //监听行工具事件

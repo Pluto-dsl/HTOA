@@ -14,7 +14,7 @@
     <jsp:include page="../include.jsp"/>
 </head>
 <body>
-    <button type="button" class="layui-btn" id="add1" >
+    <button type="button" class="layui-btn" id="add1" style="margin-left: 25px;" >
         <i class="layui-icon"></i> 添加
     </button>
     <table id="demo2"  lay-filter="test"></table>
