@@ -41,11 +41,11 @@ public class StudentClassVo {
                 '}';
     }
 
-    public int getClassidl() {
+    public int getClassId() {
         return classid;
     }
 
-    public void setClassidl(int classidl) {
+    public void setClassId(int classidl) {
         this.classid = classidl;
     }
 
