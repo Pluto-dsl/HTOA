@@ -1,5 +1,7 @@
 package com.jack.service;
 
+import com.publics.vo.assess.AduitLogVo;
+import com.publics.vo.assess.AduitModelVo;
 import com.publics.vo.educ.CourseTypeVo;
 import com.publics.vo.educ.CourseVo;
 import com.publics.vo.empModel.AttendanceVo;
@@ -37,7 +39,18 @@ public interface Jack_Service {
     void updateCourseMgt(CourseVo courseVo); //修改课程
     int delCourseMgt(int cid); //删除课程
 
-    /** 登录 */
-    Map TLoginUser(String user);
-    Map SLoginUser(String user);
+    /** 考核管理业务 */
+    List selAssessment(int currPage,int pageSize); //考核指标查询
+    int selAssCount(); //获取数据总数
+    List selDepList(); //查询部门列表
+    void addAssessment(AduitModelVo aduitModelVo); //添加考核
+    void editAssessment(AduitModelVo aduitModelVo);//编辑考核
+    void delAssessment(int Aid); //删除
+
+    /** 考核巡查管理 */
+    List selAss();
+    List selEmp();
+    void addAduit(AduitLogVo aduitLogVo);
+    List selAduitLog(int currPage,int pageSize);
+    int selAdCount();
 }

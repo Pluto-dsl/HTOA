@@ -126,7 +126,6 @@
 
         //添加按钮提交监听
         form.on('submit(Csubmit)',function (data) {
-
             $.post('${pageContext.request.contextPath}/jack/addCourseMgt',data.field,function (data) {
                 layer.msg("添加成功");
                 table.reload('Clist');
@@ -146,7 +145,6 @@
         table.on('tool(Clist)',function (obj) {
             var data1 = obj.data;
             if(obj.event === 'edit'){
-
                 $("#editfrom")[0].reset();
                 layui.form.render();
                 //为表单赋值
@@ -240,7 +238,7 @@
                     }
                 });
             }
-        })
+        });
     });
 </script>
 </html>

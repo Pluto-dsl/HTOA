@@ -118,12 +118,11 @@ public class Jack_courseController {
     @RequestMapping(value = "/editCourseMgt")
     public String editCourseMgt(String courseId,String courseName,String isobligatory,String courseTypeId,String remark){
         CourseVo courseVo = new CourseVo();
-        courseVo.setCourseId(Integer.valueOf(courseId));
+        courseVo.setCourseId(Integer.parseInt(courseId));
         courseVo.setCourseName(courseName);
         courseVo.setIsobligatory(isobligatory);
         courseVo.setCourseTypeId(Integer.parseInt(courseTypeId));
         courseVo.setRemark(remark);
-        System.out.println(courseVo);
         service.updateCourseMgt(courseVo);
         return "emp_xzq/course";
     }
