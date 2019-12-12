@@ -114,9 +114,7 @@ public class Zhq_StuDormController {
 
         //根据ID查询宿舍名
         StudentDormitoryVo  studentDormitoryVo1 = (StudentDormitoryVo) zhq_stuDormService.selIdHourName(studentDormitoryVo.getClass(),id);
-        System.out.println("找出来的对象是"+studentDormitoryVo1.toString());
-        System.out.println("获取到的房号名是"+studentDormitoryVo1.getHuorName());
-        System.out.println("获取到的房号Id是"+studentDormitoryVo1.getHourid());
+
 
         //查询学生表
         List<StudentVo> listStu = zhq_stuDormService.selStudent();
@@ -125,21 +123,18 @@ public class Zhq_StuDormController {
         for (StudentVo studentVo:listStu){
             Map map = new HashMap();
             if(studentVo.getHuor() == studentDormitoryVo1.getHourid()){
-                System.out.println("进来Map中了");
                 map.put("huorName",studentDormitoryVo1.getHuorName());//宿舍房号名称
                 map.put("stuName",studentVo.getStuname());//姓名
                 map.put("phone",studentVo.getPhone());//电话
-                studentVo.getClazz();//班级id
                 List<StudentClassVo> studentClassVo = zhq_stuDormService.sleStudentClass();
                 for (StudentClassVo classVo :studentClassVo){
-                    if(classVo.getClassId() == studentVo.getClazz()){
+                    if(classVo.getClassId() == studentVo.getClazz()){//班级id
                         map.put("className",classVo.getClassName());
                     }
                 }
             }
             jsonArray.add(map);
         }
-        System.out.println("此时jsonArray："+jsonArray.toJSONString());
 
         jsonObject.put("msg","");
         jsonObject.put("code",0);
