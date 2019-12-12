@@ -16,6 +16,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>报修申请</title>
     <jsp:include page="../include.jsp"/>
+    <style>
+        .my-badge-dot{
+            margin-left: 3px;
+            color: #ff3d00;
+        }
+    </style>
 </head>
 <body>
 <div id="window" style="padding-right:5%;display: none">
@@ -37,8 +43,8 @@
 </div>
 <div class="layui-tab">
     <ul class="layui-tab-title">
-        <li class="layui-this">员工维修列表</li>
-        <li>学生维修列表</li>
+        <li id="empListTitle" class="layui-this">员工维修列表</li>
+        <li id="stuListTitle">学生维修列表</li>
     </ul>
     <div class="layui-tab-content">
         <div class="layui-tab-item layui-show">
@@ -74,7 +80,15 @@
                 ,{field:'status', title:'状态',width: 80, minWidth: 200}
                 ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:84}
             ]]
-            ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
+            ,page: {limit: 10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
+            ,parseData:function (res) {
+                if (res.count >= 1){
+                    $("#empListTitle").text("员工维修列表");
+                    $("#empListTitle").append("<span class='my-badge-dot'>("+res.count+")</span>");
+                }else {
+                    $("#empListTitle").text("员工维修列表");
+                }
+            }
         });
         table.render({
             elem: '#stuRepairList'
@@ -94,6 +108,14 @@
                 ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:83}
             ]]
             ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
+            ,parseData:function (res) {
+                if (res.count >= 1){
+                    $("#stuListTitle").text("学生维修列表");
+                    $("#stuListTitle").append("<span class='my-badge-dot'>("+res.count+")</span>");
+                }else {
+                    $("#stuListTitle").text("学生维修列表");
+                }
+            }
         });
 
         table.on('tool(test)',function (obj) {
