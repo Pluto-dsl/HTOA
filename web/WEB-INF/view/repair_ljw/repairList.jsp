@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -15,139 +14,104 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>维修管理</title>
-    <jsp:include page="${pageContext.request.contextPath}/toPage/include"/>
+    <title>报修申请</title>
+    <jsp:include page="../include.jsp"/>
 </head>
 <body>
-
-<table id="repair" lay-filter="test"></table>
-
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="delChatRecordList">删除所选数据</button>
-        <button class="layui-btn layui-btn-sm" lay-event="newChatRecord">新增谈心记录</button>
+<div id="window" style="padding-right:5%;display: none">
+    <br><br>
+    <div class="layui-form-item">
+        <label class="layui-form-label">处理结果：</label>
+        <div class="layui-input-block">
+            <input type="hidden" name="repairId">
+            <input type="text" name="result" autocomplete="off" placeholder="请输入处理结果" class="layui-input">
+        </div>
     </div>
-</script>
+    <br>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button name="submit" class="layui-btn">提交</button>
+            <button name="close" class="layui-btn layui-btn-primary">取消</button>
+        </div>
+    </div>
+</div>
+<div class="layui-tab">
+    <ul class="layui-tab-title">
+        <li class="layui-this">员工维修列表</li>
+        <li>学生维修列表</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <table id="empRepairList" lay-filter="test"></table>
+        </div>
+        <div class="layui-tab-item">
+            <table id="stuRepairList" lay-filter="test"></table>
+        </div>
+    </div>
+</div>
+
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="manage">处理</a>
 </script>
 </body>
 <script>
     layui.use('table', function(){
         var table = layui.table;
-        table.render({
-            elem: '#repair'
-            ,url:'${pageContext.request.contextPath}/logs/getRepairData'
-            ,title: '维修管理'
+        var tableIns = table.render({
+            elem: '#empRepairList'
+            ,url:'${pageContext.request.contextPath}/logs/getEmpRepairData'
+            ,title: '我的报修列表'
             ,cols: [[
-                {type: 'checkbox', fixed: 'left'}
-                ,{field:'chatId', title:'ID', width:60, fixed: 'left', unresize: true, sort: true}
-
+                {field:'equipmentId', title:'ID', width:60, fixed: 'left', unresize: true, sort: true}
+                ,{field:'equipmentType', title:'保修设备名称',width: 140,fixed: 'left'}
+                ,{field:'depName', title:'部门名称', width:90 }
+                ,{field:'empName', title:'员工姓名', width:90 }
+                ,{field:'startTime', title:'申请时间', width:160}
+                ,{field:'remark', title:'备注',width: 175}
+                ,{field:'empId', title:'处理人',width: 90}
+                ,{field:'endTime', title:'处理时间', width:160}
+                ,{field:'result', title:'处理详情',width: 175}
+                ,{field:'status', title:'状态',width: 80, minWidth: 200}
+                ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:84}
+            ]]
+            ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
+        });
+        table.render({
+            elem: '#stuRepairList'
+            ,url:'${pageContext.request.contextPath}/logs/getStuRepairData'
+            ,title: '我的报修列表'
+            ,cols: [[
+                {field:'equipmentId', title:'ID', width:60, fixed: 'left', unresize: true, sort: true}
+                ,{field:'equipmentType', title:'保修设备名称',width: 140,fixed: 'left'}
+                ,{field:'depName', title:'班级名称', width:150 }
+                ,{field:'empName', title:'学生姓名', width:90 }
+                ,{field:'startTime', title:'申请时间', width:160}
+                ,{field:'remark', title:'备注',width: 145}
+                ,{field:'empId', title:'处理人',width: 90}
+                ,{field:'endTime', title:'处理时间', width:160}
+                ,{field:'result', title:'处理详情',width: 145}
+                ,{field:'status', title:'状态',width: 80, minWidth: 200}
+                ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:83}
             ]]
             ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
 
-        //头工具栏事件
-        table.on('toolbar(test)', function(obj){
-            var checkStatus = table.checkStatus(obj.config.id);
-            switch(obj.event){
-                case 'newChatRecord':
-                    layer.open({
-                        type: 1,
-                        title:'添加谈心记录',
-                        skin: 'layui-layer-demo', //样式类名
-                        closeBtn: 1, //是否显示关闭按钮
-                        area: ['700px', '420px'],
-                        fixed: false, //不固定
-                        maxmin: true,
-                        shadeClose: false, //是否点击遮罩时关闭
-                        content: $('#windows'),
-                        cancel: function(index, layero){
-                            $("#MyForm")[0].reset();
-                            layui.form.render();
-                            layer.close(index);
-                            return false;
-                        }
-                    });
-                    break;
-                case 'delChatRecordList':
-                    var data = checkStatus.data;
-                    var msg = "是要删除ID为：";
-                    $(data).each(function (index,elemnt) {
-                        console.log(elemnt.chatId);
-                        msg +=elemnt.chatId+"、";
-                    });
-                    msg = msg.substr(0,msg.length-1);
-                    msg +="的记录吗?";
-                    layer.confirm(msg, {
-                        btn: ['是的','取消'] //按钮
-                    }, function(){
-                        $(data).each(function (index,elemnt) {
-                            delChatRecord(elemnt.chatId)
-                        });
-                    }, function(){
-
-                    });
-                    break;
-            }
-        });
-
-        //监听行工具事件
-        table.on('tool(test)', function(obj){
+        table.on('tool(test)',function (obj) {
             var data = obj.data;
-            if(obj.event === 'del'){
-                layer.confirm('真的删除行么', function(index){
-                    obj.del();
-                    layer.close(index);
-                    delChatRecord(obj.data.chatid)
-                });
-            } else if(obj.event === 'edit'){
-                console.log(data);
-                //重置表单数据
-                $("#MyForm")[0].reset();
-                layui.form.render();
-                //为表单赋值
-                $("#chatId").val(data.chatId);
-                $("#chatDate").val(data.chatDate);
-                $("#addr").val(data.addr);
-                $("#sayscon").val(data.sayscon);
-                $("#teacher").children().each(function (index,element) {
-                    if ($(element).text() === data.teacher) {
-                        $(element).attr("selected","selected");
-                    }else {
-                        $(element).removeAttr("selected")
-                    }
-                });
-
-                $("#sayface").children().each(function (index,element) {
-                    if ($(element).text() === data.sayface) {
-                        $(element).attr("selected","selected");
-                    }else {
-                        $(element).removeAttr("selected")
-                    }
-                });
-
-                //重新渲染表单
-                layui.use('form', function() {
-                    var element = layui.form;
-                    element.render();
-                });
-
-                //打开窗口
+            console.log(obj.data);
+            if (obj.event === 'manage') {
+                $('input[name="repairId"]').val(data.equipmentId);
                 layer.open({
                     type: 1,
-                    title:'添加谈心记录',
+                    title:'处理设备申请单',
                     skin: 'layui-layer-demo', //样式类名
                     closeBtn: 1, //是否显示关闭按钮
-                    area: ['700px', '420px'],
+                    area: ['550px', '220px'],
                     fixed: false, //不固定
                     maxmin: true,
                     shadeClose: false, //是否点击遮罩时关闭
-                    content: $('#windows'),
-                    cancel: function(index, layero){//点击关闭按钮时触发
-                        //重置表单数据
-                        $("#MyForm")[0].reset();
+                    content: $('#window'),
+                    cancel: function(index, layero){
                         layui.form.render();
                         layer.close(index);
                         return false;
@@ -155,22 +119,33 @@
                 });
             }
         });
-    });
-    layui.use('laydate', function(){
-        var laydate = layui.laydate;
-        //执行一个laydate实例
-        laydate.render({
-            elem: '#chatDate' //指定元素
-            ,format:'yyyy/MM/dd'
+        //点击提交按钮触发的方法
+        $('button[name="submit"]').click(function (obj) {
+            var repairId = $('input[name="repairId"]').val();
+            var result = $('input[name="result"]').val();
+            var data = {
+                repairId:repairId,
+                result:result
+            };
+            $.post("${requestScope.context.contextPath}/logs/manageRepair",data,function (data) {
+                console.log(data);
+                layer.closeAll();
+                tableIns.reload({
+                    method:'post'
+                });
+            },"json")
         });
+        //点击取消按钮触发的方法
+        $('button[name="close"]').click(function (obj) {
+            layer.closeAll();
+        })
     });
+    layui.use('element',function () {
+        var $ = layui.jquery;
+        var element = layui.element;
+    })
 </script>
 <script>
-    function delChatRecord(id) {
-        var data = {id:id};
-        $.post("${pageContext.request.contextPath}/ljw/delChatRecord",data,function (data) {
-            console.log(data)
-        },"json");
-    }
+
 </script>
 </html>

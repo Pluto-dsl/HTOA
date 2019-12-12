@@ -51,6 +51,11 @@ public class EmpsServiceImpl extends BaseDao implements EmpsService {
     }
 
     @Override
+    public int statue(int empId) {
+        return (int) ((Map)super.listBySQL("SELECT status from emp where empId = "+empId).get(0)).get("status");
+    }
+
+    @Override
     public void status(int state, int empId) {
         super.executeSQL("update emp set status = "+state+" where empId = "+empId);
     }

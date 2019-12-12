@@ -15,7 +15,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>谈心记录</title>
-    <jsp:include page="${pageContext.request.contextPath}/toPage/include"/>
+    <jsp:include page="../include.jsp"/>
     <style>
         .menu{
             margin-top: 8px;
@@ -37,7 +37,7 @@
 <form class="layui-form menu" <%--style="width: 85%;height: 40px;padding-top: 10px;padding-left: 20px;"--%>>
     部门名称:
     <div class="layui-inline" style="padding-right: 15px">
-        <select name="depId" lay-verify="required" lay-search="">
+        <select name="depId" lay-verify="required">
             <option value="0" selected>所有部门</option>
             <c:forEach items="${requestScope.depList}" var="dep">
                 <option value="${dep.depid}">${dep.depName}</option>
