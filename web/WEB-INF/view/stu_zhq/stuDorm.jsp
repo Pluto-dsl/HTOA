@@ -163,7 +163,7 @@
 
                 layer.open({
                     type: 1,
-                    title:'修改宿舍',
+                    title:'查看宿舍学生',
                     skin: 'layui-layer-demo', //样式类名
                     closeBtn: 1, //不显示关闭按钮
                     area: ['600px', '430px'],

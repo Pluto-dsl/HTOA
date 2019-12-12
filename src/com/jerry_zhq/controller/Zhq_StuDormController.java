@@ -107,18 +107,14 @@ public class Zhq_StuDormController {
     @RequestMapping("/selStuDormit")
     @ResponseBody
     public JSONObject selStuDormit(HttpServletRequest request,StudentDormitoryVo studentDormitoryVo,int id,int page,int limit ){
-
-        System.out.println("获取到的id是"+id);
         JSONObject jsonObject= new JSONObject();
         JSONArray jsonArray = new JSONArray();
 
         //根据ID查询宿舍名
         StudentDormitoryVo  studentDormitoryVo1 = (StudentDormitoryVo) zhq_stuDormService.selIdHourName(studentDormitoryVo.getClass(),id);
 
-
         //查询学生表
         List<StudentVo> listStu = zhq_stuDormService.selStudent();
-        System.out.println("查询到的学生时"+listStu.toString());
 
         for (StudentVo studentVo:listStu){
             Map map = new HashMap();
