@@ -1,6 +1,6 @@
 package com.publics.dao;
 
-import com.publics.vo.empModel.emp.EmpVo;
+import com.publics.vo.sys.DepVo;
 import org.hibernate.*;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -123,7 +123,20 @@ public class BaseDao {
         for (Object obj:list) {
             id = Integer.parseInt(obj.toString());
         }
+        session.close();
         return id;
+    }
+
+    /**
+     * 根据员工名称查找id（模糊查询）
+     * */
+
+    public List<Integer> getEmpNames(String empName){
+        Session session = getSession();
+        SQLQuery sqlQuery = session.createSQLQuery("select empId from emp where empName like '%"+empName+"%'");
+        List<Integer> list = sqlQuery.list();
+        session.close();
+        return list;
     }
 
 
@@ -165,5 +178,15 @@ public class BaseDao {
         session.flush();
         session.close();
     }
+
+    //删改dep
+    public DepVo selId(Integer deptId) {
+        Session session = sessionFactory.openSession();
+        DepVo deptVO = (DepVo) session.createQuery("from DepVo where depid = "+deptId).uniqueResult();
+        session.close();
+        return deptVO;
+    }
+
+
 
 }

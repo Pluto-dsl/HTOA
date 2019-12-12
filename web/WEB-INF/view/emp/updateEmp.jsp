@@ -192,7 +192,7 @@
         });
     });
     function exit() {//返回员工资料页
-
+        window.location.href="<%=request.getContextPath()%>/zeroEmp/toemp";
     }
 </script>
 </html>

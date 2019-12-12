@@ -14,7 +14,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>报修申请</title>
-    <jsp:include page="${pageContext.request.contextPath}/toPage/include"/>
+    <jsp:include page="../include.jsp"/>
 </head>
 <body>
 <div id="windows" style="margin-left: 5%;display: none;">
@@ -27,9 +27,9 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">备注</label>
+            <label class="layui-form-label">描述</label>
             <div class="layui-input-block">
-                <input type="text" name="remark" lay-verify="title" autocomplete="off" placeholder="请输入备注" class="layui-input">
+                <input type="text" name="remark" lay-verify="title" autocomplete="off" placeholder="请输入对维修设备的详情" class="layui-input">
             </div>
         </div>
         <br>
@@ -61,12 +61,22 @@
             ,cols: [[
                 {field:'equipmentId', title:'报修编号', width:120, fixed: 'left', unresize: true, sort: true}
                 ,{field:'equipmentType', title:'保修设备名称',width: 160,fixed: 'left'}
-                ,{field:'depName', title:'部门名称', width:100, fixed: 'left'}
-                ,{field:'empName', title:'员工姓名', width:100, fixed: 'left'}
-                ,{field:'startTime', title:'开始时间', width:160, fixed: 'left'}
-                ,{field:'endTime', title:'结束时间', width:160, fixed: 'left'}
-                ,{field:'remark', title:'备注',width: 360,fixed: 'left'}
-                ,{field:'status', title:'状态',width: 120, minWidth: 200, fixed: 'left'}
+                ,{field:'depName', title:'部门名称', width:90 }
+                ,{field:'empName', title:'员工姓名', width:90 }
+                ,{field:'startTime', title:'申请时间', width:160}
+                ,{field:'remark', title:'备注',width: 145}
+                ,{field:'empId', title:'处理人',width: 90}
+                ,{field:'endTime', title:'处理时间', width:160}
+                ,{field:'result', title:'处理详情',width: 145}
+                ,{field:'status', title:'状态',width: 80, minWidth: 200}
+                ,{fixed:'right', title:'操作',templet:function(d){
+                    console.log(d);
+                    if (d.status==='未完成'){
+                        return '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
+                    }else {
+                        return ''
+                    }
+                    }, width:80}
             ]]
             ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
@@ -94,6 +104,24 @@
                 });
             }
         });
+        table.on('tool(test)',function (obj) {
+            var data = obj.data;
+            if ('del' === obj.event){
+                layer.confirm('是要删除此申请吗', function(index){
+                    obj.del();
+                    layer.close(index);
+                    delRepair(obj.data.equipmentId)
+                });
+            }
+        })
     });
+</script>
+<script>
+    function delRepair(id) {
+        var data = {delRepairId:id};
+        $.post("${pageContext.request.contextPath}/logs/delRepair",data,function (data) {
+            console.log(data)
+        },"json");
+    }
 </script>
 </html>

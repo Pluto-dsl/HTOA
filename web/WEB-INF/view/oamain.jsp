@@ -59,15 +59,13 @@
                     <dl class="layui-nav-child">
                         <%-- 例子  可修改 照着写就行了 --%>
                         <dd><a href="javascript:void(0);">部门管理</a></dd>
-                        <dd><a href="javascript:void(0);">员工资料</a></dd>
-                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/ljw/toWeekLogPage"
-                               data-id="周报管理" data-title="周报管理" >周报管理</a></dd>
+                        <dd><a href="javascript:void(0);" >员工资料</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/emp/toEmpPaper"
                                data-id="我的周报" data-title="我的周报" >我的周报</a></dd>
-
-                        <dd><a href="javascript:void(0);">周报管理</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/ljw/toWeekLogPage"
+                               data-id="周报管理" data-title="周报管理" >周报管理</a></dd>
                         <dd><a href="javascript:void(0);">周报审阅</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/ljw/toChatRecordPage"
@@ -75,7 +73,8 @@
                         <dd>
                             <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/empLeave/toleave"
-                               data-id="员工请假" data-title="员工请假">员工请假</a></dd>
+                               data-id="员工请假" data-title="员工请假">员工请假</a>
+                        </dd>
 
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toAtt"
@@ -85,7 +84,9 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" >学生管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:void(0);">学生请假</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/student/leave"
+                               data-id="学生请假" data-title="学生请假" >学生请假</a></dd>
                         <dd><a href="javascript:void(0);">班级管理</a></dd>
                         <dd><a href="javascript:void(0);">楼栋管理</a></dd>
                         <dd><a href="javascript:void(0);">宿舍管理</a></dd>
@@ -100,18 +101,22 @@
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toCourseList"
                                data-id="课程类别" data-title="课程类别">课程类别</a></dd>
-                        <dd><a href="javascript:void(0);"  class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/jack/toCourseManagement"
-                               data-id="课程管理" data-title="课程管理">课程管理</a></dd>
-                        <dd><a href="javascript:void(0);">试讲培训</a></dd>
+                        <dd><a href="javascript:void(0);">课程管理</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/training/rehearsal_trainingPage"
+                               data-id="试讲培训" data-title="试讲培训" >试讲培训</a></dd>
                         <dd><a href="javascript:void(0);">值班管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;">后勤管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:void(0);">报修申请</a></dd>
-                        <dd><a href="javascript:void(0);">维修管理</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/logs/toMyRepair"
+                               data-id="报修申请" data-title="报修申请" >报修申请</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/logs/toRepairPage"
+                               data-id="维修管理" data-title="维修管理" >维修管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -220,6 +225,7 @@
                 })
             }
         };
+
 
         //当点击有site-demo-active属性的标签时，即左侧菜单栏中内容 ，触发点击事件
         $('.site-demo-active').on('click', function() {

@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -15,162 +14,103 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>维修管理</title>
-    <jsp:include page="${pageContext.request.contextPath}/toPage/include"/>
+    <title>报修申请</title>
+    <jsp:include page="../include.jsp"/>
 </head>
 <body>
+<button id="btn" class="layui-btn" style="margin-top: 10px;margin-left: 10px;" value="1">切换学生报修</button>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+    <legend>默认风格的Tab</legend>
+</fieldset>
 
-<table id="repair" lay-filter="test"></table>
-
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="delChatRecordList">删除所选数据</button>
-        <button class="layui-btn layui-btn-sm" lay-event="newChatRecord">新增谈心记录</button>
+<div class="layui-tab">
+    <ul class="layui-tab-title">
+        <li class="layui-this">网站设置</li>
+        <li>员工维修列表</li>
+        <li>学生维修列表</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <table id="empRepairList" lay-filter="test"></table>
+        </div>
+        <div class="layui-tab-item">
+            <table id="stuRepairList" lay-filter="test"></table>
+        </div>
     </div>
-</script>
+</div>
+
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="option">处理</a>
 </script>
 </body>
 <script>
     layui.use('table', function(){
+        //定义学生报修表头
+        var stuCols = [[
+            {field:'equipmentId', title:'报修编号', width:120, fixed: 'left', unresize: true, sort: true}
+            ,{field:'equipmentType', title:'保修设备名称',width: 160,fixed: 'left'}
+            ,{field:'depName', title:'班级名称', width:100, fixed: 'left'}
+            ,{field:'empName', title:'学生姓名', width:100, fixed: 'left'}
+            ,{field:'startTime', title:'开始时间', width:160, fixed: 'left'}
+            ,{field:'endTime', title:'结束时间', width:160, fixed: 'left'}
+            ,{field:'remark', title:'备注',width: 320,fixed: 'left'}
+            ,{field:'status', title:'状态',width: 80, minWidth: 200, fixed: 'left'}
+            ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:120}
+        ]];
+        //定义员工报修表头
+        var empCols = [[
+            {field:'equipmentId', title:'报修编号', width:120, fixed: 'left', unresize: true, sort: true}
+            ,{field:'equipmentType', title:'保修设备名称',width: 160,fixed: 'left'}
+            ,{field:'depName', title:'部门名称', width:100, fixed: 'left'}
+            ,{field:'empName', title:'员工姓名', width:100, fixed: 'left'}
+            ,{field:'startTime', title:'申请时间', width:160, fixed: 'left'}
+            ,{field:'endTime', title:'处理时间', width:160, fixed: 'left'}
+            ,{field:'remark', title:'备注',width: 320,fixed: 'left'}
+            ,{field:'status', title:'状态',width: 80, minWidth: 200, fixed: 'left'}
+            ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:120}
+        ]];
         var table = layui.table;
-        table.render({
-            elem: '#repair'
-            ,url:'${pageContext.request.contextPath}/logs/getRepairData'
-            ,title: '维修管理'
-            ,cols: [[
-                {type: 'checkbox', fixed: 'left'}
-                ,{field:'chatId', title:'ID', width:60, fixed: 'left', unresize: true, sort: true}
-
-            ]]
+        var tableInt = table.render({
+            elem: '#empRepairList'
+            ,url:'${pageContext.request.contextPath}/logs/getEmpRepairData'
+            ,title: '我的报修列表'
+            ,cols: empCols
             ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
 
-        //头工具栏事件
-        table.on('toolbar(test)', function(obj){
-            var checkStatus = table.checkStatus(obj.config.id);
-            switch(obj.event){
-                case 'newChatRecord':
-                    layer.open({
-                        type: 1,
-                        title:'添加谈心记录',
-                        skin: 'layui-layer-demo', //样式类名
-                        closeBtn: 1, //是否显示关闭按钮
-                        area: ['700px', '420px'],
-                        fixed: false, //不固定
-                        maxmin: true,
-                        shadeClose: false, //是否点击遮罩时关闭
-                        content: $('#windows'),
-                        cancel: function(index, layero){
-                            $("#MyForm")[0].reset();
-                            layui.form.render();
-                            layer.close(index);
-                            return false;
-                        }
-                    });
-                    break;
-                case 'delChatRecordList':
-                    var data = checkStatus.data;
-                    var msg = "是要删除ID为：";
-                    $(data).each(function (index,elemnt) {
-                        console.log(elemnt.chatId);
-                        msg +=elemnt.chatId+"、";
-                    });
-                    msg = msg.substr(0,msg.length-1);
-                    msg +="的记录吗?";
-                    layer.confirm(msg, {
-                        btn: ['是的','取消'] //按钮
-                    }, function(){
-                        $(data).each(function (index,elemnt) {
-                            delChatRecord(elemnt.chatId)
-                        });
-                    }, function(){
-
-                    });
-                    break;
-            }
-        });
-
-        //监听行工具事件
-        table.on('tool(test)', function(obj){
+        table.on('tool(test)',function (obj) {
             var data = obj.data;
-            if(obj.event === 'del'){
-                layer.confirm('真的删除行么', function(index){
-                    obj.del();
-                    layer.close(index);
-                    delChatRecord(obj.data.chatid)
-                });
-            } else if(obj.event === 'edit'){
+            console.log(obj.event);
+            if (obj.event === 'option') {
                 console.log(data);
-                //重置表单数据
-                $("#MyForm")[0].reset();
-                layui.form.render();
-                //为表单赋值
-                $("#chatId").val(data.chatId);
-                $("#chatDate").val(data.chatDate);
-                $("#addr").val(data.addr);
-                $("#sayscon").val(data.sayscon);
-                $("#teacher").children().each(function (index,element) {
-                    if ($(element).text() === data.teacher) {
-                        $(element).attr("selected","selected");
-                    }else {
-                        $(element).removeAttr("selected")
-                    }
-                });
-
-                $("#sayface").children().each(function (index,element) {
-                    if ($(element).text() === data.sayface) {
-                        $(element).attr("selected","selected");
-                    }else {
-                        $(element).removeAttr("selected")
-                    }
-                });
-
-                //重新渲染表单
-                layui.use('form', function() {
-                    var element = layui.form;
-                    element.render();
-                });
-
-                //打开窗口
-                layer.open({
-                    type: 1,
-                    title:'添加谈心记录',
-                    skin: 'layui-layer-demo', //样式类名
-                    closeBtn: 1, //是否显示关闭按钮
-                    area: ['700px', '420px'],
-                    fixed: false, //不固定
-                    maxmin: true,
-                    shadeClose: false, //是否点击遮罩时关闭
-                    content: $('#windows'),
-                    cancel: function(index, layero){//点击关闭按钮时触发
-                        //重置表单数据
-                        $("#MyForm")[0].reset();
-                        layui.form.render();
-                        layer.close(index);
-                        return false;
-                    }
-                });
             }
         });
-    });
-    layui.use('laydate', function(){
-        var laydate = layui.laydate;
-        //执行一个laydate实例
-        laydate.render({
-            elem: '#chatDate' //指定元素
-            ,format:'yyyy/MM/dd'
+
+        //切换为学生列表
+        $("#btn").click(function () {
+            var cols = [];
+            console.log(this);
+            var type = $(this).val();
+            if ($(this).val()==="1"){
+                cols = stuCols;
+                $(this).text("切换员工");
+                $(this).val("2");
+            }else {
+                cols = empCols;
+                $(this).text("切换学生");
+                $(this).val("1");
+            }
+            tableInt.reload({
+                where: { //设定异步数据接口的额外参数，任意设
+                    type:type
+                }
+                ,cols: cols
+                ,method:'post'
+                ,page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
         });
     });
-</script>
-<script>
-    function delChatRecord(id) {
-        var data = {id:id};
-        $.post("${pageContext.request.contextPath}/ljw/delChatRecord",data,function (data) {
-            console.log(data)
-        },"json");
-    }
 </script>
 </html>

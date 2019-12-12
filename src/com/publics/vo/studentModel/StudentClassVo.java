@@ -12,8 +12,8 @@ import javax.persistence.*;
 public class StudentClassVo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int classId;//主键
-    private String classNo;//班级编号
+    private int classidl;//主键
+    private String classno;//班级编号
     private String className;//班级名称
     private int count;//班级人数
     private String teacher;//授课老师    员工表外键
@@ -27,8 +27,8 @@ public class StudentClassVo {
     @Override
     public String toString() {
         return "StudentClassVo{" +
-                "classId=" + classId +
-                ", classNo='" + classNo + '\'' +
+                "classidl=" + classidl +
+                ", classno='" + classno + '\'' +
                 ", className='" + className + '\'' +
                 ", count=" + count +
                 ", teacher='" + teacher + '\'' +
@@ -41,20 +41,20 @@ public class StudentClassVo {
                 '}';
     }
 
-    public int getClassId() {
-        return classId;
+    public int getClassidl() {
+        return classidl;
     }
 
-    public void setClassId(int classId) {
-        this.classId = classId;
+    public void setClassidl(int classidl) {
+        this.classidl = classidl;
     }
 
-    public String getClassNo() {
-        return classNo;
+    public String getClassno() {
+        return classno;
     }
 
-    public void setClassNo(String classNo) {
-        this.classNo = classNo;
+    public void setClassno(String classno) {
+        this.classno = classno;
     }
 
     public String getClassName() {

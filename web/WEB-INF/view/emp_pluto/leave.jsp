@@ -53,7 +53,8 @@
                 </th>
                 <td style="">
                     <input type="text" id="days" name="holidayDay" style="width: 50px;height: 30px;" >天,
-                    <select name="hour" id="hour" style="width: 50px;height: 30px;">
+                    <select name="hour" id="hour" style="width: 80px;height: 30px;">
+                        <option value="0">默认</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -101,7 +102,8 @@
             endTime:$("#endDate").val(),
             holidayDay:$("#days").val(),
             hour:$("#hour").val(),
-            Remark:$("#Remark").val()
+            Remark:$("#Remark").val(),
+            type:'empleave'
 
         }
 
@@ -126,7 +128,7 @@
         //日期
         laydate.render({
             elem: '#startDate',
-            type: 'datetime',
+            type: 'date',
             done: function (value) {
                 startdate=value;
             }
@@ -134,7 +136,7 @@
 
         laydate.render({
             elem: '#endDate',
-            type: 'datetime',
+            type: 'date',
             done: function (value) {
                 enddate = value;
                 var day = getDaysBetween(startdate,enddate);

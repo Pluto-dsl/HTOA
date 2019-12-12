@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -33,9 +35,16 @@ public class Pluto_LeaveServiceImpl extends BaseDao implements Pluto_LeaveServic
     public void addLeave( HttpServletRequest request) {
         String title = request.getParameter("Title");
         String stime = request.getParameter("startTime");
-        Date startDate = new Date(stime);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate = new Date();
         String etime = request.getParameter("endTime");
-        Date endDate = new Date(etime);
+        Date endDate = new Date();
+        try {
+            startDate = sdf.parse(stime);
+            endDate = sdf.parse(etime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         String day = request.getParameter("holidayDay");
         String hour = request.getParameter("hour");
         String Remark = request.getParameter("Remark");
@@ -43,14 +52,12 @@ public class Pluto_LeaveServiceImpl extends BaseDao implements Pluto_LeaveServic
         holidayVo.setTitle(title);
         holidayVo.setStartTime(startDate);
         holidayVo.setEndTime(endDate);
-
-
-
-
-
-
-//        holidayVo.setEmpid(1);//请假对象
-//        System.out.println(holidayVo.toString());
-//        super.addObject(holidayVo);
+        holidayVo.setHolidayDay(Integer.parseInt(day));
+        holidayVo.setHour(Integer.parseInt(hour));
+        holidayVo.setRemark(Remark);
+        holidayVo.setStatus(1);//状态 1:审批中 2：已完成 3：不批准
+        holidayVo.setEmpid(1);//设置请假员工
+        System.out.println(holidayVo.toString());
+        super.addObject(holidayVo);
     }
 }
