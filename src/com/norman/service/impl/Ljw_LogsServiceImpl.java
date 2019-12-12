@@ -57,9 +57,9 @@ public class Ljw_LogsServiceImpl extends BaseDao implements Ljw_LogsService {
             }
             //转换状态内容
             if (0 == vo.getStatus()){
-                status="未完成";
+                status="待处理";
             }else {
-                status="已完成";
+                status="已处理";
             }
             //转换处理人
             if (vo.getEmpId()==0){
@@ -132,9 +132,9 @@ public class Ljw_LogsServiceImpl extends BaseDao implements Ljw_LogsService {
             }
             //转换状态内容
             if (0 == vo.getStatus()){
-                status="未完成";
+                status="待处理";
             }else {
-                status="已完成";
+                status="已处理";
             }
             //转换处理人
             if (vo.getEmpId()==0){

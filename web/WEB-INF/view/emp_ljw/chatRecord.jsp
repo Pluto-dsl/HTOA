@@ -19,7 +19,8 @@
 </head>
 <body>
 <div id="windows" style="margin-left: 5%;display: none;">
-    <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/ljw/newChatRecord" method="post">
+    <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/ljw/newChatRecord" method="post" onclick="selMyForm()"
+    >
         <br><br>
         <input id="chatId" type="hidden" name="chatIds">
         <div class="layui-form-item">
@@ -105,7 +106,7 @@
                 ,{field:'sayscon', title:'谈心内容',width: '45%', minWidth: 200, fixed: 'left'}
                 ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:120}
             ]]
-            ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
+            ,page: {limit: 10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
 
         //头工具栏事件
@@ -232,6 +233,7 @@
     });
 </script>
 <script>
+    //删除谈心记录的方法
     function delChatRecord(id) {
         var data = {id:id};
         $.post("${pageContext.request.contextPath}/ljw/delChatRecord",data,function (data) {
