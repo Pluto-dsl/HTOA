@@ -14,11 +14,11 @@ public class MajorVo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private int majorid;//主键，标识列，自动生成
-    private int majorName;//专业名称
+    private String majorName;//专业名称
     private String deptid;//系id
     private String remark;//说明
 
-    public MajorVo(int majorid,int majorName, String deptid, String remark) {
+    public MajorVo(int majorid,String majorName, String deptid, String remark) {
         this.majorid = majorid;
         this.majorName = majorName;
         this.deptid = deptid;
@@ -35,11 +35,11 @@ public class MajorVo {
         this.majorid = majorid;
     }
 
-    public int getMajorName() {
+    public String getMajorName() {
         return majorName;
     }
 
-    public void setMajorName(int majorName) {
+    public void setMajorName(String majorName) {
         this.majorName = majorName;
     }
 

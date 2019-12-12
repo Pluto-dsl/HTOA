@@ -91,7 +91,7 @@
         //第一个实例
         table.render({
             elem: '#demo'
-            ,height: 312
+            ,height: 600
             ,url: '<%=request.getContextPath()%>/zeroEmp/allemp' //数据接口
             /*,where:{//设定异步数据接口的额外参数
 

@@ -369,6 +369,7 @@
                                 cancel: function(index, layero){
                                     //关闭清空表单
                                     document.getElementById("jobform").reset();
+                                    $("#companyName").val(0);
                                     return true;
                                 }
                             });
@@ -520,6 +521,7 @@
                             cancel: function(index, layero){
                                 //关闭清空表单
                                 document.getElementById("educationform").reset();
+                                $("#collegeid").val(0);
                                 return true;
                             }
                         });
@@ -652,6 +654,7 @@
                             cancel: function(index, layero){
                                 //关闭清空表单
                                 document.getElementById("familyInfoform").reset();
+                                $("#familyid").val(0);
                                 return true;
                             }
                         });
@@ -725,8 +728,8 @@
                     ,{field: 'aduitLogid', title: 'id',hide:'true'}
                     ,{field: 'aduitModelid', title: 'mid',hide:'true'}
                     ,{field: 'Empid', title: 'eid', hide:'true'}
-                    ,{field: 'aduitName', title: '考核指标', width:130}
-                    ,{field: 'Scores', title: '考核分数', width:200}
+                    ,{field: 'aduitName', title: '考核指标', width:200}
+                    ,{field: 'Scores', title: '考核分数', width:100}
                     ,{field: 'auditDate', title: '考核时间', width:200,templet : "<div>{{layui.util.toDateString(d.auditDate, 'yyyy年MM月dd日 HH:mm')}}</div>"}
                     ,{field: 'image', title: '图片', width:200,templet : "<div><img src='<%=request.getContextPath()%>/{{d.image}}' style='width: 100px'/></div>"}
                     ,{field: 'Remark', title: '说明', width:200}
@@ -780,6 +783,10 @@
                                     $("#aduitLogid").val(aduitLogid);
                                     $("#dRemark").val(elemnt.Remark);
                                 });
+                            },
+                            cancel: function(index, layero){
+                                $("#aduitLogid").val(0);
+                                return true;
                             }
                         });
                     }

@@ -99,7 +99,7 @@ public class Zero_EmpController {
             tiaojian += " and e.depId = "+depId;
         }
         if(!"".equals(empName)){
-            tiaojian +=" and e.empName = '"+empName+"'";
+            tiaojian +=" and e.empName like '%"+empName+"%'";
         }
         if(!"".equals(Phone)){
             tiaojian +=" and e.Phone like '%"+Phone+"%'";
