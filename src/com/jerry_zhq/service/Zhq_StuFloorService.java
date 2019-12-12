@@ -5,7 +5,7 @@ import com.publics.vo.sys.DepVo;
 
 import java.util.List;
 
-public interface Zhq_StuService {
+public interface Zhq_StuFloorService {
     //查询
     List selFloor(String hql,int page,int pageSize);
 

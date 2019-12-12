@@ -1,6 +1,6 @@
 package com.jerry_zhq.service.impl;
 
-import com.jerry_zhq.service.Zhq_StuService;
+import com.jerry_zhq.service.Zhq_StuFloorService;
 import com.publics.dao.BaseDao;
 import com.publics.vo.studentModel.StudntBuildingVo;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class Zhq_StuServiceImpl extends BaseDao implements Zhq_StuService {
+public class Zhq_StuFloorServiceImpl extends BaseDao implements Zhq_StuFloorService {
 
     //分页查询
     @Override
