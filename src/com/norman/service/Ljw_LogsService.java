@@ -10,10 +10,12 @@ import java.util.Map;
 
 public interface Ljw_LogsService {
     void newRepair(EquipmentRepairVo repairVo);//新增报修申请
+    EquipmentRepairVo getRepair(int id);
     JSONArray getRepairData(HttpServletRequest request,int userType, int page, int limit);//根据用户类型查出对应的报修申请列表
     JSONArray getMyEmpRepairData(HttpServletRequest request,int userId,int page,int limit);//根据登录的用户查出对应的报修申请列表
     int getRepairSize(int userType);//根据用户类型查找数据条数
     int getMyEmpRepairSize(int userId);//根据用户id查找数据条数
     void delRepair(int id);
     EmpVo getEmpVo(int empId);
+    void updRepair(EquipmentRepairVo vo);
 }
