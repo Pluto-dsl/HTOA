@@ -15,86 +15,159 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>报修申请</title>
-    <jsp:include page="${pageContext.request.contextPath}/toPage/include"/>
+    <jsp:include page="../include.jsp"/>
+    <style>
+        .my-badge-dot{
+            margin-left: 3px;
+            color: #ff3d00;
+        }
+    </style>
 </head>
 <body>
-<button id="btn" class="layui-btn" style="margin-top: 10px;margin-left: 10px;" value="1">切换学生报修</button>
-<table id="RepairList" lay-filter="test"></table>
+<div id="window" style="padding-right:5%;display: none">
+    <br><br>
+    <div class="layui-form-item">
+        <label class="layui-form-label">处理结果：</label>
+        <div class="layui-input-block">
+            <input type="hidden" name="repairId">
+            <input type="text" name="result" autocomplete="off" placeholder="请输入处理结果" class="layui-input">
+        </div>
+    </div>
+    <br>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button name="submit" class="layui-btn">提交</button>
+            <button name="close" class="layui-btn layui-btn-primary">取消</button>
+        </div>
+    </div>
+</div>
+<div class="layui-tab">
+    <ul class="layui-tab-title">
+        <li id="empListTitle" class="layui-this">员工维修列表</li>
+        <li id="stuListTitle">学生维修列表</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <table id="empRepairList" lay-filter="test"></table>
+        </div>
+        <div class="layui-tab-item">
+            <table id="stuRepairList" lay-filter="test"></table>
+        </div>
+    </div>
+</div>
+
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="ok">完成</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="manage">处理</a>
 </script>
 </body>
 <script>
     layui.use('table', function(){
-        //定义学生报修表头
-        var stuCols = [[
-            {field:'equipmentId', title:'报修编号', width:120, fixed: 'left', unresize: true, sort: true}
-            ,{field:'equipmentType', title:'保修设备名称',width: 160,fixed: 'left'}
-            ,{field:'depName', title:'班级名称', width:100, fixed: 'left'}
-            ,{field:'empName', title:'学生姓名', width:100, fixed: 'left'}
-            ,{field:'startTime', title:'开始时间', width:160, fixed: 'left'}
-            ,{field:'endTime', title:'结束时间', width:160, fixed: 'left'}
-            ,{field:'remark', title:'备注',width: 320,fixed: 'left'}
-            ,{field:'status', title:'状态',width: 80, minWidth: 200, fixed: 'left'}
-            ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:120}
-        ]];
-        //定义员工报修表头
-        var empCols = [[
-            {field:'equipmentId', title:'报修编号', width:120, fixed: 'left', unresize: true, sort: true}
-            ,{field:'equipmentType', title:'保修设备名称',width: 160,fixed: 'left'}
-            ,{field:'depName', title:'部门名称', width:100, fixed: 'left'}
-            ,{field:'empName', title:'员工姓名', width:100, fixed: 'left'}
-            ,{field:'startTime', title:'开始时间', width:160, fixed: 'left'}
-            ,{field:'endTime', title:'结束时间', width:160, fixed: 'left'}
-            ,{field:'remark', title:'备注',width: 320,fixed: 'left'}
-            ,{field:'status', title:'状态',width: 80, minWidth: 200, fixed: 'left'}
-            ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:120}
-        ]];
         var table = layui.table;
-        var tableInt = table.render({
-            elem: '#RepairList'
+        var tableIns = table.render({
+            elem: '#empRepairList'
             ,url:'${pageContext.request.contextPath}/logs/getEmpRepairData'
             ,title: '我的报修列表'
-            ,cols: empCols
+            ,cols: [[
+                {field:'equipmentId', title:'ID', width:60, fixed: 'left', unresize: true, sort: true}
+                ,{field:'equipmentType', title:'保修设备名称',width: 140,fixed: 'left'}
+                ,{field:'depName', title:'部门名称', width:90 }
+                ,{field:'empName', title:'员工姓名', width:90 }
+                ,{field:'startTime', title:'申请时间', width:160}
+                ,{field:'remark', title:'备注',width: 175}
+                ,{field:'empId', title:'处理人',width: 90}
+                ,{field:'endTime', title:'处理时间', width:160}
+                ,{field:'result', title:'处理详情',width: 175}
+                ,{field:'status', title:'状态',width: 80, minWidth: 200}
+                ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:84}
+            ]]
+            ,page: {limit: 10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
+            ,parseData:function (res) {
+                if (res.count >= 1){
+                    $("#empListTitle").text("员工维修列表");
+                    $("#empListTitle").append("<span class='my-badge-dot'>("+res.count+")</span>");
+                }else {
+                    $("#empListTitle").text("员工维修列表");
+                }
+            }
+        });
+        table.render({
+            elem: '#stuRepairList'
+            ,url:'${pageContext.request.contextPath}/logs/getStuRepairData'
+            ,title: '我的报修列表'
+            ,cols: [[
+                {field:'equipmentId', title:'ID', width:60, fixed: 'left', unresize: true, sort: true}
+                ,{field:'equipmentType', title:'保修设备名称',width: 140,fixed: 'left'}
+                ,{field:'depName', title:'班级名称', width:150 }
+                ,{field:'empName', title:'学生姓名', width:90 }
+                ,{field:'startTime', title:'申请时间', width:160}
+                ,{field:'remark', title:'备注',width: 145}
+                ,{field:'empId', title:'处理人',width: 90}
+                ,{field:'endTime', title:'处理时间', width:160}
+                ,{field:'result', title:'处理详情',width: 145}
+                ,{field:'status', title:'状态',width: 80, minWidth: 200}
+                ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:83}
+            ]]
             ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
+            ,parseData:function (res) {
+                if (res.count >= 1){
+                    $("#stuListTitle").text("学生维修列表");
+                    $("#stuListTitle").append("<span class='my-badge-dot'>("+res.count+")</span>");
+                }else {
+                    $("#stuListTitle").text("学生维修列表");
+                }
+            }
         });
 
         table.on('tool(test)',function (obj) {
             var data = obj.data;
-            console.log(obj.event);
-            if (obj.event === 'del') {
+            console.log(obj.data);
+            if (obj.event === 'manage') {
+                $('input[name="repairId"]').val(data.equipmentId);
+                layer.open({
+                    type: 1,
+                    title:'处理设备申请单',
+                    skin: 'layui-layer-demo', //样式类名
+                    closeBtn: 1, //是否显示关闭按钮
+                    area: ['550px', '220px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    shadeClose: false, //是否点击遮罩时关闭
+                    content: $('#window'),
+                    cancel: function(index, layero){
+                        layui.form.render();
+                        layer.close(index);
+                        return false;
+                    }
+                });
+            }
+        });
+        //点击提交按钮触发的方法
+        $('button[name="submit"]').click(function (obj) {
+            var repairId = $('input[name="repairId"]').val();
+            var result = $('input[name="result"]').val();
+            var data = {
+                repairId:repairId,
+                result:result
+            };
+            $.post("${requestScope.context.contextPath}/logs/manageRepair",data,function (data) {
                 console.log(data);
-            }else if(obj.event === 'ok'){
-
-            }
+                layer.closeAll();
+                tableIns.reload({
+                    method:'post'
+                });
+            },"json")
         });
-
-        //切换为学生列表
-        $("#btn").click(function () {
-            var cols = [];
-            console.log(this);
-            var type = $(this).val();
-            if ($(this).val()==="1"){
-                cols = stuCols;
-                $(this).text("切换员工");
-                $(this).val("2");
-            }else {
-                cols = empCols;
-                $(this).text("切换学生");
-                $(this).val("1");
-            }
-            tableInt.reload({
-                where: { //设定异步数据接口的额外参数，任意设
-                    type:type
-                }
-                ,cols: cols
-                ,method:'post'
-                ,page: {
-                    curr: 1 //重新从第 1 页开始
-                }
-            });
-        });
+        //点击取消按钮触发的方法
+        $('button[name="close"]').click(function (obj) {
+            layer.closeAll();
+        })
     });
+    layui.use('element',function () {
+        var $ = layui.jquery;
+        var element = layui.element;
+    })
+</script>
+<script>
+
 </script>
 </html>

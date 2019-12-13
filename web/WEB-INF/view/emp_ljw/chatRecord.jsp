@@ -15,11 +15,12 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>谈心记录</title>
-    <jsp:include page="${pageContext.request.contextPath}/toPage/include"/>
+    <jsp:include page="../include.jsp"/>
 </head>
 <body>
 <div id="windows" style="margin-left: 5%;display: none;">
-    <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/ljw/newChatRecord" method="post">
+    <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/ljw/newChatRecord" method="post" onclick="selMyForm()"
+    >
         <br><br>
         <input id="chatId" type="hidden" name="chatIds">
         <div class="layui-form-item">
@@ -89,7 +90,7 @@
 <script>
     layui.use('table', function(){
         var table = layui.table;
-        table.render({
+        var tableIns = table.render({
             elem: '#chatRecordList'
             ,url:'${pageContext.request.contextPath}/ljw/getChatRecordData'
             ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
@@ -105,11 +106,12 @@
                 ,{field:'sayscon', title:'谈心内容',width: '45%', minWidth: 200, fixed: 'left'}
                 ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:120}
             ]]
-            ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
+            ,page: {limit: 10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
 
         //头工具栏事件
         table.on('toolbar(test)', function(obj){
+            console.log(obj);
             var checkStatus = table.checkStatus(obj.config.id);
             switch(obj.event){
                 case 'newChatRecord':
@@ -145,9 +147,11 @@
                         //按钮
                     }, function(index){
                         $(data).each(function (index,elemnt) {
-                            delChatRecord(elemnt.chatId)
+                            delChatRecord(elemnt.chatId);
                         });
-                        obj.del();
+                        tableIns.reload({
+                            method:'post'
+                        });
                         layer.close(index);
                     },function (index) {
                         layer.close(index);
@@ -160,7 +164,7 @@
         table.on('tool(test)', function(obj){
             var data = obj.data;
             if(obj.event === 'del'){
-                layer.confirm('真的删除行么', function(index){
+                layer.confirm('是要删除这条记录吗', function(index){
                     obj.del();
                     layer.close(index);
                     delChatRecord(obj.data.chatid)
@@ -229,6 +233,7 @@
     });
 </script>
 <script>
+    //删除谈心记录的方法
     function delChatRecord(id) {
         var data = {id:id};
         $.post("${pageContext.request.contextPath}/ljw/delChatRecord",data,function (data) {

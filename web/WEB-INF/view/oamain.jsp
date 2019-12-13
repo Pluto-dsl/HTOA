@@ -38,13 +38,10 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:void(0);">
-                    未登入
+                    ${admin.empName}
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">切换账号</a></dd>
-                    <dd><a href="">邮箱</a></dd>
-                    <dd><a href="">安全设置</a></dd>
-                    <dd><a href="">注销</a></dd>
+                    <dd><a href="/logout">注销</a></dd>
                 </dl>
             </li>
         </ul>
@@ -64,7 +61,7 @@
                                data-id="部门管理" data-title="部门管理">部门管理</a>
                         </dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="<%=request.getContextPath()%>/zero/toemp"
+                               data-url="<%=request.getContextPath()%>/zeroEmp/toemp"
                                data-id="员工资料" data-title="员工资料" >员工资料</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/emp/toEmpPaper"
@@ -93,10 +90,21 @@
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/student/leave"
                                data-id="学生请假" data-title="学生请假" >学生请假</a></dd>
-                        <dd><a href="javascript:void(0);">班级管理</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/zeroStudent/toClass"
+                               data-id="班级管理" data-title="班级管理">班级管理</a></dd>
                         <dd><a href="javascript:void(0);">楼栋管理</a></dd>
                         <dd><a href="javascript:void(0);">宿舍管理</a></dd>
-                        <dd><a href="javascript:void(0);">学生资料</a></dd>
+                        <dd><a href="javascript:void(0);">班级管理</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/toPage/stuFloor"
+                               data-id="楼栋管理" data-title="楼栋管理">楼栋管理</a></dd>
+                        <dd><a href="javascript:void(0);"class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/toPage/stuDorm"
+                               data-id="宿舍管理" data-title="宿舍管理" >宿舍管理</a></dd>
+                        <dd><a href="javascript:void(0);"class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/student/stuList"
+                               data-id="学生资料" data-title="学生资料">学生资料</a></dd>
                         <dd><a href="javascript:void(0);">考试成绩</a></dd>
                         <dd><a href="javascript:void(0);">答辩成绩</a></dd>
                     </dl>
@@ -128,7 +136,7 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a>考核管理</a>
+                    <a href="javascript:;">考核管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);">考核指标</a></dd>
                         <dd><a href="javascript:void(0);">考核录入</a></dd>
@@ -137,7 +145,7 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a>问题反馈</a>
+                    <a href="javascript:;">问题反馈</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/student/questionPage"
@@ -145,13 +153,13 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a>文件管理</a>
+                    <a href="javascript:;">文件管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">资料文档</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a>系统报表</a>
+                    <a href="javascript:;">系统报表</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);">日常考核</a></dd>
                         <dd><a href="javascript:void(0);">请假管理</a></dd>
@@ -161,13 +169,13 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a>通知公告</a>
+                    <a href="javascript:;">通知公告</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">通知公告</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a>安全管理</a>
+                    <a href="javascript:;">安全管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);">权限管理</a></dd>
                         <dd><a href="javascript:void(0);">流程管理</a></dd>

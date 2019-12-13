@@ -12,41 +12,41 @@ import javax.persistence.*;
 public class StudentClassVo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int classidl;//主键
+    private int classId;//主键
     private String classno;//班级编号
     private String className;//班级名称
     private int count;//班级人数
-    private String teacher;//授课老师    员工表外键
-    private String classTeacher;//班主任   员工表外键
+    private int teacher;//授课老师    员工表外键
+    private int classTeacher;//班主任   员工表外键
     private int classType;//班级类别  关联班级类别表
     private String remark;//备注
     private int falled;//关联班级类别
     private int deptId;//关联系
     private int majorId;//关联专业表
 
-    public StudentClassVo(){
-
-    }
-    public StudentClassVo(int classidl,String classno, String className, int count, String teacher, String classTeacher, int classType, String remark, int falled, int deptId, int majorId) {
-        this.classidl = classidl;
-        this.classno = classno;
-        this.className = className;
-        this.count = count;
-        this.teacher = teacher;
-        this.classTeacher = classTeacher;
-        this.classType = classType;
-        this.remark = remark;
-        this.falled = falled;
-        this.deptId = deptId;
-        this.majorId = majorId;
-    }
-
-    public int getClassidl() {
-        return classidl;
+    @Override
+    public String toString() {
+        return "StudentClassVo{" +
+                "classId=" + classId +
+                ", classno='" + classno + '\'' +
+                ", className='" + className + '\'' +
+                ", count=" + count +
+                ", teacher='" + teacher + '\'' +
+                ", classTeacher='" + classTeacher + '\'' +
+                ", classType=" + classType +
+                ", remark='" + remark + '\'' +
+                ", falled=" + falled +
+                ", deptId=" + deptId +
+                ", majorId=" + majorId +
+                '}';
     }
 
-    public void setClassidl(int classidl) {
-        this.classidl = classidl;
+    public int getClassId() {
+        return classId;
+    }
+
+    public void setClassId(int classId) {
+        this.classId = classId;
     }
 
     public String getClassno() {
@@ -73,21 +73,7 @@ public class StudentClassVo {
         this.count = count;
     }
 
-    public String getTeacher() {
-        return teacher;
-    }
 
-    public void setTeacher(String teacher) {
-        this.teacher = teacher;
-    }
-
-    public String getClassTeacher() {
-        return classTeacher;
-    }
-
-    public void setClassTeacher(String classTeacher) {
-        this.classTeacher = classTeacher;
-    }
 
     public int getClassType() {
         return classType;
@@ -127,22 +113,5 @@ public class StudentClassVo {
 
     public void setMajorId(int majorId) {
         this.majorId = majorId;
-    }
-
-    @Override
-    public String toString() {
-        return "StudentClassVo{" +
-                "classidl=" + classidl +
-                ", classno='" + classno + '\'' +
-                ", className='" + className + '\'' +
-                ", count=" + count +
-                ", teacher='" + teacher + '\'' +
-                ", classTeacher='" + classTeacher + '\'' +
-                ", classType=" + classType +
-                ", remark='" + remark + '\'' +
-                ", falled=" + falled +
-                ", deptId=" + deptId +
-                ", majorId=" + majorId +
-                '}';
     }
 }

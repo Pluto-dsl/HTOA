@@ -14,18 +14,30 @@ public class MajorVo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private int majorid;//主键，标识列，自动生成
-    private int majorName;//专业名称
+    private String majorName;//专业名称
     private String deptid;//系id
     private String remark;//说明
 
-    public MajorVo(int majorid,int majorName, String deptid, String remark) {
-        this.majorid = majorid;
-        this.majorName = majorName;
-        this.deptid = deptid;
-        this.remark = remark;
-    }
 
     public MajorVo() {}
+
+    @Override
+    public String toString() {
+        return "MajorVo{" +
+                "majorid=" + majorid +
+                ", majorName='" + majorName + '\'' +
+                ", deptid='" + deptid + '\'' +
+                ", remark='" + remark + '\'' +
+                '}';
+    }
+
+    public String getMajorName() {
+        return majorName;
+    }
+
+    public void setMajorName(String majorName) {
+        this.majorName = majorName;
+    }
 
     public int getMajorid() {
         return majorid;
@@ -33,14 +45,6 @@ public class MajorVo {
 
     public void setMajorid(int majorid) {
         this.majorid = majorid;
-    }
-
-    public int getMajorName() {
-        return majorName;
-    }
-
-    public void setMajorName(int majorName) {
-        this.majorName = majorName;
     }
 
     public String getDeptid() {
@@ -59,13 +63,4 @@ public class MajorVo {
         this.remark = remark;
     }
 
-    @Override
-    public String toString() {
-        return "MajorVo{" +
-                "majorid=" + majorid +
-                ", majorName=" + majorName +
-                ", deptid='" + deptid + '\'' +
-                ", remark='" + remark + '\'' +
-                '}';
-    }
 }

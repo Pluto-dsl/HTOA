@@ -88,13 +88,18 @@ public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
         }else {
             depId = Integer.parseInt(depIdStr);
         }
-        System.out.println(depId);
         String startDay = request.getParameter("startDay");
         String endDay = request.getParameter("endDay");
         String hql = "FROM WeeklogVo where 1=1";
         if (!("".equals(empName) || null == empName)){
-            int id = getEmpName(empName);
-            hql +=" and Empid ="+id;
+            List<Integer> emps = super.getEmpNames(empName);
+            String empIds = "";
+            for (int id:
+                 emps) {
+                empIds +=+id+",";
+            }
+            empIds = empIds.substring(0,empIds.length()-1);
+            hql +=" and Empid in ("+empIds+")";
         }
         if (depId!=0){
             hql +=" and Empid in (SELECT empId FROM EmpVo where depId="+depId+")";
@@ -140,8 +145,14 @@ public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
         String endDay = request.getParameter("endDay");
         String hql = "select count(*) from WeeklogVo where 1=1";
         if (!("".equals(empName) || null == empName)){
-            int id = getEmpName(empName);
-            hql +=" and Empid ="+id;
+            List<Integer> emps = super.getEmpNames(empName);
+            String empIds = "";
+            for (int id:
+                    emps) {
+                empIds +=+id+",";
+            }
+            empIds = empIds.substring(0,empIds.length()-1);
+            hql +=" and Empid in ("+empIds+")";
         }
         if (depId!=0){
             hql +=" and Empid in (SELECT empId FROM EmpVo where depId="+depId+")";

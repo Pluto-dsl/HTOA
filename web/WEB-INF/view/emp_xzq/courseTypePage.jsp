@@ -80,7 +80,8 @@
             ,defaultToolbar:{}//自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
             ,title: '用户数据表'
             ,cols: [[
-                {field:'courseTypeId', title:'编号', width:300}
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'courseTypeId', title:'编号', width:300,unresize:true,sort: true}
                 ,{field:'courseTypeName', title:'类别名称', width:300}
                 ,{field:'remark', title:'说明', width:300}
                 ,{title:'操作', toolbar:'#barDemo', width:200}
@@ -110,8 +111,7 @@
                     }else {
                         layer.msg("添加失败！", {icon: 1});
                     }
-                }
-            )
+                },'json');
         });
 
         //post提交修改
@@ -173,19 +173,16 @@
                             layer.msg('删除失败');
                             table.reload('Clist');
                         }
-
-
                     });
-                    table.reload('Clist');
                     layer.close(index);
                 });
-                table.reload('Clist');
             }
         });
 
         /** 表格头部按钮监听  添加 */
         table.on('toolbar(Clist)',function (obj) {
             var data = obj.data;
+            table.reload('Clist');
             if(obj.event === 'add'){
                 layer.open({
                     type:1,

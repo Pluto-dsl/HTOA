@@ -123,7 +123,20 @@ public class BaseDao {
         for (Object obj:list) {
             id = Integer.parseInt(obj.toString());
         }
+        session.close();
         return id;
+    }
+
+    /**
+     * 根据员工名称查找id（模糊查询）
+     * */
+
+    public List<Integer> getEmpNames(String empName){
+        Session session = getSession();
+        SQLQuery sqlQuery = session.createSQLQuery("select empId from emp where empName like '%"+empName+"%'");
+        List<Integer> list = sqlQuery.list();
+        session.close();
+        return list;
     }
 
 

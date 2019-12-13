@@ -14,7 +14,7 @@
 </head>
 <body>
 <center>
-    <form  class="layui-form layui-form-pane"  accept-charset="UTF-8" οnsubmit="document.charset='UTF-8'"  action="<%=request.getContextPath()%>/zero/updateEmp" method="post">
+    <form  class="layui-form layui-form-pane"  accept-charset="UTF-8" οnsubmit="document.charset='UTF-8'"  action="<%=request.getContextPath()%>/zeroEmp/updateEmp" method="post">
         <table style="height: 370px;width: 800px;margin-top: 10px" border="0">
             <tr style="height: 40px">
                 <input name="empId" type="hidden" value="${emp.empId}"/>
