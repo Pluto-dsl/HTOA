@@ -27,7 +27,7 @@ public class StudentClassVo {
     @Override
     public String toString() {
         return "StudentClassVo{" +
-                "classid=" + classid +
+                "classId=" + classId +
                 ", classno='" + classno + '\'' +
                 ", className='" + className + '\'' +
                 ", count=" + count +
