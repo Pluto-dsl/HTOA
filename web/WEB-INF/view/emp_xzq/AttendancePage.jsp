@@ -43,6 +43,9 @@
         <button lay-event="MyApproval" class="layui-btn layui-btn-sm" ><i class="layui-icon layui-icon-notice" style="font-size: 30px;"></i>我的审批</button>
     </div>
 </script>
+<script type="text/html" id="toolDemo">
+    <button lay-event="del" class="layui-btn layui-btn-sm layui-btn-danger" ><i class="layui-icon-delete"></i>删除</button>
+</script>
 <script type="text/javascript">
     function createTime(v){
         console.log(v);
@@ -65,12 +68,13 @@
     }
 </script>
 <script>
-    layui.use([ 'element', 'table', 'layer', 'form' ,'laydate'],function() {
+    layui.use([ 'element', 'table', 'layer', 'form' ,'laydate','upload'],function() {
         var element = layui.element;
         var layer = layui.layer;
         var table = layui.table;
         var form = layui.form;
         var laydate = layui.laydate;
+        var upload = layui.upload;
 
         //执行一个laydate实例
         laydate.render({
@@ -102,6 +106,7 @@
                             return '申请失败'
                         }
                     },title:'状态', width:120}
+                ,{toolbar:'#toolDemo', title:'操作', width:100}
             ]]
             ,page: true
             ,limit:5
@@ -114,6 +119,26 @@
             //     ,last: true //不显示尾页
             // }
 
+        });
+
+        table.on('tool(test)',function (obj) {
+            var data = obj.data;
+            if(obj.event === 'del'){
+                var cid = data.attId;
+                layer.confirm('真的删除行么', function(index){
+                    $.get("${pageContext.request.contextPath}/jack/delAtt?cid="+cid,function (d) {
+                        if(d > 0){
+                            layer.msg('删除成功');
+                            table.reload('test');
+                        }else if (d === null){
+                            layer.msg('删除失败');
+                            table.reload('test');
+                        }
+                    });
+                    table.reload('test');
+                    layer.close(index);
+                });
+            }
         });
 
         //未打卡说明、我的审核   监听表格头的按钮'toolbar(test)'

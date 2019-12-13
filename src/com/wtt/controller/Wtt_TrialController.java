@@ -11,7 +11,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -77,6 +76,7 @@ public class Wtt_TrialController {
     //新增学生
     @RequestMapping(value = "/addtrial")
     public String addtrial(TrialVo trialVo){
+
         wtt_trialService.add(trialVo);
         return "redirect:/training/rehearsal_trainingPage";
     }

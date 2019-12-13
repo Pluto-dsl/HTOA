@@ -15,7 +15,7 @@ public class FeedbackVo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int feedbackId;//主键，标识列，自动生成
     private int feedBackType;//1：员工，2学生
-    private int empId;//部门编号
+    private int empId;//学生编号
     private String empName;//获取session中学生班级及姓名或员工姓名
     private Date feedbackTime;//反馈时间，获取系统时间
     private String remark;//建议
@@ -23,13 +23,14 @@ public class FeedbackVo {
     private int status;//1 未处理 2 已处理
     private String depId;//部门
     private String opinion;//审批意见
+    private String userid;//审批人
 
     public FeedbackVo() {
 
     }
 
 
-    public FeedbackVo(int feedbackId,int feedBackType, int empId, String empName, Date feedbackTime, String remark, String image, int status, String depId, String opinion) {
+    public FeedbackVo(int feedbackId,int feedBackType, int empId, String empName, Date feedbackTime, String remark, String image, int status, String depId, String opinion,String userid) {
         this.feedbackId = feedbackId;
         this.feedBackType = feedBackType;
         this.empId = empId;
@@ -40,6 +41,7 @@ public class FeedbackVo {
         this.status = status;
         this.depId = depId;
         this.opinion = opinion;
+        this.userid = userid;
     }
 
     public int getFeedbackId() {
@@ -122,6 +124,14 @@ public class FeedbackVo {
         this.opinion = opinion;
     }
 
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
     @Override
     public String toString() {
         return "FeedbackVo{" +
@@ -135,6 +145,7 @@ public class FeedbackVo {
                 ", status=" + status +
                 ", depId='" + depId + '\'' +
                 ", opinion='" + opinion + '\'' +
+                ", userid='" + userid + '\'' +
                 '}';
     }
 }
