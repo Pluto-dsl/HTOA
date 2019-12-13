@@ -18,21 +18,17 @@ public class MajorVo {
     private String deptid;//系id
     private String remark;//说明
 
-    public MajorVo(int majorid,String majorName, String deptid, String remark) {
-        this.majorid = majorid;
-        this.majorName = majorName;
-        this.deptid = deptid;
-        this.remark = remark;
-    }
 
     public MajorVo() {}
 
-    public int getMajorid() {
-        return majorid;
-    }
-
-    public void setMajorid(int majorid) {
-        this.majorid = majorid;
+    @Override
+    public String toString() {
+        return "MajorVo{" +
+                "majorid=" + majorid +
+                ", majorName='" + majorName + '\'' +
+                ", deptid='" + deptid + '\'' +
+                ", remark='" + remark + '\'' +
+                '}';
     }
 
     public String getMajorName() {
@@ -41,6 +37,14 @@ public class MajorVo {
 
     public void setMajorName(String majorName) {
         this.majorName = majorName;
+    }
+
+    public int getMajorid() {
+        return majorid;
+    }
+
+    public void setMajorid(int majorid) {
+        this.majorid = majorid;
     }
 
     public String getDeptid() {
@@ -59,13 +63,4 @@ public class MajorVo {
         this.remark = remark;
     }
 
-    @Override
-    public String toString() {
-        return "MajorVo{" +
-                "majorid=" + majorid +
-                ", majorName=" + majorName +
-                ", deptid='" + deptid + '\'' +
-                ", remark='" + remark + '\'' +
-                '}';
-    }
 }

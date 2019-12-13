@@ -20,14 +20,14 @@ public class StudentClassVo {
     private int classTeacher;//班主任   员工表外键
     private int classType;//班级类别  关联班级类别表
     private String remark;//备注
-    private int falled;//关联届别
+    private int falled;//关联班级类别
     private int deptId;//关联系
     private int majorId;//关联专业表
 
     @Override
     public String toString() {
         return "StudentClassVo{" +
-                "classId=" + classId +
+                "classid=" + classid +
                 ", classno='" + classno + '\'' +
                 ", className='" + className + '\'' +
                 ", count=" + count +
@@ -73,21 +73,7 @@ public class StudentClassVo {
         this.count = count;
     }
 
-    public int getTeacher() {
-        return teacher;
-    }
 
-    public void setTeacher(int teacher) {
-        this.teacher = teacher;
-    }
-
-    public int getClassTeacher() {
-        return classTeacher;
-    }
-
-    public void setClassTeacher(int classTeacher) {
-        this.classTeacher = classTeacher;
-    }
 
     public int getClassType() {
         return classType;

@@ -16,12 +16,11 @@
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="setDorm">调整宿舍</button>
-        <button class="layui-btn layui-btn-sm" lay-event="setClass">调整班级</button>
-        <button class="layui-btn layui-btn-sm" lay-event="isAll">设置毕业</button>
-        <lable>
+        <button class="layui-btn layui-btn-sm" lay-event="addStudent"><i class="layui-icon layui-icon-add-1" style="width: 30px;height:30px;"></i>新增学生</button>
+        <button class="layui-btn layui-btn-sm" lay-event="setDorm"><i class="layui-icon layui-icon-flag" style="width: 30px;height:30px;"></i>调整宿舍</button>
+        <button class="layui-btn layui-btn-sm" lay-event="setClass"><i class="layui-icon layui-icon-flag" style="width: 30px;height:30px;"></i>调整班级</button>
+        <button class="layui-btn layui-btn-sm" lay-event="isAll"><i class="layui-icon layui-icon-auz" style="width: 30px;height:30px;"></i>设置毕业</button>
 
-        </lable>
     </div>
 </script>
 
@@ -56,7 +55,7 @@
                 ,{field:'stuname', title:'学生姓名', width:120, edit: 'text'}
                 ,{field:'sex', title:'性别', width:80, edit: 'text'}
                 ,{field:'middleschool', title:'毕业学校', width:100}
-                ,{field:'birthday', title:'生日'}
+                ,{field:'birthday', title:'生日',width:160,templet : "<div>{{layui.util.toDateString(d.startDate, 'yyyy年MM月dd日')}}</div>"}
                 ,{field:'phone', title:'学生电话', width:80}
                 ,{field:'addr', title:'家庭住址', width:120}
                 ,{field:'clazz', title:'所在班级', width:100}
@@ -90,9 +89,17 @@
         table.on('toolbar(test)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id);
             switch(obj.event){
-                case 'getCheckData':
-                    var data = checkStatus.data;
-                    layer.alert(JSON.stringify(data));
+                case 'addStudent':
+                    //iframe层
+                    layer.open({
+                        type: 2,
+                        title: '新增学生',
+                        shadeClose: true,
+                        shade: 0.8,
+                        shadeclose:true,
+                        area: ['1100px', '770px'],
+                        content: '${pageContext.request.contextPath}/student/toAddStu' //iframe的url
+                    });
                     break;
                 case 'getCheckLength':
                     var data = checkStatus.data;
@@ -127,6 +134,8 @@
             }
         });
     });
+
+
 </script>
 </body>
 </html>
