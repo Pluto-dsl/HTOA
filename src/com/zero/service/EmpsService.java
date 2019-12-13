@@ -17,5 +17,5 @@ public interface EmpsService {
     void resetPwd(int empId);//重置员工密码
     List<Map> seekEmp(String sql);//条件搜索员工
     int statue(int empId);//查询当前员工状态
-    void status(int state, int empId);//修改员工状态
+    void status(int state,int empId);//修改员工状态
 }

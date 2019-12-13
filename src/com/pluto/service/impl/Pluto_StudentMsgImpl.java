@@ -9,7 +9,6 @@ import java.util.List;
 @Service
 public class Pluto_StudentMsgImpl extends BaseDao implements Pluto_StudentMsg {
 
-
     @Override
     public String getStudentList(String sql) {
         List list = super.listBySQL(sql);
@@ -19,5 +18,15 @@ public class Pluto_StudentMsgImpl extends BaseDao implements Pluto_StudentMsg {
         json.put("count",1000);
         json.put("data",list);
         return json.toJSONString();
+    }
+
+    @Override
+    public List getClassList(String hql) {
+        return super.listByHql(hql);
+    }
+
+    @Override
+    public List getMajor(String hql) {
+        return super.listByHql(hql);
     }
 }
