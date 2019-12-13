@@ -64,17 +64,17 @@
             toolbar: '#top', //开启头部工具栏，并为其绑定左侧模板
             page: true, //开启分页
             cols: [[ //表头
-                {field: 'replyId', title: '序号', width: 70}
+                {field: 'replyId', title: '序号', width: 70,sort:'true'}
                 , {field: 'stuname', title: '学生姓名', width: 100}
                 , {field: 'className', title: '班级名称', width: 200}
                 , {field: 'projectName', title: '项目名称', width: 130}
-                , {field: 'score1',title:'功能完善50',width:103}
-                , {field: 'Score2',title:'技术难度10',width:103}
-                , {field: 'Score3',title:'界面完美10',width:103}
-                , {field: 'Score4',title:'回答问题10',width:103}
-                , {field: 'Score5',title:'演示方法10',width:103}
-                , {field: 'Score6',title:'语言表达10',width:103}
-                , {field: 'Score7',title:'总分100',width:100}
+                , {field: 'score1',title:'功能完善50',width:103,sort:'true'}
+                , {field: 'Score2',title:'技术难度10',width:103,sort:'true'}
+                , {field: 'Score3',title:'界面完美10',width:103,sort:'true'}
+                , {field: 'Score4',title:'回答问题10',width:103,sort:'true'}
+                , {field: 'Score5',title:'演示方法10',width:103,sort:'true'}
+                , {field: 'Score6',title:'语言表达10',width:103,sort:'true'}
+                , {field: 'Score7',title:'总分100',width:100,sort:'true'}
                 , {field: 'Remark', title: '备注', width: 100}
             ]],
                 limits: [10, 20, 30 , 40, 50]

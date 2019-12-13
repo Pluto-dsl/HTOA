@@ -46,7 +46,7 @@ public class Zero_StudentScore {
 
     @RequestMapping(value = "/seek")
     @ResponseBody
-    public Map seek(int projectId,int classId,int empId,int page,int limit){//分页
+    public Map seek(int projectId,int classId,int empId,int page,int limit){//条件搜索加分页
         String sql = "";
         if (classId!=0){
             sql+=" and sc.classId = "+classId;
@@ -71,17 +71,47 @@ public class Zero_StudentScore {
     public String toscore(Model model){//去考试成绩
         //班级名称
         model.addAttribute("claes",service.allclass());
+        //在读学期
+        model.addAttribute("term",service.term());
+        //课程名称
+        model.addAttribute("course",service.course());
         return "student_zero/score";
     }
 
     @RequestMapping(value = "/score")
     @ResponseBody
-    public Map score(int page,int limit){//分页
+    public Map score(int page,int limit){//学生成绩
         List<Map> list = service.score(page,limit);
         Map map = new TreeMap();
         map.put("code",0);
         map.put("msg","");
         map.put("count",service.scorecount());
+        map.put("data",list);
+        return map;
+    }
+
+    @RequestMapping(value = "/scoreseek")
+    @ResponseBody
+    public Map seek(int term,int classId,int type,int course,int page,int limit){//分页
+        String sql = "";
+        if (classId!=0){
+            sql+=" and s.clazz = "+classId;
+        }
+        if (type!=0){
+            sql+=" and sc.testType = "+type;
+        }
+        if (term!=0){
+            sql+=" t.termid = "+term;
+        }
+        if (course!=0){
+            sql+=" and sc.courseId = "+course;
+        }
+
+        List<Map> list = service.ReplyScore(sql,page,limit);
+        Map map = new TreeMap();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",service.pagecount(sql));
         map.put("data",list);
         return map;
     }

@@ -17,33 +17,40 @@
 <table id="demo" lay-filter="test"></table>
 <script type="text/html" id="top" lay-filter="top">
     <label  class="layui-form-item">
-        <label class="layui-form-label" style="width: 50px">在读学期:</label>
+        <label class="layui-form-label" style="width: 90px">在读学期:</label>
         <div class="layui-input-inline">
-            <select id="projectName" name="projectName">
+            <select id="term" name="term">
                 <option value="0">--未选择--</option>
+                <c:forEach var="t" items="${term}">
+                    <option value="${t.termid}">${t.termName}</option>
+                </c:forEach>
             </select>
         </div>
-        <label class="layui-form-label" style="width: 100px">班级名称:</label>
+        <label class="layui-form-label" style="width: 90px">班级名称:</label>
         <div class="layui-input-inline">
-            <select id="className" name="className">
+            <select id="className" name="className" style="width: 100px">
                 <option value="0">--未选择--</option>
                 <c:forEach var="c" items="${claes}">
                     <option value="${c.classId}">${c.className}</option>
                 </c:forEach>
             </select>
         </div>
-        <label class="layui-form-label" style="width: 80px">考试类别:</label>
+        <label class="layui-form-label" style="width: 90px">考试类别:</label>
         <div class="layui-input-inline">
-            <select id="empName" name="empName">
+            <select id="stype" name="stype">
                 <option value="0">--未选择--</option>
-
+                <option value="1">笔试</option>
+                <option value="2">机试</option>
+                <option value="3">模拟面试</option>
             </select>
         </div>
-        <label class="layui-form-label" style="width: 80px">课程名称:</label>
+        <label class="layui-form-label" style="width: 90px">课程名称:</label>
         <div class="layui-input-inline">
-            <select id="Name" name="empName">
+            <select id="courseName" name="courseName">
                 <option value="0">--未选择--</option>
-
+                <c:forEach var="c" items="${course}">
+                    <option value="${c.courseId}">${c.courseName}</option>
+                </c:forEach>
             </select>
         </div>
         <div class="layui-input-inline">
@@ -66,10 +73,10 @@
             toolbar: '#top', //开启头部工具栏，并为其绑定左侧模板
             page: true, //开启分页
             cols: [[ //表头
-                {field: 'scoreId', title: '序号', width: 70}
+                {field: 'scoreId', title: '序号', width: 100,sort:'true'}
                 , {field: 'stuname', title: '学生姓名', width: 100}
-                , {field: 'score', title: '学生成绩', width: 90}
-                , {field: 'Rescore', title: '补考分数', width: 100}
+                , {field: 'score', title: '学生成绩', width: 90,sort:'true'}
+                , {field: 'Rescore', title: '补考分数', width: 100,sort:'true'}
                 , {field: 'courseName',title:'课程名称',width:103}
                 , {field: 'testType',title:'考试类别',width:103}
                 , {field: 'termName',title:'在读学期',width:103}
@@ -97,24 +104,31 @@
 
     //条件搜索
     function seek() {
-
+        //在读学期
+        var term = $("#term").val();
         //班级id
         var  classId = $("#className").val();
-
+        //考试类别
+        var type = $("#stype").val();
+        //课程名称
+        var course = $("#courseName").val();
+        alert();
         table.reload('clientId',{
-            url:'<%=request.getContextPath()%>/StudentScore/seek',
+            url:'<%=request.getContextPath()%>/StudentScore/scoreseek',
             where:{
-                projectId:projectId,
+                term:term,
                 classId:classId,
-                empId:empId,
-            }, page: {
+                type:type,
+                course:courseName
+            },
+            page: {
                 curr: 1 //重新从第 1 页开始
             }
         })
-
-
+        $("#term").val(term);
         $("#className").val(classId);
-
+        $("#stype").val(type);
+        $("#courseName").val(course);
     }
 </script>
 </html>
