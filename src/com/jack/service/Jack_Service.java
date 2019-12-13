@@ -19,6 +19,7 @@ public interface Jack_Service {
     void insertAtt(AttendanceVo attVo); //插入未打卡说明
     void updataAtt(AttendanceVo attendanceVo); //审批修改
     List selApprover(String Aname,int state);
+    void delAtt(int id);
 
     /**
      * 课程类型业务部分
@@ -55,4 +56,7 @@ public interface Jack_Service {
     int selAdCount();
     List selAdDetails(int id); //考核详情
     void delAduitLog(int id);//删除考核
+    List selDep(); //获取部门名称列表
+    List Conditional_query(String empName,String depId,String startDate,String EndDate,int currPage,int pageSize); //条件查询
+    int Conditional_queryCount(String empName,String depId,String startDate,String EndDate); //条件查询
 }

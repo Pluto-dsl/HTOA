@@ -43,6 +43,10 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
     public List selApprover(String Aname,int state) {
        return listByHql("from AttendanceVo where auditor = '"+Aname+"' and state = "+state+"");
     }
+    @Override
+    public void delAtt(int id) {
+        executeSQL("delete from attendance where attId = "+id+"");
+    }
 
     /**  课程类型 */
     @Override
@@ -147,14 +151,53 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
     }
     @Override
     public List selAdDetails(int id) {
-        return listBySQL("select ad.aduitName,e.empName,ag.Scores,ag.auditDate,ag.auditPerson,ag.Remark from \n" +
+        return listBySQL("select ad.aduitName,e.empName,ag.Scores,ag.auditDate,ag.auditPerson,ag.Remark,ag.Image from \n" +
                 "(aduitLog ag inner join aduitModel ad on ag.aduitModelid = ad.aduitModelid) \n" +
                 "inner join emp e on e.Empid = ag.empid where ag.aduitLogid = "+id+"");
     }
-
     @Override
     public void delAduitLog(int id) {
         executeSQL("DELETE FROM aduitLog where aduitLogid = "+id+"");
+    }
+    @Override
+    public List selDep() {
+        return listBySQL("select depid,depName from dep");
+    }
+
+    @Override
+    public List Conditional_query(String empName, String depId, String startDate, String EndDate,int currPage,int pageSize) {
+        String sql = "select ag.aduitLogid,am.aduitName,e.empName,ag.Scores,ag.auditDate,ag.auditPerson,ag.Remark,ag.Image from \n" +
+                "((aduitLog ag inner join emp e on ag.Empid = e.empid)\n" +
+                "INNER JOIN aduitModel am on ag.aduitModelid = am.aduitModelid) INNER JOIN dep d on e.depId = d.depid\n" +
+                "where ag.aduitLogid";
+        if(!(empName == null || "".equals(empName))){  //根据员工查询
+             sql += " and e.empName like '"+empName+"' ";
+        }else if(!(depId == null || "".equals(depId))){ //根据部门查询
+            sql += " and  d.depid = "+depId+"";
+        }else if(!(startDate == null || "".equals(startDate))){ //根据开始时间查询
+            sql += " and auditDate >='"+startDate+"' ";
+        }else if(!(EndDate == null || "".equals(EndDate))){ //根据结束时间查询
+            sql += " and auditDate <'"+EndDate+"'";
+        }
+        return listBySQL(sql);
+    }
+
+    @Override
+    public int Conditional_queryCount(String empName, String depId, String startDate, String EndDate) {
+        String sql = "select count(*) from \n" +
+                "((aduitLog ag inner join emp e on ag.Empid = e.empid)\n" +
+                "INNER JOIN aduitModel am on ag.aduitModelid = am.aduitModelid) INNER JOIN dep d on e.depId = d.depid\n" +
+                "where ag.aduitLogid";
+        if(!(empName == null || "".equals(empName))){  //根据员工查询
+            sql += " and e.empName like '%"+empName+"%' ";
+        }else if(!(depId == null || "".equals(depId))){ //根据部门查询
+            sql += " and  d.depid = "+depId+"";
+        }else if(!(startDate == null || "".equals(startDate))){ //根据开始时间查询
+            sql += " and auditDate >='"+startDate+"' ";
+        }else if(!(EndDate == null || "".equals(EndDate))){ //根据结束时间查询
+            sql += " and auditDate <'"+EndDate+"'";
+        }
+        return selTotalRow(sql);
     }
 
 
