@@ -38,13 +38,10 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:void(0);">
-                    未登入
+                    ${admin.empName}
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">切换账号</a></dd>
-                    <dd><a href="">邮箱</a></dd>
-                    <dd><a href="">安全设置</a></dd>
-                    <dd><a href="">注销</a></dd>
+                    <dd><a href="/logout">注销</a></dd>
                 </dl>
             </li>
         </ul>
