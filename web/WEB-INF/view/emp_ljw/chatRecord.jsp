@@ -146,8 +146,8 @@
                     }, function(index){
                         $(data).each(function (index,elemnt) {
                             delChatRecord(elemnt.chatId)
+                            elemnt.del();
                         });
-                        obj.del();
                         layer.close(index);
                     },function (index) {
                         layer.close(index);
