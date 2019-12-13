@@ -38,7 +38,8 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:void(0);">
-                    ${admin.empName}
+                    <%--${admin.empName}--%>
+                    已注释
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="/logout">注销</a></dd>

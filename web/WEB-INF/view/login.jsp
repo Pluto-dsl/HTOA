@@ -178,7 +178,7 @@
             phone:phone,
             pwd:pwd
         };
-        $.post("/login",data,function (data) {
+        $.post("${pageContext.request.contextPath}/login",data,function (data) {
             if (data.code === "notPhone"){
                 layer.msg('查无此手机号');
                 $('input[name="phone"]').val("");
