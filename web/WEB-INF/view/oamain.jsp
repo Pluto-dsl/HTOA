@@ -139,7 +139,9 @@
                 <li class="layui-nav-item">
                     <a>问题反馈</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">问题反馈</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/student/questionPage"
+                               data-id="问题反馈" data-title="问题反馈" >问题反馈</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -165,10 +167,18 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a>系统设置</a>
+                    <a>安全管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);">权限管理</a></dd>
                         <dd><a href="javascript:void(0);">流程管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a>系统设置</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/system/systemPage"
+                               data-id="系统设置" data-title="系统设置" >系统设置</a></dd>
                     </dl>
                 </li>
             </ul>
