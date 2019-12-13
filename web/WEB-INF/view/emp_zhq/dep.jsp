@@ -82,7 +82,7 @@
                     console.log(elem);
                     console.log(data);
                     console.log(type);
-                    if(type === 'update'){ //删除节点
+                    if(type === 'update'){ //修改节点
                         var lod = layer.load();
                         //修改后的值
                         var updData = elem.find('.layui-tree-txt').html();

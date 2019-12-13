@@ -27,7 +27,7 @@ public class StudentClassVo {
     @Override
     public String toString() {
         return "StudentClassVo{" +
-                "classidl=" + classid +
+                "classid=" + classid +
                 ", classno='" + classno + '\'' +
                 ", className='" + className + '\'' +
                 ", count=" + count +
@@ -41,12 +41,12 @@ public class StudentClassVo {
                 '}';
     }
 
-    public int getClassidl() {
+    public int getClassId() {
         return classid;
     }
 
-    public void setClassidl(int classidl) {
-        this.classid = classidl;
+    public void setClassId(int classid) {
+        this.classid = classid;
     }
 
     public String getClassno() {
