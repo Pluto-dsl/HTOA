@@ -286,7 +286,6 @@
                 level:level,
             }
         })
-
         $("#level").val(level);
     }
 </script>

@@ -27,6 +27,7 @@
             <li>家庭联系信息</li>
             <li>员工考核</li>
             <li>证件上传</li>
+            <li><button onclick="toemp()" class="layui-btn">返回</button></li>
         </ul><%--工具栏--%>
         <div class="layui-tab-content">
             <script type="text/html" id="jobTop">
@@ -1002,6 +1003,9 @@
                 document.getElementById("huixian").innerHTML = str;
             }
         }
+    }
+    function toemp() {
+        window.location.href="<%=request.getContextPath()%>/zeroEmp/toemp";
     }
 </script>
 </html>
