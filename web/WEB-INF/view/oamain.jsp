@@ -149,7 +149,9 @@
                 <li class="layui-nav-item">
                     <a>文件管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">资料文档</a></dd>
+                        <dd><a href="javascript:;" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/toPage/DataDoc"
+                               data-id="资料文档" data-title="资料文档" >资料文档</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
