@@ -20,24 +20,16 @@ public class Pluto_StudentController {
     private Pluto_StudentMsg service;
 
     @RequestMapping("/stuList")
-    public String getStudentList(Model model){
-        List clist = service.getClassList("from StudentClassVo");
-        List mList = service.getMajor("from MajorVo");
-        System.out.println("学生班级：");
-        clist.forEach(c ->{
-            System.out.println(c.toString());
-        });
-        System.out.println("专业");
-        mList.forEach(m->{
-            System.out.println(m.toString());
-        });
-        model.addAttribute("zyList",mList);
-        model.addAttribute("classList",clist);
+    public String getStudentList(){
         return "student_pluto/student_list";
     }
 
     @RequestMapping("/toAddStu")
-    public String toAddStudentPage(){
+    public String toAddStudentPage(Model model){
+        List clist = service.getClassList("from StudentClassVo");
+        List mList = service.getMajor("from MajorVo");
+        model.addAttribute("zyList",mList);
+        model.addAttribute("classList",clist);
         return "student_pluto/addStudent";
     }
 
