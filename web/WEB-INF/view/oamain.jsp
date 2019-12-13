@@ -105,7 +105,9 @@
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toCourseList"
                                data-id="课程类别" data-title="课程类别">课程类别</a></dd>
-                        <dd><a href="javascript:void(0);">课程管理</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/jack/toCourseManagement"
+                               data-id="课程管理" data-title="课程管理">课程管理</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/training/rehearsal_trainingPage"
                                data-id="试讲培训" data-title="试讲培训" >试讲培训</a></dd>
@@ -126,7 +128,7 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">考核管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                        <dd><a layadmin-event="refresh" href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toAssessmentPage"
                                data-id="考核指标" data-title="考核指标">考核指标</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
@@ -135,6 +137,9 @@
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toAduitLogList"
                                data-id="员工考核" data-title="员工考核">员工考核</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/jack/toAduitLogList"
+                               data-id="考评内容" data-title="考评内容">考评内容</a></dd>
                         <dd><a href="javascript:void(0);">教师考评</a></dd>
                     </dl>
                 </li>
