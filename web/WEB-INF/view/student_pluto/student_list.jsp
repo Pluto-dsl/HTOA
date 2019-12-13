@@ -13,7 +13,9 @@
 </head>
 <body>
 <table class="layui-hide" id="test" lay-filter="test"></table>
+<div style="height: 360px;width: 100%;">
 
+</div>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="addStudent"><i class="layui-icon layui-icon-add-1" style="width: 30px;height:30px;"></i>新增学生</button>
@@ -38,7 +40,7 @@
 <script>
     layui.use('table', function(){
         var table = layui.table;
-
+        var ly;
         table.render({
             elem: '#test'
             ,url:'${pageContext.request.contextPath}/student/returnData'
@@ -49,6 +51,7 @@
                 ,icon: 'layui-icon-tips'
             }]
             ,title: '用户数据表'
+            ,height:'500'
             ,cols: [[
                 {type: 'checkbox', fixed: 'left'}
                 ,{field:'Studid', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
@@ -56,8 +59,8 @@
                 ,{field:'sex', title:'性别', width:80, edit: 'text'}
                 ,{field:'middleschool', title:'毕业学校', width:100}
                 ,{field:'birthday', title:'生日',width:160,templet : "<div>{{layui.util.toDateString(d.startDate, 'yyyy年MM月dd日')}}</div>"}
-                ,{field:'phone', title:'学生电话', width:80}
-                ,{field:'addr', title:'家庭住址', width:120}
+                ,{field:'phone', title:'学生电话', width:150}
+                ,{field:'addr', title:'家庭住址', width:260}
                 ,{field:'clazz', title:'所在班级', width:100}
                 ,{field:'cardid', title:'身份证号', width:160}
                 ,{field:'huor', title:'宿舍房号', width:120}
@@ -88,22 +91,31 @@
         //头工具栏事件
         table.on('toolbar(test)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id);
+
             switch(obj.event){
                 case 'addStudent':
                     //iframe层
-                    layer.open({
+                    ly =  layer.open({
                         type: 2,
                         title: '新增学生',
                         shadeClose: true,
-                        shade: 0.8,
+                        shade: 0.4,
                         shadeclose:true,
                         area: ['1100px', '770px'],
                         content: '${pageContext.request.contextPath}/student/toAddStu' //iframe的url
                     });
                     break;
                 case 'getCheckLength':
-                    var data = checkStatus.data;
-                    layer.msg('选中了：'+ data.length + ' 个');
+                    //iframe层
+                    ly =  layer.open({
+                        type: 2,
+                        title: '新增学生',
+                        shadeClose: true,
+                        shade: 0.4,
+                        shadeclose:true,
+                        area: ['1100px', '770px'],
+                        content: '${pageContext.request.contextPath}/student/toAddStu' //iframe的url
+                    });
                     break;
                 case 'isAll':
                     layer.msg(checkStatus.isAll ? '全选': '未全选');
