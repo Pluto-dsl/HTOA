@@ -13,13 +13,13 @@
     <jsp:include page="../include.jsp"></jsp:include>
 </head>
 <style>
-    .layui-table img{
+    /*.layui-table img{
         max-width: 100px;
-    }
+    }*/
 </style>
 <body>
     <div id="windows" style="margin-left:5%; margin-top:1%; display: none;">
-        <form method="post" class="layui-form" enctype="multipart/form-data">
+        <form method="post" class="layui-form" enctype="multipart/form-data" action="<%=request.getContextPath()%>/studentduan/addproblems">
             <table style="border-collapse:separate;border-spacing:0px 20px;margin-left: 15%">
                 <h2 style="color: red" align="center">-------------------------------问题反馈----------------------------------</h2>
                 <tr>
@@ -40,12 +40,8 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <div class="layui-upload">
-                            <button type="button" class="layui-btn" id="test1">上传图片</button>
-                            <div class="layui-upload-list">
-                                <img id="imgtep" class="layui-upload-img" id="demo1" style="width:312px;height: 190px" name="images"/>
-                            </div>
-                        </div>
+                        <input type="file" name="images"  onchange="upload(this)">
+                            <div id="huixian" style="height:100px;width: 50px" ></div>
                     </td>
                 </tr>
                 <tr align="center">
@@ -80,7 +76,7 @@
             cols: [[
                 {type: 'checkbox', fixed: 'left'}
                 , {field: 'feedbackId', title: '编号', width: 100, fixed: 'left', unresize: true, sort: true}
-                , {field: 'empId', title: '学生姓名', width: 120}
+                , {field: 'stuname', title: '学生ID', width: 100}
                 , {field: 'empName', title: '学生班级', width: 170, sort: true}
                 , {field: 'feedBackType', title: '身份',templet: function (d) {
                         if (d.feedBackType === 1) {
@@ -88,20 +84,21 @@
                         } else if (d.feedBackType === 2) {
                             return '老师'
                         }
-                    }, width: 200,}
-                , {field: 'feedbackTime', title: '反馈时间', width: 200, templet: '<div>{{ layui.util.toDateString(d.feedbackTime,"yyyy-MM-dd")}}</div>'}
-                , {field: 'depName', title: '反馈部门', width: 200}
-                , {field: 'image', title: '图片', width: 200,templet:'<div><img style="width:50px;height:50px" src="{{d.Image}}"></div>'}
-                , {field: 'opinion', title: '审批意见', width: 200}
-                , {field: 'remark', title: '建议', width: 200}
-                , {field: 'status', title: '审批', templet: function (d) {
+                    }, width:100}
+                , {field: 'feedbackTime', title: '反馈时间', width:120, templet: '<div>{{ layui.util.toDateString(d.feedbackTime,"yyyy-MM-dd")}}</div>'}
+                , {field: 'depName', title: '反馈部门', width:100}
+                , {field: 'remark', title: '学生反馈问题', width:200}
+                , {field: 'image', title: '图片', width:100,templet:'<div><img style="width:100px;height:100px" src="{{d.Image}}"></div>'}
+                , {field: 'opinion', title: '审批意见', width:150}
+                , {field: 'status', title: '是否处理', templet: function (d) {
                         if (d.status === 1) {
                             return '未处理'
                         } else if (d.status === 2) {
                             return '已处理'
                         }
-                    }, width: 200
+                    }, width:100
                 }
+                , {field: 'userid', title: '审批人', width:100}
             ]]
             , page: true,
             limits: [5, 10, 15, 25]
@@ -128,17 +125,32 @@
         });
 
         //普通图片上传
-        upload.render({
+        /*upload.render({
             elem: '#test1',
             url:'<%=request.getContextPath()%>/studentduan/addproblems',
             bindAction:'#tijiao',
+            auto:true,
             before: function(obj){
                 //预读本地文件示例，不支持ie8
                 obj.preview(function(index, file, result){
                     $('#demo1').attr('src', result); //图片链接（base64）
                 });
             }
-        })
+        })*/
+
     })
+    //图片回显方法
+    function upload(obj){
+        var f = obj.files;
+        var str = "";
+        for(var i=0;i<f.length;i++){
+            var reader = new FileReader();
+            reader.readAsDataURL(f[i]);
+            reader.onload = function(e){
+                str+='<img src="'+e.target.result+'" height="100px"/>';
+                document.getElementById("huixian").innerHTML = str;
+            }
+        }
+    }
 </script>
 </html>

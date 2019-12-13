@@ -1,6 +1,7 @@
 package com.zero.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.publics.vo.assess.AduitLogVo;
 import com.publics.vo.empModel.emp.EducationVo;
 import com.publics.vo.empModel.emp.FamilyInfoVo;
 import com.publics.vo.empModel.emp.JobVo;
@@ -39,7 +40,10 @@ public class Zero_EmpOtherInfo {
     @RequestMapping(value = "/topage")//所有员工资料页
     public String toemp(Model model, int empId) {//去员工资料页
         model.addAttribute("empId",empId);
-        //List<Map> aduit =service.all();
+        List<Map> empaduit =service.empaduit(empId);// 查询当前用户所有考核
+        int scores = (int)(empaduit.get(0)).get("Scores");
+        model.addAttribute("scores",scores);
+        model.addAttribute("empaduit",empaduit);
         return "emp/empOtherInfo";
     }
     //工作经历
@@ -180,6 +184,22 @@ public class Zero_EmpOtherInfo {
         map.put("count",1);
         map.put("data",service.aduit(empId));
         return map;
+    }
+
+    @RequestMapping(value = "/addaduit")//新增或修改选中用户考核
+    @ResponseBody
+    public String  addaduit(AduitLogVo aduitLogVo){
+        //aduitLogVo.setAuditPerson("");//从session中获取
+        aduitLogVo.setAuditDate(new java.util.Date());
+        service.addaduit(aduitLogVo);
+        return "ok";
+    }
+
+    //根据所选考核id返回分数
+    @RequestMapping(value = "/aduitScore")//当前用户所有考核
+    @ResponseBody
+    public int aduitScore(int id){
+        return service.aduitSocre(id);
     }
 
     @RequestMapping(value = "/deladuit")//删除所选用户考核

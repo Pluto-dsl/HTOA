@@ -5,6 +5,7 @@ import com.jack.service.Jack_Service;
 import com.publics.vo.empModel.AttendanceVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -33,8 +34,7 @@ public class Jack_AttController {
     }
 
     @RequestMapping("/toAtt")
-    public String toTest1(HttpSession session){
-        session.setAttribute("user","赖国荣");
+    public String toTest1(){
         return "emp_xzq/AttendancePage";
     }
 
@@ -82,7 +82,7 @@ public class Jack_AttController {
     @RequestMapping("/Attadd")
     public String Attadd(HttpSession session,String punckClockTime,String cause,String timeing) throws ParseException {
         System.out.println("进来了");
-        String user = (String) session.getAttribute("user");
+        String user = (String) session.getAttribute("admin");
         String ptime = punckClockTime +" "+ timeing;
 
         System.out.println(ptime);
@@ -94,9 +94,7 @@ public class Jack_AttController {
         System.out.println(date+"--------");
         AttendanceVo attVo = new AttendanceVo();
         attVo.setEmpName(user);
-
-        String Auditor =  service.selDepChairman(user); //查询审核人
-        System.out.println(Auditor+"---------------");
+        String Auditor = service.selDepChairman(user); //查询审核人
         attVo.setAuditor(Auditor);
         attVo.setCause(cause);
         attVo.setPunckClockTime(date);
@@ -110,6 +108,15 @@ public class Jack_AttController {
         return "emp_xzq/AttendancePage";
     }
 
+    @RequestMapping(value = "delAtt")
+    @ResponseBody
+    public int delAtt(HttpServletRequest request){
+        int w = Integer.parseInt(request.getParameter("cid"));
+        service.delAtt(w);
+        return 0;
+    }
+
+
     /**
      * 查询未打卡说明列表
      * */
@@ -117,7 +124,7 @@ public class Jack_AttController {
     public void Att(HttpSession session,HttpServletResponse response, HttpServletRequest request) throws IOException {
         int currPage = Integer.parseInt(request.getParameter("page"));
         int pageSize = Integer.parseInt(request.getParameter("limit"));
-        String user = (String) session.getAttribute("user");//获取当前登入的名称
+        String user = (String) session.getAttribute("admin");//获取当前登入的名称
         response.setContentType("text/html;charset=utf-8");
         System.out.println(currPage+"----"+pageSize);
         List list = service.selAtt(user,currPage,pageSize);
