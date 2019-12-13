@@ -1,6 +1,7 @@
 package com.zero.service.impl;
 
 import com.publics.dao.BaseDao;
+import com.publics.vo.assess.AduitLogVo;
 import com.publics.vo.empModel.emp.EducationVo;
 import com.publics.vo.empModel.emp.FamilyInfoVo;
 import com.publics.vo.empModel.emp.JobVo;
@@ -76,8 +77,25 @@ public class EmpInfoImpl extends BaseDao implements EmpInfo {
     }
 
     @Override
+    public void addaduit(AduitLogVo aduitLogVo) {
+        if(aduitLogVo.getAduitLogid()==0){
+            super.addObject(aduitLogVo);
+        }else {//修改
+            super.updObject(aduitLogVo);
+        }
+
+    }
+
+    @Override
     public void deladuit(String allid) {
         super.executeSQL("delete from aduitLog where aduitLogid in ("+allid+")");
+    }
+
+    @Override
+    public int aduitSocre(int id) {
+        Map map = (Map) (super.listBySQL("select Scores from aduitModel where aduitModelid ="+id)).get(0);
+        System.out.println("查出的值"+map.get("Scores"));
+        return (int) map.get("Scores");
     }
 
     @Override
@@ -94,5 +112,10 @@ public class EmpInfoImpl extends BaseDao implements EmpInfo {
     @Override
     public void delAnnex(String allid) {
         super.executeSQL("delete from annex where annexId in ("+allid+")");
+    }
+
+    @Override
+    public List<Map> empaduit(int empId) {
+        return super.listBySQL("select am.aduitModelid,am.aduitName,am.Scores from  aduitModel am where Depid = (select depid from dep where depid = (select depId from emp where empId = "+empId+"))");
     }
 }

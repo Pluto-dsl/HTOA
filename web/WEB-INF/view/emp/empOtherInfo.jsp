@@ -1,3 +1,6 @@
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.List" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: 82346
@@ -11,9 +14,9 @@
     <title>Title</title>
     <jsp:include page="../include.jsp" />
     <style>
-        .layui-table-cell{
+        /*.layui-table-cell{
             height:auto !important;
-        }
+        }*/
     </style>
 </head>
 <body>
@@ -207,24 +210,39 @@
                 <input type="hidden" id="aduitLogid"  name="aduitLogid" value="0"/>
                 <label class="layui-form-label">考核指标:</label>
                 <div  class="layui-input-block">
-
+                    <select lay-filter="aduitid" name="aduitModelid">
+                        <c:forEach items="${empaduit}" var="aduit">
+                            <option value="${aduit.aduitModelid}">${aduit.aduitName}</option>
+                        </c:forEach>
+                    </select>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">考核分数:</label>
                 <div class="layui-input-block">
-
+                    <select id="feng" name="Scores">
+                        <c:if test="${scores>0}">
+                            <c:forEach  begin="1" end="${scores}" varStatus="index">
+                                <option value="${index.count}">+${index.count}</option>
+                            </c:forEach>
+                        </c:if>
+                        <c:if test="${scores<0}">
+                            <c:forEach  begin="1" end="${scores}" varStatus="index">
+                                <option value="-${index.count}">-${index.count}</option>
+                            </c:forEach>
+                        </c:if>
+                    </select>
                 </div>
             </div>
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">说明:</label>
                 <div class="layui-input-block">
-                    <textarea id="tRemark" name="Remark" class="layui-textarea"> </textarea>
+                    <textarea id="dRemark" name="Remark" class="layui-textarea"> </textarea>
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button type="submit" class="layui-btn" lay-submit lay-filter="familyInfoAction" >保存</button>
+                    <button type="submit" class="layui-btn" lay-submit lay-filter="aduitAction" >保存</button>
                 </div>
             </div>
         </form>
@@ -351,6 +369,7 @@
                                 cancel: function(index, layero){
                                     //关闭清空表单
                                     document.getElementById("jobform").reset();
+                                    $("#companyName").val(0);
                                     return true;
                                 }
                             });
@@ -379,6 +398,7 @@
                         break;
                 }
             });
+
         //新增工作经历
         form.on('submit(jobAction)', function(data){
             $.ajax({
@@ -490,7 +510,6 @@
                             content: $('#windowsEducation'),
                             success: function(layero, index){
                                 $(data).each(function (index,elemnt) {
-                                    alert(elemnt.remark);
                                     $("#collegeid").val(elemnt.collegeid);
                                     $("#collegeName").val(elemnt.collegeName);
                                     $("#edegree").val(elemnt.degree);
@@ -502,6 +521,7 @@
                             cancel: function(index, layero){
                                 //关闭清空表单
                                 document.getElementById("educationform").reset();
+                                $("#collegeid").val(0);
                                 return true;
                             }
                         });
@@ -634,6 +654,7 @@
                             cancel: function(index, layero){
                                 //关闭清空表单
                                 document.getElementById("familyInfoform").reset();
+                                $("#familyid").val(0);
                                 return true;
                             }
                         });
@@ -689,6 +710,9 @@
         var element = layui.element;
         var layer = layui.layer;
         var table = layui.table;
+        $ = layui.jquery;
+        var form = layui.form;
+
 
         layui.use('table', function(){
             table = layui.table;
@@ -704,29 +728,30 @@
                     ,{field: 'aduitLogid', title: 'id',hide:'true'}
                     ,{field: 'aduitModelid', title: 'mid',hide:'true'}
                     ,{field: 'Empid', title: 'eid', hide:'true'}
-                    ,{field: 'aduitName', title: '考核指标', width:130}
-                    ,{field: 'scores', title: '考核分数', width:200}
+                    ,{field: 'aduitName', title: '考核指标', width:200}
+                    ,{field: 'Scores', title: '考核分数', width:100}
                     ,{field: 'auditDate', title: '考核时间', width:200,templet : "<div>{{layui.util.toDateString(d.auditDate, 'yyyy年MM月dd日 HH:mm')}}</div>"}
                     ,{field: 'image', title: '图片', width:200,templet : "<div><img src='<%=request.getContextPath()%>/{{d.image}}' style='width: 100px'/></div>"}
-                    ,{field: 'remark', title: '说明', width:200}
+                    ,{field: 'Remark', title: '说明', width:200}
                     ,{field: 'auditPerson', title: '录入人员', width:200}
                 ]]
             })
         });
 
         //头部工具栏
-        var aduitxwin;
+        var aduitwin;
         table.on('toolbar(t4)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id);
             var data = checkStatus.data;
             switch(obj.event){
                 case 'add':
-                    aduitxwin = layer.open({
+                    $("#aduitLogid").val(0);
+                    aduitwin = layer.open({
                         type: 1,
                         title:'新增员工考核',
                         skin: 'layui-layer-demo', //样式类名
                         closeBtn: 1, //不显示关闭按钮
-                        area: ['600px', '550px'],
+                        area: ['800px', '550px'],
                         fixed: false, //不固定
                         maxmin: true,
                         shadeClose: true, //开启遮罩关闭
@@ -742,25 +767,25 @@
                     }else if(data.length > 1){
                         layer.msg('只能同时编辑一个');
                     } else {
-                        aduitxwin = layer.open({
+                        aduitwin = layer.open({
                             type: 1,
                             title:'编辑家庭联系信息',
                             skin: 'layui-layer-demo', //样式类名
                             closeBtn: 1, //不显示关闭按钮
-                            area: ['600px', '550px'],
+                            area: ['800px', '550px'],
                             fixed: false, //不固定
                             maxmin: true,
                             shadeClose: true, //开启遮罩关闭
                             content: $('#windowsaduit'),
                             success: function(layero, index){
                                 $(data).each(function (index,elemnt) {
-
-                                    //$("#fRemark").val(elemnt.remark);
+                                    var aduitLogid = elemnt.aduitLogid;
+                                    $("#aduitLogid").val(aduitLogid);
+                                    $("#dRemark").val(elemnt.Remark);
                                 });
                             },
                             cancel: function(index, layero){
-                                //关闭清空表单
-                                document.getElementById("familyInfoform").reset();
+                                $("#aduitLogid").val(0);
                                 return true;
                             }
                         });
@@ -788,7 +813,57 @@
                     break;
             }
         });
-
+        //动态级联分数
+        form.on('select(aduitid)', function (data) {
+            var id = data.elem[data.elem.selectedIndex].value;
+            //选择考核指标将分数
+            $("#feng").empty();
+            //根据考核指标id查询分数
+            $.ajax({
+                url:"<%=request.getContextPath()%>/zeroEmpInfo/aduitScore",
+                type: "post",
+                data:{
+                    id : id
+                },
+                datatype: "text",
+                success:function (data) {
+                    var fengs
+                    if(data>0){
+                        for (var i = 1; i <=data ; i++) {
+                            fengs += "<option value=\"" + i + "\">+" + i + "</option>";
+                        }
+                    }else if(data<0){
+                        data = data * (-1);
+                        for (var i = 1; i <=data ; i++) {
+                            fengs += "<option value=\"-" + i + "\">-" + i + "</option>";
+                        }
+                    }
+                    $("#feng").append(fengs);
+                    form.render('select');
+                }
+            });
+        });
+        //新增考核
+        form.on('submit(aduitAction)', function(data){
+            $.ajax({
+                type: 'post',
+                url: "<%=request.getContextPath()%>/zeroEmpInfo/addaduit", // ajax请求路径
+                async:true,
+                dataType: "text",
+                data:data.field,
+                success: function(data){
+                    if(data='yes'){
+                        table.reload('dtable',{
+                            url:'<%=request.getContextPath()%>/zeroEmpInfo/aduit?empId=${empId}',
+                        })
+                        layer.close(aduitwin);
+                        layer.msg('保存成功!');
+                        document.getElementById("aduitform").reset();
+                    }
+                }
+            });
+            return false;//禁止跳转，否则会提交两次，且页面会刷新
+        });
     })
 
     //证件上传---------------------------------------------------------------------------------------------------
@@ -827,7 +902,7 @@
                     ,{field: 'annexId', title: 'id',hide:'true'}
                     ,{field: 'empName', title: '员工名称', width:150}
                     ,{field: 'annexName', title: '证件名称', width:100}
-                    ,{field: 'annexPath', title: '证件图', width:130,templet : "<div><img src='<%=request.getContextPath()%>/{{d.annexPath}}' style='width: 100px'/></div>"}
+                    ,{field: 'annexPath', title: '证件图', width:110,templet : "<div><img src='<%=request.getContextPath()%>/{{d.annexPath}}' style='width: 100px'/></div>"}
                     ,{field: 'annexDate', title: '上传时间', width:200,templet : "<div>{{layui.util.toDateString(d.annexDate, 'yyyy年MM月dd日 HH:mm')}}</div>"}
                     ,{field: 'sessionName', title: '上传人', width:200}
                     ,{field: 'remark', title: '备注', width:200}
@@ -891,18 +966,19 @@
                     break;
             }
         });
+
         //新增文件上传
         /*form.on('submit(annexAction)', function(data){
             $.ajax({
                 type: 'post',
-                url: "<%=request.getContextPath()%>/zeroEmpInfo/addannex?empId=${empId}", // ajax请求路径
+                url: "<%--<%=request.getContextPath()%>--%>/zeroEmpInfo/addannex?empId=<%--${empId}--%>", // ajax请求路径
                 async:true,
                 dataType: "text",
                 data:data.field,
                 success: function(data){
                     if(data='yes'){
                         table.reload('atable',{//刷新表格
-                            url:'<%=request.getContextPath()%>/zeroEmpInfo/annex?empId=${empId}',
+                            url:'<%--<%=request.getContextPath()%>--%>/zeroEmpInfo/annex?empId=<%--${empId}--%>',
                         })
                         layer.close(annexwin);
                         layer.msg('上传成功!');
@@ -913,6 +989,7 @@
             return false;//禁止跳转，否则会提交两次，且页面会刷新
         });*/
     })
+
     //图片回显方法
     function upload(obj){
         var f = obj.files;
