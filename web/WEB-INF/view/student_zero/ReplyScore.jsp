@@ -11,10 +11,16 @@
 <head>
     <title>答辩成绩</title>
     <jsp:include page="../include.jsp"/>
-
+    <style>
+        .layui-form-item .layui-input-inline {
+            float: left;
+            width: 205px;
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
-    <table id="demo" lay-filter="test"></table>
+    <table id="demo" lay-filter="test" ></table>
     <script type="text/html" id="top" lay-filter="top">
         <label  class="layui-form-item">
             <label class="layui-form-label" style="width: 90px">项目名称:</label>
@@ -46,15 +52,60 @@
             </div>
             <div class="layui-input-inline">
                 <button id="seek" type="submit" class="layui-btn" onclick="seek()">搜索</button>
+                <a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="add"> <i class="layui-icon">&#xe654;</i>录入答辩成绩</a>
             </div>
+            <%--<div class="layui-input-inline">
+            </div>--%>
         </label>
     </script>
+    <div  id="addscore"  style="margin-left: 5%;display: none;">
+        <form id="scoreform" class="layui-form" action="<%=request.getContextPath()%>/" style="margin-right: 100px;margin-top: 35px;" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">班级名称:</label>
+                <div  class="layui-input-block">
+                    <select  name="className" style="width: 100px">
+                        <c:forEach var="c" items="${claes}">
+                            <option value="${c.classId}">${c.className}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">项目名称:</label>
+                <div  class="layui-input-block">
+                    <select  name="courseName">
+                        <c:forEach var="p" items="${project}">
+                            <option value="${p.projectId}">${p.projectName}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">答辩时间:</label>
+                <div  class="layui-input-block">
+                    <input lay-verify="required|date" id="scoreTime" name="scoreTime" value="" class="layui-input" type="text" placeholder="请选择考试时间"  autocomplete="off"  editable="false"  style="width:290px;">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="submit" class="layui-btn" lay-submit lay-filter="luru" onclick="add()">开始录入</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </body>
 <script>
-    var table;
-    layui.use(['table', 'form'], function() {
+
+    layui.use(['laydate','table', 'form'], function() {
         var form = layui.form;
-        table = layui.table;
+        var table = layui.table;
+        var laydate = layui.laydate;
+        //时间选择器
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#scoreTime'
+            // ,format: 'yyyy年MM月dd日'
+        });
         //第一个实例
         table.render({
             elem: '#demo',
@@ -79,6 +130,27 @@
             ]],
                 limits: [10, 20, 30 , 40, 50]
         });
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            var data = checkStatus.data;
+            switch(obj.event){
+                case 'add':
+                    layer.open({
+                        type: 1,
+                        title:'录入学生成绩',
+                        skin: 'layui-layer-demo', //样式类名
+                        closeBtn: 1, //不显示关闭按钮
+                        area: ['600px', '550'],
+                        fixed: false, //不固定
+                        maxmin: true,
+                        shadeClose: true, //开启遮罩关闭
+                        content: $('#addscore')
+                    });
+                break;
+
+            }
+        });
+
     })
 
     //条件搜索

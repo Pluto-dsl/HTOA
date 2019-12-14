@@ -11,10 +11,16 @@
 <head>
     <title>考试成绩</title>
     <jsp:include page="../include.jsp"/>
+    <style>
+        .layui-form-item .layui-input-inline {
+            float: left;
+            width: 121px;
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
-<table id="demo" lay-filter="test"></table>
-<script type="text/html" id="top" lay-filter="top">
+<script type="text/html" id="top">
     <label  class="layui-form-item">
         <label class="layui-form-label" style="width: 90px">在读学期:</label>
         <div class="layui-input-inline">
@@ -55,13 +61,83 @@
         <div class="layui-input-inline">
             <button id="seek"  class="layui-btn" onclick="seek()">搜索</button>
         </div>
+        <div class="layui-input-inline">
+            <a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="add"> <i class="layui-icon">&#xe654;</i>录入学生成绩</a>
+
+        </div>
     </label>
 </script>
+<table id="demo" lay-filter="test" ></table>
+<div  id="addscore"  style="margin-left: 5%;display: none;">
+    <form id="scoreform" class="layui-form" action="<%=request.getContextPath()%>/" style="margin-right: 100px;margin-top: 35px;" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label">班级名称:</label>
+            <div  class="layui-input-block">
+                <select  name="className" style="width:290px;">
+                    <c:forEach var="c" items="${claes}">
+                        <option value="${c.classId}">${c.className}</option>
+                    </c:forEach>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">课程名称:</label>
+            <div  class="layui-input-block">
+                <select  name="courseName" style="width:290px;">
+                    <c:forEach var="c" items="${course}">
+                        <option value="${c.courseId}">${c.courseName}</option>
+                    </c:forEach>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">考试类别:</label>
+            <div  class="layui-input-block">
+                <select  name="scoreType" style="width:290px;">
+                    <option value="1">笔试</option>
+                    <option value="2">机试</option>
+                    <option value="3">模拟面试</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">在读学期:</label>
+            <div  class="layui-input-block">
+                <select  name="term" style="width:290px;">
+                    <c:forEach var="t" items="${term}">
+                        <option value="${t.termid}">${t.termName}</option>
+                    </c:forEach>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">考试时间:</label>
+            <div  class="layui-input-block">
+                <input lay-verify="required|date" id="scoreTime" name="scoreTime" value="" class="layui-input" type="text" placeholder="请选择考试时间"  autocomplete="off"  editable="false"  style="width:290px;">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <center>
+                    <button type="submit" class="layui-btn" lay-submit lay-filter="luru" >开始录入</button>
+                </center>
+            </div>
+        </div>
+    </form>
+</div>
 </body>
 <script>
-    var table;
-    layui.use(['table'], function() {
-        table = layui.table;
+    layui.use([ 'laydate','element', 'table', 'layer', 'form' ,'laydate'],function() {
+        var element = layui.element;
+        layer = layui.layer;
+        var table = layui.table;
+        var form = layui.form;
+        var laydate = layui.laydate;
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#scoreTime'
+            // ,format: 'yyyy年MM月dd日'
+        });
         table.render({
             elem: '#demo',
             height: 600,
@@ -69,6 +145,7 @@
             id: "tt",
             toolbar: '#top', //开启头部工具栏，并为其绑定左侧模板
             page: true, //开启分页
+            totalRow: true,//开启合计行
             cols: [[ //表头
                 {field: 'scoreId', title: '序号', width: 100,sort:'true'}
                 , {field: 'stuname', title: '学生姓名', width: 100}
@@ -97,9 +174,26 @@
             },
             limits: [10, 20, 30 , 40, 50]
         });
-        table.on('toolbar(top)', function(obj){
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            var data = checkStatus.data;
+            switch(obj.event){
+                case 'add':
+                    layer.open({
+                        type: 1,
+                        title:'录入学生成绩',
+                        skin: 'layui-layer-demo', //样式类名
+                        closeBtn: 1, //不显示关闭按钮
+                        area: ['600px', '650px'],
+                        fixed: false, //不固定
+                        maxmin: true,
+                        shadeClose: true, //开启遮罩关闭
+                        content: $('#addscore')
+                    });
+                    break;
 
-        })
+            }
+        });
     })
 
     //条件搜索
@@ -142,5 +236,6 @@
         $("#stype").val(type);
         $("#courseName").val(course);
     }
+
 </script>
 </html>
