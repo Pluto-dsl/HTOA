@@ -14,16 +14,14 @@
 </head>
 <body>
     <form lay-filter="formTestFilter" class="layui-form" action="<%=request.getContextPath()%>/student/addcollect/">
-        <div id="windows" style="margin-top:2%; display: none;height: 90%" align="left">
+        <div id="windows" style="margin-top:2%; display: none;height: 90%;margin-left: 1px" >
             <input type="hidden" name="feedbackId">
             <div style="background-color:pink;height: 10%;width: 100%">
                 <h2>问题发起人:<input type="text" name="stuname" style="border: none;width:80px" disabled="true">
                                 问题:<input type="text" name="remark" style="border: none" disabled="true"></h2>
             </div>
-            <div style="height:50%;width: 100%;overflow-y:auto" id="content">
-                <ul id="list">
+            <div style="height:50%;width: 100%;overflow-y:auto" id="contents">
 
-                </ul>
             </div>
             <div style="background-color:skyblue;height:20%;width: 100%/*;border-style:solid*//*; border-width:1px; border-color:red*/">
                 <textarea rows="5" cols="50" style="margin-top:2px" id="txt" name="content"></textarea>
@@ -73,8 +71,8 @@
                             return '已处理'
                         }
                     }, width:100
-                }
-                , {field: 'userid', title: '审批人', width: 80}
+                }/*
+                , {field: 'userid', title: '审批人', width: 80}*/
                 ,{fixed: '', width:163, title:'操作', align:'center', toolbar: '#barDemo'}
             ]]
             , page: true,
@@ -84,7 +82,7 @@
         //行工具栏
         table.on('tool(test)', function(obj){
             var datas = obj.data;//获取当前行数据
-            console.log(datas);
+            /*console.log(datas);*/
             var event = obj.event;//获得lay-event 对应的值（编辑，删除）
                 $.ajax({
                     url: "${pageContext.request.contextPath}/student/selectcollect",
@@ -95,16 +93,19 @@
                         wid:datas.feedbackId
                     },
                     success: function (data) {
-                       /*var ul = document.getElementById("#list");
-                        var li = document.createComment("li");*/
+                        alert(data)
                        $(data).each(function (index,element) {
-                           /*console.log(element)*/
                            var name = element.empName+":"+element.content+"<br><br>";
-                           $("#content").append(name);
+                           alert(name)
+                           $("#contents").append(name);
                         })
+                    },
+                    error:function () {
+                        console.log("失败啦")
                     }
+
                 });
-                $("#content").empty();
+                $("#contents").empty();
                 layer.open({
                     type: 1,
                     title:'提出意见',
@@ -121,7 +122,7 @@
 
         //获取该id的数据
        function setFormValue(data){
-           console.log(data)
+           /*console.log(data)*/
             form.val("formTestFilter", {
                 "feedbackId":data.feedbackId
                 ,"stuname":data.stuname
@@ -133,10 +134,10 @@
 </script>
 <script type=text/javascript>
     function showInput() {
-        var username = "${sessionScope.username}";
+        var name = "${sessionScope.admin.empName}";
         var corl = document.getElementById("txt");   // 取得输入框对象
-        var val = username+":"+corl.value;                           // 取得输入的内容
-        $("#content").append(val);     //将输入内容显示到DIV
+        var val = name+":"+corl.value;                           // 取得输入的内容
+        $("#contents").append(val);     //将输入内容显示到DIV
     }
 </script>
 </html>

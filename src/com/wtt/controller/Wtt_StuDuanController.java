@@ -2,6 +2,7 @@ package com.wtt.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.publics.vo.feedback.FeedbackVo;
+import com.publics.vo.studentModel.StudentVo;
 import com.wtt.service.Wtt_StuDuanService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -89,9 +90,9 @@ public class Wtt_StuDuanController {
         }
         feedbackVo.setFeedBackType(1);
         feedbackVo.setFeedbackTime(new java.util.Date());
-        session.setAttribute("username","18270062525");
         //获取存在session中的用户(电话号码)
-        String name = (String) session.getAttribute("username");
+        StudentVo studentVo = (StudentVo) session.getAttribute("admin");
+        String name = studentVo.getStuname();
         Map map = wtt_stuDuanService.student(name);
         int id = (int) map.get("Studid");
         System.out.println("学生id:"+id);
