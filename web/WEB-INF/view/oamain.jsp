@@ -135,7 +135,7 @@
                                data-url="${pageContext.request.contextPath}/jack/toAduitLogList"
                                data-id="员工考核" data-title="员工考核">员工考核</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/jack/toAduitLogList"
+                               data-url="${pageContext.request.contextPath}/jack/toEvaluationContext"
                                data-id="考评内容" data-title="考评内容">考评内容</a></dd>
                         <dd><a href="javascript:void(0);">教师考评</a></dd>
                     </dl>

@@ -7,6 +7,7 @@ import com.publics.vo.assess.AduitModelVo;
 import com.publics.vo.educ.CourseTypeVo;
 import com.publics.vo.educ.CourseVo;
 import com.publics.vo.empModel.AttendanceVo;
+import com.publics.vo.empModel.evaluationVo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -202,12 +203,21 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
 
     @Override
     public List selHeadmasterList() {
-        return listBySQL("select * from evaluation where evaluationType = '班主任'");
+        return listBySQL("select * from evaluation where evaluationType = '2'");
+    }
+    @Override
+    public List selTeacherList() {
+        return listBySQL("select * from evaluation where evaluationType = '1'");
     }
 
     @Override
-    public List selTeacherList() {
-        return listBySQL("select * from evaluation where evaluationType = '授课老师'");
+    public int addAevaluation(evaluationVo evaluatio) {
+        return addObjectInt(evaluatio);
+    }
+
+    @Override
+    public void delAevaluation(int id) {
+        executeSQL("delete from evaluation where evaluationid = "+id+"");
     }
 
 

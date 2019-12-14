@@ -19,13 +19,13 @@
             <tr>
                 <td>考核指标:</td>
                 <td>
-                    <select id="aduitModelid" name="aduitModelid" lay-filter="type">
+                    <select id="aduitModelid" name="aduitModelid" lay-verify="required">
                         <option value="">请选择考核指标</option>
                     </select>
                 </td>
                 <td>员工:</td>
                 <td>
-                    <select id="Empid" name="Empid" lay-filter="type">
+                    <select id="Empid" name="Empid" lay-verify="required">
                         <option value="">请选择员工</option>
                     </select>
                 </td>

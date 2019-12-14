@@ -111,6 +111,14 @@ public class BaseDao {
         session.close();
     }
 
+    public int addObjectInt(Object obj) {
+        Session session = getSession();
+        int a = (int) session.save(obj);
+        session.flush();
+        session.close();
+        return a;
+    }
+
     /**
      * 根据员工名称查找id
      * */

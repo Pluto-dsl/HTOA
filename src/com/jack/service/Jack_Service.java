@@ -5,6 +5,7 @@ import com.publics.vo.assess.AduitModelVo;
 import com.publics.vo.educ.CourseTypeVo;
 import com.publics.vo.educ.CourseVo;
 import com.publics.vo.empModel.AttendanceVo;
+import com.publics.vo.empModel.evaluationVo;
 
 import java.util.List;
 import java.util.Map;
@@ -62,4 +63,6 @@ public interface Jack_Service {
     /** 考评内容，教师考评 */
     List selHeadmasterList();
     List selTeacherList();
+    int addAevaluation(evaluationVo evaluatio);
+    void delAevaluation(int id);
 }

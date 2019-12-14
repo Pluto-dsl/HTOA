@@ -8,7 +8,7 @@ public class evaluationVo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int evaluationid; //考评标准id
-    private int evaluationName; //考评名称
+    private String evaluationName; //考评名称
     private int Score; //考评分数
     private int evaluationType; //1、授课老师  2、班主任
     private String remark;
@@ -32,11 +32,11 @@ public class evaluationVo {
         this.evaluationid = evaluationid;
     }
 
-    public int getEvaluationName() {
+    public String getEvaluationName() {
         return evaluationName;
     }
 
-    public void setEvaluationName(int evaluationName) {
+    public void setEvaluationName(String evaluationName) {
         this.evaluationName = evaluationName;
     }
 

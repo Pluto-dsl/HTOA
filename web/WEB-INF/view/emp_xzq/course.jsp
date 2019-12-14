@@ -33,6 +33,7 @@
                 <td>课程类别:</td>
                 <td>
                     <select id="courseTypeId" name="courseTypeId" lay-filter="type">
+                        <option value="" >请选择课程类型</option>
                     </select>
                 </td>
             </tr>
@@ -70,7 +71,8 @@
             <tr>
                 <td>课程类别:</td>
                 <td>
-                    <select id="courseTypeId1" name="courseTypeId" lay-filter="type">
+                    <select id="courseTypeId1" name="courseTypeId" lay-verify="required">
+                        <option value="" >请选择课程类型</option>
                     </select>
                 </td>
             </tr>
@@ -134,7 +136,6 @@
 
         //动态生成下拉框
         $.get('${pageContext.request.contextPath}/jack/list',{},function (d) {
-            $("#courseTypeId1").empty();
             for (var i = 0; i < d.names.length; i++) {
                 $("#courseTypeId1").append("<option value='"+d.names[i].courseTypeId+"'>"+d.names[i].courseTypeName+"</option>");
             }
@@ -210,7 +211,6 @@
             if(obj.event === 'add'){
                 //动态生成下拉框
                  $.get('${pageContext.request.contextPath}/jack/list',{},function (data) {
-                    $("#courseTypeId").empty();
                     for (var i = 0; i < data.names.length; i++) {
                         $("#courseTypeId").append("<option value='"+data.names[i].courseTypeId+"'>"+data.names[i].courseTypeName+"</option>");
                     }
