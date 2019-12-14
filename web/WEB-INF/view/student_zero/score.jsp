@@ -66,15 +66,15 @@
             elem: '#demo',
             height: 600,
             url: '<%=request.getContextPath()%>/StudentScore/score', //数据接口,
-            id: "clientId",
+            id: "tt",
             toolbar: '#top', //开启头部工具栏，并为其绑定左侧模板
             page: true, //开启分页
             cols: [[ //表头
                 {field: 'scoreId', title: '序号', width: 100,sort:'true'}
                 , {field: 'stuname', title: '学生姓名', width: 100}
-                , {field: 'score', title: '学生成绩', width: 90,sort:'true'}
-                , {field: 'Rescore', title: '补考分数', width: 100,sort:'true'}
-                , {field: 'courseName',title:'课程名称',width:103}
+                , {field: 'score', title: '学生成绩', width: 120,sort:'true'}
+                , {field: 'Rescore', title: '补考分数', width: 120,sort:'true'}
+                , {field: 'courseName',title:'课程名称',width:120}
                 , {field: 'testType',title:'考试类别',width:103}
                 , {field: 'termName',title:'在读学期',width:103}
                 , {field: 'scoreTime',title:'考试时间',width:150,templet : "<div>{{layui.util.toDateString(d.scoreTime,'yyyy年MM月dd日')}}</div>"}
@@ -97,10 +97,11 @@
             },
             limits: [10, 20, 30 , 40, 50]
         });
-    })
-    table.on('tool(test)', function(obj){
+        table.on('toolbar(top)', function(obj){
 
+        })
     })
+
     //条件搜索
     function seek() {
         //在读学期
@@ -111,22 +112,35 @@
         var type = $("#stype").val();
         //课程名称
         var course = $("#courseName").val();
-        table.reload('clientId',{
+        table.reload('tt',{
             url:'<%=request.getContextPath()%>/StudentScore/scoreseek',
             where:{
                 term:term,
                 classId:classId,
                 type:type,
-                course:courseName
-            }/*,
+                course:course
+            },
             page: {
                 curr: 1 //重新从第 1 页开始
-            }*/
+            },done: function(res, page, count){
+            //如果是异步请求数据方式，res即为你接口返回的信息。
+            //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+            //分类显示中文名称
+            $("[data-field='testType']").children().each(function(){
+                if($(this).text()=='1'){
+                    $(this).text("笔试")
+                }else if($(this).text()=='2'){
+                    $(this).text("机试")
+                }else if($(this).text()=='3'){
+                    $(this).text("模拟面试")
+                }
+            })
+        }
         })
-        /*$("#term").val(term);
+        $("#term").val(term);
         $("#className").val(classId);
         $("#stype").val(type);
-        $("#courseName").val(course);*/
+        $("#courseName").val(course);
     }
 </script>
 </html>
