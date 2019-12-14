@@ -105,8 +105,12 @@ public class Wtt_EmpsController {
     //查询当前用户信息
     @RequestMapping(value = "selectusermessage")
     public String selectusermessage(ModelMap modelMap){
-        EmpVo empVo = empService.emplist();
-        modelMap.addAttribute("list",empVo);
+        String name = "";
+        List<EmpVo> list = empService.emplist(name);
+        //遍历
+        for (EmpVo empvo:list) {
+            modelMap.addAttribute("list",empvo);
+        }
         return "emp_wtt/userMessage";
     }
 }

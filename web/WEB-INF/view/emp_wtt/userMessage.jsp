@@ -24,12 +24,9 @@
             </td>
             <td>部门名称</td>
             <td>
-                <%--${list.depId}--%>
+                ${list.depId}
             </td>
         </tr>
     </table>
 </body>
-<script type="javascript">
-    console.log(${list})
-</script>
 </html>
