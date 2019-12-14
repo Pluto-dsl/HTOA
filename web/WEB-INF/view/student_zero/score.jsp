@@ -11,7 +11,6 @@
 <head>
     <title>考试成绩</title>
     <jsp:include page="../include.jsp"/>
-
 </head>
 <body>
 <table id="demo" lay-filter="test"></table>
@@ -54,17 +53,15 @@
             </select>
         </div>
         <div class="layui-input-inline">
-            <button id="seek" type="submit" class="layui-btn" onclick="seek()">搜索</button>
+            <button id="seek"  class="layui-btn" onclick="seek()">搜索</button>
         </div>
     </label>
 </script>
 </body>
 <script>
     var table;
-    layui.use(['table', 'form'], function() {
-        var form = layui.form;
+    layui.use(['table'], function() {
         table = layui.table;
-        //第一个实例
         table.render({
             elem: '#demo',
             height: 600,
@@ -101,7 +98,9 @@
             limits: [10, 20, 30 , 40, 50]
         });
     })
+    table.on('tool(test)', function(obj){
 
+    })
     //条件搜索
     function seek() {
         //在读学期
@@ -112,7 +111,6 @@
         var type = $("#stype").val();
         //课程名称
         var course = $("#courseName").val();
-        alert();
         table.reload('clientId',{
             url:'<%=request.getContextPath()%>/StudentScore/scoreseek',
             where:{
@@ -120,15 +118,15 @@
                 classId:classId,
                 type:type,
                 course:courseName
-            },
+            }/*,
             page: {
                 curr: 1 //重新从第 1 页开始
-            }
+            }*/
         })
-        $("#term").val(term);
+        /*$("#term").val(term);
         $("#className").val(classId);
         $("#stype").val(type);
-        $("#courseName").val(course);
+        $("#courseName").val(course);*/
     }
 </script>
 </html>

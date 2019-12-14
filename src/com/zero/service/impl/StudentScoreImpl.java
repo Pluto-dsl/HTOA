@@ -75,7 +75,9 @@ public class StudentScoreImpl extends BaseDao implements StudentScoreService {
                 " left join term t on t.termid = sc.termid" +
                 " left join emp e on e.empId = sc.EmpId " +
                 " where 1=1 ";
-        return super.pageBySQL(sql+where+" order by sc.scoreId desc",page,limit);
+        System.out.println("语句:"+sql);
+        sql = sql + where + " order by sc.scoreId desc";
+        return super.pageBySQL(sql,page,limit);
     }
 
     @Override
@@ -87,14 +89,15 @@ public class StudentScoreImpl extends BaseDao implements StudentScoreService {
 
     @Override
     public int scorepagecount(String where) {
-        String sql = "select sc.*,c.courseName,s.stuname,t.termName,e.empName from studentScore sc" +
+        String sql = "select count(*) co from studentScore sc" +
                 " left join student s on s.Studid = sc.stuid" +
                 " left join course c on c.courseId = sc.courseId" +
                 " left join term t on t.termid = sc.termid" +
                 " left join emp e on e.empId = sc.EmpId " +
                 " where 1=1 ";
         sql+=where;
-        return Integer.parseInt(((Map)super.listBySQL(sql+where).get(0)).get("co").toString());
+        System.out.println("count"+sql);
+        return Integer.parseInt(((Map)super.listBySQL(sql).get(0)).get("co").toString());
     }
 
     @Override

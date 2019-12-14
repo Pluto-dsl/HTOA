@@ -93,6 +93,7 @@ public class Zero_StudentScore {
     @RequestMapping(value = "/scoreseek")
     @ResponseBody
     public Map seek(int term,int classId,int type,int course,int page,int limit){//分页
+        System.out.println("进入方法");
         String sql = "";
         if (classId!=0){
             sql+=" and s.clazz = "+classId;
@@ -101,17 +102,17 @@ public class Zero_StudentScore {
             sql+=" and sc.testType = "+type;
         }
         if (term!=0){
-            sql+=" t.termid = "+term;
+            sql+=" and t.termid = "+term;
         }
         if (course!=0){
             sql+=" and sc.courseId = "+course;
         }
 
-        List<Map> list = service.ReplyScore(sql,page,limit);
+        List<Map> list = service.score(sql,page,limit);
         Map map = new TreeMap();
         map.put("code",0);
         map.put("msg","");
-        map.put("count",service.pagecount(sql));
+        map.put("count",service.scorepagecount(sql));
         map.put("data",list);
         return map;
     }
