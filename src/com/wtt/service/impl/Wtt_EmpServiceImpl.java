@@ -86,7 +86,7 @@ public class Wtt_EmpServiceImpl extends BaseDao implements Wtt_EmpService {
     }
 
     @Override
-    public List<EmpVo> emplist() {
-       return listBySQL("select * from emp");
+    public EmpVo emplist() {
+       return (EmpVo) listByHql("from * EmpVo");
     }
 }

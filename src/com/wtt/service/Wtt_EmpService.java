@@ -21,5 +21,5 @@ public interface Wtt_EmpService {
     //查询总行数
     int pagecount(HttpServletRequest request);
     //查询用户信息
-    List<EmpVo> emplist();
+    EmpVo emplist();
 }

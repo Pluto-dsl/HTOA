@@ -93,10 +93,8 @@
                         wid:datas.feedbackId
                     },
                     success: function (data) {
-                        alert(data)
                        $(data).each(function (index,element) {
                            var name = element.empName+":"+element.content+"<br><br>";
-                           alert(name)
                            $("#contents").append(name);
                         })
                     },

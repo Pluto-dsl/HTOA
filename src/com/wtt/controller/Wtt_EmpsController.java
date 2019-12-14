@@ -2,8 +2,10 @@ package com.wtt.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.publics.vo.empModel.WeeklogVo;
+import com.publics.vo.empModel.emp.EmpVo;
 import com.wtt.service.Wtt_EmpService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -96,16 +98,15 @@ public class Wtt_EmpsController {
     }
 
     //点击主页面最上面的用户查询出当前用户信息
-    /*@RequestMapping(value = "usermessage")
+    @RequestMapping(value = "usermessage")
     public String usermessage(){
         return "emp_wtt/userMessage";
-    }*/
+    }
     //查询当前用户信息
     @RequestMapping(value = "selectusermessage")
     public String selectusermessage(ModelMap modelMap){
-        List list =empService.emplist();
-        System.out.println(list);
-        modelMap.addAttribute("emplist",list);
+        EmpVo empVo = empService.emplist();
+        modelMap.addAttribute("list",empVo);
         return "emp_wtt/userMessage";
     }
 }
