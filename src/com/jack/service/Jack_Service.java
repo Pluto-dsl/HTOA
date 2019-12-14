@@ -48,7 +48,7 @@ public interface Jack_Service {
     void editAssessment(AduitModelVo aduitModelVo);//编辑考核
     void delAssessment(int Aid); //删除
 
-    /** 考核巡查管理 */
+    /** 考核管理 */
     List selAss(); //查询所有的考核指标
     List selEmp();  //查询所有的员工
     void addAduit(AduitLogVo aduitLogVo); //员工考核录入
@@ -59,4 +59,7 @@ public interface Jack_Service {
     List selDep(); //获取部门名称列表
     List Conditional_query(String empName,String depId,String startDate,String EndDate,int currPage,int pageSize); //条件查询
     int Conditional_queryCount(String empName,String depId,String startDate,String EndDate); //条件查询
+    /** 考评内容，教师考评 */
+    List selHeadmasterList();
+    List selTeacherList();
 }

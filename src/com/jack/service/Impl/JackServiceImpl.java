@@ -200,5 +200,15 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
         return selTotalRow(sql);
     }
 
+    @Override
+    public List selHeadmasterList() {
+        return listBySQL("select * from evaluation where evaluationType = '班主任'");
+    }
+
+    @Override
+    public List selTeacherList() {
+        return listBySQL("select * from evaluation where evaluationType = '授课老师'");
+    }
+
 
 }

@@ -119,7 +119,6 @@
 
             $("#editfrom")[0].reset();
             layui.form.render();
-
             if(obj.event === 'addBtn'){
                 //动态生成下拉框
                 $.get('${pageContext.request.contextPath}/jack/select',{},function (data) {

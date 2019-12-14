@@ -3,6 +3,7 @@ package com.jack.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.jack.service.Jack_Service;
 import com.publics.vo.empModel.AttendanceVo;
+import com.publics.vo.empModel.emp.EmpVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -82,7 +83,7 @@ public class Jack_AttController {
     @RequestMapping("/Attadd")
     public String Attadd(HttpSession session,String punckClockTime,String cause,String timeing) throws ParseException {
         System.out.println("进来了");
-        String user = (String) session.getAttribute("admin");
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
         String ptime = punckClockTime +" "+ timeing;
 
         System.out.println(ptime);
@@ -93,8 +94,8 @@ public class Jack_AttController {
 
         System.out.println(date+"--------");
         AttendanceVo attVo = new AttendanceVo();
-        attVo.setEmpName(user);
-        String Auditor = service.selDepChairman(user); //查询审核人
+        attVo.setEmpName(empVo.getEmpName());
+        String Auditor = service.selDepChairman(empVo.getEmpName()); //查询审核人
         attVo.setAuditor(Auditor);
         attVo.setCause(cause);
         attVo.setPunckClockTime(date);
@@ -124,11 +125,11 @@ public class Jack_AttController {
     public void Att(HttpSession session,HttpServletResponse response, HttpServletRequest request) throws IOException {
         int currPage = Integer.parseInt(request.getParameter("page"));
         int pageSize = Integer.parseInt(request.getParameter("limit"));
-        String user = (String) session.getAttribute("admin");//获取当前登入的名称
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");//获取当前登入的名称
         response.setContentType("text/html;charset=utf-8");
         System.out.println(currPage+"----"+pageSize);
-        List list = service.selAtt(user,currPage,pageSize);
-        int pageCount = service.selAttCount(user);
+        List list = service.selAtt(empVo.getEmpName(),currPage,pageSize);
+        int pageCount = service.selAttCount(empVo.getEmpName());
         PrintWriter out = response.getWriter();
         JSONObject json = new JSONObject();
         json.put("msg","提示");

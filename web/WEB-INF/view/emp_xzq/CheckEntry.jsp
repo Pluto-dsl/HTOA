@@ -46,7 +46,7 @@
                     <input type="text" id="Remark" name="Remark" required lay-verify="required" placeholder="请输入考核说明" autocomplete="off" class="layui-input">
                 </td>
                 <td>录入人员:</td>
-                <td><input readonly="readonly" id="auditPerson" name="auditPerson" value="${sessionScope.admin}" placeholder="请输入课程类型"  class="layui-input"></td>
+                <td><input readonly="readonly" id="auditPerson" name="auditPerson" value="${sessionScope.admin.empName}" placeholder="请输入课程类型"  class="layui-input"></td>
             </tr>
             <tr>
                 <td align="center"  colspan="2" >
