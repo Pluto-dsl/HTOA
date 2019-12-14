@@ -124,7 +124,6 @@ public class Wtt_StudentController {
         int id = Integer.parseInt(request.getParameter("feedbackId"));
         collect_opinionsVo.setWid(id);
         collect_opinionsVo.setPuttime(new Date());
-
         //获取当前登录用户
         EmpVo empVo = (EmpVo) session.getAttribute("admin");
         String username = empVo.getEmpName();
