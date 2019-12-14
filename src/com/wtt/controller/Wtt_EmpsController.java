@@ -25,7 +25,7 @@ public class Wtt_EmpsController {
     //去到我的周报查询主页面
     @RequestMapping(value = "/toEmpPaper")
     public String toEmpPaper(){
-        return "emp_wtt/selectmynewpaper";
+        return "emp_wtt/selectMynewpaper";
     }
     //周报查询
     @RequestMapping(value = "/selectEmpPaper")
@@ -54,7 +54,7 @@ public class Wtt_EmpsController {
     //去到我的周报新增页面
     @RequestMapping(value = "/addEmpPaperPage")
     public String addEmpPaperPage(){
-        return "emp_wtt/addmynewpaper";
+        return "emp_wtt/addMynewpaper";
     }
     //新增我的周报
     @RequestMapping(value = "/addEmpPaper")
@@ -65,22 +65,6 @@ public class Wtt_EmpsController {
         return "redirect:/emp/toEmpPaper";
     }
 
-    //根据id查找对象
-   /* @RequestMapping(value = "/updateEmpPaper")
-    public void updateEmpPaperPage(int id,HttpServletResponse response){
-        List list = (List) empService.wekk(id);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("list",list);
-        try {
-            PrintWriter pw = response.getWriter();
-            pw.println(jsonObject.toJSONString());
-            pw.flush();
-            pw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-*/
     //修改操作
     @RequestMapping(value = "/update")
     public String update(WeeklogVo weeklogVo){
@@ -109,5 +93,19 @@ public class Wtt_EmpsController {
     public String lookEmpPaperPage(@PathVariable(value = "id") int id, ModelMap modelMap){
         modelMap.addAttribute("list",empService.wekk(id));
         return "emp_wtt/mynewpaper";
+    }
+
+    //点击主页面最上面的用户查询出当前用户信息
+    /*@RequestMapping(value = "usermessage")
+    public String usermessage(){
+        return "emp_wtt/userMessage";
+    }*/
+    //查询当前用户信息
+    @RequestMapping(value = "selectusermessage")
+    public String selectusermessage(ModelMap modelMap){
+        List list =empService.emplist();
+        System.out.println(list);
+        modelMap.addAttribute("emplist",list);
+        return "emp_wtt/userMessage";
     }
 }

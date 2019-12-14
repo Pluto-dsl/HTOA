@@ -37,7 +37,9 @@
         <div class="layui-logo">HTOA</div>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
-                <a href="javascript:void(0);">
+                <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                   data-url="${pageContext.request.contextPath}/emp/selectusermessage"
+                   data-id="用户信息" data-title="用户信息">
                     ${admin.empName}
                 </a>
                 <dl class="layui-nav-child">

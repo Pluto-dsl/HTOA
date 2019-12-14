@@ -20,4 +20,6 @@ public interface Wtt_EmpService {
     void delete(int id);
     //查询总行数
     int pagecount(HttpServletRequest request);
+    //查询用户信息
+    List<EmpVo> emplist();
 }

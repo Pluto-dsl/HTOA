@@ -84,4 +84,9 @@ public class Wtt_EmpServiceImpl extends BaseDao implements Wtt_EmpService {
         }
         return selTotalRow(sql);
     }
+
+    @Override
+    public List<EmpVo> emplist() {
+       return listBySQL("select * from emp");
+    }
 }
