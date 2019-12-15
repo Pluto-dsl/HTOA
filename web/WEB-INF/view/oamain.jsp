@@ -28,11 +28,18 @@
         .layui-tab-content {
             padding: 0px;
         }
-
+        .layui-layout-admin .layui-logo {
+            background-color: #393d49;
+        }
+        .layui-layout-admin .layui-header {
+            border-bottom-style: solid;
+            border-bottom-color: #393d49;
+            border-bottom-width: 1px;
+        }
     </style>
 </head>
 <body class="layui-layout-body">
-<div class="layui-layout layui-layout-admin">
+<div layadmin-themealias="purple-red-header" class="layui-layout layui-layout-admin">
     <div class="layui-header">
         <div class="layui-logo">HTOA</div>
         <ul class="layui-nav layui-layout-right">
@@ -52,7 +59,10 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                 <li class="layui-nav-item">
-                    <a href="javascript:;">员工管理</a>
+                    <a href="javascript:;" lay-tips="员工管理" lay-direction="2">
+                        <i class="layui-icon layui-icon-user"></i>
+                        <cite>员工管理</cite>
+                    </a>
                     <dl class="layui-nav-child">
                         <%-- 例子  可修改 照着写就行了 --%>
                         <dd><a href="javascript:void(0);">部门管理</a></dd>
@@ -75,11 +85,15 @@
 
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toAtt"
-                               data-id="考勤管理" data-title="考勤管理">考勤管理</a></dd>
+                               data-id="考勤管理" data-title="考勤管理" >考勤管理</a>
+                        </dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" >学生管理</a>
+                    <a href="javascript:;" lay-tips="学生管理" lay-direction="2">
+                        <i class="layui-icon layui-icon-face-smile-b"></i>
+                        <cite>学生管理</cite>
+                    </a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/student/leave"
@@ -97,7 +111,10 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;">教务管理</a>
+                    <a href="javascript:;" lay-tips="教务管理" lay-direction="2">
+                        <i class="layui-icon layui-icon-read"></i>
+                        <cite>教务管理</cite>
+                    </a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toCourseList"
@@ -112,7 +129,7 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;">后勤管理</a>
+                    <a href="javascript:;" lay-tips="后勤管理" lay-direction="2"><i class="layui-icon layui-icon-template-1"></i><cite>后勤管理</cite></a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/logs/toMyRepair"
@@ -123,7 +140,7 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;">考核管理</a>
+                    <a href="javascript:;" lay-tips="考核管理" lay-direction="2"><i class="layui-icon layui-icon-survey"></i><cite>考核管理</cite></a>
                     <dl class="layui-nav-child">
                         <dd><a layadmin-event="refresh" href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toAssessmentPage"
@@ -141,7 +158,9 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;">问题反馈</a>
+                    <a href="javascript:;" lay-tips="问题反馈" lay-direction="2">
+                        <i class="layui-icon layui-icon-chat"></i>
+                        <cite>问题反馈</cite></a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/student/questionPage"
@@ -149,13 +168,16 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;">文件管理</a>
+                    <a href="javascript:;" lay-tips="文件管理" lay-direction="2">
+                        <i class="layui-icon layui-icon-tabs"></i>
+                        <cite>文件管理</cite></a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">资料文档</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;">系统报表</a>
+                    <a href="javascript:;" lay-tips="系统报表" lay-direction="2"><i class="layui-icon layui-icon-layouts"></i>
+                        <cite>系统报表</cite></a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);">日常考核</a></dd>
                         <dd><a href="javascript:void(0);">请假管理</a></dd>
@@ -165,20 +187,20 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;">通知公告</a>
+                    <a href="javascript:;" lay-tips="通知公告" lay-direction="2"><i class="layui-icon layui-icon-file"></i><cite>通知公告</cite></a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">通知公告</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;">安全管理</a>
+                    <a href="javascript:;" lay-tips="安全管理" lay-direction="2"><i class="layui-icon layui-icon-auz"></i><cite>安全管理</cite></a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);">权限管理</a></dd>
                         <dd><a href="javascript:void(0);">流程管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a>系统设置</a>
+                    <a href="javascript:;" lay-tips="系统设置" lay-direction="2"><i class="layui-icon layui-icon-util"></i><cite>系统设置</cite></a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/system/systemPage"

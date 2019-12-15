@@ -35,7 +35,7 @@
                     <input type="text" id="Remark" name="remark" required lay-verify="required" placeholder="请输入考评类型" autocomplete="off" class="layui-input">
                 </td>
             </tr>
-            <tr>
+            <tr align="center">
                 <td colspan="2">
                     <button lay-submit lay-filter="addSubmit" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
                 </td>

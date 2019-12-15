@@ -11,7 +11,7 @@ public class headTeacherVo {
     private int headTeacherid;
     private int evaluationid;
     private String testScore;
-    private int totalId;
+    private int TeachertotalId;
 
     @Override
     public String toString() {
@@ -19,7 +19,7 @@ public class headTeacherVo {
                 "headTeacherid=" + headTeacherid +
                 ", evaluationid=" + evaluationid +
                 ", testScore='" + testScore + '\'' +
-                ", totalId=" + totalId +
+                ", totalId=" + TeachertotalId +
                 '}';
     }
 
@@ -48,10 +48,10 @@ public class headTeacherVo {
     }
 
     public int getTotalId() {
-        return totalId;
+        return TeachertotalId;
     }
 
     public void setTotalId(int totalId) {
-        this.totalId = totalId;
+        this.TeachertotalId  = totalId;
     }
 }

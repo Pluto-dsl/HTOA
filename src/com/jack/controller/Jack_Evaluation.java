@@ -2,6 +2,8 @@ package com.jack.controller;
 
 import com.jack.service.Jack_Service;
 import com.publics.vo.empModel.evaluationVo;
+import com.publics.vo.empModel.headTeacherVo;
+import com.publics.vo.empModel.teacherTotalVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -62,6 +64,13 @@ public class Jack_Evaluation {
     @ResponseBody
     public String delEvaluation(String evaluationid){
         service.delAevaluation(Integer.parseInt(evaluationid));
+        headTeacherVo head = new headTeacherVo();
+        teacherTotalVo teacherTotal = new teacherTotalVo();
         return "成功";
+    }
+
+    @RequestMapping("/toTeacharEva")
+    public String toTeacharEva(){
+        return "emp_xzq/stu_selectWindows";
     }
 }
