@@ -8,6 +8,7 @@ import com.jerry_zhq.service.Zhq_DataDocService;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.file.DataDocVo;
 import com.publics.vo.studentModel.StudentDormitoryVo;
+import org.h2.store.Data;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -102,6 +103,37 @@ public class Zhq_DataDocController {
         docVo.setDocId(docId);
         zhq_dataDocService.delDoc(docVo);
         return "success";
+    }
+
+    @RequestMapping("/download.do")
+    public void download(Integer docId,DataDocVo dataDocVo,HttpServletResponse response) throws Exception{
+        System.out.println("获取到的id是"+docId);
+        DataDocVo dataDocVO1 = (DataDocVo) zhq_dataDocService.selDocId(dataDocVo.getClass(),docId);
+
+        System.out.println("要下载的路径是"+dataDocVO1.getUrl());
+        // 指定要下载的文件所在路径
+        String path = dataDocVO1.getUrl();
+        // 创建该文件对象
+        File file = new File(path);
+
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("multipart/form-data");
+        response.setHeader("Content-Disposition", "attachment;fileName=" + dataDocVO1.getDataName());
+
+        //打开本地文件流
+        InputStream inputStream = new FileInputStream(file);
+        //激活下载操作
+        OutputStream os = response.getOutputStream();
+
+        byte[] b = new byte[1024*50];
+        int length;
+        while ((length = inputStream.read(b)) > 0) {
+            os.write(b,0,length);
+        }
+        // 这里主要关闭。
+        os.close();
+        inputStream.close();
+
     }
 
 }

@@ -46,7 +46,7 @@
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     <%--<a href="文件路径" download="文件名称">下载文件</a>--%>
-   <%-- <a  class="layui-btn  layui-btn-xs" lay-event="download">下载文件</a>--%>
+    <a  class="layui-btn  layui-btn-xs" lay-event="download">下载文件</a>
 </script>
 <script>
     layui.use([ 'element', 'table', 'layer', 'form' ,'laydate','upload'],function() {
@@ -70,10 +70,10 @@
                 ,{field: 'opTime', title: '上传时间', width: 200, templet: '<div>{{ layui.util.toDateString(d.feedbackTime,"yyyy-MM-dd")}}</div>'}
                 ,{field: 'remark', title: '备注', width: 200}
                 ,{field: 'empId', title: '上传人', width: 200}
-                ,{field: 'url', title: '下载文件',width:100,/*hide:true,*/templet:function (data) {
+                ,{field: 'url', title: '下载文件',hide:true/*templet:function (data) {
                         return '<a href="${pageContext.request.contextPath}\\'+data.url+'" download="'+data.dataName+'" class="layui-btn layui-bg-blue layui-btn-xs" >下载文件</a>'
-                    }}
-                ,{fixed: 'right',  title:'操作', toolbar: '#barDemo',width:100}
+                    }*/}
+                ,{fixed: 'right',  title:'操作', toolbar: '#barDemo',width:200}
             ]]
             ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
@@ -124,14 +124,9 @@
                         }
                     })
                 });
-            }/*else if(obj.event ==='download'){
-                var param = {
-                };
-                var backdata = function(d){
-
-                };
-                $.post('${pageContext.request.contextPath}/download?id='+data.docId,param,backdata,"json");
-            }*/
+            }else if(obj.event ==='download'){
+                location.href='${pageContext.request.contextPath}/download.do?docId='+data.docId;
+            }
         })
     })
 </script>
