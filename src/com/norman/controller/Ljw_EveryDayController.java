@@ -1,5 +1,6 @@
 package com.norman.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.norman.service.Ljw_EmpService;
 import com.norman.service.Ljw_SystemLogService;
@@ -14,6 +15,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -49,12 +51,51 @@ public class Ljw_EveryDayController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/getEveryList")
-    public void getEveryList(int empId,HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/getEveryList")//获取员工的考勤列表
+    public void getEveryList(Integer empId,HttpServletResponse response) throws IOException {
         response.setContentType("text/html;charset=utf-8");
-        List<AduitLogVo> list = systemLogService.getEveryListById(empId) ;
+
+        List<Map> list;
+        if (empId ==null || empId == 0){
+            list = new ArrayList<>();
+        }else {
+            list = systemLogService.getEveryListById(empId);
+        }
+        JSONObject obj = new JSONObject();
+        obj.put("code",0);
+        obj.put("msg","");
+        obj.put("count",list.size());
+        obj.put("data",list);
         PrintWriter out = response.getWriter();
-        out.print(list);
+        out.print(obj);
+        out.flush();
+        out.close();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getImg/{aduitLogId}")//获取图片
+    public void getImg(@PathVariable(value = "aduitLogId") Integer aduitLogId,HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        AduitLogVo vo = systemLogService.getAduitLog(aduitLogId);
+        JSONObject obj = new JSONObject();
+        JSONArray data = new JSONArray();
+
+        JSONObject jo = new JSONObject();
+        jo.put("alt","");
+        jo.put("pid",666);
+        jo.put("src",vo.getImage());
+        jo.put("thumb",vo.getImage());
+        data.add(jo);
+
+        obj.put("title","");
+        obj.put("id",123);
+        obj.put("start",0);
+        obj.put("data",data);
+
+        System.out.println(obj.toJSONString());
+
+        PrintWriter out = response.getWriter();
+        out.print(obj);
         out.flush();
         out.close();
     }

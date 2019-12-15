@@ -57,9 +57,12 @@
     </tr>
 </table>
 <table id="empList" lay-filter="test"></table>
-<div style="width: 100%;height: 234px;background-color: #9F9F9F">
+<div style="width: 100%;height: 234px">
     <table id="everyDay" lay-filter="every"></table>
 </div>
+<script type="text/html" id="toolbarDemo">
+    员工考核详情报表
+</script>
 <%--<div id="layer-photos-demo" class="layer-photos-demo">
     <img layer-src="" src="" alt="图片名">
 </div>
@@ -74,11 +77,10 @@
 <script>
     layui.use('table', function(){
         var table = layui.table;
-        var tableIns = table.render({
+        var empIns = table.render({
             elem: '#empList'
             ,method:"post"
             ,url:'${pageContext.request.contextPath}/systemLog/getEveryDayData'
-            ,title: '员工考核总表'
             ,cols: [[
                 {field:'empId', title:'员工编号', fixed: 'left', unresize: true, sort: true}
                 ,{field:'empName', title:'员工名称'}
@@ -91,18 +93,56 @@
             ,page: {limit: 10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
 
+        var everyIns = table.render({
+            elem: '#everyDay'
+            ,method:"post"
+            ,url:'${pageContext.request.contextPath}/systemLog/getEveryList'
+            ,title: '员工考核详情报表'
+            ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            ,defaultToolbar: ['filter', 'exports', 'print']
+            ,cols: [[
+                {field:'aduitLogid', hide:true}
+                ,{field:'empName', title:'员工名称', fixed: 'left'}
+                ,{field:'aduitName', title:'考核内容', fixed: 'left'}
+                ,{field:'Scores', title:'考核分数', unresize: true, sort: true}
+                ,{field:'auditDate', title:'考核时间',templet:function (d){return createTime(d.auditDate);}, unresize: true, sort: true}
+                ,{field:'auditPerson', title:'录入人员'}
+                ,{field:'Remark', title:'说明'}
+                ,{field:'Image', title:'说明',templet:function (d) {
+                        return "单击此行显示图片"
+                    }
+                }
+            ]]
+            ,height:'220'
+        });
+
+
+
         //监听行工具事件
         table.on('tool(test)', function(obj){
 
         });
-        //监听行单击事件
+        //监听行单击事件(员工列表)
         table.on('row(test)', function(obj){
             var data = obj.data;//当前行数据
             var tr = obj.tr;//当前行对象
-            console.log(data);
-            console.log(data.empId);
-            //getEveryList(data.empId);
+            everyIns.reload({
+                where:{
+                    empId:data.empId
+                }
+            });
+        });
 
+        //监听行单击事件(员工考核详情报表)
+        table.on('row(every)', function(obj){
+            var data = obj.data;//当前行数据
+            var tr = obj.tr;//当前行对象
+            $.getJSON('${pageContext.request.contextPath}/systemLog/getImg/'+data.aduitLogid, function(json){
+                layer.photos({
+                    photos: json
+                    ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+                });
+            });
         });
         //重载表格
         $("#btn").click(function () {
@@ -128,14 +168,25 @@
         });
     });
 </script>
-<script>
-    function getEveryList(empId) {
-        $.ajax("${pageContext.request.contextPath}/systemLog/getEveryList",{empId:empId},function (data) {
-            console.log(data);
-            $(data).each(function (index,element) {
-                console.log(element)
-            })
-        },"json")
+<script type="text/javascript">
+    function createTime(v){
+        console.log(v);
+        if(v == undefined || v ==''){
+            return "";
+        }else {
+            var date = new Date(v);
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            m = m < 10 ? '0' + m : m;
+            var d = date.getDate();
+            d = d < 10 ? ("0" + d) : d;
+            var h = date.getHours();
+            h = h < 10 ? ("0" + h) : h;
+            var M = date.getMinutes();
+            M = M < 10 ? ("0" + M) : M;
+            var str = y + "-" + m + "-" + d + " " + h + ":" + M;
+            return str;
+        }
     }
 </script>
 </html>
