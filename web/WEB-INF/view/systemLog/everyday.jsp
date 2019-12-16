@@ -134,6 +134,7 @@
         });
 
         //监听行单击事件(员工考核详情报表)
+        //137
         table.on('row(every)', function(obj){
             var data = obj.data;//当前行数据
             var tr = obj.tr;//当前行对象
