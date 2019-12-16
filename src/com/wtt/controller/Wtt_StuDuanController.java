@@ -2,6 +2,7 @@ package com.wtt.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.publics.vo.feedback.FeedbackVo;
+import com.publics.vo.studentModel.StudentLeaveVo;
 import com.publics.vo.studentModel.StudentVo;
 import com.wtt.service.Wtt_StuDuanService;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,7 @@ public class Wtt_StuDuanController {
     Wtt_StuDuanService wtt_stuDuanService;
 
     //
-    @RequestMapping(value = "stuframeset")
+    /*@RequestMapping(value = "stuframeset")
     public String stuframeset(){
         return "main";
     }
@@ -37,12 +38,11 @@ public class Wtt_StuDuanController {
     @RequestMapping(value = "studentonmain")
     public String studentonmain(){
         return "studentOamain";
-    }
+    }*/
 
     @RequestMapping(value = "/problem_feedback")
     public String problem_feedback(ModelMap modelMap,HttpSession session){
         List deplist = wtt_stuDuanService.dep();
-        System.out.println("部门："+deplist);
         modelMap.addAttribute("list",deplist);
         return "student_wtt/problem_feedback";
     }
@@ -115,5 +115,33 @@ public class Wtt_StuDuanController {
         feedbackVo.setEmpName(classname);
         wtt_stuDuanService.add(feedbackVo);
         return "redirect:/studentduan/problem_feedback";
+    }
+
+    //去到学生申请请假页面
+    @RequestMapping(value = "/studentleaves")
+    public String studentleave(){
+        return "student_wtt/apply_leave";
+    }
+
+    //查询学生请假
+    @RequestMapping(value = "studentselectleave")
+    public void studentselectleave(int page,int limit,HttpServletResponse response){
+        response.setContentType("text/html;charset=utf-8");
+        List<StudentLeaveVo> list = wtt_stuDuanService.studentleave(page,limit);
+        //获取总行数
+        int rows =wtt_stuDuanService.leavepagecount();
+        JSONObject jsonObjects = new JSONObject();
+        jsonObjects.put("msg","提示");
+        jsonObjects.put("code",0);
+        jsonObjects.put("data",list);
+        jsonObjects.put("count",rows);
+        try {
+            PrintWriter pw = response.getWriter();
+            pw.print(jsonObjects.toJSONString());
+            pw.flush();
+            pw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
