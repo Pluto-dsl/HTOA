@@ -32,14 +32,15 @@
             ,defaultToolbar:{}//自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
             ,title: '用户数据表'
             ,cols: [[
-                ,{field:'aduitLogid', title:'考核内容', width:200}
+                {field:'aduitName', title:'考核指标', width:200}
                 ,{field:'empName', title:'员工', width:150}
                 ,{field:'Scores', title:'考核分数  ', width:100}
                 ,{field:'auditDate', title:'考核时间 ',templet : "<div>{{layui.util.toDateString(d.auditDate, 'yyyy年MM月dd日')}}</div>", width:200}
                 ,{field:'auditPerson', title:'录入人员', width:120}
                 ,{field:'Remark', title:'说明', width:200}
-                ,{ templet:function (d) {
+                ,{field:'',title:'', width:10,templet:function (d) {
                     $("#img").attr("src",d.Image);
+                    return "";
                     } }
             ]]
             ,page: false

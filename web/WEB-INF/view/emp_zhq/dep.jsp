@@ -153,7 +153,7 @@
             });
         });
     };
-    $.post('${pageContext.request.contextPath}/tree?type=tree',param,backdata,"json");
+    $.post('${pageContext.request.contextPath}/tree',param,backdata,"json");
 
 
 
