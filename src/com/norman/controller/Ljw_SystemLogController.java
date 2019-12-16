@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.norman.service.Ljw_EmpService;
 import com.norman.service.Ljw_SystemLogService;
 import com.publics.vo.assess.AduitLogVo;
+import com.publics.vo.empModel.AttendanceVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,17 +38,6 @@ public class Ljw_SystemLogController {
 
     @RequestMapping(value = "/toWorkTime")//去往员工请假统计
     public String toWorkTime(Model model){
-        JSONObject result = new JSONObject();
-        Calendar cal = Calendar.getInstance();
-        int month = cal.get(Calendar.MONTH);
-        result.put("lastMonth",month);
-        result.put("thisMonth",month +1);
-        model.addAttribute("month",result);
-        return "systemLog/workTimeList";
-    }
-
-    @RequestMapping(value = "/toHolidayEmp")//去往未打卡说明统计
-    public String toHolidayEmp(Model model){
         JSONObject result = new JSONObject();
         Calendar cal = Calendar.getInstance();
         int month = cal.get(Calendar.MONTH);
@@ -126,11 +116,33 @@ public class Ljw_SystemLogController {
         out.close();
     }
 
+
+    @RequestMapping(value = "/toHolidayEmp")//去往未打卡说明统计
+    public String toHolidayEmp(Model model){
+        JSONObject result = new JSONObject();
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.MONTH);
+        result.put("lastMonth",month);
+        result.put("thisMonth",month +1);
+        model.addAttribute("month",result);
+        return "systemLog/workTimeList";
+    }
+
     @ResponseBody
-    @RequestMapping(value = "/getWorkTimeData")
-    public void getWorkTimeData(HttpServletRequest request,HttpServletResponse response){
+    @RequestMapping(value = "/getWorkTimeData")//获取
+    public void getWorkTimeData(HttpServletRequest request,HttpServletResponse response,int page,int limit) throws IOException {
         response.setContentType("text/html;charset=utf-8");
+        List<AttendanceVo> data = systemLogService.getAttendance(page,limit);
+        int count = systemLogService.getAttendanceSize();
+        JSONObject result = new JSONObject();
+        result.put("code",0);
+        result.put("msg","提示");
+        result.put("count",count);
+        result.put("data",data);
 
-
+        PrintWriter out = response.getWriter();
+        out.print(request);
+        out.flush();
+        out.close();
     }
 }

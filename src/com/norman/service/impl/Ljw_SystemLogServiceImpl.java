@@ -50,7 +50,7 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
                 sql +=" and Empid in (0)";
             }
         }
-        return pageBySQL(sql,page,limit);
+        return super.pageBySQL(sql,page,limit);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
 
     @Override
     public List<Map> getEveryListById(int empId) {
-        return listBySQL("SELECT al.aduitLogid,e.empName,am.aduitName,al.Scores,al.auditDate,al.Image,ap.empName auditPerson,al.Remark FROM aduitLog al \n" +
+        return super.listBySQL("SELECT al.aduitLogid,e.empName,am.aduitName,al.Scores,al.auditDate,al.Image,ap.empName auditPerson,al.Remark FROM aduitLog al \n" +
                 "LEFT JOIN aduitModel am on al.aduitModelid=am.aduitModelid \n" +
                 "LEFT JOIN emp e on al.Empid=e.empId \n" +
                 "LEFT JOIN emp ap on al.auditPerson=ap.Empid\n" +
@@ -69,11 +69,17 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
 
     @Override
     public AduitLogVo getAduitLog(int auditId) {
-        return (AduitLogVo) getObject(AduitLogVo.class,auditId);
+        return (AduitLogVo) super.getObject(AduitLogVo.class,auditId);
     }
 
     @Override
-    public List<AttendanceVo> getAttendance() {
-        return null;
+    public List<AttendanceVo> getAttendance(int page,int limit) {
+        return super.pageBySQL("SELECT att.*,e.empName FROM attendance att\n" +
+                "LEFT JOIN emp e on e.empId=att.empId",page,limit);
+    }
+
+    @Override
+    public int getAttendanceSize() {
+        return 0;
     }
 }

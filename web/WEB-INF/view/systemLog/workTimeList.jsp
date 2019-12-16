@@ -15,6 +15,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <jsp:include page="../include.jsp"/>
 </head>
 <body>
 <table>
@@ -44,15 +45,15 @@
             ,method:"post"
             ,url:'${pageContext.request.contextPath}/systemLog/getWorkTimeData'
             ,cols: [[
-                {field:'empId', title:'未打卡编号', fixed: 'left', unresize: true, sort: true}
+                {field:'attId', title:'未打卡编号', fixed: 'left', unresize: true, sort: true}
                 ,{field:'empName', title:'员工名称'}
-                ,{field:'depName', title:'申请时间',unresize: true, sort: true}
-                ,{field:'depName', title:'未打卡时间',unresize: true, sort: true}
-                ,{field:'Sex', title:'原因'}
-                ,{field:'Phone', title:'审核人'}
-                ,{field:'scores', title:'审核说明'}
-                ,{field:'scores', title:'审核时间',unresize: true, sort: true}
-                ,{field:'scores', title:'审核状态'}
+                ,{field:'applyTime', title:'申请时间',unresize: true, sort: true}
+                ,{field:'punckClockTime', title:'未打卡时间',unresize: true, sort: true}
+                ,{field:'cause', title:'原因'}
+                ,{field:'auditor', title:'审核人'}
+                ,{field:'examineExplain', title:'审核说明'}
+                ,{field:'examinTime', title:'审核时间',unresize: true, sort: true}
+                ,{field:'state', title:'审核状态'}
             ]]
             ,height:'full-200'
             ,page: {limit: 20,limits:[5,10,15,20,30],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
