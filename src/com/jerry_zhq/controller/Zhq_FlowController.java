@@ -7,9 +7,7 @@ import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.file.DataDocVo;
 import org.activiti.engine.*;
 import org.activiti.engine.repository.ProcessDefinition;
-import org.activiti.engine.repository.ProcessDefinitionQuery;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,7 +54,6 @@ public class Zhq_FlowController {
         List list = zhq_flowService.selFlow(hql,page,limit);
         int count = zhq_flowService.selCount();
 
-        System.out.println("查询出来的"+list);
         jsonObject.put("msg","");
         jsonObject.put("code",0);
         jsonObject.put("count",count);
@@ -66,6 +63,7 @@ public class Zhq_FlowController {
     //上传
     @RequestMapping("/addFlow")
     public String addFlow(MultipartFile file){
+        System.out.println("获取到的文件名是"+file.getOriginalFilename());
         try {
             //创建临时file对象
             File pdFile = File.createTempFile("tem",null);
@@ -79,7 +77,6 @@ public class Zhq_FlowController {
         }
         return "redirect:/toPage/flow";
     }
-
     /**
      * 下载流程图
      */
