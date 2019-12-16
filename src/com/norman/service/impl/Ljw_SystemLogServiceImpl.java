@@ -5,6 +5,7 @@ import com.publics.dao.BaseDao;
 import com.publics.vo.assess.AduitLogVo;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
@@ -14,11 +15,45 @@ import java.util.Map;
 public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogService {
 
     @Override
-    public List getEmpList(int page,int limit) {
-        return pageBySQL(   "select e.empId,e.empName,e.Sex,e.Phone,d.depName,SUM(a.Scores) scores from emp e " +
-                            "LEFT JOIN aduitLog a on e.empId = a.Empid " +
-                            "LEFT JOIN dep d on e.depId = d.depId " +
-                            "GROUP BY e.empId,e.empName,e.Sex,e.Phone,d.depName",page,limit);
+    public List getEmpList(HttpServletRequest request,int page, int limit) {
+
+        String empName = request.getParameter("empName");
+        String depIdStr = request.getParameter("depId");
+        String sql ="select e.empId,e.empName,e.Sex,e.Phone,d.depName,SUM(a.Scores) scores from emp e \n" +
+                "LEFT JOIN aduitLog a on e.empId = a.Empid \n" +
+                "LEFT JOIN dep d on e.depId = d.depId \n" +
+                "GROUP BY e.empId,e.empName,e.Sex,e.Phone,d.depName \n" +
+                "HAVING 1=1 ";
+        System.out.println("1111111111  "+sql);
+
+        int depId;//判断员工id
+        if ("".equals(depIdStr) || null == depIdStr){
+            depId = 0;
+        }else {
+            depId = Integer.parseInt(depIdStr);
+        }
+        if (depId!=0){
+            sql +=" and Empid in (SELECT empId FROM emp where depId="+depId+")";
+        }
+
+        System.out.println("2222222222  "+sql);
+
+        if (!("".equals(empName) || null == empName)){//部门
+            List<Integer> emps = super.getEmpNames(empName);
+            if (emps.size()>=1){
+                String empIds = "";
+                for (int id:emps) {
+                    empIds +=+id+",";
+                }
+                System.out.println(empIds);
+                empIds = empIds.substring(0,empIds.length()-1);
+                sql +=" and Empid in ("+empIds+")";
+            }else {
+                sql +=" and Empid in (0)";
+            }
+        }
+        System.out.println("3333333333  "+sql);
+        return pageBySQL(sql,page,limit);
     }
 
     @Override

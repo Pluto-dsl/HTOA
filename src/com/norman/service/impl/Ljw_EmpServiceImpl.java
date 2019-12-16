@@ -56,14 +56,14 @@ public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
         JSONArray data = new JSONArray();
         String empName = request.getParameter("empName");
         String depIdStr = request.getParameter("depId");
-        int depId = 0;
+        String startDay = request.getParameter("startDay");
+        String endDay = request.getParameter("endDay");
+        int depId;
         if ("".equals(depIdStr) || null == depIdStr){
             depId = 0;
         }else {
             depId = Integer.parseInt(depIdStr);
         }
-        String startDay = request.getParameter("startDay");
-        String endDay = request.getParameter("endDay");
         String hql = "FROM ChatRecordVo where 1=1";
         if (!("".equals(empName) || null == empName)){
             List<Integer> emps = super.getEmpNames(empName);

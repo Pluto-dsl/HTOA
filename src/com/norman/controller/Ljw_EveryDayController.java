@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -35,10 +36,10 @@ public class Ljw_EveryDayController {
 
     @ResponseBody
     @RequestMapping("/getEveryDayData")//获取员工日常考核数据
-    public void getEveryDayData(HttpServletResponse response,int page,int limit) throws IOException {
+    public void getEveryDayData(HttpServletRequest request,HttpServletResponse response,int page,int limit) throws IOException {
         response.setContentType("text/html;charset=utf-8");
         JSONObject result = new JSONObject();
-        List<Map> list = systemLogService.getEmpList(page,limit);
+        List<Map> list = systemLogService.getEmpList(request,page,limit);
         int count = systemLogService.getEmpListSize();
         result.put("code",0);
         result.put("msg","");
@@ -74,16 +75,18 @@ public class Ljw_EveryDayController {
 
     @ResponseBody
     @RequestMapping(value = "/getImg/{aduitLogId}")//获取图片
-    public void getImg(@PathVariable(value = "aduitLogId") Integer aduitLogId,HttpServletResponse response) throws IOException {
+    public void getImg(@PathVariable(value = "aduitLogId") Integer aduitLogId, HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html;charset=utf-8");
         AduitLogVo vo = systemLogService.getAduitLog(aduitLogId);
         JSONObject obj = new JSONObject();
         JSONArray data = new JSONArray();
+        String imgPath = vo.getImage();
+        imgPath = imgPath.substring(2,imgPath.length());
 
         JSONObject jo = new JSONObject();
         jo.put("alt","");
         jo.put("pid",666);
-        jo.put("src",vo.getImage());
+        jo.put("src",request.getContextPath()+imgPath);
         jo.put("thumb",vo.getImage());
         data.add(jo);
 

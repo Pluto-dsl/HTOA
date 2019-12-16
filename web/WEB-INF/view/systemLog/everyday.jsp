@@ -146,25 +146,20 @@
         });
         //重载表格
         $("#btn").click(function () {
-            /*console.log("fasfd");
             //获取条件
             var empName = $('input[name="empName"]').val();
             var depId = $('select[name="depId"] option:selected').val();
-            var startDay = $('input[name="startDay"]').val();
-            var endDay = $('input[name="endDay"]').val();
             //调用重载方法
-            tableIns.reload({
+            empIns.reload({
                 where: { //设定异步数据接口的额外参数，任意设
                     empName:empName,
-                    depId:depId,
-                    startDay:startDay,
-                    endDay:endDay
+                    depId:depId
                 }
                 ,method:'post'
                 ,page: {
                     curr: 1 //重新从第 1 页开始
                 }
-            });*/
+            });
         });
     });
 </script>
