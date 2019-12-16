@@ -14,12 +14,12 @@
 </head>
 <body>
 <div id="windows" style="margin-left:5%; margin-top:1%; display: none;">
-    <form method="post" class="layui-form" enctype="multipart/form-data" action="<%=request.getContextPath()%>/">
+    <form method="post" class="layui-form" enctype="multipart/form-data" action="<%=request.getContextPath()%>/studentduan/addstudentleave">
         <table style="border-collapse:separate;border-spacing:0px 20px;margin-left: 15%">
             <tr>
                 <th>请假类型:</th>
                 <td>
-                    <select name="depId">
+                    <select name="Title">
                         <option value="">--请选择请假类型--</option>
                         <option value="事假">事假</option>
                         <option value="病假">病假</option>
@@ -86,8 +86,8 @@
                 ,{field:'holidayDay', title:'假期天数', width:170,sort:true}
                 ,{field:'startTime', title:'开始时间', width:200,templet:'<div>{{ layui.util.toDateString(d.startTime,"yyyy-MM-dd HH:mm:ss")}}</div>'}
                 ,{field:'endTime', title:'结束时间', width:200,templet:'<div>{{ layui.util.toDateString(d.endTime,"yyyy-MM-dd HH:mm:ss")}}</div>'}
-                ,{field:'Title', title:'标题',width:200}
-                ,{field:'Remark', title:'备注', width:200}
+                ,{field:'Title', title:'请假类型',width:200}
+                ,{field:'Remark', title:'请假事由', width:200}
                 ,{field:'Status', title:'状态', width:200}
             ]]
             ,page:true,

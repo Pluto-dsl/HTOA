@@ -66,12 +66,10 @@
                         <cite>员工管理</cite>
                     </a>
                     <dl class="layui-nav-child">
-                        <dd>
-                            <%-- 例子  可修改 照着写就行了 --%>
-                            <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                        <%-- 例子  可修改 照着写就行了 --%>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/toPage/dep"
-                               data-id="部门管理" data-title="部门管理">部门管理</a>
-                        </dd>
+                               data-id="部门管理" data-title="部门管理">部门管理</a></dd>
                         <dd><a href="javascript:void(0);" >员工资料</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/emp/toEmpPaper"
@@ -106,8 +104,6 @@
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/zeroStudent/toClass"
                                data-id="班级管理" data-title="班级管理">班级管理</a></dd>
-                        <dd><a href="javascript:void(0);">楼栋管理</a></dd>
-                        <dd><a href="javascript:void(0);">宿舍管理</a></dd>
                         <dd><a href="javascript:void(0);">班级管理</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/toPage/stuFloor"
@@ -117,7 +113,7 @@
                                data-id="宿舍管理" data-title="宿舍管理" >宿舍管理</a></dd>
                         <dd><a href="javascript:void(0);"class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/student/stuList"
-                               data-id="学生资料" data-title="学生资料">学生资料</a></dd>
+                               data-id="学生资料" data-title="学生资料" >学生资料</a></dd>
                         <dd><a href="javascript:void(0);">考试成绩</a></dd>
                         <dd><a href="javascript:void(0);">答辩成绩</a></dd>
                     </dl>

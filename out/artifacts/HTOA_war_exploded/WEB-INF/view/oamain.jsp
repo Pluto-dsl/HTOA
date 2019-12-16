@@ -106,8 +106,6 @@
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/zeroStudent/toClass"
                                data-id="班级管理" data-title="班级管理">班级管理</a></dd>
-                        <dd><a href="javascript:void(0);">楼栋管理</a></dd>
-                        <dd><a href="javascript:void(0);">宿舍管理</a></dd>
                         <dd><a href="javascript:void(0);">班级管理</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/toPage/stuFloor"

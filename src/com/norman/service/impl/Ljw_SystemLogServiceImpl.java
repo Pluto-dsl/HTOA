@@ -82,4 +82,9 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
     public int getAttendanceSize() {
         return 0;
     }
+
+    @Override
+    public List<AttendanceVo> getAttendance() {
+        return null;
+    }
 }

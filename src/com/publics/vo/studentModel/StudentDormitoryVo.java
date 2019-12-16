@@ -30,6 +30,7 @@ public class StudentDormitoryVo {
         this.huoeIddsc = huoeIddsc;
     }
 
+
     public StudentDormitoryVo(){}
 
     public int getHourid() {

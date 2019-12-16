@@ -29,17 +29,6 @@ public class Wtt_StuDuanController {
     @Resource
     Wtt_StuDuanService wtt_stuDuanService;
 
-    //
-    /*@RequestMapping(value = "stuframeset")
-    public String stuframeset(){
-        return "main";
-    }
-    //去到学生端主页
-    @RequestMapping(value = "studentonmain")
-    public String studentonmain(){
-        return "studentOamain";
-    }*/
-
     @RequestMapping(value = "/problem_feedback")
     public String problem_feedback(ModelMap modelMap,HttpSession session){
         List deplist = wtt_stuDuanService.dep();
@@ -143,5 +132,18 @@ public class Wtt_StuDuanController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    //新增学生请假
+    @RequestMapping(value = "/addstudentleave")
+    public String addstuedntleave(StudentLeaveVo studentLeaveVo,HttpSession session){
+        //获取存在session中的用户(电话号码)
+        StudentVo studentVo = (StudentVo) session.getAttribute("admin");
+        String name = studentVo.getStuname();
+        Map map = wtt_stuDuanService.student(name);
+        int id = (int) map.get("Studid");
+        studentLeaveVo.setStudentId(id);
+        wtt_stuDuanService.leaveadd(studentLeaveVo);
+        return "redirect:/studentduan/studentleaves";
     }
 }

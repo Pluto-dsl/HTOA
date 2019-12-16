@@ -59,4 +59,9 @@ public class Wtt_StuDuanServiceImpl extends BaseDao implements Wtt_StuDuanServic
     public int leavepagecount() {
        return selTotalRow("select count(*) from holidayStudent");
     }
+
+    @Override
+    public void leaveadd(StudentLeaveVo studentLeaveVo) {
+        addObject(studentLeaveVo);
+    }
 }

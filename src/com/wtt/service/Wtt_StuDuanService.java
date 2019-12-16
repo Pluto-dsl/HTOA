@@ -26,5 +26,5 @@ public interface Wtt_StuDuanService {
     //学生请假的总行数
     int leavepagecount();
     //新增学生请假
-
+    void leaveadd(StudentLeaveVo studentLeaveVo);
 }
