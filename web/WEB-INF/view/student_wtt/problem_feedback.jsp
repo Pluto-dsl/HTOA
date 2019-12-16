@@ -89,7 +89,6 @@
                 , {field: 'depName', title: '反馈部门', width:100}
                 , {field: 'remark', title: '学生反馈问题', width:200}
                 , {field: 'image', title: '图片', width:100,templet:'<div><img style="width:100px;height:100px" src="{{d.Image}}"></div>'}
-                , {field: 'opinion', title: '审批意见', width:150}
                 , {field: 'status', title: '是否处理', templet: function (d) {
                         if (d.status === 1) {
                             return '未处理'
@@ -98,7 +97,6 @@
                         }
                     }, width:100
                 }
-                , {field: 'userid', title: '审批人', width:100}
             ]]
             , page: true,
             limits: [5, 10, 15, 25]

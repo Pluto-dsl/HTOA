@@ -3,7 +3,9 @@ package com.wtt.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.publics.dao.BaseDao;
 import com.publics.vo.empModel.WeeklogVo;
+import com.publics.vo.empModel.emp.EducationVo;
 import com.publics.vo.empModel.emp.EmpVo;
+import com.publics.vo.empModel.emp.JobVo;
 import com.publics.vo.sys.DepVo;
 import com.wtt.service.Wtt_EmpService;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class Wtt_EmpServiceImpl extends BaseDao implements Wtt_EmpService {
@@ -84,4 +87,40 @@ public class Wtt_EmpServiceImpl extends BaseDao implements Wtt_EmpService {
         }
         return selTotalRow(sql);
     }
+
+    @Override
+    public String name (int id) {
+            String sql = "select d.depName from emp e\n" +
+                    "left join dep d on d.depid = e.depId\n" +
+                    "where e.empId = '"+id+"'";
+        List<Map> list = listBySQL(sql);
+        for (Map map:list) {
+            return map.get("depName").toString();
+        }
+        return null;
+    }
+
+    @Override
+    public List edmap(int id) {
+        String sql = "select d.collegeName,d.degree,d.startDate,d.endDate from emp e left join education d on d.Empid= e.empId where e.empId = '"+id+"'";
+        return listBySQL(sql);
+    }
+
+    @Override
+    public List jobmap(int id) {
+        String sql ="select j.companyName,j.degree,j.startDate,j.endDate from emp e left join job j on j.Empid= e.empId where e.empId = '"+id+"'";
+        /*List<Map> list = listBySQL(sql);
+        for (Map map:list) {
+            return map;
+        }
+        return null;*/
+        return listBySQL(sql);
+    }
+
+    @Override
+    public List familymap(int id) {
+        String sql = "select f.contactName,f.relationship,f.Phone from emp e left join familyInfo f on f.Empid= e.empId where e.empId = '"+id+"'";
+        return listBySQL(sql);
+    }
+
 }

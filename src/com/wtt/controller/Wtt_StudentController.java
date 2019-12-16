@@ -2,7 +2,9 @@ package com.wtt.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.norman.service.LoginService;
 import com.publics.utills.StringUtill;
+import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.feedback.Collect_OpinionsVo;
 import com.publics.vo.feedback.FeedbackVo;
 import com.publics.vo.studentModel.StudentLeaveVo;
@@ -30,6 +32,8 @@ import java.util.List;
 public class Wtt_StudentController {
     @Resource
     Wtt_StudentService studentService;
+    @Resource
+    LoginService loginService;
     //去到学生请假页面
     @RequestMapping(value = "leave")
     public String leave(){
@@ -45,7 +49,6 @@ public class Wtt_StudentController {
         JSONArray jsonArray = new JSONArray();
         for(StudentLeaveVo studentLeaveVo:list){
             StudentVo studentVo = studentService.student(studentLeaveVo.getHolidayid());
-            System.out.println("学生姓名:"+studentVo.getStuname());
             JSONObject jsonObject1 = new JSONObject();
             jsonObject1.put("holidayid",studentLeaveVo.getHolidayid());
             jsonObject1.put("StudentId",studentVo.getStuname());
@@ -105,11 +108,15 @@ public class Wtt_StudentController {
     //查询意见
     @RequestMapping(value ="/selectcollect")
     @ResponseBody
-    public List<Collect_OpinionsVo> selectcollect(HttpServletRequest request){
-        int id = Integer.parseInt(request.getParameter("wid"));
-        System.out.println(id);
-        List<Collect_OpinionsVo> list = studentService.selectyijian(id);
-       return list;
+    public void selectcollect(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        int ids = Integer.parseInt(request.getParameter("wid"));
+        System.out.println("id为："+ids);
+        List<Collect_OpinionsVo> list = studentService.selectyijian(ids);
+//      request.setAttribute("list",list);
+        PrintWriter pw = response.getWriter();
+        pw.print(JSONArray.toJSONString(list));
+        pw.close();
     }
     //新增意见
     @RequestMapping(value = "/addcollect")
@@ -117,11 +124,10 @@ public class Wtt_StudentController {
         int id = Integer.parseInt(request.getParameter("feedbackId"));
         collect_opinionsVo.setWid(id);
         collect_opinionsVo.setPuttime(new Date());
-
         //获取当前登录用户
-        session.setAttribute("username","张三");
-        String name = (String) session.getAttribute("username");
-        collect_opinionsVo.setEmpname(name);
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        String username = empVo.getEmpName();
+        collect_opinionsVo.setEmpname(username);
         collect_opinionsVo.setContent(StringUtill.tostring(collect_opinionsVo.getContent()));
         //根据问题反馈Id去查找数据
         FeedbackVo feedbackVo = studentService.feedbackvo(id);

@@ -2,6 +2,7 @@ package com.wtt.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.publics.vo.feedback.FeedbackVo;
+import com.publics.vo.studentModel.StudentVo;
 import com.wtt.service.Wtt_StuDuanService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,6 +27,18 @@ import java.util.UUID;
 public class Wtt_StuDuanController {
     @Resource
     Wtt_StuDuanService wtt_stuDuanService;
+
+    //
+    @RequestMapping(value = "stuframeset")
+    public String stuframeset(){
+        return "main";
+    }
+    //去到学生端主页
+    @RequestMapping(value = "studentonmain")
+    public String studentonmain(){
+        return "studentOamain";
+    }
+
     @RequestMapping(value = "/problem_feedback")
     public String problem_feedback(ModelMap modelMap,HttpSession session){
         List deplist = wtt_stuDuanService.dep();
@@ -33,7 +46,7 @@ public class Wtt_StuDuanController {
         modelMap.addAttribute("list",deplist);
         return "student_wtt/problem_feedback";
     }
-    //查询
+    //学生端查询问题反馈
     @RequestMapping(value = "/selectproblem")
     public void selectproblem(HttpServletResponse response, int page, int limit){
         response.setContentType("text/html;charset=utf-8");
@@ -89,9 +102,9 @@ public class Wtt_StuDuanController {
         }
         feedbackVo.setFeedBackType(1);
         feedbackVo.setFeedbackTime(new java.util.Date());
-        session.setAttribute("username","18270062525");
         //获取存在session中的用户(电话号码)
-        String name = (String) session.getAttribute("username");
+        StudentVo studentVo = (StudentVo) session.getAttribute("admin");
+        String name = studentVo.getStuname();
         Map map = wtt_stuDuanService.student(name);
         int id = (int) map.get("Studid");
         System.out.println("学生id:"+id);

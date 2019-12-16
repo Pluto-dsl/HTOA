@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>HT软件DSL</title>
     <jsp:include page="include.jsp" />
     <style>
         a{
@@ -178,7 +178,7 @@
             phone:phone,
             pwd:pwd
         };
-        $.post("/login",data,function (data) {
+        $.post("${pageContext.request.contextPath}/login",data,function (data) {
             if (data.code === "notPhone"){
                 layer.msg('查无此手机号');
                 $('input[name="phone"]').val("");
@@ -189,10 +189,12 @@
                 $('input[name="pwd"]').focus();
             } else if (data.code === "admin") {
                 layer.msg("登录成功<br>正在跳转页面");
-                window.location.href = "/toPage/oamain"
+                window.location.href = "${pageContext.request.contextPath}/toPage/oamain"
             } else if (data.code === "user") {
                 layer.msg("登录成功<br>正在跳转页面");
-                window.location.href = "/toPage/oamain"
+                window.location.href = "${pageContext.request.contextPath}/toPage/oamain"
+            } else if (data.code === "ban") {
+                layer.msg("您已被禁用");
             }
             delVarCode();
             console.log(data);

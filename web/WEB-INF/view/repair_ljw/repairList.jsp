@@ -72,10 +72,10 @@
                 ,{field:'equipmentType', title:'保修设备名称',width: 140,fixed: 'left'}
                 ,{field:'depName', title:'部门名称', width:90 }
                 ,{field:'empName', title:'员工姓名', width:90 }
-                ,{field:'startTime', title:'申请时间', width:160}
+                ,{field:'startTime', title:'申请时间', width:160, unresize: true, sort: true}
                 ,{field:'remark', title:'备注',width: 175}
                 ,{field:'empId', title:'处理人',width: 90}
-                ,{field:'endTime', title:'处理时间', width:160}
+                ,{field:'endTime', title:'处理时间', width:160, unresize: true, sort: true}
                 ,{field:'result', title:'处理详情',width: 175}
                 ,{field:'status', title:'状态',width: 80, minWidth: 200}
                 ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:84}
@@ -99,10 +99,10 @@
                 ,{field:'equipmentType', title:'保修设备名称',width: 140,fixed: 'left'}
                 ,{field:'depName', title:'班级名称', width:150 }
                 ,{field:'empName', title:'学生姓名', width:90 }
-                ,{field:'startTime', title:'申请时间', width:160}
+                ,{field:'startTime', title:'申请时间', width:160, unresize: true, sort: true}
                 ,{field:'remark', title:'备注',width: 145}
                 ,{field:'empId', title:'处理人',width: 90}
-                ,{field:'endTime', title:'处理时间', width:160}
+                ,{field:'endTime', title:'处理时间', width:160, unresize: true, sort: true}
                 ,{field:'result', title:'处理详情',width: 145}
                 ,{field:'status', title:'状态',width: 80, minWidth: 200}
                 ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:83}
