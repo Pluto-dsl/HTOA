@@ -10,25 +10,27 @@ public class AttendanceVo { //考勤管理
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int attId; //编号
-    private String empName; //员工姓名
+    private int empId; //员工姓名
     private Date punckClockTime; //打卡时间
     private String cause;   //原因说明
     private String auditor; //审核人
     private Date examineTime; //审核时间
     private String examineExplain; //审核说明
-    private int state; //状态 1通过 2待审 3审核通过
+    private int status; //状态 1通过 2待审 3审核通过
+    private Date applyTime;
 
     @Override
     public String toString() {
         return "AttendanceVo{" +
                 "attId=" + attId +
-                ", empName='" + empName + '\'' +
+                ", empId=" + empId +
                 ", punckClockTime=" + punckClockTime +
                 ", cause='" + cause + '\'' +
                 ", auditor='" + auditor + '\'' +
                 ", examineTime=" + examineTime +
                 ", examineExplain='" + examineExplain + '\'' +
-                ", state='" + state + '\'' +
+                ", status=" + status +
+                ", applyTime=" + applyTime +
                 '}';
     }
 
@@ -40,12 +42,12 @@ public class AttendanceVo { //考勤管理
         this.attId = attId;
     }
 
-    public String getEmpName() {
-        return empName;
+    public int getEmpId() {
+        return empId;
     }
 
-    public void setEmpName(String empName) {
-        this.empName = empName;
+    public void setEmpId(int empId) {
+        this.empId = empId;
     }
 
     public Date getPunckClockTime() {
@@ -88,11 +90,19 @@ public class AttendanceVo { //考勤管理
         this.examineExplain = examineExplain;
     }
 
-    public int getState() {
-        return state;
+    public int getStatus() {
+        return status;
     }
 
-    public void setState(int state) {
-        this.state = state;
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public Date getApplyTime() {
+        return applyTime;
+    }
+
+    public void setApplyTime(Date applyTime) {
+        this.applyTime = applyTime;
     }
 }

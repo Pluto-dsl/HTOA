@@ -43,40 +43,45 @@ public class Zhq_DepController {
     @RequestMapping("/tree")
     @ResponseBody//部门管理，查询部门
     public void seldep(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String type =request.getParameter("type");
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();
 
-        JSONArray depJsonArray = new JSONArray();
-        List<DepVo> depVoList = new ArrayList<>();
-        //部门
-        List<DepVo> depList = zhqDepService.selDep();
+        if("tree".equals(type)){
+            JSONArray depJsonArray = new JSONArray();
+            List<DepVo> depVoList = new ArrayList<>();
+            List<DepVo> depVoList2 = new ArrayList<>();
+            List<DepVo> depVoList3 = new ArrayList<>();
+            //部门
+            List<DepVo> depList = zhqDepService.selDep();
 
-        for (DepVo depVo1:depList) {//最高部门
-            if(depVo1.getParentId() == 0){
-                depVoList.add(depVo1);
-            }
-        }
-
-        for (DepVo depVo:depVoList) {//最高部门
-            Map map = new HashMap();
-            map.put("title",depVo.getDepName());
-            map.put("id",depVo.getDepid());
-
-            JSONArray jsonArray = new JSONArray();
-
-            for (DepVo depVo1:depList){
-                if(depVo1.getParentId() == depVo.getDepid()){//第二阶
-                    Map chilDep = new HashMap();
-                    chilDep.put("title",depVo1.getDepName());
-                    chilDep.put("id",depVo1.getDepid());
-                    jsonArray.add(chilDep);
+            for (DepVo depVo1:depList) {//最高部门
+                if(depVo1.getParentId() == 0){
+                    depVoList.add(depVo1);
                 }
             }
-            map.put("children",jsonArray);
-            depJsonArray.add(map);
-        }
-        out.print(depJsonArray.toJSONString());
 
+            for (DepVo depVo:depVoList) {//最高部门
+                Map map = new HashMap();
+                map.put("title",depVo.getDepName());
+                map.put("id",depVo.getDepid());
+
+                JSONArray jsonArray = new JSONArray();
+
+                for (DepVo depVo1:depList){
+                    if(depVo1.getParentId() == depVo.getDepid()){//第二阶
+                        Map chilDep = new HashMap();
+                        chilDep.put("title",depVo1.getDepName());
+                        chilDep.put("id",depVo1.getDepid());
+                        jsonArray.add(chilDep);
+                    }
+                }
+                map.put("children",jsonArray);
+                depJsonArray.add(map);
+            }
+            out.print(depJsonArray.toJSONString());
+
+        }
     }
 
     @RequestMapping("/selDepAll")

@@ -1,4 +1,4 @@
-<%--
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><%--
   Created by IntelliJ IDEA.
   User: HP
   Date: 2019/12/15
@@ -12,13 +12,23 @@
     <jsp:include page="../include.jsp" />
 </head>
 <body>
-<div id="addWin" style="display: none">
-    <form id="addFrom" class="layui-form">
+<div id="addWin">
+    <form id="addFrom" action="${pageContext.request.contextPath}/jack/ajaxEvaluate" class="layui-form" method="post">
         <table align="center" style="margin-top: 5%;border-collapse: separate;border-spacing: 10px 30px;">
             <tr>
-                <td id="test1"></td>
+                <th id="className">班级:<font color="#ff4500">${evaluate.className}</font></th>
+                <th id="teacharName">班主任:<font color="#ff4500">${evaluate.empName}</font></th>
+            </tr>
+            <tr>
+                <td>考评题目</td>
+                <td>分数</td>
+            </tr>
+            <c:forEach items="${problem}" var="problem">
+            <tr align="center">
+                <td id="test">${problem.evaluationName}</td>
+                <input type="hidden" name="evaluationid" value="${problem.evaluationid}" />
                 <td>
-                    <select name="number1"  lay-verify="required">
+                    <select name="number"  lay-verify="required">
                         <option value="">选择分数</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -33,84 +43,18 @@
                     </select>
                 </td>
             </tr>
-            <tr>
-                <td id="test2"></td>
-                <td>
-                    <select name="number2"  lay-verify="required">
-                        <option value="">选择分数</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td id="test3"></td>
-                <td>
-                    <select name="number3"  lay-verify="required">
-                        <option value="">选择分数</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td id="test4" ></td>
-                <td>
-                    <select name="number4"  lay-verify="required">
-                        <option value="">选择分数</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td id="test5" name="test5"></td>
-                <td>
-                    <select name="number5"  lay-verify="required">
-                        <option value="">选择分数</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
+            </c:forEach>
+            <tr align="center">
                 <td colspan="2" id="suggesText" name="suggesText">问题与意见</td>
             </tr>
-            <tr>
-                <td>
-                    <input type="text" id="sugges" name="sugges" required lay-verify="required" placeholder="问题与意见" autocomplete="off" class="layui-input">
+            <tr align="center">
+                <td colspan="2">
+                    <input type="text" id="sugges" name="sugges"  placeholder="问题与意见" autocomplete="off" class="layui-input">
+                </td>
+            </tr>
+            <tr align="center">
+                <td colspan="2">
+                    <button lay-submit lay-filter="Hsubmit" id="Hsubmit" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
                 </td>
             </tr>
         </table>

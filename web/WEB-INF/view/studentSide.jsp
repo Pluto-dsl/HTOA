@@ -45,7 +45,7 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:void(0);">
-                    ${admin.empName}
+                    ${admin.stuname}
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="/logout">注销</a></dd>
@@ -59,13 +59,15 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                 <li class="layui-nav-item">
-                    <a href="javascript:;" lay-tips="请假管理" lay-direction="2">
+                    <a href="javascript:;" lay-tips="请假管理" lay-direction="2" class="site-demo-active" data-type="tabAdd" data-url="${pageContext.request.contextPath}/studentduan/studentleaves"
+                       data-id="申请请假" data-title="申请请假">
                         <i class="layui-icon layui-icon-release"></i>
                         <cite>请假管理</cite>
                     </a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" lay-tips="问题反馈" lay-direction="2">
+                    <a href="javascript:;" lay-tips="问题反馈" lay-direction="2" class="site-demo-active" data-type="tabAdd" data-url="${pageContext.request.contextPath}/studentduan/problem_feedback"
+                       data-id="问题反馈" data-title="问题反馈">
                         <i class="layui-icon layui-icon-help"></i>
                         <cite>问题反馈</cite>
                     </a>

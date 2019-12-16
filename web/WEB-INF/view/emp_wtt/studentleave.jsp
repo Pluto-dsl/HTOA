@@ -29,7 +29,6 @@
         table.render({
             elem:'#test',
             height:500,
-            title:'周报表',
             url:'<%=request.getContextPath()%>/student/selectleave',
             cols:[[
                 {type:'checkbox', fixed:'left'}
@@ -38,8 +37,8 @@
                 ,{field:'holidayDay', title:'假期天数', width:170,sort:true}
                 ,{field:'startTime', title:'开始时间', width:200,templet:'<div>{{ layui.util.toDateString(d.startTime,"yyyy-MM-dd HH:mm:ss")}}</div>'}
                 ,{field:'endTime', title:'结束时间', width:200,templet:'<div>{{ layui.util.toDateString(d.endTime,"yyyy-MM-dd HH:mm:ss")}}</div>'}
-                ,{field:'Title', title:'标题',width:200}
-                ,{field:'Remark', title:'备注', width:200}
+                ,{field:'Title', title:'请假类型',width:200}
+                ,{field:'Remark', title:'请假事由', width:200}
                 ,{field:'Status', title:'状态', width:200}
                 ,{fixed: '', width:300, title:'操作', align:'center', toolbar: '#barDemo'}
             ]]

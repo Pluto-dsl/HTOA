@@ -14,9 +14,9 @@ public interface Jack_Service {
     /**
      *  这里是考勤管理部分
      * */
-    List selAtt(String Aname, int currPage, int pageSize); //查询考勤表
-    int selAttCount(String Aname); //查询总页数
-    String selDepChairman(String AName); //查询部门负责人
+    List selAtt(int Aid, int currPage, int pageSize); //查询考勤表
+    int selAttCount(int Aname); //查询总页数
+    String selDepChairman(int AName); //查询部门负责人
     void insertAtt(AttendanceVo attVo); //插入未打卡说明
     void updataAtt(AttendanceVo attendanceVo); //审批修改
     List selApprover(String Aname,int state);
@@ -65,4 +65,9 @@ public interface Jack_Service {
     List selTeacherList();
     int addAevaluation(evaluationVo evaluatio);
     void delAevaluation(int id);
+
+    List selHeadmasterTest(int stu);
+    List selHeadmasterType();
+    List selTeachatTest(int stu);
+    List selTeacharType();
 }
