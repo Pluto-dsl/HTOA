@@ -16,11 +16,50 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>谈心记录</title>
     <jsp:include page="../include.jsp"/>
+    <style>
+        .menu{
+            margin-top: 8px;
+            margin-left: 15px;
+            float: left;
+        }
+        .layui-table-view{
+            float: left;
+        }
+    </style>
 </head>
 <body>
+<div class="menu">
+    员工姓名:
+    <div class="layui-inline" style="padding-right: 15px">
+        <input class="layui-input" name="empName" id="empName" autocomplete="off">
+    </div>
+</div>
+<form class="layui-form menu">
+    部门名称:
+    <div class="layui-inline" style="padding-right: 15px">
+        <select name="depId" lay-verify="required">
+            <option value="0" selected>所有部门</option>
+            <c:forEach items="${requestScope.depList}" var="dep">
+                <option value="${dep.depid}">${dep.depName}</option>
+            </c:forEach>
+        </select>
+    </div>
+</form>
+<div class="menu">
+    开始日期:
+    <div class="layui-inline" style="padding-right: 15px">
+        <input type="text" id="startDay" name="startDay" autocomplete="off" class="layui-input">
+    </div>
+</div>
+<div class="menu">
+    结束日期:
+    <div class="layui-inline" style="padding-right: 15px">
+        <input type="text" id="endDay" name="endDay" autocomplete="off" class="layui-input">
+    </div>
+</div>
+<button class="layui-btn menu" id="btn">搜索</button>
 <div id="windows" style="margin-left: 5%;display: none;">
-    <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/ljw/newChatRecord" method="post" onclick="selMyForm()"
-    >
+    <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/ljw/newChatRecord" method="post" onclick="selMyForm()">
         <br><br>
         <input id="chatId" type="hidden" name="chatIds">
         <div class="layui-form-item">
@@ -101,12 +140,38 @@
                 ,{field:'chatId', title:'ID', width:60, fixed: 'left', unresize: true, sort: true}
                 ,{field:'sayFace', title:'学生名称', width:90, fixed: 'left'}
                 ,{field:'teacher', title:'员工名称', width:90, fixed: 'left'}
-                ,{field:'chatDate', title:'时间', width:120, fixed: 'left'}
+                ,{field:'chatDate', title:'时间', width:120, fixed: 'left', unresize: true, sort: true}
                 ,{field:'addr', title:'地址', width:170, fixed: 'left'}
                 ,{field:'sayscon', title:'谈心内容',width: '45%', minWidth: 200, fixed: 'left'}
                 ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:120}
             ]]
             ,page: {limit: 10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
+        });
+
+        //重载表格
+        $("#btn").click(function () {
+            //获取条件
+            var empName = $('input[name="empName"]').val();
+            var depId = $('select[name="depId"] option:selected').val();
+            var startDay = $('input[name="startDay"]').val();
+            var endDay = $('input[name="endDay"]').val();
+            console.log(empName);
+            console.log(depId);
+            console.log(startDay);
+            console.log(endDay);
+            //调用重载方法
+            tableIns.reload({
+                where: { //设定异步数据接口的额外参数，任意设
+                    empName:empName,
+                    depId:depId,
+                    startDay:startDay,
+                    endDay:endDay
+                }
+                ,method:'post'
+                ,page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
         });
 
         //头工具栏事件
@@ -223,11 +288,17 @@
             }
         });
     });
+    //初始化时间选择框
     layui.use('laydate', function(){
         var laydate = layui.laydate;
         //执行一个laydate实例
         laydate.render({
-            elem: '#chatDate' //指定元素
+            elem: '#startDay' //指定元素
+            ,format:'yyyy/MM/dd'
+        });
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#endDay' //指定元素
             ,format:'yyyy/MM/dd'
         });
     });
