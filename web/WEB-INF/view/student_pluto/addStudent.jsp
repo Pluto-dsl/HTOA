@@ -25,7 +25,7 @@
             <input type="hidden" name="Studid" id="stuId" value="0"/>
             <input type="hidden" name="password" value="123456"/>
             <input type="hidden" name="huor" value="0"/>
-            <input type="hidden" name="stat" value="0"/>
+            <input type="hidden" name="stat" value="4"/>
             <input type="hidden" name="prolevel" value="0"/>
             <input type="hidden" name="studytype" value="0"/>
             <input type="hidden" name="qkMoney" value="0.00"/>

@@ -55,6 +55,6 @@ public class LoginController {
     public void logout(HttpServletRequest request,HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         session.invalidate();
-        response.sendRedirect("/toPage/login");
+        response.sendRedirect(request.getContextPath()+"/toPage/login");
     }
 }

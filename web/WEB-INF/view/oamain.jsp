@@ -42,7 +42,7 @@
                     已注释
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="/logout">注销</a></dd>
+                    <dd><a href="<%=request.getContextPath()%>/logout">注销</a></dd>
                 </dl>
             </li>
         </ul>
