@@ -27,6 +27,18 @@ import java.util.UUID;
 public class Wtt_StuDuanController {
     @Resource
     Wtt_StuDuanService wtt_stuDuanService;
+
+    //
+    @RequestMapping(value = "stuframeset")
+    public String stuframeset(){
+        return "main";
+    }
+    //去到学生端主页
+    @RequestMapping(value = "studentonmain")
+    public String studentonmain(){
+        return "studentOamain";
+    }
+
     @RequestMapping(value = "/problem_feedback")
     public String problem_feedback(ModelMap modelMap,HttpSession session){
         List deplist = wtt_stuDuanService.dep();
@@ -34,7 +46,7 @@ public class Wtt_StuDuanController {
         modelMap.addAttribute("list",deplist);
         return "student_wtt/problem_feedback";
     }
-    //查询
+    //学生端查询问题反馈
     @RequestMapping(value = "/selectproblem")
     public void selectproblem(HttpServletResponse response, int page, int limit){
         response.setContentType("text/html;charset=utf-8");

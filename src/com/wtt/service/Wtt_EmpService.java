@@ -27,9 +27,9 @@ public interface Wtt_EmpService {
     //根据员工id查出部门名称
     String name (int id);
     //根据员工Id查出教育经历
-    Map edmap(int id);
+    List edmap(int id);
     //根据员工Id查出工作经历
-    Map jobmap(int id);
+    List jobmap(int id);
     //根据员工Id查出家庭信息
-    Map familymap(int id);
+    List familymap(int id);
 }

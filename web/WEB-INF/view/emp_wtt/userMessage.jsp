@@ -53,17 +53,15 @@
         <tr>
             <th colspan="4">工作经历</th>
         </tr>
-
+        <c:forEach items="${joblist}" var="list">
             <tr>
                 <td>公司名称</td>
                 <td>
-                        <%--${education.collegeName}--%>
-                    ${joblist.companyName}
+                    ${list.companyName}
                 </td>
                 <td>岗位</td>
                 <td>
-<%--                        ${education.}--%>
-                    ${joblist.degree}
+                    ${list.degree}
                 </td>
             </tr>
 
@@ -71,63 +69,63 @@
             <tr>
                 <td>入职时间</td>
                 <td>
-                        <%--${job.companyName}--%>
-                    ${joblist.startDate}
+                    ${list.startDate}
                 </td>
                 <td>离职时间</td>
                 <td>
-                        <%--                ${list.phone}--%>
-                    ${joblist.endDate}
+                    ${list.endDate}
                 </td>
             </tr>
+        </c:forEach>
+
 
         <tr>
             <th colspan="4">教育背景</th>
         </tr>
-        <%--<c:forEach items="${education}" var="educationlist">--%>
+        <c:forEach items="${education}" var="educationlist">
             <tr>
                 <td>学校名称</td>
                 <td>
-<%--                    ${educationlist.collegeName}--%>
-                    ${education.collegeName}
+                    ${educationlist.collegeName}
                 </td>
                 <td>学历</td>
                 <td>
-                    ${education.degree}
+                    ${educationlist.degree}
                 </td>
             </tr>
             <tr>
                 <td>入校时间</td>
                 <td>
-<%--                   ${educationlist.startDate}--%>
-                        ${education.startDate}
+                    ${educationlist.startDate}
                 </td>
                 <td>毕业时间</td>
                 <td>
-                    <%--${educationlist.endDate}--%>
-                        ${education.endDate}
+                    ${educationlist.endDate}
                 </td>
             </tr>
-        <%--</c:forEach>--%>
+        </c:forEach>
+
         <tr>
             <th colspan="4">家庭联系信息</th>
         </tr>
+        <c:forEach items="${famliy}" var="famliylist">
         <tr>
             <td>联系人名称</td>
             <td>
-                ${famliy.contactName}
+                ${famliylist.contactName}
             </td>
             <td>与员工信息</td>
             <td>
-                ${famliy.relationship}
+                ${famliylist.relationship}
             </td>
         </tr>
         <tr>
             <td>联系电话</td>
             <td colspan="3">
-                ${famliy.Phone}
+                ${famliylist.Phone}
             </td>
         </tr>
+        </c:forEach>
     </table>
 </body>
 </html>

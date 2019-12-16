@@ -101,33 +101,26 @@ public class Wtt_EmpServiceImpl extends BaseDao implements Wtt_EmpService {
     }
 
     @Override
-    public Map edmap(int id) {
+    public List edmap(int id) {
         String sql = "select d.collegeName,d.degree,d.startDate,d.endDate from emp e left join education d on d.Empid= e.empId where e.empId = '"+id+"'";
-        List<Map> list = listBySQL(sql);
-        for (Map map:list) {
-            return map;
-        }
-        return null;
+        return listBySQL(sql);
     }
 
     @Override
-    public Map jobmap(int id) {
+    public List jobmap(int id) {
         String sql ="select j.companyName,j.degree,j.startDate,j.endDate from emp e left join job j on j.Empid= e.empId where e.empId = '"+id+"'";
-        List<Map> list = listBySQL(sql);
+        /*List<Map> list = listBySQL(sql);
         for (Map map:list) {
             return map;
         }
-        return null;
+        return null;*/
+        return listBySQL(sql);
     }
 
     @Override
-    public Map familymap(int id) {
+    public List familymap(int id) {
         String sql = "select f.contactName,f.relationship,f.Phone from emp e left join familyInfo f on f.Empid= e.empId where e.empId = '"+id+"'";
-        List<Map> list = listBySQL(sql);
-        for (Map map:list) {
-            return map;
-        }
-        return null;
+        return listBySQL(sql);
     }
 
 }

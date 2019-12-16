@@ -113,44 +113,16 @@ public class Wtt_EmpsController {
         EmpVo empVo = (EmpVo) session.getAttribute("admin");
         int id = empVo.getEmpId();
         System.out.println("员工Id:"+id);
-        /*String username = empVo.getEmpName();*/
-        //遍历
-        /*for (EmpVo empvo:empVo) {
-            modelMap.addAttribute("list",empvo);
-        }*/
-       /*int id = empVo.getDepId();
-        int jobid = empVo.getPostId();
-        String name = empService.depname(id);
-        System.out.println("部门名称:"+name);
-        String companyName = empService.jobname(jobid);
-        System.out.println("公司名称:"+companyName);
-        empVo.setDepId(Integer.parseInt(name));
-        empVo.setPostId(Integer.parseInt(companyName));*/
-        /*int id = empVo.getDepId();
-        int depname = Integer.parseInt(empService.depname(id));
-        empVo.setDepId(depname);*/
-//        Map map = empService.job(id);
-//        int ids = (int) map.get("companyName");
-//        System.out.println(ids);
-//        String name =empService.depname(id);
-//        System.out.println("部门名称:"+name);
-//        empVo.getDepId();
-        /*List<JobVo> joblist = empService.jobvo(id);
-        System.out.println("工作经历:"+joblist);
-        for (JobVo jobVo:joblist) {
-            modelMap.addAttribute("job",jobVo);
-            System.out.println(jobVo.getCompanyName());
-        }*/
         String name = empService.name(id);
 
-        Map map = empService.edmap(id);
-        Map jobmap = empService.jobmap(id);
-        Map familymap = empService.familymap(id);
+        List edlist = empService.edmap(id);
+        List joblist = empService.jobmap(id);
+        List familylist = empService.familymap(id);
         modelMap.addAttribute("list",empVo);
         modelMap.addAttribute("depname",name);
-        modelMap.addAttribute("education",map);
-        modelMap.addAttribute("joblist",jobmap);
-        modelMap.addAttribute("famliy",familymap);
+        modelMap.addAttribute("education",edlist);
+        modelMap.addAttribute("joblist",joblist);
+        modelMap.addAttribute("famliy",familylist);
         return "emp_wtt/userMessage";
     }
 }
