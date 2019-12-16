@@ -26,17 +26,8 @@
             </div>
         </td>
         <td>
-            <form class="layui-form">
-                时间:
-                <div class="layui-inline" style="padding-right: 15px">
-                    <select name="depId" lay-verify="required">
-                        <option value="0" selected>全部月份</option>
-                        <c:forEach items="${month}" var="m">
-                            <option value="${m}">${m}月</option>
-                        </c:forEach>
-                    </select>
-                </div>
-            </form>
+            <input type="radio" name="month" value="${month.lastMonth}" title="上一月(${month.lastMonth})" checked="">
+            <input type="radio" name="month" value="${month.lastMonth}" title="本月(${month.lastMonth})">
         </td>
         <td>
             <button class="layui-btn menu" id="btn">搜索</button>
@@ -48,20 +39,23 @@
 <script>
     layui.use('table', function(){
         var table = layui.table;
-        var empIns = table.render({
-            elem: '#empList'
+        var workTime = table.render({
+            elem: '#workTime'
             ,method:"post"
-            ,url:'${pageContext.request.contextPath}/systemLog/getEveryDayData'
+            ,url:'${pageContext.request.contextPath}/systemLog/getWorkTimeData'
             ,cols: [[
-                {field:'empId', title:'员工编号', fixed: 'left', unresize: true, sort: true}
+                {field:'empId', title:'未打卡编号', fixed: 'left', unresize: true, sort: true}
                 ,{field:'empName', title:'员工名称'}
-                ,{field:'depName', title:'部门名称'}
-                ,{field:'Sex', title:'性别'}
-                ,{field:'Phone', title:'手机号'}
-                ,{field:'scores', title:'考核总分', fixed: 'right'}
+                ,{field:'depName', title:'申请时间',unresize: true, sort: true}
+                ,{field:'depName', title:'未打卡时间',unresize: true, sort: true}
+                ,{field:'Sex', title:'原因'}
+                ,{field:'Phone', title:'审核人'}
+                ,{field:'scores', title:'审核说明'}
+                ,{field:'scores', title:'审核时间',unresize: true, sort: true}
+                ,{field:'scores', title:'审核状态'}
             ]]
-            ,height:'full-300'
-            ,page: {limit: 10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
+            ,height:'full-200'
+            ,page: {limit: 20,limits:[5,10,15,20,30],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
         //重载表格
         $("#btn").click(function () {
@@ -69,7 +63,7 @@
             var empName = $('input[name="empName"]').val();
             var depId = $('select[name="depId"] option:selected').val();
             //调用重载方法
-            empIns.reload({
+            workTime.reload({
                 where: { //设定异步数据接口的额外参数，任意设
                     empName:empName,
                     depId:depId

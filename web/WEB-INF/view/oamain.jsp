@@ -198,9 +198,13 @@
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/systemLog/toEveryDayPage"
                                data-id="日常考核" data-title="日常考核">日常考核</a></dd>
-                        <dd><a href="javascript:void(0);">员工请假统计</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/systemLog/toWorkTime"
+                               data-id="员工请假统计" data-title="员工请假统计">员工请假统计</a></dd>
                         <dd><a href="javascript:void(0);">学生请假统计</a></dd>
-                        <dd><a href="javascript:void(0);">未打卡说明统计</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/systemLog/toHolidayEmp"
+                               data-id="未打卡说明统计" data-title="未打卡说明统计">未打卡说明统计</a></dd>
                         <dd><a href="javascript:void(0);">宿舍统计报表</a></dd>
                         <dd><a href="javascript:void(0);">学生请假</a></dd>
                     </dl>

@@ -24,7 +24,6 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
                 "LEFT JOIN dep d on e.depId = d.depId \n" +
                 "GROUP BY e.empId,e.empName,e.Sex,e.Phone,d.depName \n" +
                 "HAVING 1=1 ";
-        System.out.println("1111111111  "+sql);
 
         int depId;//判断员工id
         if ("".equals(depIdStr) || null == depIdStr){
@@ -35,8 +34,6 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
         if (depId!=0){
             sql +=" and Empid in (SELECT empId FROM emp where depId="+depId+")";
         }
-
-        System.out.println("2222222222  "+sql);
 
         if (!("".equals(empName) || null == empName)){//部门
             List<Integer> emps = super.getEmpNames(empName);
@@ -52,7 +49,6 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
                 sql +=" and Empid in (0)";
             }
         }
-        System.out.println("3333333333  "+sql);
         return pageBySQL(sql,page,limit);
     }
 
@@ -63,8 +59,8 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
 
     @Override
     public List<Map> getEveryListById(int empId) {
-        return listBySQL("SELECT al.aduitLogid,e.empName,am.aduitName,al.Scores,al.auditDate,al.Image,ap.empName auditPerson,al.Remark FROM aduitLog al\n" +
-                "LEFT JOIN aduitModel am on al.aduitModelid=am.aduitModelid\n" +
+        return listBySQL("SELECT al.aduitLogid,e.empName,am.aduitName,al.Scores,al.auditDate,al.Image,ap.empName auditPerson,al.Remark FROM aduitLog al \n" +
+                "LEFT JOIN aduitModel am on al.aduitModelid=am.aduitModelid \n" +
                 "LEFT JOIN emp e on al.Empid=e.empId \n" +
                 "LEFT JOIN emp ap on al.auditPerson=ap.Empid\n" +
                 "WHERE al.Empid = "+empId);
