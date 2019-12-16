@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.norman.service.Ljw_LogsService;
 import com.publics.vo.logistics.EquipmentRepairVo;
-import org.hibernate.Session;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -15,7 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/logs")
@@ -29,6 +32,18 @@ public class Norman_LogisticsController {
     public String toMyRepair(){
         return "repair_ljw/myRepair";
     }
+
+    @RequestMapping(value = "/toWorkTime")
+    public String toWorkTime(Model model){
+        List<Integer> result = new ArrayList<>();
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.MONTH);
+        result.add(month);
+        result.add(month +1);
+        model.addAttribute("month",result);
+        return "systemLog/workTimeList";
+    }
+
     @RequestMapping(value = "/addRepair")
     public String addRepair(HttpServletRequest request,String equipmentType,String remark){
         HttpSession session = request.getSession();

@@ -63,16 +63,6 @@
 <script type="text/html" id="toolbarDemo">
     员工考核详情报表
 </script>
-<%--<div id="layer-photos-demo" class="layer-photos-demo">
-    <img layer-src="" src="" alt="图片名">
-</div>
-<script>
-    //调用示例
-    layer.photos({
-        photos: '#layer-photos-demo'
-        ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
-    });
-</script>--%>
 </body>
 <script>
     layui.use('table', function(){
