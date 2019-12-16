@@ -37,9 +37,10 @@
         <div class="layui-logo">HTOA</div>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
-                <a href="javascript:void(0);">
-                    <%--${admin.empName}--%>
-                    已注释
+                <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                   data-url="${pageContext.request.contextPath}/emp/selectusermessage"
+                   data-id="用户信息" data-title="用户信息">
+                    ${admin.empName}
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="${pageContext.request.contextPath}/logout">注销</a></dd>
@@ -55,10 +56,12 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">员工管理</a>
                     <dl class="layui-nav-child">
-                        <%-- 例子  可修改 照着写就行了 --%>
-                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                        <dd>
+                            <%-- 例子  可修改 照着写就行了 --%>
+                            <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/toPage/dep"
-                               data-id="部门管理" data-title="部门管理">部门管理</a></dd>
+                               data-id="部门管理" data-title="部门管理">部门管理</a>
+                        </dd>
                         <dd><a href="javascript:void(0);" >员工资料</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/emp/toEmpPaper"
@@ -86,22 +89,27 @@
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/student/leave"
                                data-id="学生请假" data-title="学生请假" >学生请假</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/zeroStudent/toClass"
+                               data-id="班级管理" data-title="班级管理">班级管理</a></dd>
+                        <dd><a href="javascript:void(0);">楼栋管理</a></dd>
+                        <dd><a href="javascript:void(0);">宿舍管理</a></dd>
                         <dd><a href="javascript:void(0);">班级管理</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/toPage/stuFloor"
-                               data-id="部门管理" data-title="楼栋管理">楼栋管理</a></dd>
+                               data-id="楼栋管理" data-title="楼栋管理">楼栋管理</a></dd>
                         <dd><a href="javascript:void(0);"class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/toPage/stuDorm"
-                               data-id="部门管理" data-title="楼栋管理" >宿舍管理</a></dd>
+                               data-id="宿舍管理" data-title="宿舍管理" >宿舍管理</a></dd>
                         <dd><a href="javascript:void(0);"class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/student/stuList"
-                               data-id="学生资料" data-title="学生资料" >学生资料</a></dd>
+                               data-id="学生资料" data-title="学生资料">学生资料</a></dd>
                         <dd><a href="javascript:void(0);">考试成绩</a></dd>
                         <dd><a href="javascript:void(0);">答辩成绩</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;">教务管理</a>
+                    <a>教务管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toCourseList"
@@ -112,7 +120,9 @@
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/training/rehearsal_trainingPage"
                                data-id="试讲培训" data-title="试讲培训" >试讲培训</a></dd>
-                        <dd><a href="javascript:void(0);">值班管理</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/arrange/arrangePage"
+                               data-id="值班管理" data-title="值班管理" >值班管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
