@@ -3,6 +3,7 @@ package com.norman.service.impl;
 import com.norman.service.Ljw_SystemLogService;
 import com.publics.dao.BaseDao;
 import com.publics.vo.assess.AduitLogVo;
+import com.publics.vo.empModel.AttendanceVo;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -69,5 +70,10 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
     @Override
     public AduitLogVo getAduitLog(int auditId) {
         return (AduitLogVo) getObject(AduitLogVo.class,auditId);
+    }
+
+    @Override
+    public List<AttendanceVo> getAttendance() {
+        return null;
     }
 }

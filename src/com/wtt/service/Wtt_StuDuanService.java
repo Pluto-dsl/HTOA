@@ -21,6 +21,8 @@ public interface Wtt_StuDuanService {
     void add(FeedbackVo feedbackVo);
     //查询学生
     Map student(String name);
+    //根据登录用户查出用户id
+    Map studentid(String name);
     //查询学生请假
     List<StudentLeaveVo> studentleave(int currpage, int pagesize);
     //学生请假的总行数
