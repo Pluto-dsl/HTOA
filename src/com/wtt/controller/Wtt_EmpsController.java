@@ -1,27 +1,25 @@
 package com.wtt.controller;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.publics.vo.empModel.WeeklogVo;
 import com.publics.vo.empModel.emp.EmpVo;
+import com.publics.vo.empModel.emp.JobVo;
+import com.publics.vo.sys.DepVo;
 import com.wtt.service.Wtt_EmpService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import sun.misc.FDBigInteger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 /*import java.util.Date;*/
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +31,7 @@ public class Wtt_EmpsController {
     //去到我的周报查询主页面
     @RequestMapping(value = "/toEmpPaper")
     public String toEmpPaper(){
-        return "emp_wtt/selectmynewpaper";
+        return "emp_wtt/selectMynewpaper";
     }
     //周报查询
     @RequestMapping(value = "/selectEmpPaper")
@@ -62,7 +60,7 @@ public class Wtt_EmpsController {
     //去到我的周报新增页面
     @RequestMapping(value = "/addEmpPaperPage")
     public String addEmpPaperPage(){
-        return "emp_wtt/addmynewpaper";
+        return "emp_wtt/addMynewpaper";
     }
     //新增我的周报
     @RequestMapping(value = "/addEmpPaper")
@@ -73,22 +71,6 @@ public class Wtt_EmpsController {
         return "redirect:/emp/toEmpPaper";
     }
 
-    //根据id查找对象
-   /* @RequestMapping(value = "/updateEmpPaper")
-    public void updateEmpPaperPage(int id,HttpServletResponse response){
-        List list = (List) empService.wekk(id);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("list",list);
-        try {
-            PrintWriter pw = response.getWriter();
-            pw.println(jsonObject.toJSONString());
-            pw.flush();
-            pw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-*/
     //修改操作
     @RequestMapping(value = "/update")
     public String update(WeeklogVo weeklogVo){
@@ -117,5 +99,30 @@ public class Wtt_EmpsController {
     public String lookEmpPaperPage(@PathVariable(value = "id") int id, ModelMap modelMap){
         modelMap.addAttribute("list",empService.wekk(id));
         return "emp_wtt/mynewpaper";
+    }
+
+    //点击主页面最上面的用户查询出当前用户信息
+    /*@RequestMapping(value = "usermessage")
+    public String usermessage(){
+        return "emp_wtt/userMessage";
+    }*/
+    //查询当前用户信息
+    @RequestMapping(value = "selectusermessage")
+    public String selectusermessage(ModelMap modelMap, HttpSession session){
+        //获取当前登录用户
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        int id = empVo.getEmpId();
+        System.out.println("员工Id:"+id);
+        String name = empService.name(id);
+
+        List edlist = empService.edmap(id);
+        List joblist = empService.jobmap(id);
+        List familylist = empService.familymap(id);
+        modelMap.addAttribute("list",empVo);
+        modelMap.addAttribute("depname",name);
+        modelMap.addAttribute("education",edlist);
+        modelMap.addAttribute("joblist",joblist);
+        modelMap.addAttribute("famliy",familylist);
+        return "emp_wtt/userMessage";
     }
 }

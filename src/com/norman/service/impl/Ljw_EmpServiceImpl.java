@@ -52,9 +52,45 @@ public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
     }
 
     @Override
-    public JSONArray getData(int page,int limit) {
+    public JSONArray getChatData(HttpServletRequest request,int page,int limit) {
         JSONArray data = new JSONArray();
-        List<ChatRecordVo> list = pageByHql("FROM ChatRecordVo",page,limit);
+        String empName = request.getParameter("empName");
+        String depIdStr = request.getParameter("depId");
+        String startDay = request.getParameter("startDay");
+        String endDay = request.getParameter("endDay");
+        int depId;
+        if ("".equals(depIdStr) || null == depIdStr){
+            depId = 0;
+        }else {
+            depId = Integer.parseInt(depIdStr);
+        }
+        String hql = "FROM ChatRecordVo where 1=1";
+        if (!("".equals(empName) || null == empName)){
+            List<Integer> emps = super.getEmpNames(empName);
+            if (emps.size()>=1){
+                String empIds = "";
+                for (int id:emps) {
+                    empIds +=+id+",";
+                }
+                System.out.println(empIds);
+                empIds = empIds.substring(0,empIds.length()-1);
+                hql +=" and sayface in ("+empIds+")";
+            }else {
+                hql +=" and sayface in (0)";
+            }
+        }
+        if (depId!=0){
+            hql +=" and sayface in (SELECT empId FROM EmpVo where depId="+depId+")";
+        }
+        if (!("".equals(startDay) || null == startDay)){
+            hql +=" and chatDate>='"+startDay+"'";
+        }
+        if (!("".equals(endDay) || null == endDay)){
+            hql +=" and chatDate<='"+endDay+"'";
+        }
+        System.out.println(hql);
+
+        List<ChatRecordVo> list = pageByHql(hql,page,limit);
         for (ChatRecordVo chatRecordVo:list) {
             EmpVo emp = (EmpVo) getObject(EmpVo.class,chatRecordVo.getTeacher());
             StudentVo stu = (StudentVo) getObject(StudentVo.class,chatRecordVo.getSayface());
@@ -93,13 +129,17 @@ public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
         String hql = "FROM WeeklogVo where 1=1";
         if (!("".equals(empName) || null == empName)){
             List<Integer> emps = super.getEmpNames(empName);
-            String empIds = "";
-            for (int id:
-                 emps) {
-                empIds +=+id+",";
+            if (emps.size()>=1){
+                String empIds = "";
+                for (int id:emps) {
+                    empIds +=+id+",";
+                }
+                System.out.println(empIds);
+                empIds = empIds.substring(0,empIds.length()-1);
+                hql +=" and sayface in ("+empIds+")";
+            }else {
+                hql +=" and sayface in (0)";
             }
-            empIds = empIds.substring(0,empIds.length()-1);
-            hql +=" and Empid in ("+empIds+")";
         }
         if (depId!=0){
             hql +=" and Empid in (SELECT empId FROM EmpVo where depId="+depId+")";

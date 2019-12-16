@@ -54,7 +54,7 @@
             <tr>
                 <td>考核指标:</td>
                 <td>
-                    <select id="Depid1" name="Depid" lay-filter="type">
+                    <select id="Depid1" name="Depid" lay-verify="required">
                     </select>
                 </td>
                 <td>说明:</td>
@@ -119,11 +119,9 @@
 
             $("#editfrom")[0].reset();
             layui.form.render();
-
             if(obj.event === 'addBtn'){
                 //动态生成下拉框
                 $.get('${pageContext.request.contextPath}/jack/select',{},function (data) {
-                    $("#Depid").empty();
                     for (var i = 0; i < data.names.length; i++) {
                         $("#Depid").append("<option value='"+data.names[i].depid+"'>"+data.names[i].depName+"</option>");
                     }
@@ -181,7 +179,6 @@
         });
 
         $.get('${pageContext.request.contextPath}/jack/select',{},function (da) {
-            $("#Depid1").empty();
             for (var i = 0; i < da.names.length; i++) {
                 $("#Depid1").append("<option value='" + da.names[i].depid + "'>" + da.names[i].depName + "</option>");
             }
@@ -230,6 +227,7 @@
                     $.get("${pageContext.request.contextPath}/jack/delAss?Aid="+data.aduitModelid,function (result) {
                         if(result === '成功'){
                             layer.msg("删除成功");
+                            table.reload('AssList');
                         }
                     });
                     table.reload('AssList');
@@ -240,7 +238,6 @@
         //编辑
         form.on('submit(editfrom)',function (data) {
             $.post('${pageContext.request.contextPath}/jack/editAss',data.field,function (d) {
-                alert(d);
             },"json");
             table.reload('AssList');
         });

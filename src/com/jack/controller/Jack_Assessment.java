@@ -90,8 +90,7 @@ public class Jack_Assessment {
 
     /** 员工考核录入 */
     @RequestMapping(value = "/toCheckEntry")
-    public String toCheckEntry(HttpSession session){
-        session.setAttribute("user","dddd");
+    public String toCheckEntry(){
         return "emp_xzq/CheckEntry";
     }
     /** 考核指标 */
@@ -207,10 +206,12 @@ public class Jack_Assessment {
         request.setAttribute("id",id);
         return "emp_xzq/selAduitLog";
     }
-
+    /**  员工考核列表  */
     @RequestMapping(value = "/selAduitLog")
     public void selAduitLog(String id,HttpServletResponse response,HttpServletRequest request) throws IOException {
         List list = service.selAdDetails(Integer.parseInt(id));
+        System.out.println(list+"++++++++++++++++++++++++++");
+        response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();
         JSONObject json = new JSONObject();
         json.put("msg","提示");
@@ -220,12 +221,49 @@ public class Jack_Assessment {
         out.print(json);
         out.close();
     }
+    /**  员工考核删除、批量删除     */
     @RequestMapping(value = "/delAduitLog")
     @ResponseBody
     public int delAduitLog(HttpServletRequest request){
         int a = Integer.parseInt(request.getParameter("cid"));
-        service.delAduitLog(a);
+        String type1 = request.getParameter("type");
+
+        if("duo".equals(type1)){
+            service.delAduitLog(a);
+        }else {
+            service.delAduitLog(a);
+        }
         return 0;
+    }
+
+    @RequestMapping(value = "/depList")
+    @ResponseBody
+    public Map depList(){
+        Map map = new HashMap();
+        List list = service.selDep();
+        map.put("Names",list);
+        return map;
+    }
+
+
+    /** 条件查询 */
+    @RequestMapping(value = "/searchSel")
+    @ResponseBody
+    public void searchSel(String empName,String dep,String startDate,String EndDate,HttpServletResponse response,HttpServletRequest request) throws IOException {
+        int currPage = Integer.parseInt(request.getParameter("page"));
+        int pageSize = Integer.parseInt(request.getParameter("limit"));
+        List list = service.Conditional_query(empName,dep,startDate,EndDate,currPage,pageSize);
+        int count = service.Conditional_queryCount(empName,dep,startDate,EndDate);
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter out = response.getWriter();
+        JSONObject json = new JSONObject();
+        json.put("msg","提示");
+        json.put("code","0");
+        json.put("data",list);
+        json.put("count",count);
+        System.out.println(json.toJSONString());
+        out.print(json);
+        out.close();
     }
 }
 
