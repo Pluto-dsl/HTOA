@@ -91,6 +91,11 @@ public class Zhq_StuDormController {
     @RequestMapping("/addDorm")
     @ResponseBody
     public String addDorm(StudentDormitoryVo studentDormitoryVo){
+        List<Map> l = zhq_stuDormService.selDormFloor(studentDormitoryVo.getFloorId());
+        String fname = l.get(0).get("floorName").toString();
+        String sname = studentDormitoryVo.getHuorName();
+        sname = fname+"-"+sname;
+        studentDormitoryVo.setHuorName(sname);
         zhq_stuDormService.addDorm(studentDormitoryVo);
         return "success";
     }

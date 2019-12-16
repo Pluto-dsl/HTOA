@@ -42,7 +42,7 @@
                     已注释
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="${pageContext.request.contextPath}/logout">注销</a></dd>
+                    <dd><a href="/logout">注销</a></dd>
                 </dl>
             </li>
         </ul>
@@ -65,14 +65,15 @@
                                data-id="我的周报" data-title="我的周报" >我的周报</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/ljw/toWeekLogPage"
-                               data-id="周报审阅" data-title="周报审阅" >周报审阅</a></dd>
+                               data-id="周报管理" data-title="周报管理" >周报管理</a></dd>
+                        <dd><a href="javascript:void(0);">周报审阅</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/ljw/toChatRecordPage"
                                data-id="谈心记录" data-title="谈心记录" >谈心记录</a></dd>
                         <dd>
                             <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/empLeave/toleave"
-                               data-id="请假管理" data-title="请假管理">请假管理</a>
+                               data-id="员工请假" data-title="员工请假">员工请假</a>
                         </dd>
 
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
@@ -163,13 +164,11 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">系统报表</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/systemLog/toEveryDayPage"
-                               data-id="日常考核" data-title="日常考核">日常考核</a></dd>
-                        <dd><a href="javascript:void(0);">员工请假统计</a></dd>
-                        <dd><a href="javascript:void(0);">学生请假统计</a></dd>
-                        <dd><a href="javascript:void(0);">未打卡说明统计</a></dd>
+                        <dd><a href="javascript:void(0);">日常考核</a></dd>
+                        <dd><a href="javascript:void(0);">请假管理</a></dd>
+                        <dd><a href="javascript:void(0);">未打卡说明</a></dd>
                         <dd><a href="javascript:void(0);">宿舍统计报表</a></dd>
+                        <dd><a href="javascript:void(0);">学生请假</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
