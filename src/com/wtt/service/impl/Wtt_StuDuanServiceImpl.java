@@ -3,6 +3,7 @@ package com.wtt.service.impl;
 import com.publics.dao.BaseDao;
 import com.publics.vo.feedback.FeedbackVo;
 import com.publics.vo.studentModel.StudentClassVo;
+import com.publics.vo.studentModel.StudentLeaveVo;
 import com.publics.vo.studentModel.StudentVo;
 import com.publics.vo.sys.DepVo;
 import com.wtt.service.Wtt_StuDuanService;
@@ -46,5 +47,16 @@ public class Wtt_StuDuanServiceImpl extends BaseDao implements Wtt_StuDuanServic
             return map;
         }
         return null;
+    }
+
+    @Override
+    public List<StudentLeaveVo> studentleave(int currpage, int pagesize) {
+       String sql="select * from holidayStudent h left join student s on h.StudentId = s.Studid";
+      return pageBySQL(sql,currpage,pagesize);
+    }
+
+    @Override
+    public int leavepagecount() {
+       return selTotalRow("select count(*) from holidayStudent");
     }
 }

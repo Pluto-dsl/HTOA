@@ -29,7 +29,6 @@
         table.render({
             elem:'#test',
             height:500,
-            title:'周报表',
             url:'<%=request.getContextPath()%>/student/selectleave',
             cols:[[
                 {type:'checkbox', fixed:'left'}
