@@ -5,6 +5,7 @@
   Time: 10:53
   To change this template use File | Settings | File Templates.
 --%>
+<!doctype html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -12,8 +13,11 @@
     <jsp:include page="../include.jsp" />
 </head>
 <body>
+<%--表格--%>
 <table class="layui-hide" id="test" lay-filter="test"></table>
+<div style="height: 360px;width: 100%;">
 
+</div>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="addStudent"><i class="layui-icon layui-icon-add-1" style="width: 30px;height:30px;"></i>新增学生</button>
@@ -31,14 +35,13 @@
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="chongzhi">重置密码</a>
 </script>
 
-
 <script src="//res.layui.com/layui/dist/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 
 <script>
     layui.use('table', function(){
         var table = layui.table;
-
+        var ly;
         table.render({
             elem: '#test'
             ,url:'${pageContext.request.contextPath}/student/returnData'
@@ -49,15 +52,16 @@
                 ,icon: 'layui-icon-tips'
             }]
             ,title: '用户数据表'
+            ,height:'500'
             ,cols: [[
-                {type: 'checkbox', fixed: 'left'}
-                ,{field:'Studid', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
+                {type: 'radio',width:50}
+                ,{field:'Studid', title:'ID', width:80,unresize: true, sort: true}
                 ,{field:'stuname', title:'学生姓名', width:120, edit: 'text'}
                 ,{field:'sex', title:'性别', width:80, edit: 'text'}
                 ,{field:'middleschool', title:'毕业学校', width:100}
                 ,{field:'birthday', title:'生日',width:160,templet : "<div>{{layui.util.toDateString(d.startDate, 'yyyy年MM月dd日')}}</div>"}
-                ,{field:'phone', title:'学生电话', width:80}
-                ,{field:'addr', title:'家庭住址', width:120}
+                ,{field:'phone', title:'学生电话', width:150}
+                ,{field:'addr', title:'家庭住址', width:260}
                 ,{field:'clazz', title:'所在班级', width:100}
                 ,{field:'cardid', title:'身份证号', width:160}
                 ,{field:'huor', title:'宿舍房号', width:120}
@@ -88,24 +92,33 @@
         //头工具栏事件
         table.on('toolbar(test)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id);
+
             switch(obj.event){
                 case 'addStudent':
                     //iframe层
-                    layer.open({
+                    ly =  layer.open({
                         type: 2,
                         title: '新增学生',
                         shadeClose: true,
-                        shade: 0.8,
+                        shade: 0.4,
                         shadeclose:true,
                         area: ['1100px', '770px'],
                         content: '${pageContext.request.contextPath}/student/toAddStu' //iframe的url
                     });
                     break;
-                case 'getCheckLength':
-                    var data = checkStatus.data;
-                    layer.msg('选中了：'+ data.length + ' 个');
+                case 'setDorm':
+                    //iframe层
+                    ly =  layer.open({
+                        type: 2,
+                        title: '调整宿舍',
+                        shadeClose: true,
+                        shade: 0.4,
+                        shadeclose:true,
+                        area: ['1100px', '770px'],
+                        content: '${pageContext.request.contextPath}/student/toAddStu' //iframe的url
+                    });
                     break;
-                case 'isAll':
+                case 'setClass':
                     layer.msg(checkStatus.isAll ? '全选': '未全选');
                     break;
 
@@ -133,7 +146,18 @@
 
             }
         });
+        table.on('row(test)',function(obj){
+            var oo = obj.tr; //得到当前行元素对象
+            var data = obj.data; //得到当前行数据
+            selected =  data;
+            //选中行样式
+            obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+            //选中radio样式
+            obj.tr.find('i[class="layui-anim layui-icon"]').trigger("click");
+            // addTable(stuId,stuName);
+        });
     });
+
 
 
 </script>
