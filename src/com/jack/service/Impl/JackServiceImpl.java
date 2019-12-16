@@ -35,6 +35,7 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
     }
     @Override
     public void insertAtt(AttendanceVo attVo) {
+        System.out.println(attVo);
         addObject(attVo);
     }
     @Override

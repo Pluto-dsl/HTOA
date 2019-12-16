@@ -105,12 +105,12 @@
             return createTime(d.examineTime);
         } , title:'审核时间' ,width:180}
                 ,{field:'examineExplain', title:'审核说明', width:120}
-                ,{field:'state',templet:function (d) {
-                        if (d.state === 1) {
+                ,{field:'status',templet:function (d) {
+                        if (d.status === 1) {
                             return '通过审核'
-                        }else if(d.state === 2) {
+                        }else if(d.status === 2) {
                             return '待审核'
-                        }else if(d.state === 3){
+                        }else if(d.status === 3){
                             return '审核失败'
                         }
                     },title:'状态', width:120}
