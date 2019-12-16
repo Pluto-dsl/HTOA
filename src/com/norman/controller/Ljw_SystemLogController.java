@@ -17,12 +17,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
 @Controller
 @RequestMapping("/systemLog")
-public class Ljw_EveryDayController {
+public class Ljw_SystemLogController {
     @Resource
     Ljw_SystemLogService systemLogService;
     @Resource
@@ -32,6 +33,28 @@ public class Ljw_EveryDayController {
     public String toEveryDayPage(Model model){
         model.addAttribute("depList",empService.getDepList());
         return "systemLog/everyday";
+    }
+
+    @RequestMapping(value = "/toWorkTime")//去往员工请假统计
+    public String toWorkTime(Model model){
+        JSONObject result = new JSONObject();
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.MONTH);
+        result.put("lastMonth",month);
+        result.put("thisMonth",month +1);
+        model.addAttribute("month",result);
+        return "systemLog/workTimeList";
+    }
+
+    @RequestMapping(value = "/toHolidayEmp")//去往未打卡说明统计
+    public String toHolidayEmp(Model model){
+        JSONObject result = new JSONObject();
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.MONTH);
+        result.put("lastMonth",month);
+        result.put("thisMonth",month +1);
+        model.addAttribute("month",result);
+        return "systemLog/workTimeList";
     }
 
     @ResponseBody
@@ -101,5 +124,13 @@ public class Ljw_EveryDayController {
         out.print(obj);
         out.flush();
         out.close();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getWorkTimeData")
+    public void getWorkTimeData(HttpServletRequest request,HttpServletResponse response){
+        response.setContentType("text/html;charset=utf-8");
+
+
     }
 }
