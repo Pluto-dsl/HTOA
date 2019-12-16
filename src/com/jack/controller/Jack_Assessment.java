@@ -254,7 +254,6 @@ public class Jack_Assessment {
         int pageSize = Integer.parseInt(request.getParameter("limit"));
         List list = service.Conditional_query(empName,dep,startDate,EndDate,currPage,pageSize);
         int count = service.Conditional_queryCount(empName,dep,startDate,EndDate);
-        System.out.println(list+"++++++++++++++++++++++++++");
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();
         JSONObject json = new JSONObject();
