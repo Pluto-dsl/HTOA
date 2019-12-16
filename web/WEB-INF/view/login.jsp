@@ -192,7 +192,7 @@
                 window.location.href = "${pageContext.request.contextPath}/toPage/oamain"
             } else if (data.code === "user") {
                 layer.msg("登录成功<br>正在跳转页面");
-                window.location.href = "${pageContext.request.contextPath}/toPage/oamain"
+                window.location.href = "${pageContext.request.contextPath}/toPage/studentSide"
             } else if (data.code === "ban") {
                 layer.msg("您已被禁用");
             }
