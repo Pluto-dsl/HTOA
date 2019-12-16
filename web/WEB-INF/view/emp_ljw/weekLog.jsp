@@ -14,7 +14,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>谈心记录</title>
+    <title>周报审阅</title>
     <jsp:include page="../include.jsp"/>
     <style>
         .menu{
@@ -34,7 +34,7 @@
         <input class="layui-input" name="empName" id="empName" autocomplete="off">
     </div>
 </div>
-<form class="layui-form menu" <%--style="width: 85%;height: 40px;padding-top: 10px;padding-left: 20px;"--%>>
+<form class="layui-form menu">
     部门名称:
     <div class="layui-inline" style="padding-right: 15px">
         <select name="depId" lay-verify="required">
@@ -73,10 +73,9 @@
             ,defaultToolbar: ['filter', 'exports', 'print']
             ,title: '用户数据表'
             ,cols: [[
-                {type: 'checkbox', fixed: 'left'}
-                ,{field:'worklogid', title:'ID', width:60, fixed: 'left', unresize: true, sort: true}
+                {field:'worklogid', title:'ID', width:60, fixed: 'left', unresize: true, sort: true}
                 ,{field:'empName', title:'员工名称', width:90, fixed: 'left'}
-                ,{field:'weekDay', title:'填写日期', width:120, fixed: 'left'}
+                ,{field:'weekDay', title:'填写日期', width:120, fixed: 'left', unresize: true, sort: true}
                 ,{field:'weekCur', title:'本周情况描述', width:280, fixed: 'left'}
                 ,{field:'studentQuestion', title:'问题学生情况反馈', width:280, fixed: 'left'}
                 ,{field:'idea', title:'意见建议',width: 140, minWidth: 200, fixed: 'left'}
@@ -118,7 +117,7 @@
             });
         });
     });
-
+    //初始化时间选择框
     layui.use('laydate', function(){
         var laydate = layui.laydate;
         //执行一个laydate实例

@@ -21,7 +21,7 @@
     </div>
         时间点:
         <div class="layui-input-inline">
-            <select name="timeing" lay-filter="type">
+            <select name="timeing" lay-verify="required">
                 <option>请选择时间</option>
                 <option value="8:00">8:00</option>
                 <option value="14:00">14:00</option>
@@ -97,12 +97,12 @@
                 ,{field:'auditor', title:'审核人', width:100}
                 ,{field:'examineTime',templet:function (d){return createTime(d.examineTime);},title:'审核时间' ,width:200}
                 ,{field:'examineExplain', title:'审核说明', width:120}
-                ,{field:'state',templet:function (d) {
-                        if (d.state === 1) {
+                ,{field:'status',templet:function (d) {
+                        if (d.status === 1) {
                             return '通过审核'
-                        }else if(d.state === 2) {
+                        }else if(d.status === 2) {
                             return '待审核'
-                        }else if(d.state === 3){
+                        }else if(d.status === 3){
                             return '申请失败'
                         }
                     },title:'状态', width:120}
@@ -134,6 +134,7 @@
                             layer.msg('删除失败');
                             table.reload('test');
                         }
+                        table.reload('test');
                     });
                     table.reload('test');
                     layer.close(index);

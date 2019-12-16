@@ -3,6 +3,7 @@ package com.jack.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.jack.service.Jack_Service;
 import com.publics.vo.empModel.AttendanceVo;
+import com.publics.vo.empModel.emp.EmpVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -49,7 +50,7 @@ public class Jack_AttController {
         AttendanceVo avo = new AttendanceVo();
         avo.setExamineTime(new Date());
         avo.setAttId(Integer.parseInt(eid));
-        avo.setState(Integer.parseInt(state));
+        avo.setStatus(Integer.parseInt(state));
         avo.setExamineExplain(specification);
         service.updataAtt(avo);
 
@@ -60,8 +61,8 @@ public class Jack_AttController {
     @RequestMapping("/Approver")
     public void Approver(HttpSession session,HttpServletResponse response) throws IOException {
         //获取当前登入的用户 查询是否有审核申请
-        String user = (String) session.getAttribute("user");
-        List list = service.selApprover("裴钱",2);
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        List list = service.selApprover(empVo.getEmpName(),2);
         response.setContentType("text/json;charset=utf-8");
         PrintWriter out = response.getWriter();
         JSONObject json = new JSONObject();
@@ -82,7 +83,7 @@ public class Jack_AttController {
     @RequestMapping("/Attadd")
     public String Attadd(HttpSession session,String punckClockTime,String cause,String timeing) throws ParseException {
         System.out.println("进来了");
-        String user = (String) session.getAttribute("admin");
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
         String ptime = punckClockTime +" "+ timeing;
 
         System.out.println(ptime);
@@ -93,13 +94,14 @@ public class Jack_AttController {
 
         System.out.println(date+"--------");
         AttendanceVo attVo = new AttendanceVo();
-        attVo.setEmpName(user);
-        String Auditor = service.selDepChairman(user); //查询审核人
+        attVo.setEmpId(empVo.getEmpId());
+        String Auditor = service.selDepChairman(empVo.getEmpId()); //查询审核人
         attVo.setAuditor(Auditor);
         attVo.setCause(cause);
         attVo.setPunckClockTime(date);
-        attVo.setState(2); //待审核
+        attVo.setStatus(2); //待审核
         attVo.setExamineTime(null);
+        attVo.setApplyTime(new Date());
 
         service.insertAtt(attVo); //添加未打卡说明
 
@@ -124,11 +126,12 @@ public class Jack_AttController {
     public void Att(HttpSession session,HttpServletResponse response, HttpServletRequest request) throws IOException {
         int currPage = Integer.parseInt(request.getParameter("page"));
         int pageSize = Integer.parseInt(request.getParameter("limit"));
-        String user = (String) session.getAttribute("admin");//获取当前登入的名称
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");//获取当前登入的名称
         response.setContentType("text/html;charset=utf-8");
         System.out.println(currPage+"----"+pageSize);
-        List list = service.selAtt(user,currPage,pageSize);
-        int pageCount = service.selAttCount(user);
+        List list = service.selAtt(empVo.getEmpId(),currPage,pageSize);
+        System.out.println(empVo.getEmpId()+"当前用户id");
+        int pageCount = service.selAttCount(empVo.getEmpId());
         PrintWriter out = response.getWriter();
         JSONObject json = new JSONObject();
         json.put("msg","提示");

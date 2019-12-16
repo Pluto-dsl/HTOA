@@ -2,6 +2,8 @@ package com.wtt.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.publics.vo.feedback.FeedbackVo;
+import com.publics.vo.studentModel.StudentLeaveVo;
+import com.publics.vo.studentModel.StudentVo;
 import com.wtt.service.Wtt_StuDuanService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,14 +28,14 @@ import java.util.UUID;
 public class Wtt_StuDuanController {
     @Resource
     Wtt_StuDuanService wtt_stuDuanService;
+
     @RequestMapping(value = "/problem_feedback")
     public String problem_feedback(ModelMap modelMap,HttpSession session){
         List deplist = wtt_stuDuanService.dep();
-        System.out.println("部门："+deplist);
         modelMap.addAttribute("list",deplist);
         return "student_wtt/problem_feedback";
     }
-    //查询
+    //学生端查询问题反馈
     @RequestMapping(value = "/selectproblem")
     public void selectproblem(HttpServletResponse response, int page, int limit){
         response.setContentType("text/html;charset=utf-8");
@@ -89,9 +91,9 @@ public class Wtt_StuDuanController {
         }
         feedbackVo.setFeedBackType(1);
         feedbackVo.setFeedbackTime(new java.util.Date());
-        session.setAttribute("username","18270062525");
         //获取存在session中的用户(电话号码)
-        String name = (String) session.getAttribute("username");
+        StudentVo studentVo = (StudentVo) session.getAttribute("admin");
+        String name = studentVo.getStuname();
         Map map = wtt_stuDuanService.student(name);
         int id = (int) map.get("Studid");
         System.out.println("学生id:"+id);
@@ -102,5 +104,46 @@ public class Wtt_StuDuanController {
         feedbackVo.setEmpName(classname);
         wtt_stuDuanService.add(feedbackVo);
         return "redirect:/studentduan/problem_feedback";
+    }
+
+    //去到学生申请请假页面
+    @RequestMapping(value = "/studentleaves")
+    public String studentleave(){
+        return "student_wtt/apply_leave";
+    }
+
+    //查询学生请假
+    @RequestMapping(value = "studentselectleave")
+    public void studentselectleave(int page,int limit,HttpServletResponse response){
+        response.setContentType("text/html;charset=utf-8");
+        List<StudentLeaveVo> list = wtt_stuDuanService.studentleave(page,limit);
+        //获取总行数
+        int rows =wtt_stuDuanService.leavepagecount();
+        JSONObject jsonObjects = new JSONObject();
+        jsonObjects.put("msg","提示");
+        jsonObjects.put("code",0);
+        jsonObjects.put("data",list);
+        jsonObjects.put("count",rows);
+        try {
+            PrintWriter pw = response.getWriter();
+            pw.print(jsonObjects.toJSONString());
+            pw.flush();
+            pw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //新增学生请假
+    @RequestMapping(value = "/addstudentleave")
+    public String addstuedntleave(StudentLeaveVo studentLeaveVo,HttpSession session){
+        //获取存在session中的用户(电话号码)
+        StudentVo studentVo = (StudentVo) session.getAttribute("admin");
+        String name = studentVo.getStuname();
+        Map map = wtt_stuDuanService.student(name);
+        int id = (int) map.get("Studid");
+        studentLeaveVo.setStudentId(id);
+        wtt_stuDuanService.leaveadd(studentLeaveVo);
+        return "redirect:/studentduan/studentleaves";
     }
 }

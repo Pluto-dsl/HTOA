@@ -31,8 +31,12 @@ public class LoginController {
         String result = "";
         if (emp != null){
             if (emp.getPassword() != null && emp.getPassword().equals(pwd)){
-                session.setAttribute("admin",emp);
-                result = "{\"code\":\"admin\"}";
+                if (emp.getStatus()==0){
+                    result = "{\"code\":\"ban\"}";
+                }else if (emp.getStatus() == 1){
+                    session.setAttribute("admin",emp);
+                    result = "{\"code\":\"admin\"}";
+                }
             }else {
                 result = "{\"code\":\"notPwd\"}";
             }

@@ -58,7 +58,7 @@ public class Zhq_DataDocServiceImpl extends BaseDao implements Zhq_DataDocServic
             month2  ="0" +month;
         }
 
-        paht += "upload\\" + calendar.get(Calendar.YEAR) + month2+ calendar.get(Calendar.DAY_OF_MONTH);
+        paht +="WEB-INF\\"+"static\\"+ "upload\\" + calendar.get(Calendar.YEAR) + month2+ calendar.get(Calendar.DAY_OF_MONTH);
         System.out.println(paht);
 
         //判断文件是否存在
@@ -77,7 +77,7 @@ public class Zhq_DataDocServiceImpl extends BaseDao implements Zhq_DataDocServic
         //保存文件
         file.transferTo(file1);
 
-        dataDocVo.setUrl("upload\\" + calendar.get(Calendar.YEAR) + month2+ calendar.get(Calendar.DAY_OF_MONTH)+"\\"+s+extName);
+        dataDocVo.setUrl(paht+"\\"+s+extName);
 
         dataDocVo.setDataName(oldName);//资料名称
         addObject(dataDocVo);
@@ -89,6 +89,7 @@ public class Zhq_DataDocServiceImpl extends BaseDao implements Zhq_DataDocServic
         delObject(dataDocVo);
     }
 
+    //根据id查询
     @Override
     public Object selDocId(Class vo, int id) {
         return getObject(vo,id);

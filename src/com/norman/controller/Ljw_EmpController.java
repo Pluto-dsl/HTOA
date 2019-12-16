@@ -34,6 +34,7 @@ public class Ljw_EmpController {
         List<StudentVo> stuList = empService.getStudentList();
         request.setAttribute("empList",empList);
         request.setAttribute("stuList",stuList);
+        request.setAttribute("depList",empService.getDepList());
         return "emp_ljw/chatRecord";
     }
 
@@ -51,7 +52,7 @@ public class Ljw_EmpController {
         jsonObject.put("code",0);
         jsonObject.put("msg","提示");
         jsonObject.put("count",count);
-        jsonObject.put("data",empService.getData(page,limit));
+        jsonObject.put("data",empService.getChatData(request,page,limit));
 
         response.setContentType("text/html;charset=utf-8");
         System.out.println("发送到前台");

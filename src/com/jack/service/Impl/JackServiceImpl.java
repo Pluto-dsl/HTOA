@@ -7,6 +7,7 @@ import com.publics.vo.assess.AduitModelVo;
 import com.publics.vo.educ.CourseTypeVo;
 import com.publics.vo.educ.CourseVo;
 import com.publics.vo.empModel.AttendanceVo;
+import com.publics.vo.empModel.evaluationVo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,16 +19,17 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
     /**  考勤管理 */
 
     @Override
-    public List selAtt(String Aname,int currPage,int pageSize) {
-        return pageByHql("from AttendanceVo where empName = '"+Aname+"'",currPage,pageSize);
+    public List selAtt(int Aname,int currPage,int pageSize) {
+        return pageBySQL("select att.attId,e.empName,att.punckClockTime,att.cause,att.auditor,att.examineTime,att.examineExplain,att.`status`\n" +
+                "from attendance att inner join emp e on att.empid = e.empid where att.empid = "+Aname+"",currPage,pageSize);
     }
     @Override
-    public int selAttCount(String Aname) {
-        return selTotalRow("select count(*) from attendance where empName = '"+Aname+"'");
+    public int selAttCount(int Aname) {
+        return selTotalRow("select count(*) from attendance where empId = "+Aname+"");
     }
     @Override
-    public String selDepChairman(String AName) {
-        List list =  super.listBySQL("SELECT chairman FROM emp join dep on emp.depId = dep.depid where dep.depid =(select depId from emp where empName = '"+AName+"')");
+    public String selDepChairman(int AName) {
+        List list =  super.listBySQL("SELECT chairman FROM emp join dep on emp.depId = dep.depid where dep.depid =(select depId from emp where empId = "+AName+")");
         Map m = (Map) list.get(0);
         return (String) m.get("chairman");
     }
@@ -37,11 +39,12 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
     }
     @Override
     public void updataAtt(AttendanceVo att) {
-         executeSQL("UPDATE attendance set examineTime = sysdate() , examineExplain = '"+att.getExamineExplain()+"',state= "+att.getState()+" where attId= "+att.getAttId()+"");
+         executeSQL("UPDATE attendance set examineTime = sysdate() , examineExplain = '"+att.getExamineExplain()+"',status= "+att.getStatus()+" where attId= "+att.getAttId()+"");
     }
     @Override
     public List selApprover(String Aname,int state) {
-       return listByHql("from AttendanceVo where auditor = '"+Aname+"' and state = "+state+"");
+       return listBySQL("select att.attId,e.empName,att.punckClockTime,att.cause,att.auditor,att.examineTime,att.examineExplain,att.`status`\n" +
+               "from attendance att inner join emp e on att.empid = e.empid where att.auditor = '"+Aname+"' and att.status = "+state+"");
     }
     @Override
     public void delAtt(int id) {
@@ -198,6 +201,46 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
             sql += " and auditDate <'"+EndDate+"'";
         }
         return selTotalRow(sql);
+    }
+    /** 考评内容 */
+    @Override
+    public List selHeadmasterList() {
+        return listBySQL("select * from evaluation where evaluationType = '2'");
+    }
+    @Override
+    public List selTeacherList() {
+        return listBySQL("select * from evaluation where evaluationType = '1'");
+    }
+    @Override
+    public int addAevaluation(evaluationVo evaluatio) {
+        return addObjectInt(evaluatio);
+    }
+    @Override
+    public void delAevaluation(int id) {
+        executeSQL("delete from evaluation where evaluationid = "+id+"");
+    }
+
+    /** 学生端——教师考评 */
+    @Override
+    public List selHeadmasterTest(int stu) {
+        return listBySQL("select stc.classId,stc.className,e.empId,e.empName from (student stu inner join studentClass stc \n" +
+                "on stu.clazz = stc.classId) inner join emp e on stc.classTeacher = e.empId\n" +
+                "where Studid = "+stu+"");
+    }
+
+    @Override
+    public List selHeadmasterType() {
+        return listBySQL("select * from evaluation  where evaluationType = 2");
+    }
+
+    @Override
+    public List selTeachatTest(int stu) {
+        return null;
+    }
+
+    @Override
+    public List selTeacharType() {
+        return null;
     }
 
 

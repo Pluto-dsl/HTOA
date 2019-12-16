@@ -5,6 +5,7 @@ import com.publics.vo.assess.AduitModelVo;
 import com.publics.vo.educ.CourseTypeVo;
 import com.publics.vo.educ.CourseVo;
 import com.publics.vo.empModel.AttendanceVo;
+import com.publics.vo.empModel.evaluationVo;
 
 import java.util.List;
 import java.util.Map;
@@ -13,9 +14,9 @@ public interface Jack_Service {
     /**
      *  这里是考勤管理部分
      * */
-    List selAtt(String Aname, int currPage, int pageSize); //查询考勤表
-    int selAttCount(String Aname); //查询总页数
-    String selDepChairman(String AName); //查询部门负责人
+    List selAtt(int Aid, int currPage, int pageSize); //查询考勤表
+    int selAttCount(int Aname); //查询总页数
+    String selDepChairman(int AName); //查询部门负责人
     void insertAtt(AttendanceVo attVo); //插入未打卡说明
     void updataAtt(AttendanceVo attendanceVo); //审批修改
     List selApprover(String Aname,int state);
@@ -48,7 +49,7 @@ public interface Jack_Service {
     void editAssessment(AduitModelVo aduitModelVo);//编辑考核
     void delAssessment(int Aid); //删除
 
-    /** 考核巡查管理 */
+    /** 考核管理 */
     List selAss(); //查询所有的考核指标
     List selEmp();  //查询所有的员工
     void addAduit(AduitLogVo aduitLogVo); //员工考核录入
@@ -59,4 +60,14 @@ public interface Jack_Service {
     List selDep(); //获取部门名称列表
     List Conditional_query(String empName,String depId,String startDate,String EndDate,int currPage,int pageSize); //条件查询
     int Conditional_queryCount(String empName,String depId,String startDate,String EndDate); //条件查询
+    /** 考评内容，教师考评 */
+    List selHeadmasterList();
+    List selTeacherList();
+    int addAevaluation(evaluationVo evaluatio);
+    void delAevaluation(int id);
+
+    List selHeadmasterTest(int stu);
+    List selHeadmasterType();
+    List selTeachatTest(int stu);
+    List selTeacharType();
 }

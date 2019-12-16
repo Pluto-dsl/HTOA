@@ -54,7 +54,7 @@
             <tr>
                 <td>考核指标:</td>
                 <td>
-                    <select id="Depid1" name="Depid" lay-filter="type">
+                    <select id="Depid1" name="Depid" lay-verify="required">
                     </select>
                 </td>
                 <td>说明:</td>
@@ -119,7 +119,6 @@
 
             $("#editfrom")[0].reset();
             layui.form.render();
-
             if(obj.event === 'addBtn'){
                 //动态生成下拉框
                 $.get('${pageContext.request.contextPath}/jack/select',{},function (data) {
@@ -228,6 +227,7 @@
                     $.get("${pageContext.request.contextPath}/jack/delAss?Aid="+data.aduitModelid,function (result) {
                         if(result === '成功'){
                             layer.msg("删除成功");
+                            table.reload('AssList');
                         }
                     });
                     table.reload('AssList');

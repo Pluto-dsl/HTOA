@@ -16,11 +16,6 @@ public class EmpVo {//员工
 
     private String  Sex;//性别（男，女）
     private Date Birthday;//出生日期
-    /*@Table(
-            uniqueConstraints = {
-                    @UniqueConstraint(columnNames = "uid"),
-                    @UniqueConstraint(columnNames = {"tid","username"}),
-            })*/
     private String Cardno;//身份证号码（唯一）
     private String nation;//籍贯
     private String Phone;//手机号码
