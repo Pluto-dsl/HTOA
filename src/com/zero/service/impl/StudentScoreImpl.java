@@ -109,4 +109,23 @@ public class StudentScoreImpl extends BaseDao implements StudentScoreService {
     public List<CourseVo> course() {
         return super.listByHql("from CourseVo");
     }
+
+    @Override
+    public int haveScore(int classid, int courseid, int scoreType, int termid) {
+        return  super.listBySQL("select sc.score from studentScore sc " +
+                " left join student s on s.Studid = sc.stuid" +
+                " where s.clazz = "+classid+" and sc.courseId = "+courseid+" and sc.testType = "+scoreType+" and sc.termid =  "+termid).size();
+
+
+    }
+
+    @Override
+    public List<Map> stu(int classid, int courseid, int scoreType, int termid) {
+        return super.listBySQL("select s.stuno,s.stuname,t.termName,ss.testType,c.courseName from studentClass sc " +
+                " left join student s on s.clazz = sc.classId" +
+                " left join studentScore ss on ss.stuid = s.clazz" +
+                " left join term t on t.termid = ss.termid" +
+                " left join course c on c.courseId = ss.courseId" +
+                " where s.clazz = "+classid+" and t.termid = "+termid+" and c.courseId = 24 and ss.testType = "+scoreType);
+    }
 }

@@ -1,6 +1,7 @@
 package com.zero.controller;
 
 
+import com.alibaba.fastjson.JSONArray;
 import com.zero.service.StudentScoreService;
 import com.zero.service.StudentService;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -115,5 +122,30 @@ public class Zero_StudentScore {
         map.put("count",service.scorepagecount(sql));
         map.put("data",list);
         return map;
+    }
+
+    @RequestMapping(value = "/havescore")
+    @ResponseBody
+    public void havescore(int classid, int courseid, int scoreType, int termid, HttpServletResponse response) throws IOException {//去新增成绩页
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter writer = response.getWriter();
+        //查询此班是否有成绩
+        int i = service.haveScore(classid,courseid,scoreType,termid);
+        System.out.println("大小"+i);
+        if(i>0){
+            writer.write("no");
+        }else {
+            writer.write("ok");
+        }
+        //查询当前班级的学生
+    }
+
+    @RequestMapping(value = "/toaddscore")
+    public String toaddscore(int classid, int courseid, int scoreType, int termid, String scoreTime, Model model) throws ParseException {//去新增成绩页
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = sdf.parse(scoreTime);
+        model.addAttribute("scoreTime",date.getTime());
+        model.addAttribute("stu", JSONArray.toJSONString(service.stu(classid,courseid,scoreType,termid)));
+        return "student_zero/addscore";
     }
 }

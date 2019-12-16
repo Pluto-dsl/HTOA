@@ -21,5 +21,6 @@ public interface StudentScoreService {
     int scorepagecount(String where);//学生成绩总条数
     List<TermVo> term();//在读学期
     List<CourseVo> course();//所有课程
-
+    int haveScore(int classid, int courseid, int scoreType, int termid);//查询该班级是否有成绩
+    List<Map> stu(int classid, int courseid, int scoreType, int termid);//查询该班的学生
 }

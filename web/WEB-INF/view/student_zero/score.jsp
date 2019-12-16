@@ -63,17 +63,76 @@
         </div>
         <div class="layui-input-inline">
             <a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="add"> <i class="layui-icon">&#xe654;</i>录入学生成绩</a>
-
+            <a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="edit"> <i class="layui-icon">&#xe642;</i>修改学生成绩</a>
         </div>
     </label>
 </script>
 <table id="demo" lay-filter="test" ></table>
+<!--新增成绩-->
 <div  id="addscore"  style="margin-left: 5%;display: none;">
-    <form id="scoreform" class="layui-form" action="<%=request.getContextPath()%>/" style="margin-right: 100px;margin-top: 35px;" method="post">
+    <form id="scoreform" class="layui-form"  style="margin-right: 100px;margin-top: 35px;" method="post">
         <div class="layui-form-item">
             <label class="layui-form-label">班级名称:</label>
             <div  class="layui-input-block">
-                <select  name="className" style="width:290px;">
+                <select  name="classid" id ="classid" style="width:290px;">
+                    <c:forEach var="c" items="${claes}">
+                        <option value="${c.classId}">${c.className}</option>
+                    </c:forEach>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">课程名称:</label>
+            <div  class="layui-input-block">
+                <select  name="courseid" style="width:290px;">
+                    <c:forEach var="c" items="${course}">
+                        <option value="${c.courseId}">${c.courseName}</option>
+                    </c:forEach>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">考试类别:</label>
+            <div  class="layui-input-block">
+                <select  name="scoreType" style="width:290px;">
+                    <option value="1">笔试</option>
+                    <option value="2">机试</option>
+                    <option value="3">模拟面试</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">在读学期:</label>
+            <div  class="layui-input-block">
+                <select  name="termid" style="width:290px;">
+                    <c:forEach var="t" items="${term}">
+                        <option value="${t.termid}">${t.termName}</option>
+                    </c:forEach>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">考试时间:</label>
+            <div  class="layui-input-block">
+                <input lay-verify="required|date" id="scoreTime" name="scoreTime" value="" class="layui-input" type="text" placeholder="请选择考试时间"  autocomplete="off"  editable="false"  style="width:290px;">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <center>
+                    <button type="submit" class="layui-btn" lay-submit lay-filter="luruAction" >开始录入</button>
+                </center>
+            </div>
+        </div>
+    </form>
+</div>
+<!--修改成绩-->
+<div  id="editscore"  style="margin-left: 5%;display: none;">
+    <form id="editform" class="layui-form" action="<%=request.getContextPath()%>/" style="margin-right: 100px;margin-top: 35px;" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label">班级名称:</label>
+            <div  class="layui-input-block">
+                <select  name="classid" style="width:290px;">
                     <c:forEach var="c" items="${claes}">
                         <option value="${c.classId}">${c.className}</option>
                     </c:forEach>
@@ -111,15 +170,9 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">考试时间:</label>
-            <div  class="layui-input-block">
-                <input lay-verify="required|date" id="scoreTime" name="scoreTime" value="" class="layui-input" type="text" placeholder="请选择考试时间"  autocomplete="off"  editable="false"  style="width:290px;">
-            </div>
-        </div>
-        <div class="layui-form-item">
             <div class="layui-input-block">
                 <center>
-                    <button type="submit" class="layui-btn" lay-submit lay-filter="luru" >开始录入</button>
+                    <button type="submit" class="layui-btn" lay-submit lay-filter="edit" >开始修改</button>
                 </center>
             </div>
         </div>
@@ -129,7 +182,7 @@
 <script>
     layui.use([ 'laydate','element', 'table', 'layer', 'form' ,'laydate'],function() {
         var element = layui.element;
-        layer = layui.layer;
+        var layer = layui.layer;
         var table = layui.table;
         var form = layui.form;
         var laydate = layui.laydate;
@@ -191,8 +244,49 @@
                         content: $('#addscore')
                     });
                     break;
-
+                case 'edit':
+                    layer.open({
+                        type: 1,
+                        title:'修改学生成绩',
+                        skin: 'layui-layer-demo', //样式类名
+                        closeBtn: 1, //不显示关闭按钮
+                        area: ['600px', '400px'],
+                        fixed: false, //不固定
+                        maxmin: true,
+                        shadeClose: true, //开启遮罩关闭
+                        content: $('#editscore')
+                    });
+                    break;
             }
+        });
+
+        //新增工作经历
+        form.on('submit(luruAction)', function(data){
+            console.log()
+            $.ajax({
+                type: 'post',
+                url: "<%=request.getContextPath()%>/StudentScore/havescore", // ajax请求路径
+                async:true,
+                dataType: "text",
+                data:{
+                    classid:data.field.classid,
+                    courseid:data.field.courseid,
+                    scoreType:data.field.scoreType,
+                    termid:data.field.termid,
+                    scoreTime:data.field.scoreTime
+                },
+                success: function(d){
+                    if(d=='no'){
+                        layer.msg('此班已有此成绩,你可以修改此班级此的成绩!')
+                    }else if(d=='ok'){
+                        window.location.href="<%=request.getContextPath()%>/StudentScore/toaddscore?classid="+data.field.classid+"&courseid="+data.field.courseid+"&scoreType="+data.field.scoreType +
+                            "&termid="+data.field.termid+
+                            "&scoreTime="+data.field.scoreTime;
+                        return true;
+                    }
+                }
+            });
+            return false;//禁止跳转，否则会提交两次，且页面会刷新
         });
     })
 
