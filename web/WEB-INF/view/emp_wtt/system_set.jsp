@@ -46,7 +46,7 @@
                     </div>
                 </td>
                 <td align="center">
-                    <div style="height: 30px" onclick="alert('aaa')">
+                    <div style="height: 30px" id="aa" onclick="">
                         <i class="layui-icon layui-icon-set" style="font-size:50px;color: #93D1FF"></i>
                         <br>
                         流程设置
@@ -63,4 +63,12 @@
         </table>
     </div>
 </body>
+    <script>
+        layui.use([ 'element', 'table', 'layer', 'form' ,'laydate'],function() {
+
+            $("#aa").click(function () {
+                location.href='${pageContext.request.contextPath}/toPage/flow'
+            })
+        })
+    </script>
 </html>

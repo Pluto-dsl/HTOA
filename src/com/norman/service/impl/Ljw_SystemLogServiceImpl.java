@@ -3,6 +3,7 @@ package com.norman.service.impl;
 import com.norman.service.Ljw_SystemLogService;
 import com.publics.dao.BaseDao;
 import com.publics.vo.assess.AduitLogVo;
+import com.publics.vo.empModel.AttendanceVo;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,6 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
                 "LEFT JOIN dep d on e.depId = d.depId \n" +
                 "GROUP BY e.empId,e.empName,e.Sex,e.Phone,d.depName \n" +
                 "HAVING 1=1 ";
-        System.out.println("1111111111  "+sql);
 
         int depId;//判断员工id
         if ("".equals(depIdStr) || null == depIdStr){
@@ -35,8 +35,6 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
         if (depId!=0){
             sql +=" and Empid in (SELECT empId FROM emp where depId="+depId+")";
         }
-
-        System.out.println("2222222222  "+sql);
 
         if (!("".equals(empName) || null == empName)){//部门
             List<Integer> emps = super.getEmpNames(empName);
@@ -52,8 +50,7 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
                 sql +=" and Empid in (0)";
             }
         }
-        System.out.println("3333333333  "+sql);
-        return pageBySQL(sql,page,limit);
+        return super.pageBySQL(sql,page,limit);
     }
 
     @Override
@@ -63,8 +60,8 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
 
     @Override
     public List<Map> getEveryListById(int empId) {
-        return listBySQL("SELECT al.aduitLogid,e.empName,am.aduitName,al.Scores,al.auditDate,al.Image,ap.empName auditPerson,al.Remark FROM aduitLog al\n" +
-                "LEFT JOIN aduitModel am on al.aduitModelid=am.aduitModelid\n" +
+        return super.listBySQL("SELECT al.aduitLogid,e.empName,am.aduitName,al.Scores,al.auditDate,al.Image,ap.empName auditPerson,al.Remark FROM aduitLog al \n" +
+                "LEFT JOIN aduitModel am on al.aduitModelid=am.aduitModelid \n" +
                 "LEFT JOIN emp e on al.Empid=e.empId \n" +
                 "LEFT JOIN emp ap on al.auditPerson=ap.Empid\n" +
                 "WHERE al.Empid = "+empId);
@@ -72,6 +69,17 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
 
     @Override
     public AduitLogVo getAduitLog(int auditId) {
-        return (AduitLogVo) getObject(AduitLogVo.class,auditId);
+        return (AduitLogVo) super.getObject(AduitLogVo.class,auditId);
+    }
+
+    @Override
+    public List<AttendanceVo> getAttendance(int page,int limit) {
+        return super.pageBySQL("SELECT att.*,e.empName FROM attendance att\n" +
+                "LEFT JOIN emp e on e.empId=att.empId",page,limit);
+    }
+
+    @Override
+    public int getAttendanceSize() {
+        return 0;
     }
 }

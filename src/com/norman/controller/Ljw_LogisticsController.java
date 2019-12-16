@@ -22,26 +22,15 @@ import java.util.List;
 
 @Controller
 @RequestMapping(value = "/logs")
-public class Norman_LogisticsController {
+public class Ljw_LogisticsController {
     @Resource
     private Ljw_LogsService logsService;
     /**
-     * 保修申请相关方法
+     * 报修申请相关方法
      * */
     @RequestMapping(value = "/toMyRepair")
     public String toMyRepair(){
         return "repair_ljw/myRepair";
-    }
-
-    @RequestMapping(value = "/toWorkTime")
-    public String toWorkTime(Model model){
-        List<Integer> result = new ArrayList<>();
-        Calendar cal = Calendar.getInstance();
-        int month = cal.get(Calendar.MONTH);
-        result.add(month);
-        result.add(month +1);
-        model.addAttribute("month",result);
-        return "systemLog/workTimeList";
     }
 
     @RequestMapping(value = "/addRepair")

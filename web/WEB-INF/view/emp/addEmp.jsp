@@ -47,14 +47,14 @@
                 </td>
                 <td align="right">身份证号:</td>
                 <td align="left">
-                    <input lay-verify="required" type="text" class="layui-input" id="cardNo"  name="cardNo" value=""placeholder="请输入身份证号" style="width:200px;">
+                    <input lay-verify="required|identity" type="text" class="layui-input" id="cardNo"  name="cardNo" value=""placeholder="请输入身份证号" style="width:200px;">
                 </td>
             </tr>
 
             <tr style="height: 40px">
                 <td align="right">出生日期:</td>
                 <td align="left">
-                    <input lay-verify="required" class="layui-input" type="text" id="birthday" name="birthday" value="" placeholder="可根据身份证号获取出生日期"  style="width:200px;">
+                    <input lay-verify="required|date" class="layui-input" type="text" id="birthday" name="birthday" value="" placeholder="可根据身份证号获取出生日期"  style="width:200px;">
                     <%--<input class="layui-input" type="button"  onclick="hqbirthday();" value="获取日期" style="height: 33px;width: 60px;">--%>
                 </td>
                 <td align="right">籍贯:</td>
@@ -67,11 +67,11 @@
             <tr style="height: 40px">
                 <td align="right">手机号码:</td>
                 <td align="left">
-                    <input lay-verify="required" class="layui-input" type="text" id="phone" name="phone" value="" placeholder="请输入手机号"  style="width:200px;">
+                    <input lay-verify="required|phone" class="layui-input" type="text" id="phone" name="phone" value="" placeholder="请输入手机号"  style="width:200px;">
                 </td>
                 <td align="right">QQ号码:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="qqCode"  name="qqCode" value=""placeholder="请输入QQ号码" style="width:200px;">
+                    <input class="layui-input" lay-verify="number" type="text" id="qqCode"  name="qqCode" value=""placeholder="请输入QQ号码" style="width:200px;">
                 </td>
             </tr>
 
@@ -82,7 +82,7 @@
                 </td>
                 <td align="right">邮箱地址:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="email"  name="email" value="" placeholder="请输入邮箱地址" style="width:200px;">
+                    <input class="layui-input" lay-verify="email" type="text" id="email"  name="email" value="" placeholder="请输入邮箱地址" style="width:200px;">
                 </td>
             </tr>
 
