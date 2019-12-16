@@ -128,7 +128,7 @@
 </div>
 <!--修改成绩-->
 <div  id="editscore"  style="margin-left: 5%;display: none;">
-    <form id="editform" class="layui-form" action="<%=request.getContextPath()%>/" style="margin-right: 100px;margin-top: 35px;" method="post">
+    <form id="editform" class="layui-form"  style="margin-right: 100px;margin-top: 35px;" method="post">
         <div class="layui-form-item">
             <label class="layui-form-label">班级名称:</label>
             <div  class="layui-input-block">
@@ -142,7 +142,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">课程名称:</label>
             <div  class="layui-input-block">
-                <select  name="courseName" style="width:290px;">
+                <select  name="courseid" style="width:290px;">
                     <c:forEach var="c" items="${course}">
                         <option value="${c.courseId}">${c.courseName}</option>
                     </c:forEach>
@@ -162,7 +162,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">在读学期:</label>
             <div  class="layui-input-block">
-                <select  name="term" style="width:290px;">
+                <select  name="termid" style="width:290px;">
                     <c:forEach var="t" items="${term}">
                         <option value="${t.termid}">${t.termName}</option>
                     </c:forEach>
@@ -172,7 +172,7 @@
         <div class="layui-form-item">
             <div class="layui-input-block">
                 <center>
-                    <button type="submit" class="layui-btn" lay-submit lay-filter="edit" >开始修改</button>
+                    <button type="submit" class="layui-btn" lay-submit lay-filter="editAction" >开始修改</button>
                 </center>
             </div>
         </div>
@@ -180,10 +180,11 @@
 </div>
 </body>
 <script>
+    var table;
     layui.use([ 'laydate','element', 'table', 'layer', 'form' ,'laydate'],function() {
         var element = layui.element;
         var layer = layui.layer;
-        var table = layui.table;
+        table = layui.table;
         var form = layui.form;
         var laydate = layui.laydate;
         //执行一个laydate实例
@@ -202,6 +203,7 @@
             cols: [[ //表头
                 {field: 'scoreId', title: '序号', width: 100,sort:'true'}
                 , {field: 'stuname', title: '学生姓名', width: 100}
+                , {field: 'className', title: '班级', width: 250}
                 , {field: 'score', title: '学生成绩', width: 120,sort:'true'}
                 , {field: 'Rescore', title: '补考分数', width: 120,sort:'true'}
                 , {field: 'courseName',title:'课程名称',width:120}
@@ -209,7 +211,7 @@
                 , {field: 'termName',title:'在读学期',width:103}
                 , {field: 'scoreTime',title:'考试时间',width:150,templet : "<div>{{layui.util.toDateString(d.scoreTime,'yyyy年MM月dd日')}}</div>"}
                 , {field: 'empName',title:'录入人员',width:103}
-                , {field: 'Remark', title: '备注', width: 150}
+                , {field: 'remark', title: '备注', width: 150}
             ]]
             ,done: function(res, page, count){
             //如果是异步请求数据方式，res即为你接口返回的信息。
@@ -260,9 +262,8 @@
             }
         });
 
-        //新增工作经历
+        //新增学生成绩
         form.on('submit(luruAction)', function(data){
-            console.log()
             $.ajax({
                 type: 'post',
                 url: "<%=request.getContextPath()%>/StudentScore/havescore", // ajax请求路径
@@ -283,6 +284,28 @@
                             "&termid="+data.field.termid+
                             "&scoreTime="+data.field.scoreTime;
                         return true;
+                    }
+                }
+            });
+            return false;//禁止跳转，否则会提交两次，且页面会刷新
+        });
+
+        //修改学生成绩
+        form.on('submit(editAction)', function(data){
+            console.log(data.field)
+            $.ajax({
+                type: 'post',
+                url: "<%=request.getContextPath()%>/StudentScore/havescore", // ajax请求路径
+                async:true,
+                dataType: "text",
+                data:data.field,
+                success: function(d){
+                    if(d=='no'){
+                        window.location.href="<%=request.getContextPath()%>/StudentScore/toeditscore?classid="+data.field.classid+"&courseid="+data.field.courseid+"&scoreType="+data.field.scoreType +
+                            "&termid="+data.field.termid;
+                        return true;
+                    }else if(d=='ok'){
+                        layer.msg('还没有此班该成绩,请先新增后再做修改!')
                     }
                 }
             });

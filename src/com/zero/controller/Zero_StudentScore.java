@@ -2,6 +2,7 @@ package com.zero.controller;
 
 
 import com.alibaba.fastjson.JSONArray;
+import com.publics.vo.studentModel.StudentScoreVo;
 import com.zero.service.StudentScoreService;
 import com.zero.service.StudentService;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -131,21 +133,71 @@ public class Zero_StudentScore {
         PrintWriter writer = response.getWriter();
         //查询此班是否有成绩
         int i = service.haveScore(classid,courseid,scoreType,termid);
-        System.out.println("大小"+i);
-        if(i>0){
+        if(i>0){//有成绩
             writer.write("no");
-        }else {
+        }else {//没有成绩
             writer.write("ok");
         }
-        //查询当前班级的学生
     }
 
     @RequestMapping(value = "/toaddscore")
     public String toaddscore(int classid, int courseid, int scoreType, int termid, String scoreTime, Model model) throws ParseException {//去新增成绩页
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = sdf.parse(scoreTime);
-        model.addAttribute("scoreTime",date.getTime());
-        model.addAttribute("stu", JSONArray.toJSONString(service.stu(classid,courseid,scoreType,termid)));
+        model.addAttribute("scoreTime",date.getTime());//考试时间
+        model.addAttribute("stu", JSONArray.toJSONString(service.stu(classid)));//学生信息
+        model.addAttribute("course",service.nowcourse(courseid));//课程
+        model.addAttribute("term",service.nowterm(termid));//学期
+        model.addAttribute("scoreType",scoreType);//考试类别
         return "student_zero/addscore";
     }
+
+    @RequestMapping(value = "/toeditscore")//去新增成绩页
+    public String toeditscore(int classid, int courseid, int scoreType, int termid, Model model) throws ParseException {
+        model.addAttribute("stu", JSONArray.toJSONString(service.toeditScore(classid,courseid,scoreType,termid)));//学生成绩信息
+        model.addAttribute("course",service.nowcourse(courseid));//课程
+        model.addAttribute("term",service.nowterm(termid));//学期
+        model.addAttribute("scoreType",scoreType);//考试类别
+        return "student_zero/editscore";
+    }
+
+    @RequestMapping(value = "/addscore")
+    @ResponseBody//去新增成绩页
+    public void toaddscore(float score, String Rescore,String remark,int courseId,String testType, int termid, String scoreTime,int Studid, HttpServletResponse response, HttpSession session) throws ParseException, IOException {
+        String sql = "(0,";
+        //sql+=session.getAttribute("admin"); session获取录入人员
+        sql+=(1+",");
+        if (Rescore!=""){
+            sql+=(Rescore+",");
+        }else {
+            sql+="null,";
+        }
+        sql+=(courseId+",");
+        sql+=("'"+remark+"',");
+        sql+=(score+",");
+        sql+=("'"+scoreTime+"',");
+        sql+=(Studid+",");
+        sql+=(termid+",");
+        sql+=(testType+")");
+        service.addscore(sql);
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter writer = response.getWriter();
+        writer.write("ok");
+    }
+
+    @RequestMapping(value = "/editscore")
+    @ResponseBody
+    public void editscore(String res,StudentScoreVo studentScoreVo, HttpServletResponse response, HttpSession session) throws ParseException, IOException {//去新增成绩页
+        studentScoreVo.setEmpid(1);//从session里获取
+        //studentScoreVo.setEmpid((Integer) session.getAttribute(""));//从session里获取
+        if("".equals(res)){
+            res="null";
+        }
+        service.editscore(res,studentScoreVo);
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter writer = response.getWriter();
+        writer.write("ok");
+    }
+
+
 }

@@ -4,6 +4,7 @@ import com.publics.dao.BaseDao;
 import com.publics.vo.educ.CourseVo;
 import com.publics.vo.studentModel.ProjectNameVo;
 import com.publics.vo.studentModel.StudentClassVo;
+import com.publics.vo.studentModel.StudentScoreVo;
 import com.publics.vo.studentModel.TermVo;
 import com.zero.service.StudentScoreService;
 import org.springframework.stereotype.Service;
@@ -60,17 +61,19 @@ public class StudentScoreImpl extends BaseDao implements StudentScoreService {
 
     @Override
     public List<Map> score(int page, int limit) {
-        return super.pageBySQL("select sc.*,c.courseName,s.stuname,t.termName,e.empName from studentScore sc" +
-                " left join student s on s.Studid = sc.stuid" +
-                " left join course c on c.courseId = sc.courseId" +
-                " left join term t on t.termid = sc.termid" +
-                " left join emp e on e.empId = sc.EmpId order by sc.scoreId desc",page,limit);
+        return super.pageBySQL("select sc.*,c.courseName,s.stuname,ss.className,t.termName,e.empName from studentScore sc" +
+                "  left join student s on s.Studid = sc.stuid" +
+                "  left join studentClass ss on ss.classId = s.clazz" +
+                "  left join course c on c.courseId = sc.courseId" +
+                "  left join term t on t.termid = sc.termid" +
+                "  left join emp e on e.empId = sc.EmpId order by sc.scoreId desc",page,limit);
     }
 
     @Override
     public List<Map> score(String where, int page, int limit) {
-        String sql = "select sc.*,c.courseName,s.stuname,t.termName,e.empName from studentScore sc" +
+        String sql = "select sc.*,c.courseName,s.stuname,ss.className,t.termName,e.empName from studentScore sc" +
                 " left join student s on s.Studid = sc.stuid" +
+                " left join studentClass ss on ss.classId = s.clazz" +
                 " left join course c on c.courseId = sc.courseId" +
                 " left join term t on t.termid = sc.termid" +
                 " left join emp e on e.empId = sc.EmpId " +
@@ -120,12 +123,42 @@ public class StudentScoreImpl extends BaseDao implements StudentScoreService {
     }
 
     @Override
-    public List<Map> stu(int classid, int courseid, int scoreType, int termid) {
-        return super.listBySQL("select s.stuno,s.stuname,t.termName,ss.testType,c.courseName from studentClass sc " +
-                " left join student s on s.clazz = sc.classId" +
-                " left join studentScore ss on ss.stuid = s.clazz" +
-                " left join term t on t.termid = ss.termid" +
-                " left join course c on c.courseId = ss.courseId" +
-                " where s.clazz = "+classid+" and t.termid = "+termid+" and c.courseId = 24 and ss.testType = "+scoreType);
+    public List<Map> stu(int classid) {
+        return super.listBySQL("select s.Studid,s.stuno,s.stuname from student s where s.clazz = "+classid);
+    }
+
+    @Override
+    public TermVo nowterm(int termid) {
+        List<TermVo> list = super.listByHql("from TermVo where termid = "+termid);
+        return list.get(0);
+    }
+
+    @Override
+    public CourseVo nowcourse(int courseid) {
+        List<CourseVo> list = super.listByHql("from CourseVo where courseId = "+courseid);
+        return list.get(0);
+    }
+
+
+    @Override
+    public void addscore(String sql) {
+        sql = "insert into studentScore values"+sql;
+        super.executeSQL(sql);
+    }
+
+    @Override
+    public List<Map> toeditScore(int classid, int courseid, int scoreType, int termid) {
+        String  sql = "SELECT sc.scoreId,sc.score,sc.Rescore,t.termid,t.termName,sc.testType,sc.remark,sc.scoreTime,s.Studid,s.stuno,s.stuname,c.courseName,c.courseId,e.empName FROM student s  " +
+                " left join studentScore sc on s.Studid = sc.stuid" +
+                " left join term t on t.termid = sc.termid" +
+                " left join course c on c.courseId = sc.courseId " +
+                " left join emp  e on e.empId = sc.Empid" +
+                " where  s.clazz = "+classid+" and c.courseId = "+courseid+" and sc.testType = "+scoreType+" and t.termid = "+termid;
+        return super.listBySQL(sql);
+    }
+
+    @Override
+    public void editscore(String rescore,StudentScoreVo s) {
+        super.executeSQL("update studentScore set Empid = "+s.getEmpid()+",Rescore = "+rescore+",courseId = "+s.getCourseId()+",remark = '"+s.getRemark()+"',score = "+s.getScore()+",scoreTime='"+s.getScoreTime()+"',stuid = "+s.getStuid()+",termid = "+s.getTermid()+",testType = "+s.getTestType()+" where scoreId = "+s.getScoreId());
     }
 }

@@ -115,7 +115,7 @@
             toolbar: '#top', //开启头部工具栏，并为其绑定左侧模板
             page: true, //开启分页
             cols: [[ //表头
-                {field: 'replyId', title: '序号', width: 70,sort:'true'}
+                {field: 'replyId', title: '序号', width: 75,sort:'true'}
                 , {field: 'stuname', title: '学生姓名', width: 100}
                 , {field: 'className', title: '班级名称', width: 200}
                 , {field: 'projectName', title: '项目名称', width: 130}

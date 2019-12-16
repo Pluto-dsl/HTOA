@@ -3,6 +3,7 @@ package com.zero.service;
 import com.publics.vo.educ.CourseVo;
 import com.publics.vo.studentModel.ProjectNameVo;
 import com.publics.vo.studentModel.StudentClassVo;
+import com.publics.vo.studentModel.StudentScoreVo;
 import com.publics.vo.studentModel.TermVo;
 
 import java.util.List;
@@ -22,5 +23,11 @@ public interface StudentScoreService {
     List<TermVo> term();//在读学期
     List<CourseVo> course();//所有课程
     int haveScore(int classid, int courseid, int scoreType, int termid);//查询该班级是否有成绩
-    List<Map> stu(int classid, int courseid, int scoreType, int termid);//查询该班的学生
+    int haveReplyScore();//查询该班是否有答辩成绩
+    List<Map> stu(int classid);//查询该班的学生
+    TermVo nowterm(int termid);//在读学期
+    CourseVo nowcourse(int courseid);//课程名称
+    void addscore(String sql);//新增学生成绩
+    List<Map> toeditScore(int classid, int courseid, int scoreType, int termid);//查询该班成绩
+    void editscore(String rescore,StudentScoreVo studentScoreVo);//修改学生成绩
 }
