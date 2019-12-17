@@ -201,8 +201,9 @@
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/systemLog/toHolidayEmp"
                                data-id="未打卡说明统计" data-title="未打卡说明统计">未打卡说明统计</a></dd>
-                        <dd><a href="javascript:void(0);">宿舍统计报表</a></dd>
-                        <dd><a href="javascript:void(0);">学生请假</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/systemLog/toStuHour"
+                               data-id="宿舍统计报表" data-title="宿舍统计报表">宿舍统计报表</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
