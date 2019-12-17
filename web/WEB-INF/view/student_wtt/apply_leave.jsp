@@ -82,7 +82,7 @@
             cols:[[
                 {type:'checkbox', fixed:'left'}
                 ,{field:'holidayid',title:'编号', width:100, fixed: 'left', unresize: true, sort: true}
-                ,{field:'StudentIdd', title:'请假人', width:100}
+                ,{field:'stuname', title:'请假人', width:100}
                 ,{field:'holidayDay', title:'假期天数', width:170,sort:true}
                 ,{field:'startTime', title:'开始时间', width:200,templet:'<div>{{ layui.util.toDateString(d.startTime,"yyyy-MM-dd HH:mm:ss")}}</div>'}
                 ,{field:'endTime', title:'结束时间', width:200,templet:'<div>{{ layui.util.toDateString(d.endTime,"yyyy-MM-dd HH:mm:ss")}}</div>'}

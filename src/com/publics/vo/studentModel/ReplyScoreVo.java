@@ -25,23 +25,6 @@ public class ReplyScoreVo {
     private float Score7;//总分100
     private String Remark;//备注
 
-    public ReplyScoreVo(int replyId,int studentId, int projectId, int empId, float score1, float score2, float score3, float score4, float score5, float score6, float score7, String remark) {
-        this.replyId = replyId;
-        this.StudentId = studentId;
-        this.projectId = projectId;
-        this.empId = empId;
-        this.score1 = score1;
-        this.Score2 = score2;
-        this.Score3 = score3;
-        this.Score4 = score4;
-        this.Score5 = score5;
-        this.Score6 = score6;
-        this.Score7 = score7;
-        this.Remark = remark;
-    }
-
-    public ReplyScoreVo(){}
-
     public int getReplyId() {
         return replyId;
     }

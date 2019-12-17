@@ -31,7 +31,7 @@
 </head>
 <body>
     <script type="text/html" id="top">
-        <a class="layui-btn layui-btn-primary layui-btn-xs layui-icon-add-1" lay-event="detail" href="<%=request.getContextPath()%>/zeroEmp/toaddemp">新增员工</a>
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail" href="<%=request.getContextPath()%>/zeroEmp/toaddemp"><i class="layui-icon">&#xe654;</i>新增员工</a>
             <label  class="layui-form-item">
                 <label class="layui-form-label" style="width: 90px">部门名称:</label>
                 <div class="layui-input-inline">
@@ -93,9 +93,6 @@
             elem: '#demo'
             ,height: 600
             ,url: '<%=request.getContextPath()%>/zeroEmp/allemp' //数据接口
-            /*,where:{//设定异步数据接口的额外参数
-
-            }*/
             ,id:"clientId"
             ,toolbar: '#top' //开启头部工具栏，并为其绑定左侧模板
             ,page: true //开启分页

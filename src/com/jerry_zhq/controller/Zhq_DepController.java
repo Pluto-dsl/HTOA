@@ -36,52 +36,57 @@ public class Zhq_DepController {
     }
 
     @RequestMapping("/toPage/dep")
-    public String dep(){
+    public String dep(HttpServletRequest request){
+        //部门
+        List<DepVo> depList = zhqDepService.selDep();
+        //员工
+        List<EmpVo> empList = zhqDepService.selEmp();
+
+        request.setAttribute("depList",depList);//部门
+        request.setAttribute("empList",empList);//员工
         return "emp_zhq/dep";
     }
 
     @RequestMapping("/tree")
     @ResponseBody//部门管理，查询部门
     public void seldep(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String type =request.getParameter("type");
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();
 
-        if("tree".equals(type)){
-            JSONArray depJsonArray = new JSONArray();
-            List<DepVo> depVoList = new ArrayList<>();
-            List<DepVo> depVoList2 = new ArrayList<>();
-            List<DepVo> depVoList3 = new ArrayList<>();
-            //部门
-            List<DepVo> depList = zhqDepService.selDep();
+        JSONArray depJsonArray = new JSONArray();
+        List<DepVo> depVoList = new ArrayList<>();
+        //部门
+        List<DepVo> depList = zhqDepService.selDep();
 
-            for (DepVo depVo1:depList) {//最高部门
-                if(depVo1.getParentId() == 0){
-                    depVoList.add(depVo1);
-                }
+
+        for (DepVo depVo1:depList) {//最高部门
+            if(depVo1.getParentId() == 0){
+                depVoList.add(depVo1);
             }
-
-            for (DepVo depVo:depVoList) {//最高部门
-                Map map = new HashMap();
-                map.put("title",depVo.getDepName());
-                map.put("id",depVo.getDepid());
-
-                JSONArray jsonArray = new JSONArray();
-
-                for (DepVo depVo1:depList){
-                    if(depVo1.getParentId() == depVo.getDepid()){//第二阶
-                        Map chilDep = new HashMap();
-                        chilDep.put("title",depVo1.getDepName());
-                        chilDep.put("id",depVo1.getDepid());
-                        jsonArray.add(chilDep);
-                    }
-                }
-                map.put("children",jsonArray);
-                depJsonArray.add(map);
-            }
-            out.print(depJsonArray.toJSONString());
-
         }
+
+        for (DepVo depVo:depVoList) {//最高部门
+            Map map = new HashMap();
+            map.put("title",depVo.getDepName());
+            map.put("id",depVo.getDepid());
+
+            JSONArray jsonArray = new JSONArray();
+
+            for (DepVo depVo1:depList){
+                if(depVo1.getParentId() == depVo.getDepid()){//第二阶
+                    Map chilDep = new HashMap();
+                    chilDep.put("title",depVo1.getDepName());
+                    chilDep.put("id",depVo1.getDepid());
+                    chilDep.put("parentId",depVo1.getParentId());
+                    chilDep.put("remark",depVo1.getRemark());
+                    jsonArray.add(chilDep);
+                }
+            }
+            map.put("children",jsonArray);
+            depJsonArray.add(map);
+        }
+        out.print(depJsonArray.toJSONString());
+
     }
 
     @RequestMapping("/selDepAll")
@@ -90,27 +95,35 @@ public class Zhq_DepController {
         String name = request.getParameter("name");
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();
+        JSONObject jsonObject = new JSONObject();
 
         if("treeOpen".equals(type)){
-            List<DepVo> list = zhqDepService.selDepAll(name);
-            List<DepVo> depVos = zhqDepService.selDep();
-            JSONObject jsonObject = new JSONObject();
-            for (DepVo d :depVos) {
-                for (DepVo deVo: list) {
-                    if(deVo.getParentId() ==d.getDepid()){
-                        jsonObject.put("parentId",d.getDepName());//父部门名称
+            List<DepVo> list = zhqDepService.selDepAll(name);  //根据部门名查询所有部门
+            List<EmpVo> empVos = zhqDepService.selEmp();//查询员工
+            List<DepVo> depVoList = zhqDepService.selDep();//查询部门
+
+            for (DepVo d:depVoList) {
+                for (EmpVo e :empVos) {
+                    for (DepVo deVo: list) {
+                        jsonObject.put("depid",deVo.getDepid());
+                        jsonObject.put("depName",deVo.getDepName());//部门名称
+                        if(d.getDepid() == deVo.getParentId()){
+                            jsonObject.put("parentIdName",d.getDepName());
+                        }
+                        jsonObject.put("parentId",deVo.getParentId());
+                        jsonObject.put("chairman",deVo.getChairman());//部门负责人
+                        if(e.getEmpName().equals( deVo.getChairman())){
+                            jsonObject.put("empId",e.getEmpId());//员工
+                        }
+                        jsonObject.put("personnel",deVo.getPersonnel());//是否为人事部
+                        jsonObject.put("remark",deVo.getRemark());//备注
+                        request.setAttribute("depName",deVo.getDepName());
                     }
-                    jsonObject.put("depName",deVo.getDepName());//部门名称
-                    /*jsonObject.put("parentId",deVo.getParentId());*/
-                    jsonObject.put("chaiman",deVo.getChairman());//部门负责人
-                    jsonObject.put("personnel",deVo.getPersonnel());//是否为人事部
-                    jsonObject.put("remark",deVo.getRemark());//备注
-                    request.setAttribute("depName",deVo.getDepName());
                 }
             }
-
             out.print(jsonObject);
         }
+
     }
 
     //添加部门
@@ -133,16 +146,32 @@ public class Zhq_DepController {
 
     //修改
     @RequestMapping("/delUpdate")
-    @ResponseBody
-    public String delUpdate(HttpServletRequest request){
+    public String delUpdate(HttpServletResponse response,HttpServletRequest request){
+        response.setContentType("text/html;charset=utf-8");
+        int empId = Integer.valueOf(request.getParameter("empId"));
+        int depId= Integer.valueOf(request.getParameter("depid"));
+        String remark= request.getParameter("remark");
         String depName = request.getParameter("depName");
-        int deptId = Integer.parseInt(request.getParameter("deptId"));
-        DepVo depVo = zhqDepService.selById(deptId);
+        int parentId = Integer.valueOf(request.getParameter("parentId"));
+
+
+
+        EmpVo empVo = new EmpVo();
+        //根据id查询员工
+        EmpVo empVo1 = (EmpVo) zhqDepService.selObjId(empVo.getClass(),empId);
+
+        DepVo depVo = new DepVo();
+
+        depVo.setDepid(depId);
         depVo.setDepName(depName);
+        depVo.setParentId(parentId);
+        depVo.setChairman(empVo1.getEmpName());
+        depVo.setRemark(remark);
+        depVo.setPersonnel(0);
+
 
         zhqDepService.updateDep(depVo);
-
-        return "success";
+        return "redirect:/toPage/dep";
     }
 
     //删除
