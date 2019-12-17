@@ -129,10 +129,10 @@ public class Ljw_SystemLogController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/getWorkTimeData")//获取
+    @RequestMapping(value = "/getWorkTimeData")//获取未打卡说明数据
     public void getWorkTimeData(HttpServletRequest request,HttpServletResponse response,int page,int limit) throws IOException {
         response.setContentType("text/html;charset=utf-8");
-        List<AttendanceVo> data = systemLogService.getAttendance(page,limit);
+        List<AttendanceVo> data = systemLogService.getAttendance(request,page,limit);
         int count = systemLogService.getAttendanceSize();
         JSONObject result = new JSONObject();
         result.put("code",0);
@@ -141,7 +141,49 @@ public class Ljw_SystemLogController {
         result.put("data",data);
 
         PrintWriter out = response.getWriter();
-        out.print(request);
+        out.print(result.toJSONString());
+        out.flush();
+        out.close();
+    }
+
+    @RequestMapping(value = "/toStuHour")//去往宿舍统计页面
+    public String toStuHour(Model model){
+        List<Map> result = systemLogService.getFloorList();
+        model.addAttribute("floorList",result);
+        return "systemLog/stuHour";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getStuHourData")//获取宿舍的数据
+    public void getStuHourData(HttpServletRequest request,HttpServletResponse response,int page,int limit) throws IOException {
+        response.setContentType("test/html;charset=utf-8");
+        //取出数据
+        List<Map> data = systemLogService.getStuHourList(request,page,limit);
+        int count = systemLogService.getStuHourSize(request);
+        //拼接返回数据
+        JSONObject result = new JSONObject();
+        result.put("code",0);
+        result.put("msg","提示");
+        result.put("count",count);
+        result.put("data",data);
+        //使用输出流输出数据
+        PrintWriter out = response.getWriter();
+        out.print(result.toJSONString());
+        out.flush();
+        out.close();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/hourByFloor")//通过楼栋获取宿舍信息
+    public void hourByFloor(HttpServletResponse response,Integer floorId) throws IOException {
+        response.setContentType("test/html;charset=utf-8");
+        //取出数据
+        List<Map> hourList = systemLogService.getHourListNames(floorId);
+        //使用输出流输出数据
+        PrintWriter out = response.getWriter();
+        JSONObject result = new JSONObject();
+        result.put("data",hourList);
+        out.print(result);
         out.flush();
         out.close();
     }

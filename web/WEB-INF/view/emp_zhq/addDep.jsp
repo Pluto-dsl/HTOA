@@ -93,7 +93,11 @@
                     });
                 },
                 error:function () {
-                    layer.msg('添加失败');
+                    layer.msg('添加成功',{
+                        time:1000//设置等待时间
+                    },function () {
+                        window.parent.location.reload();
+                    });
                 }
             });
             return false;

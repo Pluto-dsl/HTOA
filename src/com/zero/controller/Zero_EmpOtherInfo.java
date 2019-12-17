@@ -3,6 +3,7 @@ package com.zero.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.publics.vo.assess.AduitLogVo;
 import com.publics.vo.empModel.emp.EducationVo;
+import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.empModel.emp.FamilyInfoVo;
 import com.publics.vo.empModel.emp.JobVo;
 import com.publics.vo.file.AnnexVo;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -188,8 +190,8 @@ public class Zero_EmpOtherInfo {
 
     @RequestMapping(value = "/addaduit")//新增或修改选中用户考核
     @ResponseBody
-    public String  addaduit(AduitLogVo aduitLogVo){
-        //aduitLogVo.setAuditPerson("");//从session中获取
+    public String  addaduit(AduitLogVo aduitLogVo, HttpSession session){
+        aduitLogVo.setAuditPerson(((EmpVo) session.getAttribute("admin")).getEmpName());//从session中获取
         aduitLogVo.setAuditDate(new java.util.Date());
         service.addaduit(aduitLogVo);
         return "ok";
@@ -222,7 +224,7 @@ public class Zero_EmpOtherInfo {
     }
 
     @RequestMapping(value = "/addannex")//添加证件
-    public String addannex(int empId, MultipartFile annexPath,String annexName,String Remark, HttpServletRequest request) throws IOException {
+    public String addannex(int empId, MultipartFile annexPath,String annexName,String Remark, HttpServletRequest request,HttpSession session) throws IOException {
         String oldName = annexPath.getOriginalFilename();
         System.out.println(annexPath.getOriginalFilename());
         //文件后缀名
@@ -253,7 +255,7 @@ public class Zero_EmpOtherInfo {
         annexVo.setSeName(1);
         annexVo.setSeId(empId);
         annexVo.setAnnexDate(new Date(new java.util.Date().getTime()));
-        annexVo.setSessionName("");//操作人 在有登录后在session中获取
+        annexVo.setSessionName(((EmpVo) session.getAttribute("admin")).getEmpName());//操作人 在有登录后在session中获取
         service.addAnnex(annexVo);
         return "redirect:topage?empId="+empId;
     }

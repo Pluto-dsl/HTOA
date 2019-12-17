@@ -62,7 +62,7 @@ public interface Jack_Service {
     int Conditional_queryCount(String empName,String depId,String startDate,String EndDate); //条件查询
     /** 考评内容，教师考评 */
     List selHeadmasterList();
-    List selTeacherList();  //老师查看学生对老师的考评及总分
+    List selTeacherList();
     int addAevaluation(evaluationVo evaluatio);
     void delAevaluation(int id);
     List selTeacherListE(String name,String evaluationType,int currPage,int pageSize); // 教师考评

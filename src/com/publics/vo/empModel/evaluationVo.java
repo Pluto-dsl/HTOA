@@ -11,16 +11,16 @@ public class evaluationVo {
     private String evaluationName; //考评名称
     private int Score; //考评分数
     private int evaluationType; //1、授课老师  2、班主任
-    private int isOpen; //开启考评  1 开启  2未开启
+    private String remark;
 
     @Override
     public String toString() {
         return "evaluationVo{" +
                 "evaluationid=" + evaluationid +
-                ", evaluationName='" + evaluationName + '\'' +
+                ", evaluationName=" + evaluationName +
                 ", Score=" + Score +
                 ", evaluationType=" + evaluationType +
-                ", isOpen=" + isOpen +
+                ", remark='" + remark + '\'' +
                 '}';
     }
 
@@ -56,11 +56,11 @@ public class evaluationVo {
         this.evaluationType = evaluationType;
     }
 
-    public int getIsOpen() {
-        return isOpen;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setIsOpen(int isOpen) {
-        this.isOpen = isOpen;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

@@ -61,8 +61,8 @@
                         $(this).text("模拟面试")
                     }
                 })
-            },
-            limits: [10, 20, 30 , 40, 50]
+            }
+            //limits: [10, 20, 30 , 40, 50]
         });
         table.on('tool(test)',
             function(d) {
@@ -76,12 +76,6 @@
                         break;
                 }
         });
-        table.on('edit(test)', function(obj) {
-            var value = obj.value //得到修改后的值
-                , data = obj.data //得到所在行所有键值
-                , field = obj.field; //得到字段
-            ///console.log(value+''+data+''+field)
-        })
 
         table.on('toolbar(test)', function(obj){
             switch(obj.event) {

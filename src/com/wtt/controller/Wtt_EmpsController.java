@@ -81,6 +81,7 @@ public class Wtt_EmpsController {
     //删除
     @RequestMapping(value = "/deleteEmpPaper")
     public String deleteEmpPaperPage(HttpServletResponse response,int id){
+        System.out.println("id为："+id);
         empService.delete(id);
         try {
             PrintWriter printWriter = response.getWriter();
@@ -100,6 +101,11 @@ public class Wtt_EmpsController {
         return "emp_wtt/mynewpaper";
     }
 
+    //点击主页面最上面的用户查询出当前用户信息
+    /*@RequestMapping(value = "usermessage")
+    public String usermessage(){
+        return "emp_wtt/userMessage";
+    }*/
     //查询当前用户信息
     @RequestMapping(value = "selectusermessage")
     public String selectusermessage(ModelMap modelMap, HttpSession session){
