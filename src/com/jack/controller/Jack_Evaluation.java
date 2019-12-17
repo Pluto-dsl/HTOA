@@ -3,9 +3,8 @@ package com.jack.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jack.service.Jack_Service;
+import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.empModel.evaluationVo;
-import com.publics.vo.empModel.headTeacherVo;
-import com.publics.vo.empModel.teacherTotalVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,6 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 
@@ -57,7 +59,8 @@ public class Jack_Evaluation {
         evaluationVo evaluation = new evaluationVo();
         evaluation.setEvaluationName(evaluationName);
         evaluation.setEvaluationType(Integer.parseInt(evaluationType));
-        evaluation.setRemark(remark);
+        evaluation.setScore(10);
+        evaluation.setIsOpen(2);
         int a = service.addAevaluation(evaluation);
         System.out.println(a+"-===-=-=-==-=-");
         return "成功";
@@ -67,11 +70,80 @@ public class Jack_Evaluation {
     @ResponseBody
     public String delEvaluation(String evaluationid){
         service.delAevaluation(Integer.parseInt(evaluationid));
-        headTeacherVo head = new headTeacherVo();
-        teacherTotalVo teacherTotal = new teacherTotalVo();
         return "成功";
     }
 
+    /** 教师考评 */
+    @RequestMapping(value = "toTeacherListE")
+    public String toTeacherListE(){
+        return "emp_xzq/teacherEvaluation";
+    }
+    @RequestMapping(value = "/teacherListE")
+    @ResponseBody
+    public void teacherListE(String Name,String duties, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int currPage = Integer.parseInt(request.getParameter("page"));
+        int pageSize = Integer.parseInt(request.getParameter("limit"));
+        response.setContentType("text/html;charset=utf-8");
+        System.out.println(Name+"fwfewf"+duties+"---------------");
+        List list = service.selTeacherListE(Name,duties,currPage,pageSize);
+        PrintWriter out = response.getWriter();
+        JSONObject json = new JSONObject();
+        json.put("msg","提示");
+        json.put("code","0");
+        json.put("data",list);
+        json.put("count",list.size());
+        System.out.println(json.toJSONString());
+        out.print(json);
+        out.close();
+    }
+    /** 考评报表 */
+    @RequestMapping(value = "/toReportForm")
+    public String toReportForm(){
+        return "emp_xzq/ReportForm";
+    }
+
+    @RequestMapping(value = "/ReportForm")
+    @ResponseBody
+    public void ReportForm(HttpServletResponse response) throws IOException {
+        List list = service.selReportForm();
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter out = response.getWriter();
+        JSONObject json = new JSONObject();
+        json.put("msg","提示");
+        json.put("code","0");
+        json.put("data",list);
+        System.out.println(json.toJSONString());
+        out.print(json);
+        out.close();
+    }
+
+
+    String tid = "";
+    String cid = "";
+    @RequestMapping(value = "/toScoreDetails")
+    public  String toScoreDetails(String teacherid,String classid){
+        tid = teacherid;
+        cid = classid;
+        return "emp_xzq/ScoreDetails";
+    }
+
+    @RequestMapping(value = "/ScoreDetails")
+    @ResponseBody
+    public void ScoreDetails(HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        System.out.println(tid+"fwfewf"+cid+"---------------");
+        List list = service.selScoreDetails(tid,cid);
+        PrintWriter out = response.getWriter();
+        JSONObject json = new JSONObject();
+        json.put("msg","提示");
+        json.put("code","0");
+        json.put("data",list);
+        System.out.println(json.toJSONString());
+        out.print(json);
+        out.close();
+    }
+
+    /** 学生端——教师考评 */
     @RequestMapping("/toTeacharEva")
     public String toTeacharEva(){
         return "emp_xzq/stu_selectWindows";
@@ -85,7 +157,7 @@ public class Jack_Evaluation {
         //进入班主任考评
         if("Headmaster".equals(type)){
             List evaluate = service.selHeadmasterTest(2);
-            List  problem = service.selHeadmasterType();
+            List problem = service.selHeadmasterType();
             System.out.println(evaluate);
             Map json = new HashMap();
             for(int a=0;a<evaluate.size();a++){
@@ -106,18 +178,25 @@ public class Jack_Evaluation {
         return "error";
     }
 
-    @RequestMapping("/ajaxEvaluate")
+    @RequestMapping(value = "/ajaxEvaluate")
     public String ajaxEvaluate(HttpServletRequest request){
         String [] list1  = request.getParameterValues("number");
         String [] list2  = request.getParameterValues("evaluationid");
+        String classid = request.getParameter("classid");
+        String teacherid = request.getParameter("teacherid");
+        String sugges = request.getParameter("sugges");
         List number = new ArrayList();
         List evaluationid = new ArrayList();
-        for (int a=0;a<list1.length;a++){
-            number.add(list1[a]);
+        for (int i=0;i<list1.length;i++){
+            number.add(list1[i]);
+            evaluationid.add(list2[i]);
+
         }
-        for (int b=0;b<list2.length;b++){
-            number.add(list2[b]);
-        }
+        System.out.println(number+"----------------");
+        System.out.println(evaluationid);
+        System.out.println(classid);
+        System.out.println(teacherid);
+        System.out.println(sugges);
         return "emp_xzq/stu_selectWindows";
     }
 }

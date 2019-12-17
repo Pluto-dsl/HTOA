@@ -59,20 +59,20 @@
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test" lay-accordion>
                 <li class="layui-nav-item">
                     <a href="javascript:;" lay-tips="员工管理" lay-direction="2">
                         <i class="layui-icon layui-icon-user"></i>
                         <cite>员工管理</cite>
                     </a>
                     <dl class="layui-nav-child">
-                        <dd>
-                            <%-- 例子  可修改 照着写就行了 --%>
-                            <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                        <%-- 例子  可修改 照着写就行了 --%>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/toPage/dep"
-                               data-id="部门管理" data-title="部门管理">部门管理</a>
-                        </dd>
-                        <dd><a href="javascript:void(0);" >员工资料</a></dd>
+                               data-id="部门管理" data-title="部门管理">部门管理</a></dd>
+                        <dd> <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                                data-url="<%=request.getContextPath()%>/zeroEmp/toemp"
+                                data-id="员工资料" data-title="员工资料" >员工资料</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/emp/toEmpPaper"
                                data-id="我的周报" data-title="我的周报" >我的周报</a></dd>
@@ -106,7 +106,6 @@
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/zeroStudent/toClass"
                                data-id="班级管理" data-title="班级管理">班级管理</a></dd>
-                        <dd><a href="javascript:void(0);">班级管理</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/toPage/stuFloor"
                                data-id="楼栋管理" data-title="楼栋管理">楼栋管理</a></dd>
@@ -115,9 +114,13 @@
                                data-id="宿舍管理" data-title="宿舍管理" >宿舍管理</a></dd>
                         <dd><a href="javascript:void(0);"class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/student/stuList"
-                               data-id="学生资料" data-title="学生资料">学生资料</a></dd>
-                        <dd><a href="javascript:void(0);">考试成绩</a></dd>
-                        <dd><a href="javascript:void(0);">答辩成绩</a></dd>
+                               data-id="学生资料" data-title="学生资料" >学生资料</a></dd>
+                        <dd><a href="javascript:void(0);"class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/StudentScore/toscore"
+                               data-id="考试成绩" data-title="考试成绩" >考试成绩</a></dd>
+                        <dd><a href="javascript:void(0);"class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/StudentScore/toreply"
+                               data-id="答辩成绩" data-title="答辩成绩" >答辩成绩</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -166,7 +169,9 @@
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toEvaluationContext"
                                data-id="考评内容" data-title="考评内容">考评内容</a></dd>
-                        <dd><a href="javascript:void(0);">教师考评</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/jack/toTeacherListE"
+                               data-id="教师考评" data-title="教师考评">教师考评</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -204,7 +209,6 @@
                                data-url="${pageContext.request.contextPath}/systemLog/toHolidayEmp"
                                data-id="未打卡说明统计" data-title="未打卡说明统计">未打卡说明统计</a></dd>
                         <dd><a href="javascript:void(0);">宿舍统计报表</a></dd>
-                        <dd><a href="javascript:void(0);">学生请假</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">

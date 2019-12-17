@@ -45,7 +45,7 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:void(0);">
-                    ${admin.stuname}
+                    ${user.stuname}
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="/logout">注销</a></dd>

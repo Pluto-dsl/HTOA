@@ -58,7 +58,7 @@
                     </select>
                 </td>
                 <td>说明:</td>
-                <td><input type="text" id="Remark1" name="Remark" required lay-verify="required" placeholder="请输入课程类型" autocomplete="off" class="layui-input"></td>
+                <td><input type="text"  id="Remark1" name="Remark" required lay-verify="required" placeholder="请输入课程类型" autocomplete="off" class="layui-input"></td>
             </tr>
             <tr>
                 <td align="center" colspan="4">
@@ -176,6 +176,7 @@
             $.post('${pageContext.request.contextPath}/jack/addAss',data.field,function (d) {
                 alert(d);
             },"json");
+            table.reload('AssList');
         });
 
         $.get('${pageContext.request.contextPath}/jack/select',{},function (da) {
