@@ -2,6 +2,7 @@ package com.zero.controller;
 
 
 import com.alibaba.fastjson.JSONArray;
+import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.studentModel.ReplyScoreVo;
 import com.publics.vo.studentModel.StudentScoreVo;
 import com.zero.service.StudentScoreService;
@@ -188,7 +189,7 @@ public class Zero_StudentScore {
     @ResponseBody//去新增成绩页
     public void toaddscore(float score, String Rescore,String remark,int courseId,String testType, int termid, String scoreTime,int Studid, HttpServletResponse response, HttpSession session) throws ParseException, IOException {
         String sql = "(0,";
-        //sql+=session.getAttribute("admin"); session获取录入人员
+        sql+=((EmpVo) session.getAttribute("admin")).getEmpId(); //session获取录入人员
         sql+=(1+",");
         if (Rescore!=""){
             sql+=(Rescore+",");
@@ -231,8 +232,8 @@ public class Zero_StudentScore {
     @RequestMapping(value = "/editscore")
     @ResponseBody//修改学生答辩成绩
     public void editscore(String res,StudentScoreVo studentScoreVo, HttpServletResponse response, HttpSession session) throws ParseException, IOException {//去新增成绩页
-        studentScoreVo.setEmpid(1);//从session里获取
-        //studentScoreVo.setEmpid((Integer) session.getAttribute(""));//从session里获取
+        //studentScoreVo.setEmpid(1);//从session里获取
+        studentScoreVo.setEmpid(((EmpVo) session.getAttribute("admin")).getEmpId());//从session里获取
         if("".equals(res)){
             res="null";
         }
