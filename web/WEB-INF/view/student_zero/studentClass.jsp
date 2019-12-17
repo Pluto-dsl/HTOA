@@ -177,7 +177,7 @@
                 ,{field: 'status', title: '操作', width: 200,toolbar:'#bar'}
                 ,{field: 'ren', title: '人数',hide:'true'}
             ]]
-            ,page: {limit:10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
+            ,page: {limit:10,limits:[5,10,20,30,50],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
         //查看学生表格
         table.render({
@@ -190,7 +190,7 @@
                 {field: 'className', title: '班级', width:200}
                 ,{field: 'stuname', title: '学生姓名', width:100}
                 ,{field: 'sex', title: '性别', width:100}
-                ,{field: 'phone', title: '学生电话', width:200}
+                ,{field: 'phone', title: '学生电话', width:150}
             ]]
             ,
         })
@@ -208,7 +208,7 @@
                     title:data.className+'学生名单(共:'+data.ren+'人)',
                     skin: 'layui-layer-demo', //样式类名
                     closeBtn: 1, //不显示关闭按钮
-                    area: ['600px', '300'],
+                    area: ['600px', '550'],
                     fixed: false, //不固定
                     maxmin: true,
                     shadeClose: true, //开启遮罩关闭
@@ -286,7 +286,6 @@
                 level:level,
             }
         })
-
         $("#level").val(level);
     }
 </script>

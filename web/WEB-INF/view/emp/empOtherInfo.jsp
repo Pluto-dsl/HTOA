@@ -27,6 +27,7 @@
             <li>家庭联系信息</li>
             <li>员工考核</li>
             <li>证件上传</li>
+            <li><button onclick="toemp()" class="layui-btn">返回</button></li>
         </ul><%--工具栏--%>
         <div class="layui-tab-content">
             <script type="text/html" id="jobTop">
@@ -261,9 +262,9 @@
                 <label class="layui-form-label">上传证件:</label>
                 <div class="layui-input-block">
                         <input type="file" multiple name="annexPath" onchange="upload(this)"  required lay-verify="required"/>
-<%--                            <button type="button" class="layui-btn" id="upload" name="annexPath" onchange="upload(this)">--%>
-<%--                                <i class="layui-icon">&#xe67c;</i>上传图片--%>
-<%--                            </button>--%>
+                            <%--<div class="layui-upload uploadbuchong" style="margin-top: 20px;margin-left: 60px;">
+                                <button type="button" class="layui-btn layui-btn-normal" id="test8" name="face"><i class="layui-icon">&#xe67c;</i>上传图片</button>
+                            </div>--%>
                     <div id="huixian" style="height:100px"></div>
                 </div>
             </div>
@@ -731,7 +732,15 @@
                     ,{field: 'aduitName', title: '考核指标', width:200}
                     ,{field: 'Scores', title: '考核分数', width:100}
                     ,{field: 'auditDate', title: '考核时间', width:200,templet : "<div>{{layui.util.toDateString(d.auditDate, 'yyyy年MM月dd日 HH:mm')}}</div>"}
-                    ,{field: 'image', title: '图片', width:200,templet : "<div><img src='<%=request.getContextPath()%>/{{d.image}}' style='width: 100px'/></div>"}
+                    ,{field: 'Image', title: '图片', width:110,templet: function (d) {
+                            console.log(d.Image)
+                            if (d.Image!=null){
+                                return "<div><img src='"+d.Image+"' style='width: 100px'/></div>";
+                            }else{
+                                return "";
+                            }
+                        }
+                    }
                     ,{field: 'Remark', title: '说明', width:200}
                     ,{field: 'auditPerson', title: '录入人员', width:200}
                 ]]
@@ -875,19 +884,14 @@
 
         var upload = layui.upload;
 
-        //执行实例
-        /*var uploadInst = upload.render({
-            elem: '#upload' //绑定元素
-            ,url: '<%=request.getContextPath()%>/zeroEmpInfo/addannexfile' //上传接口
-            ,done: function(res){
-                layer.msg('上传成功!')
-                //上传完毕回调
-            }
-            ,error: function(){
-                //请求异常回调
-            }
+       /* upload.render({
+            elem: '#test8'
+            ,size:1024*10//限制文件大小，单位 KB
+            ,auto: false//非自动上传
+            /!*,accept:'images'*!/
+            ,acceptMime: 'image/jpg, image/png'
+            ,multiple: true
         });*/
-
         layui.use('table', function(){
             table = layui.table;
             //家庭联系人
@@ -967,8 +971,8 @@
             }
         });
 
-        //新增文件上传
-        /*form.on('submit(annexAction)', function(data){
+        /*//新增文件上传
+        form.on('submit(annexAction)', function(data){
             $.ajax({
                 type: 'post',
                 url: "<%--<%=request.getContextPath()%>--%>/zeroEmpInfo/addannex?empId=<%--${empId}--%>", // ajax请求路径
@@ -1002,6 +1006,9 @@
                 document.getElementById("huixian").innerHTML = str;
             }
         }
+    }
+    function toemp() {
+        window.location.href="<%=request.getContextPath()%>/zeroEmp/toemp";
     }
 </script>
 </html>

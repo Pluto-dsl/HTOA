@@ -16,10 +16,10 @@
     <form id="addFrom" action="${pageContext.request.contextPath}/jack/ajaxEvaluate" class="layui-form" method="post">
         <table align="center" style="margin-top: 5%;border-collapse: separate;border-spacing: 10px 30px;">
             <tr>
-                <th id="className">班级:<font color="#ff4500">${evaluate.className}</font></th>
-                <th id="teacharName">班主任:<font color="#ff4500">${evaluate.empName}</font></th>
+                <th id="className">班级:（<font color="#ff4500">${evaluate.className}</font>）</th>
+                <th id="teacharName">班主任:（<font color="#ff4500">${evaluate.empName}</font>）</th>
             </tr>
-            <tr>
+            <tr align="center">
                 <td>考评题目</td>
                 <td>分数</td>
             </tr>
