@@ -2,7 +2,6 @@ package com.norman.service;
 
 import com.publics.vo.assess.AduitLogVo;
 import com.publics.vo.empModel.AttendanceVo;
-import com.publics.vo.studentModel.StudentDormitoryVo;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -18,10 +17,18 @@ public interface Ljw_SystemLogService {
     AduitLogVo getAduitLog(int auditId);//获取指定的考核巡查记录
 
     /*
+    * 员工请假统计
+    * */
+    List<Map> getHolidayEmp(HttpServletRequest request,int page,int limit);
+    int getHolidayEmpSize(HttpServletRequest request);
+    List<Map> getHolidayListByEmp(HttpServletRequest request,int page,int limit);
+
+
+    /*
     * 未打卡说明统计
     * */
     List<AttendanceVo> getAttendance(HttpServletRequest request,int page,int limit);
-    int getAttendanceSize();
+    int getAttendanceSize(HttpServletRequest request);
 
     /*
     * 宿舍统计

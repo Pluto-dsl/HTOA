@@ -73,6 +73,109 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
     }
 
     @Override
+    public List<Map> getHolidayEmp(HttpServletRequest request, int page, int limit) {
+        //创建sql语句
+        String sql = "select e.empId,e.empName,count(*) holiCount,SUM(h.holidayDay) holiday,SUM(h.hour) 'hour' FROM holiday h\n" +
+                "LEFT JOIN emp e on h.Empid=e.empId where 1=1";
+
+        //取出条件
+        String empName = request.getParameter("empName");
+        String month = request.getParameter("month");
+
+        //根据条件添加sql语句
+        if (!("".equals(empName) || null == empName)){
+            List<Integer> emps = super.getEmpNames(empName);
+            if (emps.size()>=1){
+                String empIds = "";
+                for (int id:emps) {
+                    empIds +=+id+",";
+                }
+                System.out.println(empIds);
+                empIds = empIds.substring(0,empIds.length()-1);
+                sql +=" and h.Empid in ("+empIds+")";
+            }else {
+                sql +=" and h.Empid in (0)";
+            }
+        }
+        if (!("".equals(month) || null == month)) {
+            int mon = Integer.parseInt(month);
+            if (mon != 0){
+                Calendar cal = Calendar.getInstance();
+                sql += " and h.startTime >= '"+cal.get(Calendar.YEAR)+"-"+mon+"-01 00:00:00'";
+                mon++;
+                sql += " and h.startTime < '"+cal.get(Calendar.YEAR)+"-"+mon+"-01 00:00:00'";
+            }
+        }else {
+            Calendar cal = Calendar.getInstance();
+            int mon = cal.get(Calendar.MONTH);
+            mon--;
+            sql += " and h.startTime >= '"+cal.get(Calendar.YEAR)+"-"+mon+"-01 00:00:00'";
+            mon++;
+            sql += " and h.startTime < '"+cal.get(Calendar.YEAR)+"-"+mon+"-01 00:00:00'";
+        }
+        sql +=" GROUP BY e.empId,e.empName";
+        System.out.println(sql);
+        return super.pageBySQL(sql,page,limit);
+    }
+
+    @Override
+    public int getHolidayEmpSize(HttpServletRequest request) {
+        //创建sql语句
+        String sql = "select e.empId,e.empName,count(*) holiCount,SUM(h.holidayDay) holiday,SUM(h.hour) 'hour' FROM holiday h\n" +
+                "LEFT JOIN emp e on h.Empid=e.empId where 1=1";
+
+        //取出条件
+        String empName = request.getParameter("empName");
+        String month = request.getParameter("month");
+
+        //根据条件添加sql语句
+        if (!("".equals(empName) || null == empName)){
+            List<Integer> emps = super.getEmpNames(empName);
+            if (emps.size()>=1){
+                String empIds = "";
+                for (int id:emps) {
+                    empIds +=+id+",";
+                }
+                System.out.println(empIds);
+                empIds = empIds.substring(0,empIds.length()-1);
+                sql +=" and h.Empid in ("+empIds+")";
+            }else {
+                sql +=" and h.Empid in (0)";
+            }
+        }
+        if (!("".equals(month) || null == month)) {
+            int mon = Integer.parseInt(month);
+            if (mon != 0){
+                Calendar cal = Calendar.getInstance();
+                sql += " and h.startTime >= '"+cal.get(Calendar.YEAR)+"-"+mon+"-01 00:00:00'";
+                mon++;
+                sql += " and h.startTime < '"+cal.get(Calendar.YEAR)+"-"+mon+"-01 00:00:00'";
+            }
+        }else {
+            Calendar cal = Calendar.getInstance();
+            int mon = cal.get(Calendar.MONTH);
+            mon--;
+            sql += " and h.startTime >= '"+cal.get(Calendar.YEAR)+"-"+mon+"-01 00:00:00'";
+            mon++;
+            sql += " and h.startTime < '"+cal.get(Calendar.YEAR)+"-"+mon+"-01 00:00:00'";
+        }
+        sql +=" GROUP BY e.empId,e.empName";
+        System.out.println(sql);
+        return listBySQL(sql).size();
+    }
+
+    @Override
+    public List<Map> getHolidayListByEmp(HttpServletRequest request,int page,int limit) {
+        String empId = request.getParameter("empId");
+        if (!("".equals(empId) ||empId==null )){
+
+        }
+        return listBySQL("select e.empName,h.* FROM holiday h\n" +
+                "LEFT JOIN emp e on h.Empid=e.empId\n" +
+                "WHERE h.Empid = "+empId);
+    }
+
+    @Override
     public List<AttendanceVo> getAttendance(HttpServletRequest request,int page,int limit) {
         //创建sql语句
         String sql = "SELECT att.*,e.empName FROM attendance att LEFT JOIN emp e on e.empId=att.empId where 1=1";
@@ -89,7 +192,48 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
                 for (int id:emps) {
                     empIds +=+id+",";
                 }
-                System.out.println(empIds);
+                empIds = empIds.substring(0,empIds.length()-1);
+                sql +=" and att.empId in ("+empIds+")";
+            }else {
+                sql +=" and att.empId in (0)";
+            }
+        }
+        if (!("".equals(month) || null == month)) {
+            int mon = Integer.parseInt(month);
+            if (mon != 0){
+                Calendar cal = Calendar.getInstance();
+                sql += " and punckClockTime >= '"+cal.get(Calendar.YEAR)+"-"+mon+"-01 00:00:00'";
+                mon++;
+                sql += " and punckClockTime < '"+cal.get(Calendar.YEAR)+"-"+mon+"-01 00:00:00'";
+            }
+        }else {
+            Calendar cal = Calendar.getInstance();
+            int mon = cal.get(Calendar.MONTH);
+            mon--;
+            sql += " and punckClockTime >= '"+cal.get(Calendar.YEAR)+"-"+mon+"-01 00:00:00'";
+            mon++;
+            sql += " and punckClockTime < '"+cal.get(Calendar.YEAR)+"-"+mon+"-01 00:00:00'";
+        }
+        return super.pageBySQL(sql,page,limit);
+    }
+
+    @Override
+    public int getAttendanceSize(HttpServletRequest request) {
+        //创建sql语句
+        String sql = "SELECT att.*,e.empName FROM attendance att LEFT JOIN emp e on e.empId=att.empId where 1=1";
+
+        //取出条件
+        String empName = request.getParameter("empName");
+        String month = request.getParameter("month");
+
+        //根据条件添加sql语句
+        if (!("".equals(empName) || null == empName)){
+            List<Integer> emps = super.getEmpNames(empName);
+            if (emps.size()>=1){
+                String empIds = "";
+                for (int id:emps) {
+                    empIds +=+id+",";
+                }
                 empIds = empIds.substring(0,empIds.length()-1);
                 sql +=" and att.empId in ("+empIds+")";
             }else {
@@ -113,13 +257,7 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
             sql += " and punckClockTime < '"+cal.get(Calendar.YEAR)+"-"+mon+"-01 00:00:00'";
         }
         System.out.println(sql);
-        return super.pageBySQL(sql,page,limit);
-    }
-
-    @Override
-    public int getAttendanceSize() {
-        return super.listBySQL("SELECT att.*,e.empName FROM attendance att\n" +
-                "LEFT JOIN emp e on e.empId=att.empId").size();
+        return super.listBySQL(sql).size();
     }
 
     @Override

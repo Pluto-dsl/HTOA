@@ -12,7 +12,7 @@
     <jsp:include page="include.jsp" />
     <style>
         a{
-            color: #000;
+            color: #fff;
         }
         #Bcontext{
             width: 100%;
@@ -120,13 +120,13 @@
         #down{
             font-size: 12px;
             text-align: center;
-            color: #6e6e6e;
+            color: #979797;
             font-family: 'Segoe UI',SegoeUI,'Microsoft YaHei',微软雅黑,"Helvetica Neue",Helvetica,Arial,sans-serif;
             position: absolute;
             top: 90%;
             width: 100%;
             height: 10%;
-            background-color: #ffffffd4;
+            background-color: #070707ed;
         }
     </style>
 </head>
