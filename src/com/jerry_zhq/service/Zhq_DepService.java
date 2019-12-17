@@ -21,10 +21,12 @@ public interface Zhq_DepService {
 
 
     //修改部门
-    void updateDep(DepVo depName);
+    void updateDep(DepVo depVo);
 
     //删除部门
     void deleteDep(DepVo depId);
+
+    Object selObjId(Class clazz, Integer id);
 
 
 
