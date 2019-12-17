@@ -155,9 +155,11 @@ public class Zhq_DepController {
         int parentId = Integer.valueOf(request.getParameter("parentId"));
 
 
+
         EmpVo empVo = new EmpVo();
         //根据id查询员工
         EmpVo empVo1 = (EmpVo) zhqDepService.selObjId(empVo.getClass(),empId);
+
         DepVo depVo = new DepVo();
 
         depVo.setDepid(depId);
@@ -166,6 +168,7 @@ public class Zhq_DepController {
         depVo.setChairman(empVo1.getEmpName());
         depVo.setRemark(remark);
         depVo.setPersonnel(0);
+
 
         zhqDepService.updateDep(depVo);
         return "redirect:/toPage/dep";

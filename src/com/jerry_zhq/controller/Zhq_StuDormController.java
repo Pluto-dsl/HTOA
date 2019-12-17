@@ -32,7 +32,7 @@ public class Zhq_StuDormController {
         return "/stu_zhq/stuDorm";
     }
     @RequestMapping("/selDorm")
-    @ResponseBody
+    @ResponseBody//查询宿舍
     public JSONObject selDorm(HttpServletResponse response,HttpServletRequest request, int page, int limit){
         response.setContentType("text/html;charset=utf-8");
         JSONObject jsonObject = new JSONObject();
@@ -97,6 +97,7 @@ public class Zhq_StuDormController {
         sname = fname+"-"+sname;
         studentDormitoryVo.setHuorName(sname);
         zhq_stuDormService.addDorm(studentDormitoryVo);
+
         return "success";
     }
 
@@ -104,6 +105,12 @@ public class Zhq_StuDormController {
     @RequestMapping("/updateDorm")
     public String updateStuDormit(StudentDormitoryVo studentDormitoryVo,HttpServletResponse response){
         response.setContentType("text/html;charset=utf-8");
+        List<Map> l = zhq_stuDormService.selDormFloor(studentDormitoryVo.getFloorId());
+        String fname = l.get(0).get("floorName").toString();
+        String name = studentDormitoryVo.getHuorName().substring(2,6);
+        name = fname+name;
+        studentDormitoryVo.setHuorName(name);
+
         zhq_stuDormService.update(studentDormitoryVo);
         return "redirect:/toPage/stuDorm";
     }
