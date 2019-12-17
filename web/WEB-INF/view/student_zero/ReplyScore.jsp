@@ -14,7 +14,7 @@
     <style>
         .layui-form-item .layui-input-inline {
             float: left;
-            width: 205px;
+            width: 176px;
             margin-right: 10px;
         }
     </style>
@@ -52,18 +52,21 @@
             </div>
             <div class="layui-input-inline">
                 <button id="seek" type="submit" class="layui-btn" onclick="seek()">搜索</button>
+            </div>
+            <div class="layui-input-inline" style=" margin-left: -50px;">
                 <a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="add"> <i class="layui-icon">&#xe654;</i>录入答辩成绩</a>
             </div>
-            <%--<div class="layui-input-inline">
-            </div>--%>
+            <div class="layui-input-inline" style=" margin-left: -51px;">
+                <a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="edit"> <i class="layui-icon">&#xe642;</i>修改答辩成绩</a>
+            </div>
         </label>
     </script>
     <div  id="addscore"  style="margin-left: 5%;display: none;">
-        <form id="scoreform" class="layui-form" action="<%=request.getContextPath()%>/" style="margin-right: 100px;margin-top: 35px;" method="post">
+        <form  class="layui-form"  style="margin-right: 100px;margin-top: 35px;" method="post">
             <div class="layui-form-item">
                 <label class="layui-form-label">班级名称:</label>
                 <div  class="layui-input-block">
-                    <select  name="className" style="width: 100px">
+                    <select  name="classid" style="width: 100px">
                         <c:forEach var="c" items="${claes}">
                             <option value="${c.classId}">${c.className}</option>
                         </c:forEach>
@@ -73,7 +76,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">项目名称:</label>
                 <div  class="layui-input-block">
-                    <select  name="courseName">
+                    <select  name="projectId">
                         <c:forEach var="p" items="${project}">
                             <option value="${p.projectId}">${p.projectName}</option>
                         </c:forEach>
@@ -81,31 +84,48 @@
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">答辩时间:</label>
+                <div class="layui-input-block">
+                    <button type="submit" class="layui-btn" lay-submit lay-filter="luruAction" >开始录入</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--修改-->
+    <div  id="editscore"  style="margin-left: 5%;display: none;">
+        <form  class="layui-form"  style="margin-right: 100px;margin-top: 35px;" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">班级名称:</label>
                 <div  class="layui-input-block">
-                    <input lay-verify="required|date" id="scoreTime" name="scoreTime" value="" class="layui-input" type="text" placeholder="请选择考试时间"  autocomplete="off"  editable="false"  style="width:290px;">
+                    <select  name="classid" style="width: 100px">
+                        <c:forEach var="c" items="${claes}">
+                            <option value="${c.classId}">${c.className}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">项目名称:</label>
+                <div  class="layui-input-block">
+                    <select  name="projectId">
+                        <c:forEach var="p" items="${project}">
+                            <option value="${p.projectId}">${p.projectName}</option>
+                        </c:forEach>
+                    </select>
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button type="submit" class="layui-btn" lay-submit lay-filter="luru" onclick="add()">开始录入</button>
+                    <button type="submit" class="layui-btn" lay-submit lay-filter="editAction" >开始修改</button>
                 </div>
             </div>
         </form>
     </div>
 </body>
 <script>
-
+    var table
     layui.use(['laydate','table', 'form'], function() {
         var form = layui.form;
-        var table = layui.table;
-        var laydate = layui.laydate;
-        //时间选择器
-        //执行一个laydate实例
-        laydate.render({
-            elem: '#scoreTime'
-            // ,format: 'yyyy年MM月dd日'
-        });
+        table = layui.table;
         //第一个实例
         table.render({
             elem: '#demo',
@@ -116,15 +136,16 @@
             page: true, //开启分页
             cols: [[ //表头
                 {field: 'replyId', title: '序号', width: 75,sort:'true'}
-                , {field: 'stuname', title: '学生姓名', width: 100}
+                , {field: 'stuname', title: '学生姓名', width: 80}
                 , {field: 'className', title: '班级名称', width: 200}
-                , {field: 'projectName', title: '项目名称', width: 130}
+                , {field: 'projectName', title: '项目名称', width: 150}
+                , {field: 'empName', title: '评分老师', width: 150}
                 , {field: 'score1',title:'功能完善50',width:103,sort:'true'}
-                , {field: 'Score2',title:'技术难度10',width:103,sort:'true'}
-                , {field: 'Score3',title:'界面完美10',width:103,sort:'true'}
-                , {field: 'Score4',title:'回答问题10',width:103,sort:'true'}
-                , {field: 'Score5',title:'演示方法10',width:103,sort:'true'}
-                , {field: 'Score6',title:'语言表达10',width:103,sort:'true'}
+                , {field: 'Score2',title:'技术难度10',width:105,sort:'true'}
+                , {field: 'Score3',title:'界面完美10',width:105,sort:'true'}
+                , {field: 'Score4',title:'回答问题10',width:105,sort:'true'}
+                , {field: 'Score5',title:'演示方法10',width:105,sort:'true'}
+                , {field: 'Score6',title:'语言表达10',width:105,sort:'true'}
                 , {field: 'Score7',title:'总分100',width:100,sort:'true'}
                 , {field: 'Remark', title: '备注', width: 100}
             ]],
@@ -140,17 +161,74 @@
                         title:'录入学生成绩',
                         skin: 'layui-layer-demo', //样式类名
                         closeBtn: 1, //不显示关闭按钮
-                        area: ['600px', '550'],
+                        area: ['450px', '350'],
                         fixed: false, //不固定
                         maxmin: true,
                         shadeClose: true, //开启遮罩关闭
                         content: $('#addscore')
                     });
                 break;
-
+                case 'edit':
+                    layer.open({
+                        type: 1,
+                        title:'修改学生成绩',
+                        skin: 'layui-layer-demo', //样式类名
+                        closeBtn: 1, //不显示关闭按钮
+                        area: ['450px', '350'],
+                        fixed: false, //不固定
+                        maxmin: true,
+                        shadeClose: true, //开启遮罩关闭
+                        content: $('#editscore')
+                    });
+                    break;
             }
         });
 
+        //新增学生成绩
+        form.on('submit(luruAction)', function(data){
+            $.ajax({
+                type: 'post',
+                url: "<%=request.getContextPath()%>/StudentScore/haveReplyscore", // ajax请求路径
+                async:true,
+                dataType: "text",
+                data:{
+                    classid:data.field.classid,
+                    projectId:data.field.projectId,
+                },
+                success: function(d){
+                    if(d=='have'){//有成绩
+                        layer.msg('此班已有该成绩,你可以修改此班级该的成绩!')
+                    }else if(d=='no'){//没成绩
+                        window.location.href="<%=request.getContextPath()%>/StudentScore/toaddReply?classid="+data.field.classid+"&projectId="+data.field.projectId;
+                        return true;
+                    }
+                }
+            });
+            return false;//禁止跳转，否则会提交两次，且页面会刷新
+        });
+
+        //修改学生成绩
+        form.on('submit(editAction)', function(data){
+            $.ajax({
+                type: 'post',
+                url: "<%=request.getContextPath()%>/StudentScore/haveReplyscore", // ajax请求路径
+                async:true,
+                dataType: "text",
+                data:{
+                    classid:data.field.classid,
+                    projectId:data.field.projectId,
+                },
+                success: function(d){
+                    if(d=='have'){//有成绩
+                        window.location.href="<%=request.getContextPath()%>/StudentScore/toeditReply?classid="+data.field.classid+"&projectId="+data.field.projectId;
+                        return true;
+                    }else if(d=='no'){//没成绩
+                        layer.msg('查无此班级成绩,请先新增此班的该答辩成绩!')
+                    }
+                }
+            });
+            return false;//禁止跳转，否则会提交两次，且页面会刷新
+        });
     })
 
     //条件搜索
