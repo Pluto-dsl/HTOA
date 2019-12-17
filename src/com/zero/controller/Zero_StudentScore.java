@@ -2,6 +2,7 @@ package com.zero.controller;
 
 
 import com.alibaba.fastjson.JSONArray;
+import com.publics.vo.studentModel.ReplyScoreVo;
 import com.publics.vo.studentModel.StudentScoreVo;
 import com.zero.service.StudentScoreService;
 import com.zero.service.StudentService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -140,7 +142,20 @@ public class Zero_StudentScore {
         }
     }
 
-    @RequestMapping(value = "/toaddscore")
+    @RequestMapping(value = "/haveReplyscore")
+    @ResponseBody
+    public void havescore(int classid, int projectId, HttpServletResponse response) throws IOException {//去新增成绩页
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter writer = response.getWriter();
+        //查询此班是否有成绩
+        int i = service.haveReplyScore(classid,projectId);
+        if(i>0){//有成绩
+            writer.write("have");
+        }else {//没有成绩
+            writer.write("no");
+        }
+    }
+    @RequestMapping(value = "/toaddscore")//去新增学生成绩页
     public String toaddscore(int classid, int courseid, int scoreType, int termid, String scoreTime, Model model) throws ParseException {//去新增成绩页
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = sdf.parse(scoreTime);
@@ -152,7 +167,15 @@ public class Zero_StudentScore {
         return "student_zero/addscore";
     }
 
-    @RequestMapping(value = "/toeditscore")//去新增成绩页
+    @RequestMapping(value = "/toaddReply")//去新增学生答辩成绩页
+    public String toaddReply(int classid, int projectId, Model model) throws ParseException {//去新增成绩页
+        model.addAttribute("stu", JSONArray.toJSONString(service.stu(classid)));//学生信息
+        model.addAttribute("project",service.nowproject(projectId));//项目
+        model.addAttribute("teacher",studentService.teacher());//评分人员
+        return "student_zero/addReply";
+    }
+
+    @RequestMapping(value = "/toeditscore")//去编辑学生成绩页
     public String toeditscore(int classid, int courseid, int scoreType, int termid, Model model) throws ParseException {
         model.addAttribute("stu", JSONArray.toJSONString(service.toeditScore(classid,courseid,scoreType,termid)));//学生成绩信息
         model.addAttribute("course",service.nowcourse(courseid));//课程
@@ -185,8 +208,28 @@ public class Zero_StudentScore {
         writer.write("ok");
     }
 
+    @RequestMapping(value = "/addReplyScore")
+    @ResponseBody//去新增成绩页
+    public void toaddscore(ReplyScoreVo scoreVo, HttpServletResponse response) throws ParseException, IOException {
+        scoreVo.setScore7(scoreVo.getScore1()+scoreVo.getScore2()+scoreVo.getScore3()+scoreVo.getScore4()+scoreVo.getScore5()+scoreVo.getScore6());
+        service.addReplyscore(scoreVo);
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter writer = response.getWriter();
+        writer.write("ok");
+    }
+
+    @RequestMapping(value = "/toeditReply")//去修改学生答辩成绩页
+    public String toeditscore(int classid,int projectId, Model model) throws ParseException {
+        model.addAttribute("stu",JSONArray.toJSONString(service.toeditReplyscore(classid,projectId)));
+        model.addAttribute("cls",service.nowclass(classid));//班级信息
+        model.addAttribute("project",service.nowproject(projectId));//项目信息
+        //评分人员
+        model.addAttribute("teacher",studentService.teacher());
+        return "student_zero/editReply";
+    }
+
     @RequestMapping(value = "/editscore")
-    @ResponseBody
+    @ResponseBody//修改学生答辩成绩
     public void editscore(String res,StudentScoreVo studentScoreVo, HttpServletResponse response, HttpSession session) throws ParseException, IOException {//去新增成绩页
         studentScoreVo.setEmpid(1);//从session里获取
         //studentScoreVo.setEmpid((Integer) session.getAttribute(""));//从session里获取
@@ -199,5 +242,14 @@ public class Zero_StudentScore {
         writer.write("ok");
     }
 
+    @RequestMapping(value = "/editReplyscore")
+    @ResponseBody
+    public void editReply(ReplyScoreVo scoreVo,HttpServletResponse response) throws ParseException, IOException {//修改答辩成绩页
+        scoreVo.setScore7(scoreVo.getScore1()+scoreVo.getScore2()+scoreVo.getScore3()+scoreVo.getScore4()+scoreVo.getScore5()+scoreVo.getScore6());
+        service.editReply(scoreVo);
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter writer = response.getWriter();
+        writer.write("ok");
+    }
 
 }
