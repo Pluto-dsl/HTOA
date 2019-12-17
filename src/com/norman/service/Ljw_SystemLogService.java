@@ -22,4 +22,5 @@ public interface Ljw_SystemLogService {
     List<AttendanceVo> getAttendance(int page,int limit);
     int getAttendanceSize();
 
+    List<AttendanceVo> getAttendance();
 }
