@@ -1,7 +1,11 @@
 package com.jack.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.jack.service.Jack_Service;
 import com.publics.vo.empModel.evaluationVo;
+import com.publics.vo.empModel.headTeacherVo;
+import com.publics.vo.empModel.teacherTotalVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -53,8 +57,7 @@ public class Jack_Evaluation {
         evaluationVo evaluation = new evaluationVo();
         evaluation.setEvaluationName(evaluationName);
         evaluation.setEvaluationType(Integer.parseInt(evaluationType));
-        evaluation.setScore(10);
-        evaluation.setIsOpen(2);
+        evaluation.setRemark(remark);
         int a = service.addAevaluation(evaluation);
         System.out.println(a+"-===-=-=-==-=-");
         return "成功";
@@ -64,13 +67,9 @@ public class Jack_Evaluation {
     @ResponseBody
     public String delEvaluation(String evaluationid){
         service.delAevaluation(Integer.parseInt(evaluationid));
+        headTeacherVo head = new headTeacherVo();
+        teacherTotalVo teacherTotal = new teacherTotalVo();
         return "成功";
-    }
-
-    /** 教师考评 */
-    @RequestMapping(value = "/teacherListE")
-    public String teacherListE(){
-        return "";
     }
 
     @RequestMapping("/toTeacharEva")
@@ -107,7 +106,7 @@ public class Jack_Evaluation {
         return "error";
     }
 
-    @RequestMapping(value = "/ajaxEvaluate")
+    @RequestMapping("/ajaxEvaluate")
     public String ajaxEvaluate(HttpServletRequest request){
         String [] list1  = request.getParameterValues("number");
         String [] list2  = request.getParameterValues("evaluationid");
@@ -117,10 +116,8 @@ public class Jack_Evaluation {
             number.add(list1[a]);
         }
         for (int b=0;b<list2.length;b++){
-            evaluationid.add(list2[b]);
+            number.add(list2[b]);
         }
-        System.out.println(number);
-        System.out.println(evaluationid);
         return "emp_xzq/stu_selectWindows";
     }
 }

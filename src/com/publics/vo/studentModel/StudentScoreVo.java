@@ -15,14 +15,29 @@ public class StudentScoreVo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int scoreId;//成绩主键id
     private int stuid;//学生表外键
-    private float score;//学生成绩
-    private float Rescore;//补考成绩
+    private int score;//学生成绩
+    private int Rescore;//补考成绩
     private int courseId;//关联课程id
     private int testType;//1:笔试2:机试3:模拟面试
     private int termid;//关联学期id
     private Date scoreTime;//考试时间
     private int Empid;//录入人员,获取session值
     private String remark;//备注
+
+    public StudentScoreVo(int scoreId,int stuid, int score, int rescore, int courseId, int testType, int termid, Date scoreTime, int empid, String remark) {
+        this.scoreId = scoreId;
+        this.stuid = stuid;
+        this.score = score;
+        Rescore = rescore;
+        this.courseId = courseId;
+        this.testType = testType;
+        this.termid = termid;
+        this.scoreTime = scoreTime;
+        Empid = empid;
+        this.remark = remark;
+    }
+
+    public StudentScoreVo(){}
 
     public int getScoreId() {
         return scoreId;
@@ -40,19 +55,19 @@ public class StudentScoreVo {
         this.stuid = stuid;
     }
 
-    public float getScore() {
+    public int getScore() {
         return score;
     }
 
-    public void setScore(float score) {
+    public void setScore(int score) {
         this.score = score;
     }
 
-    public float getRescore() {
+    public int getRescore() {
         return Rescore;
     }
 
-    public void setRescore(float rescore) {
+    public void setRescore(int rescore) {
         Rescore = rescore;
     }
 

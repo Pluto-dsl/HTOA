@@ -19,7 +19,7 @@ public interface Ljw_SystemLogService {
     /*
     * 未打卡说明统计
     * */
-    List<AttendanceVo> getAttendance(int page,int limit);
-    int getAttendanceSize();
+    List<AttendanceVo> getAttendance();
+
 
 }
