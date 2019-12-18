@@ -3,7 +3,9 @@ package com.norman.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.norman.service.Ljw_LogsService;
+import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.logistics.EquipmentRepairVo;
+import org.hibernate.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,8 +38,7 @@ public class Ljw_LogisticsController {
     @RequestMapping(value = "/addRepair")
     public String addRepair(HttpServletRequest request,String equipmentType,String remark){
         HttpSession session = request.getSession();
-        session.setAttribute("user",1);
-        int user = (int) session.getAttribute("user");
+        int user = ((EmpVo) session.getAttribute("admin")).getEmpId();
         int depId = logsService.getEmpVo(user).getDepId();
         EquipmentRepairVo repair = new EquipmentRepairVo();
         repair.setEquipmentType(equipmentType);
@@ -56,7 +57,6 @@ public class Ljw_LogisticsController {
     public void getEmpRepairData(HttpServletResponse response,HttpServletRequest request,int page,int limit) throws IOException {
         int count;
         JSONArray data;
-        System.out.println("员工");
         count = logsService.getRepairSize(2);
         data = logsService.getRepairData(request,2,page,limit);
 
@@ -77,7 +77,6 @@ public class Ljw_LogisticsController {
     public void getStuRepairData(HttpServletResponse response,HttpServletRequest request,int page,int limit) throws IOException {
         int count;
         JSONArray data;
-        System.out.println("学生");
         count = logsService.getRepairSize(1);
         data = logsService.getRepairData(request,1,page,limit);
         response.setContentType("text/html;charset=utf-8");
@@ -95,7 +94,9 @@ public class Ljw_LogisticsController {
     @ResponseBody
     @RequestMapping(value = "/getMyRepairData")
     public void getMyRepairData(HttpServletResponse response,HttpServletRequest request,int page,int limit) throws IOException {
-        int user = 1;
+        HttpSession session = request.getSession();
+        EmpVo vo = (EmpVo) session.getAttribute("admin");
+        int user = vo.getEmpId();
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();
         JSONObject result = new JSONObject();

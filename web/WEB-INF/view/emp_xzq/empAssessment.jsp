@@ -60,7 +60,6 @@
         <button lay-event="batchDel" class="layui-btn layui-btn-sm layui-btn-danger" ><i class="layui-icon layui-icon-prev" style="font-size: 30px;"></i>批量删除</button>
         <button lay-event="search" id="search" style="float: right;" class="layui-btn layui-btn-sm layui-btn-warm"><i class="layui-icon layui-icon-search"></i>搜索</button>
     </div>
-
 </script>
 <script type="text/html" id="barDemo">
     <button class="layui-btn layui-btn-xs layui-btn layui-btn-normal" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</button>

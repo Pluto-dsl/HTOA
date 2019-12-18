@@ -37,7 +37,7 @@
                 </td>
                 <td>考核时间:</td>
                 <td>
-                    <input type="text" class="layui-input" id="auditDate" name="auditDate" placeholder="yyyy-MM-dd">
+                    <input type="text" class="layui-input" id="auditDate" name="auditDate" autocomplete="off" placeholder="yyyy-MM-dd">
                 </td>
             </tr>
             <tr>
