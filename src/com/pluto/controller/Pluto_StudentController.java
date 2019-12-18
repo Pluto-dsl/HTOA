@@ -1,6 +1,8 @@
 package com.pluto.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.pluto.service.Pluto_StudentMsg;
+import com.publics.utills.StringUtill;
 import com.publics.vo.studentModel.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +31,10 @@ public class Pluto_StudentController {
     @RequestMapping("/stuList")
     public String getStudentList(HttpServletRequest request){
         List hList = service.getHourList("from StudentDormitoryVo");
+        List cList = service.getListByHql("from StudentClassVo");
+        List sList = service.getListByHql("from StuStartSetVo");
+        request.setAttribute("cList",cList);
+        request.setAttribute("sList",sList);
         request.setAttribute("ssList",hList);
         return "student_pluto/student_list";
     }
@@ -48,6 +54,17 @@ public class Pluto_StudentController {
         return "student_pluto/updateStudent";
     }
 
+    @RequestMapping("/seekStuList")
+    @ResponseBody
+    public void seekStuList(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setContentType("text/html;charset=utf-8");
+        String json = service.seekStuList(request);
+        PrintWriter pw = response.getWriter();
+        pw.print(json);
+        pw.flush();
+        pw.close();
+    }
 
 
     @RequestMapping("/updateStu")

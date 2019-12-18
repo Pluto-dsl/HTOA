@@ -40,6 +40,8 @@ public interface Pluto_StudentMsg {
     String getDbData(int stuid);//获取学生的答辩成绩表数据
     List getListByHql(String hql);//根据hql查询列表
     Object getObjById(Class cla,int id);//根据id获取对象
+    String seekStuList(HttpServletRequest request);//根据查询学生列表
+
     //查询员工，暂时
     EmpVo getemp(int id);
 }

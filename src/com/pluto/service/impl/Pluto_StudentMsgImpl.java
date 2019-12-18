@@ -3,6 +3,7 @@ package com.pluto.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.pluto.service.Pluto_StudentMsg;
 import com.publics.dao.BaseDao;
+import com.publics.utills.StringUtill;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.studentModel.*;
 import org.springframework.stereotype.Service;
@@ -226,6 +227,70 @@ public class Pluto_StudentMsgImpl extends BaseDao implements Pluto_StudentMsg {
         json.put("msg","学生列表");
         json.put("count",10);
         json.put("data",list);
+        return json.toJSONString();
+    }
+
+    @Override
+    public String seekStuList(HttpServletRequest request) {
+        String stuname  = request.getParameter("name");
+        String stuphone = request.getParameter("phone");
+        String stuclass = request.getParameter("stuclass");
+        String stuhour  = request.getParameter("hour");
+        String stustart = request.getParameter("start");
+        try {
+            stuname  = StringUtill.tostring(stuname);
+            stuphone = StringUtill.tostring(stuphone);
+            stuclass = StringUtill.tostring(stuclass);
+            stuhour  = StringUtill.tostring(stuhour );
+            stustart = StringUtill.tostring(stustart);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        String sql = "select  s.Studid,s.stuno,s.stuname,s.sex,s.entertime,s.phone,s.addr,c.className,s.cardid,h.huorName,s.stat,s.computer,s.collar,s.`grants`,s.parents,s.parentsphone,s.qkMoney \n" +
+                " from student s " +
+                " inner join studentClass c on s.clazz = c.classId" +
+                " inner join studentHuor h on s.huor = h.Hourid" +
+                " where 1=1";
+        String countsql = "select  count(*) sl\n" +
+                "\tfrom student s\n" +
+                "\tinner join studentClass c on s.clazz = c.classId\n" +
+                "\tinner join studentHuor h on s.huor = h.Hourid where 1=1";
+
+        if(!"".equals(stuname)){
+            sql+=" and s.stuname like '%"+stuname+"%'";
+            countsql+=" and s.stuname like '%"+stuname+"%'";
+        }
+        if(!"".equals(stuphone)){
+            sql+=" and s.phone like '%"+stuphone+"%'";
+            countsql+=" and s.phone like '%"+stuphone+"%'";
+        }
+        if(!"0".equals(stuclass)){
+            sql+=" and s.clazz = "+stuclass;
+            countsql+=" and s.clazz = "+stuclass;
+        }
+        if(!"0".equals(stuhour)){
+            sql+=" and s.huor = "+stuhour;
+            countsql+=" and s.huor = "+stuhour;
+        }
+        if(!"0".equals(stustart)){
+            sql+=" and s.stat = "+stustart;
+            countsql+=" and s.stat = "+stustart;
+        }
+
+
+        List list = super.listBySQL(sql);
+
+        List temp = super.listBySQL(countsql);
+        Map m = (Map) temp.get(0);
+        int count =  Integer.valueOf(m.get("sl").toString());
+
+        JSONObject json = new JSONObject();
+        json.put("code",0);
+        json.put("msg","学生列表");
+        json.put("count",count);
+        json.put("data",list);
+
         return json.toJSONString();
     }
 
