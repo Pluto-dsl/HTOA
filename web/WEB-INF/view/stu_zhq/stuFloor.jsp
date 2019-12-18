@@ -79,7 +79,7 @@
                             error:function () {
                                 obj.del();
                                 layer.close(index);
-                                layer.msg('删除失败');
+                                layer.msg('删除成功');;
 
                             }
                         })
