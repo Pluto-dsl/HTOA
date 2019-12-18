@@ -123,6 +123,11 @@ public class StudentScoreImpl extends BaseDao implements StudentScoreService {
     }
 
     @Override
+    public int haveReplyScore() {
+        return 0;
+    }
+
+    @Override
     public List<Map> stu(int classid) {
         return super.listBySQL("select s.Studid,s.stuno,s.stuname from student s where s.clazz = "+classid);
     }

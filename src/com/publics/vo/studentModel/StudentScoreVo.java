@@ -24,6 +24,7 @@ public class StudentScoreVo {
     private int Empid;//录入人员,获取session值
     private String remark;//备注
 
+
     public int getScoreId() {
         return scoreId;
     }

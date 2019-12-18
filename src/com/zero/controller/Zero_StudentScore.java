@@ -189,6 +189,8 @@ public class Zero_StudentScore {
     @ResponseBody
     public void editscore(String res,StudentScoreVo studentScoreVo, HttpServletResponse response, HttpSession session) throws ParseException, IOException {//去新增成绩页
         studentScoreVo.setEmpid(1);//从session里获取
+        System.out.println(studentScoreVo);
+        System.out.println(res);
         //studentScoreVo.setEmpid((Integer) session.getAttribute(""));//从session里获取
         if("".equals(res)){
             res="null";

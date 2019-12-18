@@ -20,18 +20,18 @@ public class StudentDormitoryVo {
     private int numberBeds;//床位数
     private int huoeIddsc;//序号
 
-    public StudentDormitoryVo(int Hourid,String huorName, String addr, int count, int floorId, int numberBeds, int huoeIddsc) {
-        this.Hourid = Hourid;
-        this.huorName = huorName;
-        this.addr = addr;
-        this.count = count;
-        this.floorId = floorId;
-        this.numberBeds = numberBeds;
-        this.huoeIddsc = huoeIddsc;
+    @Override
+    public String toString() {
+        return "StudentDormitoryVo{" +
+                "Hourid=" + Hourid +
+                ", huorName='" + huorName + '\'' +
+                ", addr='" + addr + '\'' +
+                ", count=" + count +
+                ", floorId=" + floorId +
+                ", numberBeds=" + numberBeds +
+                ", huoeIddsc=" + huoeIddsc +
+                '}';
     }
-
-
-    public StudentDormitoryVo(){}
 
     public int getHourid() {
         return Hourid;
@@ -87,18 +87,5 @@ public class StudentDormitoryVo {
 
     public void setHuoeIddsc(int huoeIddsc) {
         this.huoeIddsc = huoeIddsc;
-    }
-
-    @Override
-    public String toString() {
-        return "StudentDormitoryVo{" +
-                "Hourid=" + Hourid +
-                ", huorName='" + huorName + '\'' +
-                ", addr='" + addr + '\'' +
-                ", count=" + count +
-                ", floorId=" + floorId +
-                ", numberBeds=" + numberBeds +
-                ", huoeIddsc=" + huoeIddsc +
-                '}';
     }
 }

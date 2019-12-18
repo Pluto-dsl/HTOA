@@ -20,37 +20,63 @@
     <ul class="layui-tab-title">
         <li class="layui-this">再校情况</li>
         <li>家庭信息</li>
-        <li>答辩成绩</li>
         <li>考试成绩</li>
+        <li>答辩成绩</li>
     </ul>
-
     <div class="layui-tab-content">
         <div class="layui-tab-item layui-show"><!--再校情况-->
+            <%--在校情况--%>
+            <script type="text/html" id="hrzxbar">
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" lay-event="updzx" style="height: 25px;">
+                    <i class="layui-icon">&#xe642;</i>
+                </button>
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" lay-event="delzx" style="height: 25px;">
+                    <i class="layui-icon">&#xe640;</i>
+                </button>
+            </script>
             <xblock>
                 <button class="layui-btn layui-btn-sm layui-btn-primary" id="addzx">
                     <i class="layui-icon">&#xe654;</i>
-                    添加
+                    新增
                 </button>
             </xblock>
             <table class="layui-hide" id="zaixiao" lay-filter="zaixiao"></table>
         </div>
 
         <div class="layui-tab-item" id="jiating" lay-filter="jiating"><!--家庭情况-->
+            <script type="text/html" id="hrjtbar">
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" lay-event="updzx" style="height: 25px;">
+                    <i class="layui-icon">&#xe642;</i>
+                </button>
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" lay-event="delzx" style="height: 25px;">
+                    <i class="layui-icon">&#xe640;</i>
+                </button>
+            </script>
             <xblock>
-                <button class="layui-btn layui-btn-sm layui-btn-primary" id="addjt   ">
+                <button class="layui-btn layui-btn-sm layui-btn-primary" id="addjt">
                     <i class="layui-icon">&#xe654;</i>
-                    添加
+                    新增
                 </button>
             </xblock>
             <table class="layui-hide" id="family" lay-filter="family"></table>
         </div>
-
-        <div class="layui-tab-item" id="dabian" lay-filter="dabian"><!--答辩成绩-->
-
+        <!--考试成绩-->
+        <div class="layui-tab-item" id="score" lay-filter="score">
+            <script type="text/html" id="hrksbar">
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" lay-event="upd" style="height: 25px;">
+                    <i class="layui-icon">&#xe642;</i>
+                </button>
+            </script>
+            <table class="layui-hide" id="exam" lay-filter="exam"></table>
         </div>
-
-        <div class="layui-tab-item " id="score" lay-filter="score"><!--考试成绩-->
-
+        <!--答辩成绩-->
+        <div class="layui-tab-item " id="dabian" lay-filter="dabian">
+            <script type="text/html" id="hrdbbar">
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" lay-event="upd" style="height: 25px;">
+                    <i class="layui-icon">&#xe642;</i>
+                </button>
+            </script>
+            <table class="layui-hide" id="dbtab" lay-filter="dbtab"></table>
         </div>
     </div>
 </div>
@@ -71,25 +97,8 @@
 </script>
 
 <%-----------------------------------%>
-<%--在校情况--%>
-<%--<script type="text/html" id="zaixiaobar">
-    <div class="layui-btn-container">
-        <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" id="addzx" lay-event="addzx">
-            <i class="layui-icon">&#xe654;</i>
-        </button>
-    </div>
-</script>--%>
-<script type="text/html" id="hrzxbar">
-    <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" lay-event="updzx" style="height: 25px;">
-        <i class="layui-icon">&#xe642;</i>
-    </button>
-    <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" lay-event="delzx" style="height: 25px;">
-        <i class="layui-icon">&#xe640;</i>
-    </button>
-</script>
+
 <%------------------------------------------%>
-<script src="//res.layui.com/layui/dist/layui.js" charset="utf-8"></script>
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 
 <script>
     layui.use(['table','element'], function(){
@@ -295,26 +304,7 @@
             settable(data.Studid);
         });
 
-        // ----学生记录判断------------------------
-        $("#addzx").on("click",function () {
-            var checkStatus = table.checkStatus('test');
-            var data=checkStatus.data;
-            if(data==""){
-                layer.msg("请选择学生");
-            }else {
-                // console.log(data)
-                layer.open({
-                    type: 2,
-                    title: '添加学生在校情况',
-                    shadeClose: true,
-                    shade: 0.4,
-                    shadeclose:true,
-                    area: ['520px', '550px'],
-                    content: '${pageContext.request.contextPath}/student/toAddzxPage?stuid='+data[0].Studid
-                });
-                // alert("test")
-            }
-        });
+
 // ----------------在校情况-----------------------------------------------------------------------------------------------------
         function settable(stuid){
             table.render({
@@ -333,26 +323,86 @@
                     , {fixed: 'right', title: '操作', toolbar: '#hrzxbar'}
                 ]]
             });
+
+            table.on('row(zaixiao)',function(obj){
+                var oo = obj.tr; //得到当前行元素对象
+                var data = obj.data; //得到当前行数据
+                selected =  data;
+                //选中行样式
+                obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+                //选中radio样式
+                obj.tr.find('i[class="layui-anim layui-icon"]').trigger("click");
+            });
+            //家庭信息————————————————————————————————————————————————————————————
+            table.render({elem: '#family'
+                    , url: '${pageContext.request.contextPath}/student/familyData?stuid='+stuid
+                    , title: '添加学生家庭信息'
+                    , totalRow: true
+                    ,height:257
+                    , cols: [[
+                    {type: 'radio', fixed: 'left'}
+                    , {field: 'stuname', title: '学生姓名'}
+                    , {field: 'familyname', title: '亲属姓名'}
+                    , {field: 'relation', title: '与学生关系'}
+                    , {field: 'familyhone', title: '亲属电话'}
+                    , {fixed: 'right', title: '操作', toolbar: '#hrjtbar'}
+                ]]
+            });
+            table.on('row(family)',function(obj){
+                var oo = obj.tr; //得到当前行元素对象
+                var data = obj.data; //得到当前行数据
+                selected =  data;
+                //选中行样式
+                obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+                //选中radio样式
+                obj.tr.find('i[class="layui-anim layui-icon"]').trigger("click");
+            });
+            // -----考试成绩------------------------------
+            table.render({elem: '#exam'
+                , url: '${pageContext.request.contextPath}/student/examData?stuid='+stuid
+                , title: '添加学生家庭信息'
+                , totalRow: true
+                ,height:257
+                , cols: [[
+                    {type: 'radio', fixed: 'left'}
+                    , {field: 'stuname', title: '学生姓名'}
+                    , {field: 'termName', title: '学期'}
+                    , {field: 'courseName', title: '考试科目'}
+                    , {field: 'testType', title: '考试类型'}
+                    , {field: 'score', title: '分数'}
+                    , {field: 'Rescore', title: '补考分数'}
+                    , {field: 'scoreTime', title: '考试时间',templet : "<div>{{layui.util.toDateString(d.startDate, 'yyyy年MM月dd日')}}</div>"}
+                    , {field: 'remark', title: '备注'}
+                    , {fixed: 'right', title: '操作', toolbar: '#hrksbar'}
+                ]]
+            });
+
+            // ------答辩表-----------------------
+            table.render({elem: '#dbtab'
+                , url: '${pageContext.request.contextPath}/student/dbData?stuid='+stuid
+                , title: '添加学生答辩成绩'
+                , totalRow: true
+                ,height:257
+                , cols: [[
+                    {type: 'radio', fixed: 'left'}
+                    , {field: 'stuname', title: '学生姓名'}
+                    , {field: 'projectName', title: '答辩项目'}
+                    , {field: 'score1', title: '功能完善50'}
+                    , {field: 'Score2', title: '技术难度10'}
+                    , {field: 'Score3', title: '界面完美10'}
+                    , {field: 'Score4', title: '回答问题10'}
+                    , {field: 'Score5', title: '演示方法10'}
+                    , {field: 'Score6', title: '语言表达10'}
+                    , {field: 'Score7', title: '总分100'}
+                    , {field: 'empName', title: '评分老师'}
+                    , {field: 'Remark', title: '备注'}
+                    , {fixed: 'right', title: '操作', toolbar: '#hrksbar'}
+                ]]
+            });
+
+            // ————————————————————————————————————————————————————————————
         }
 
-
-//工具栏事件
-        table.on('toolbar(zaixiao)', function (obj) {
-            var checkStatus = table.checkStatus(obj.config.id);
-            switch (obj.event) {
-                case 'addzx':
-
-                    break;
-                case 'updzx':
-                    var data = checkStatus.data;
-                    layer.msg('选中了：' + data.length + ' 个');
-                    break;
-                case 'delzx':
-                    layer.msg(checkStatus.isAll ? '全选' : '未全选')
-                    break;
-            }
-            ;
-        });
         table.on('tool(zaixiao)', function(obj) {
             var data = obj.data;
             //console.log(obj)
@@ -379,8 +429,108 @@
             }
         })
         // ——————在校情况结束——————————————————————————————————————————————————————————
-    });
+        // ----学生记录判断------------------------
+        $("#addzx").on("click",function () {
+            var checkStatus = table.checkStatus('test');
+            var data=checkStatus.data;
+            if(data==""){
+                layer.msg("请选择学生");
+            }else {
+                // console.log(data)
+                layer.open({
+                    type: 2,
+                    title: '添加学生在校情况',
+                    shadeClose: true,
+                    shade: 0.4,
+                    shadeclose:true,
+                    area: ['520px', '550px'],
+                    content: '${pageContext.request.contextPath}/student/toAddzxPage?stuid='+data[0].Studid
+                });
+                // alert("test")
+            }
+        });
+        // ——————家庭按钮判断————————————————————————————————————————
+        $("#addjt").on("click",function () {
+            var checkStatus = table.checkStatus('test');
+            var data=checkStatus.data;
+            if(data==""){
+                layer.msg("请选择学生");
+            }else {
+                // console.log(data)
+                layer.open({
+                    type: 2,
+                    title: '添加学生家庭信息',
+                    shadeClose: true,
+                    shade: 0.4,
+                    shadeclose:true,
+                    area: ['520px', '550px'],
+                    content: '${pageContext.request.contextPath}/student/toAddJtPage?stuid='+data[0].Studid
+                });
+                // alert("test")
+            }
+        });
 
+        table.on('tool(family)', function(obj) {
+            var data = obj.data;
+            //console.log(obj)
+            if (obj.event === 'updzx') {
+                layer.open({
+                    type: 2,
+                    title: '修改亲属信息',
+                    shadeClose: true,
+                    shade: 0.4,
+                    shadeclose:true,
+                    area: ['520px', '550px'],
+                    content: '${pageContext.request.contextPath}/student/toUpdateJt?familyid='+data.familyid
+                });
+            }else if(obj.event === 'delzx'){
+                layer.confirm('确定要删除该同学的家庭信息吗？', function(index){
+                    // alert(data.happenid)
+                    $.post("${pageContext.request.contextPath}/student/deljt",{familyid:data.familyid},function (data) {
+                        table.reload('family');
+                        layer.msg('删除成功！')
+                        table.reload('family')
+                    },'text')
+                    layer.close(index);
+                });
+            }
+        })
+// ________________考试成绩_____________________________________
+        table.on('tool(exam)', function(obj) {
+            var data = obj.data;
+            //console.log(obj)
+            if (obj.event === 'upd') {
+                layer.open({
+                    type: 2,
+                    title: '修改学生成绩',
+                    shadeClose: true,
+                    shade: 0.4,
+                    shadeclose:true,
+                    area: ['1000px', '600px'],
+                    content: '${pageContext.request.contextPath}/student/toUpdateExam?scoreId='+data.scoreId
+                });
+            }
+        })
+    // ________答辩成绩_______________________________
+        table.on('tool(dbtab)', function(obj) {
+            var data = obj.data;
+
+            //console.log(obj)
+            if (obj.event === 'upd') {
+                layer.open({
+                    type: 2,
+                    title: '修改学生答辩成绩',
+                    shadeClose: true,
+                    shade: 0.4,
+                    shadeclose:true,
+                    area: ['1000px', '600px'],
+                    content: '${pageContext.request.contextPath}/student/toUpdDb?replyId='+data.replyId
+                });
+            }
+        })
+
+        // ____________________________分界线
+    });
 </script>
 </body>
 </html>
