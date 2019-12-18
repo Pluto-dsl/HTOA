@@ -139,7 +139,7 @@ public class Ljw_SystemLogController {
         response.setContentType("text/html;charset=utf-8");
         JSONObject result = new JSONObject();
         List<Map> list = systemLogService.getHolidayListByEmp(request,page,limit);
-        int count = systemLogService.getHolidayEmpSize(request);
+        int count = systemLogService.getHolidayListByEmpSize(request);
         result.put("code",0);
         result.put("msg","");
         result.put("count",count);

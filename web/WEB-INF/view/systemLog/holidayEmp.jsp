@@ -37,37 +37,38 @@
         </td>
     </tr>
 </table>
-<table id="holiday" lay-filter="test"></table>
+<table id="holidayEmp" lay-filter="holidayEmp"></table>
+<table id="holidayInfo" lay-filter="holidayInfo"></table>
 <script>
     layui.use(['form','table'], function () {
         var form = layui.form,
             table = layui.table;
 
         var holidayIns = table.render({
-            elem: '#holiday'
+            elem: '#holidayEmp'
             ,method:"post"
             ,url:'${pageContext.request.contextPath}/systemLog/getHolidayEmp'
             ,cols: [[
                 {field:'empId', title:'员工编号', fixed: 'left', unresize: true, sort: true}
                 ,{field:'empName', title:'员工名称'}
-                ,{field:'holiCount', title:'请假次数'}
-                ,{field:'holiday', title:'天数'}
-                ,{field:'hour', title:'小时'}
+                ,{field:'holiCount', title:'请假次数', unresize: true, sort: true}
+                ,{field:'holiday', title:'天数', unresize: true, sort: true}
+                ,{field:'hour', title:'小时', unresize: true, sort: true}
             ]]
             ,height:'full-300'
             ,page: {limit: 10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
 
         var holidayTableIns = table.render({
-            elem: '#holiday'
+            elem: '#holidayInfo'
             ,method:"post"
             ,url:'${pageContext.request.contextPath}/systemLog/getHolidayByEmp'
             ,cols: [[
-                {field:'empId', title:'员工姓名', fixed: 'left', unresize: true, sort: true}
-                ,{field:'holidayDay', title:'请假天数'}
-                ,{field:'hour', title:'请假小时'}
-                ,{field:'startTime', title:'开始时间'}
-                ,{field:'endTime', title:'结束时间'}
+                {field:'empName', title:'员工姓名', fixed: 'left', unresize: true, sort: true}
+                ,{field:'holidayDay', title:'请假天数', unresize: true, sort: true}
+                ,{field:'hour', title:'请假小时', unresize: true, sort: true}
+                ,{field:'startTime', title:'开始时间',templet:function (d){return createTime(d.startTime);}, unresize: true, sort: true}
+                ,{field:'endTime', title:'结束时间',templet:function (d){return createTime(d.endTime);}, unresize: true, sort: true}
                 ,{field:'Title', title:'类型'}
                 ,{field:'Remark', title:'备注'}
                 ,{field:'status', title:'状态',templet:function (d) {
@@ -78,21 +79,21 @@
                         }else if (d.status === 3){
                             return '不批准';
                         }
-                    }}
+                    }, unresize: true, sort: true}
             ]]
             ,height:'220'
-            ,page: {limit: 10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
+            ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
 
         //监听行单击事件(员工列表)
-        table.on('row(test)', function(obj){
+        table.on('row(holidayEmp)', function(obj){
             var data = obj.data;//当前行数据
             var tr = obj.tr;//当前行对象
-            everyIns.reload({
+            holidayTableIns.reload({
                 where:{
                     empId:data.empId
                 }
-            });
+            })
         });
 
         //重载表格
@@ -115,6 +116,27 @@
             });
         });
     });
+</script>
+<script type="text/javascript">
+    function createTime(v){
+        console.log(v);
+        if(v == undefined || v ==''){
+            return "";
+        }else {
+            var date = new Date(v);
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            m = m < 10 ? '0' + m : m;
+            var d = date.getDate();
+            d = d < 10 ? ("0" + d) : d;
+            var h = date.getHours();
+            h = h < 10 ? ("0" + h) : h;
+            var M = date.getMinutes();
+            M = M < 10 ? ("0" + M) : M;
+            var str = y + "-" + m + "-" + d + " " + h + ":" + M;
+            return str;
+        }
+    }
 </script>
 </body>
 </html>

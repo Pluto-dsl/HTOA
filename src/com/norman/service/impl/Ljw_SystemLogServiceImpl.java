@@ -167,12 +167,21 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
     @Override
     public List<Map> getHolidayListByEmp(HttpServletRequest request,int page,int limit) {
         String empId = request.getParameter("empId");
-        if (!("".equals(empId) ||empId==null )){
-
+        if ("".equals(empId) || empId==null ){
+            return new ArrayList<>();
+        }else {
+            return pageBySQL("select e.empName,h.* FROM holiday h\nLEFT JOIN emp e on h.Empid=e.empId\nWHERE h.Empid = "+empId,page,limit);
         }
-        return listBySQL("select e.empName,h.* FROM holiday h\n" +
-                "LEFT JOIN emp e on h.Empid=e.empId\n" +
-                "WHERE h.Empid = "+empId);
+    }
+
+    @Override
+    public int getHolidayListByEmpSize(HttpServletRequest request) {
+        String empId = request.getParameter("empId");
+        if ("".equals(empId) || empId==null ){
+            return 0;
+        }else {
+            return listBySQL("select e.empName,h.* FROM holiday h\nLEFT JOIN emp e on h.Empid=e.empId\nWHERE h.Empid = "+empId).size();
+        }
     }
 
     @Override
