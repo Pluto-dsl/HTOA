@@ -126,7 +126,7 @@
         table.render({
             elem: '#test'
             ,height:600
-            ,url:'${pageContext.request.contextPath}/empLeave/returnData'
+            ,url:'${pageContext.request.contextPath}/zeroLeave/returnData'
             ,toolbar: '#topBar' //开启头部工具栏，并为其绑定左侧模板
             ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
                 title: '提示'
@@ -166,12 +166,12 @@
                         content: $('#windows')
                     });
                     break;
-                case 'getCheckLength':
-                    var data = checkStatus.data;
-                    layer.msg('选中了：'+ data.length + ' 个');
+                case 'mytask'://我的任务
+                    layer.msg('跳转！');
+                    window.location.href="<%=request.getContextPath()%>/zeroLeave/mytask"
                     break;
-                case 'isAll':
-                    layer.msg(checkStatus.isAll ? '全选': '未全选');
+                case 'history'://历史任务
+
                     break;
             };
         });
@@ -206,7 +206,7 @@
         back = function(data){
             $("#windows").css("display","none")
         }
-        $.post("${pageContext.request.contextPath}/empLeave/addLeave",params,back,"text");
+        $.post("${pageContext.request.contextPath}/zeroLeave/addLeave",params,back,"text");
     }
 </script>
 </body>

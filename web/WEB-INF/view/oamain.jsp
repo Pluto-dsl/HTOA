@@ -84,7 +84,7 @@
                                data-id="谈心记录" data-title="谈心记录" >谈心记录</a></dd>
                         <dd>
                             <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/empLeave/toleave"
+                               data-url="${pageContext.request.contextPath}/zeroLeave/toleave"
                                data-id="请假管理" data-title="请假管理">请假管理</a>
                         </dd>
 
