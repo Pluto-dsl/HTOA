@@ -53,5 +53,10 @@ public class Zhq_DepServiceImpl extends BaseDao implements Zhq_DepService {
     }
 
 
+    @Override
+    public Object selObjId(Class clazz, Integer id) {
+        return getObject(clazz,id);
+    }
+
 
 }

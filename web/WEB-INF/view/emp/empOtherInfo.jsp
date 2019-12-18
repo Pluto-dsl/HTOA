@@ -9,6 +9,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!doctype html>
 <html>
 <head>
     <title>Title</title>
@@ -733,7 +734,7 @@
                     ,{field: 'Scores', title: '考核分数', width:100}
                     ,{field: 'auditDate', title: '考核时间', width:200,templet : "<div>{{layui.util.toDateString(d.auditDate, 'yyyy年MM月dd日 HH:mm')}}</div>"}
                     ,{field: 'Image', title: '图片', width:110,templet: function (d) {
-                            console.log(d.Image)
+                            //console.log(d.Image)
                             if (d.Image!=null){
                                 return "<div><img src='"+d.Image+"' style='width: 100px'/></div>";
                             }else{

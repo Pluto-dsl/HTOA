@@ -16,9 +16,8 @@ public class AttendanceVo { //考勤管理
     private String auditor; //审核人
     private Date examineTime; //审核时间
     private String examineExplain; //审核说明
-    @Column(name = "status")
     private int status; //状态 1通过 2待审 3审核通过
-    private Date applyTime;//申请时间
+    private Date applyTime;
 
     @Override
     public String toString() {

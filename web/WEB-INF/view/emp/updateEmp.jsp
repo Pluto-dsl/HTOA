@@ -49,14 +49,14 @@
                 </td>
                 <td align="right">身份证号:</td>
                 <td align="left">
-                    <input lay-verify="required" type="text" class="layui-input" id="Cardno"  name="Cardno" value="${emp.Cardno}" placeholder="请输入身份证号" style="width:200px;">
+                    <input lay-verify="required|identity" type="text" class="layui-input" id="Cardno"  name="Cardno" value="${emp.Cardno}" placeholder="请输入身份证号" style="width:200px;">
                 </td>
             </tr>
 
             <tr style="height: 40px">
                 <td align="right">出生日期:</td>
                 <td align="left">
-                    <input lay-verify="required" class="layui-input" type="text" id="birthday" name="birthday" value="${emp.Birthday}" placeholder="可根据身份证号获取出生日期"  style="width:200px;">
+                    <input lay-verify="required|date" class="layui-input" type="text" id="birthday" name="birthday" value="${emp.Birthday}" placeholder="可根据身份证号获取出生日期"  style="width:200px;">
                     <%--<input class="layui-input" type="button"  onclick="hqbirthday();" value="获取日期" style="height: 33px;width: 60px;">--%>
                 </td>
                 <td align="right">籍贯:</td>

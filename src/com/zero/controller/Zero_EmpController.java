@@ -51,8 +51,9 @@ public class Zero_EmpController {
         writer.close();
     }
 
-    @RequestMapping(value = "/addemp")//添加修改员工
+    @RequestMapping(value = "/addemp")//添加员工
     public String addemp(EmpVo empVo){
+        empVo.setEmpId(0);
         empVo.setStatus(1);//设置启用状态
         empVo.setPassword("123456");
         empVo.setPostId(101);
@@ -60,7 +61,7 @@ public class Zero_EmpController {
         return "redirect:toemp";
     }
 
-    @RequestMapping(value = "/updateEmp")//添加修改员工
+    @RequestMapping(value = "/updateEmp")//修改员工
     public String updateEmp(EmpVo empVo){
         empService.update(empVo);
         return "redirect:toemp";

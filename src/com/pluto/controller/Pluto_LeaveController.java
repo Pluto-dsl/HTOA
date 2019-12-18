@@ -17,7 +17,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/empLeave")
-public class Pluto_LeaveController {
+public class    Pluto_LeaveController {
 
     @Resource
     Pluto_LeaveService service;
@@ -32,6 +32,7 @@ public class Pluto_LeaveController {
     public void addLeave(HttpServletResponse response,HttpServletRequest request) throws IOException {
         service.addLeave(request);
         PrintWriter out = response.getWriter();
+
         out.print("1");
         out.flush();
         out.close();
@@ -41,7 +42,8 @@ public class Pluto_LeaveController {
     @ResponseBody
     public void responseData(HttpServletResponse response) throws IOException {
         response.setContentType("text/html;charset=utf-8");
-        String json = service.getLeaveList("select * from holiday");
+        String json = service.getLeaveList("select h.*,e.empName from holiday h" +
+                " left join emp e on e.empId = h.Empid");
         PrintWriter out = response.getWriter();
         out.print(json);
         out.close();
