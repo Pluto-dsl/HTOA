@@ -18,6 +18,8 @@
             <tr>
                 <th id="className">班级:（<font color="#ff4500">${evaluate.className}</font>）</th>
                 <th id="teacharName">班主任:（<font color="#ff4500">${evaluate.empName}</font>）</th>
+                <input name="classid" type="hidden" value="${evaluate.classId}" />
+                <input name="teacherid" type="hidden" value="${evaluate.empId}" />
             </tr>
             <tr align="center">
                 <td>考评题目</td>
