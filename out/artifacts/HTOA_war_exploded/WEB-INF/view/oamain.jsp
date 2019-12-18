@@ -212,7 +212,9 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" lay-tips="通知公告" lay-direction="2"><i class="layui-icon layui-icon-file"></i><cite>通知公告</cite></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">通知公告</a></dd>
+                        <dd><a href="javascript:;"class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/toPage/Notice"
+                               data-id="通知公告" data-title="通知公告">通知公告</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">

@@ -19,7 +19,6 @@
     <button type="button" class="layui-btn" id="add1" style="margin-left: 25px;" >
         <i class="layui-icon"></i> 添加
     </button>
-
     <div id="tt"></div>
     <!--弹出窗-->
     <div  id="windows"  style="margin-left: 5%;display: none;">
@@ -83,13 +82,12 @@
                     var tree = layui.tree;
                     //渲染
                     tree.render({
-
                         elem: '#tt', //绑定元素
                         showLine: false,//是否为连线性
+                        spread:true,
                         data:d,
                         edit:['del'],
                         operate:function(obj){
-
                             var type = obj.type; //得到操作类型：add、edit、del
                             var data = obj.data; //得到当前节点的数据
                             var elem = obj.elem; //得到当前节点元素
