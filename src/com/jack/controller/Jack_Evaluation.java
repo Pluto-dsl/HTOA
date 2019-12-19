@@ -1,17 +1,21 @@
 package com.jack.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jack.service.Jack_Service;
+import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.empModel.evaluationVo;
 import com.publics.vo.empModel.teacherTotalVo;
 import com.publics.vo.studentModel.StudentVo;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -264,19 +268,38 @@ public class Jack_Evaluation {
 
         return "emp_xzq/stu_selectWindows";
     }
-    @RequestMapping(value = "MyMission")
+    @RequestMapping(value = "/MyMission")
     @ResponseBody
     public Map MyMission(HttpSession session){
         EmpVo emp = (EmpVo) session.getAttribute("admin");
         Map map = new HashMap();
         int talk = service.selChatRecordCount(emp.getEmpId());
-        int clock = service.selClockCount(emp.getEmpId());
+        int clock = service.selClockCount(emp.getEmpName());
         map.put("emp",0);
         map.put("stu",0);
         map.put("clock",clock);
         map.put("Notice",0);
         map.put("weekly","未完成");
         map.put("talk",talk);
+        return map;
+    }
+
+    @RequestMapping(value = "/toMyAnno")
+    public String toMyAnno(Model model,HttpServletRequest request){
+        List<Map> list = service.selNoticeList();
+        model.addAttribute("list",list);
+        return "emp_xzq/stu_MyAnnouncement";
+    }
+
+    @RequestMapping(value = "/MyAnno")
+    @ResponseBody
+    public Map MyAnno(String noticeId){
+        Map map = new HashMap();
+        int count = service.selNoticeCount();
+        map.put("count",count);
+        if("2".equals(noticeId)){
+
+        }
         return map;
     }
 }

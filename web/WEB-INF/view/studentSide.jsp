@@ -48,7 +48,7 @@
                     ${user.stuname}
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="${pageContext.request.contextPath}}/logout">注销</a></dd>
+                    <dd><a href="${pageContext.request.contextPath}/logout">注销</a></dd>
                 </dl>
             </li>
         </ul>
@@ -71,12 +71,13 @@
                         <i class="layui-icon layui-icon-help"></i>
                         <cite>问题反馈</cite>
                     </a>
-                </li><li class="layui-nav-item">
-                <a href="javascript:;" lay-tips="报修申请" lay-direction="2">
-                    <i class="layui-icon layui-icon-set-fill"></i>
-                    <cite>报修申请</cite>
-                </a>
-            </li>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" lay-tips="报修申请" lay-direction="2">
+                        <i class="layui-icon layui-icon-set-fill"></i>
+                        <cite>报修申请</cite>
+                    </a>
+                </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;" lay-tips="教师考评" lay-direction="2" class="site-demo-active" data-type="tabAdd"
                        data-url="${pageContext.request.contextPath}/jack/toTeacharEva"
@@ -85,7 +86,14 @@
                         <cite>教师考评</cite>
                     </a>
                 </li>
-
+                <li class="layui-nav-item">
+                    <a href="javascript:;" lay-tips="我的公告" lay-direction="2" class="site-demo-active" data-type="tabAdd"
+                       data-url="${pageContext.request.contextPath}/jack/toMyAnno"
+                       data-id="我的公告" data-title="我的公告">
+                        <i class="layui-icon layui-icon-reply-fill"></i>
+                        <cite>我的公告</cite>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -94,11 +102,11 @@
         <div style="height: 93%;width: 100%;">
             <div class="layui-tab layui-tab-brief" lay-filter="demo" lay-allowClose="true">
                 <ul class="layui-tab-title">
-                    <li style="" class="first-tab" lay-id="首页">首页</li>
+                    <li style="" class="first-tab layui-this" lay-id="首页">首页</li>
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
-                        xxxx
+                        欢迎进入学生端
                     </div>
                 </div>
             </div>
