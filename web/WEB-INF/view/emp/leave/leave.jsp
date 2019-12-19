@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>员工请假页面</title>
-    <jsp:include page="../include.jsp" />
+    <jsp:include page="../../include.jsp" />
 </head>
 <body>
 <div id="windows" style="margin-left: 5%;display: none;">
@@ -72,7 +72,6 @@
             <tr>
                 <td colspan="2" style="text-align: center;">
                     <button type="button" class="layui-btn" style="width: 100px;" onclick="submitleave()">提交</button>
-                    <button type="button" class="layui-btn layui-btn-normal" style="width: 100px;">取消</button>
                 </td>
             </tr>
         </table>
@@ -91,10 +90,12 @@
 <script>
     var startdate = "";
     var enddate = "";
+    var win;
+    var table;
     layui.use([ 'element', 'table', 'layer', 'form' ,'laydate'],function() {
         var element = layui.element;
         var layer = layui.layer;
-        var table = layui.table;
+        table = layui.table;
         var form = layui.form;
         var laydate = layui.laydate;
         //日期
@@ -125,6 +126,7 @@
 
         table.render({
             elem: '#test'
+            ,id:'etabe'
             ,height:600
             ,url:'${pageContext.request.contextPath}/zeroLeave/returnData'
             ,toolbar: '#topBar' //开启头部工具栏，并为其绑定左侧模板
@@ -146,6 +148,17 @@
                 ,{fixed: '', title:'操作', width: 150, align:'center', toolbar: '#barDemo'}
             ]]
             ,page: true
+            ,done: function(res, page, count){
+                $("[data-field='status']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("审批中")
+                    }else if($(this).text()=='2'){
+                        $(this).text("已完成")
+                    } else if($(this).text()=='3'){
+                        $(this).text("不批准")
+                    }
+                })
+            }
         });
 
         //头工具栏事件
@@ -153,7 +166,7 @@
             var checkStatus = table.checkStatus(obj.config.id);
             switch(obj.event){
                 case 'add':
-                    layer.open({
+                    win = layer.open({
                         type: 1,
                         title:'员工请假',
                         skin: 'layui-layer-demo', //样式类名
@@ -162,12 +175,11 @@
                         fixed: false, //不固定
                         maxmin: true,
                         shadeClose: true, //开启遮罩关闭
-                        //content: ['${pageContext.request.contextPath}/jack/test','no']
                         content: $('#windows')
                     });
                     break;
                 case 'mytask'://我的任务
-                    layer.msg('跳转！');
+                    layer.msg('加载中,请稍后!');
                     window.location.href="<%=request.getContextPath()%>/zeroLeave/mytask"
                     break;
                 case 'history'://历史任务
@@ -179,21 +191,14 @@
         //监听行工具事件
         table.on('tool(test)', function(obj){
             var data = obj.data;
-            if(obj.event === 'edit'){//查看批注
-                layer.prompt({
-                    formType: 2
-                    ,value: data.email
-                }, function(value, index){
-                    obj.update({
-                        email: value
-                    });
-                    layer.close(index);
-                });
+            if(obj.event === 'detail'){//查看批注
+                window.location.href="<%=request.getContextPath()%>/zeroLeave/mycomment?holidayid="+data.holidayid;
             }
         })
     })
 
     function submitleave(){//提交请假
+        layer.msg('正在提交,请稍等!')
         params = {
             Title:document.getElementById("Title").value,
             startTime:$("#startDate").val(),
@@ -201,12 +206,15 @@
             holidayDay:$("#days").val(),
             hour:$("#hour").val(),
             Remark:$("#Remark").val(),
-            type:'empleave'
+            type:'empLeave'
         }
-        back = function(data){
-            $("#windows").css("display","none")
+        back = function(){
+            layer.close(win);
+            layer.msg('提交成功!')
+            table.reload('etabe');
         }
         $.post("${pageContext.request.contextPath}/zeroLeave/addLeave",params,back,"text");
+
     }
 </script>
 </body>
