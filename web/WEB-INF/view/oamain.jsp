@@ -85,9 +85,6 @@
                     </a>
                     <dl class="layui-nav-child">
                         <%-- 例子  可修改 照着写就行了 --%>
-                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/toPage/dep"
-                               data-id="部门管理" data-title="部门管理">部门管理</a></dd>
                         <dd> <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                 data-url="<%=request.getContextPath()%>/zeroEmp/toemp"
                                 data-id="员工资料" data-title="员工资料" >员工资料</a></dd>

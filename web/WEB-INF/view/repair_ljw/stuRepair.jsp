@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: norman
-  Date: 2019/12/9
-  Time: 8:31
+  Date: 2019/12/19
+  Time: 8:58
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -13,12 +13,12 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>报修申请</title>
+    <title>学生</title>
     <jsp:include page="../include.jsp"/>
 </head>
 <body>
 <div id="windows" style="padding-right: 5%;display: none;">
-    <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/logs/addRepair" method="post">
+    <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/myRepair/addRepair" method="post">
         <br><br>
         <div class="layui-form-item">
             <label class="layui-form-label">设备名称</label>
@@ -54,28 +54,28 @@
         var table = layui.table;
         table.render({
             elem: '#RepairList'
-            ,url:'${pageContext.request.contextPath}/logs/getMyRepairData'
+            ,url:'${pageContext.request.contextPath}/myRepair/getMyRepairData'
             ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             ,defaultToolbar: ['filter', 'exports', 'print']
             ,title: '我的报修列表'
             ,cols: [[
-                {field:'equipmentId', title:'报修编号', width:120, fixed: 'left', unresize: true, sort: true}
-                ,{field:'equipmentType', title:'保修设备名称',width: 160,fixed: 'left'}
-                ,{field:'depName', title:'部门名称', width:90 }
-                ,{field:'empName', title:'员工姓名', width:90 }
-                ,{field:'startTime', title:'申请时间', width:160}
-                ,{field:'remark', title:'备注',width: 145}
-                ,{field:'empId', title:'处理人',width: 90}
-                ,{field:'endTime', title:'处理时间', width:160}
-                ,{field:'result', title:'处理详情',width: 145}
-                ,{field:'status', title:'状态',width: 80, minWidth: 200}
+                {field:'equipmentId', title:'报修编号', fixed: 'left', unresize: true, sort: true}
+                ,{field:'equipmentType', title:'保修设备名称',fixed: 'left'}
+                ,{field:'className', title:'班级名称'}
+                ,{field:'stuName', title:'员工姓名'}
+                ,{field:'startTime', title:'申请时间', width:160, unresize: true, sort: true}
+                ,{field:'remark', title:'备注'}
+                ,{field:'empId', title:'处理人'}
+                ,{field:'endTime', title:'处理时间', width:160, unresize: true, sort: true}
+                ,{field:'result', title:'处理详情'}
+                ,{field:'status', title:'状态'}
                 ,{fixed:'right', title:'操作',templet:function(d){
-                    console.log(d);
-                    if (d.status==='待处理'){
-                        return '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
-                    }else {
-                        return ''
-                    }
+                        console.log(d);
+                        if (d.status==='待处理'){
+                            return '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
+                        }else {
+                            return ''
+                        }
                     }, width:80}
             ]]
             ,page: {limit: 10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
