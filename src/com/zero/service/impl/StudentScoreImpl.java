@@ -2,10 +2,7 @@ package com.zero.service.impl;
 
 import com.publics.dao.BaseDao;
 import com.publics.vo.educ.CourseVo;
-import com.publics.vo.studentModel.ProjectNameVo;
-import com.publics.vo.studentModel.StudentClassVo;
-import com.publics.vo.studentModel.StudentScoreVo;
-import com.publics.vo.studentModel.TermVo;
+import com.publics.vo.studentModel.*;
 import com.zero.service.StudentScoreService;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +14,12 @@ public class StudentScoreImpl extends BaseDao implements StudentScoreService {
 
     @Override
     public List<Map> ReplyScore(int page,int limit) {
-        return super.pageBySQL("select sr.*,s.stuname,sc.className,p.projectName from studentReplyScore sr" +
+        return super.pageBySQL("select sr.*,s.stuname,sc.className,p.projectName,e.empName from studentReplyScore sr" +
                 " left join student s on s.Studid = sr.StudentId" +
                 " left join studentClass sc on sc.classId = s.clazz" +
-                " left join project p on p.projectId = sr.projectId order by sr.replyId desc",page,limit);
+                " left join project p on p.projectId = sr.projectId" +
+                " left join emp e on e.empId = sr.empId" +
+                " order by sr.replyId desc",page,limit);
     }
 
     @Override
@@ -123,13 +122,17 @@ public class StudentScoreImpl extends BaseDao implements StudentScoreService {
     }
 
     @Override
-    public int haveReplyScore() {
-        return 0;
+    public int haveReplyScore(int classid,int projectId) {
+        return super.listBySQL("select sr.score1  from studentReplyScore sr " +
+                " left join student s on s.Studid = sr.StudentId" +
+                " where s.clazz = "+classid+" and sr.projectId = "+projectId).size();
     }
 
     @Override
     public List<Map> stu(int classid) {
-        return super.listBySQL("select s.Studid,s.stuno,s.stuname from student s where s.clazz = "+classid);
+        return super.listBySQL("select s.Studid,s.stuno,s.stuname,sc.className from student s" +
+                " left join studentClass sc on sc.classId = s.clazz " +
+                " where s.clazz = "+classid);
     }
 
     @Override
@@ -144,11 +147,28 @@ public class StudentScoreImpl extends BaseDao implements StudentScoreService {
         return list.get(0);
     }
 
+    @Override
+    public StudentClassVo nowclass(int classId) {
+        List<StudentClassVo> list = super.listByHql("from StudentClassVo where classId = "+classId);
+        return list.get(0);
+    }
+
+    @Override
+    public ProjectNameVo nowproject(int projectId) {
+        List<ProjectNameVo> list = super.listByHql("from ProjectNameVo where projectId = "+projectId);
+        return list.get(0);
+    }
+
 
     @Override
     public void addscore(String sql) {
         sql = "insert into studentScore values"+sql;
         super.executeSQL(sql);
+    }
+
+    @Override
+    public void addReplyscore(ReplyScoreVo scoreVo) {
+        super.addObject(scoreVo);
     }
 
     @Override
@@ -165,5 +185,17 @@ public class StudentScoreImpl extends BaseDao implements StudentScoreService {
     @Override
     public void editscore(String rescore,StudentScoreVo s) {
         super.executeSQL("update studentScore set Empid = "+s.getEmpid()+",Rescore = "+rescore+",courseId = "+s.getCourseId()+",remark = '"+s.getRemark()+"',score = "+s.getScore()+",scoreTime='"+s.getScoreTime()+"',stuid = "+s.getStuid()+",termid = "+s.getTermid()+",testType = "+s.getTestType()+" where scoreId = "+s.getScoreId());
+    }
+
+    @Override
+    public List<Map> toeditReplyscore(int classid, int projectId) {
+        String sql = "select sr.*,s.stuno,s.stuname from studentReplyScore sr " +
+                "left join student s on s.Studid = sr.StudentId where s.clazz = "+classid+" and sr.projectId = "+projectId;
+        return super.listBySQL(sql);
+    }
+
+    @Override
+    public void editReply(ReplyScoreVo replyScoreVo) {
+        super.updObject(replyScoreVo);
     }
 }

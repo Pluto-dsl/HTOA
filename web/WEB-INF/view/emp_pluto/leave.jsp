@@ -37,14 +37,12 @@
                 <th>开始时间：</th>
                 <td>
                     <input type="text" class="layui-input" name="startTime" id="startDate" placeholder="选择开始时间">
-<%--                    <input type="text" name="startDate"  autocomplete="off" class="layui-input shij">--%>
                 </td>
             </tr>
             <tr>
                 <th>结束时间：</th>
                 <td>
                     <input type="text" class="layui-input" name="endTime" id="endDate" placeholder="选择结束时间">
-<%--                    <input type="text" name="startDate"  autocomplete="off" class="layui-input shij">--%>
                 </td>
             </tr>
             <tr>
@@ -80,51 +78,25 @@
         </table>
 </div>
 <table class="layui-hide" id="test" lay-filter="test" style="text-align: center;"></table>
-
 <div id="page"></div>
-
-
-<script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-</script>
-
 <script type="text/html" id="topBar">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="add">添加</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="add">申请请假</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="mytask">我的任务</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="history">历史任务</a>
+</script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看批注</a>
 </script>
 <%-------------------------------------------------------------%>
 <script>
-    function submitleave(){
-        params = {
-            Title:document.getElementById("Title").value,
-            startTime:$("#startDate").val(),
-            endTime:$("#endDate").val(),
-            holidayDay:$("#days").val(),
-            hour:$("#hour").val(),
-            Remark:$("#Remark").val(),
-            type:'empleave'
-
-        }
-
-        back = function(data){
-            $("#windows").css("display","none")
-        }
-
-        $.post("${pageContext.request.contextPath}/empLeave/addLeave",params,back,"text");
-    }
-
-
     var startdate = "";
     var enddate = "";
-
     layui.use([ 'element', 'table', 'layer', 'form' ,'laydate'],function() {
         var element = layui.element;
         var layer = layui.layer;
         var table = layui.table;
         var form = layui.form;
         var laydate = layui.laydate;
-
         //日期
         laydate.render({
             elem: '#startDate',
@@ -144,7 +116,7 @@
                 document.getElementById("days").value=day;
             }
         })
-        function  getDaysBetween(dateString1,dateString2){
+        function getDaysBetween(dateString1,dateString2){
             var  startDate = Date.parse(dateString1);
             var  endDate = Date.parse(dateString2);
             var days=(endDate - startDate)/(1*24*60*60*1000);
@@ -153,6 +125,7 @@
 
         table.render({
             elem: '#test'
+            ,height:600
             ,url:'${pageContext.request.contextPath}/empLeave/returnData'
             ,toolbar: '#topBar' //开启头部工具栏，并为其绑定左侧模板
             ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
@@ -162,14 +135,15 @@
             }]
             ,title: '用户数据表'
             ,cols: [[
-                {field: 'holidayid', title: 'ID', width:200, sort: true, fixed: 'left', totalRowText: '合计：'}
-                ,{field: 'Empid', title: '请假人', width:200}
-                ,{field: 'holidayDay', title: '请假时长', width: 200, sort: true, totalRow: true}
-                ,{field: 'startTime', title: '开始时间', width:200, sort: true}
-                ,{field: 'endTime', title: '结束时间', width: 200, sort: true, totalRow: true}
-                ,{field: 'status', title: '状态', width: 200}
-                ,{field: 'Remark', title: '内容', width: 200}
-                ,{fixed: '', title:'操作', width: 270, align:'center', toolbar: '#barDemo'}
+                {field: 'holidayid', title: 'ID', width:80, sort: true, fixed: 'left', totalRowText: '合计：'}
+                ,{field: 'Empid', title: 'id', width:100,hide:'true'}
+                ,{field: 'empName', title: '请假人', width:100}
+                ,{field: 'holidayDay', title: '请假时长', width:110, sort: true, totalRow: true}
+                ,{field: 'startTime', title: '开始时间', width:150, sort: true,templet : "<div>{{layui.util.toDateString(d.startDate, 'yyyy年MM月dd日')}}</div>"}
+                ,{field: 'endTime', title: '结束时间', width: 150, sort: true, totalRow: true,templet : "<div>{{layui.util.toDateString(d.endTime, 'yyyy年MM月dd日')}}</div>"}
+                ,{field: 'status', title: '状态', width: 100}
+                ,{field: 'Remark', title: '内容', width: 100}
+                ,{fixed: '', title:'操作', width: 150, align:'center', toolbar: '#barDemo'}
             ]]
             ,page: true
         });
@@ -199,24 +173,13 @@
                 case 'isAll':
                     layer.msg(checkStatus.isAll ? '全选': '未全选');
                     break;
-
-                //自定义头工具栏右侧图标 - 提示
-                case 'LAYTABLE_TIPS':
-                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
-                    break;
             };
         });
 
         //监听行工具事件
         table.on('tool(test)', function(obj){
             var data = obj.data;
-            //console.log(obj)
-            if(obj.event === 'del'){
-                layer.confirm('真的删除行么', function(index){
-                    obj.del();
-                    layer.close(index);
-                });
-            } else if(obj.event === 'edit'){
+            if(obj.event === 'edit'){//查看批注
                 layer.prompt({
                     formType: 2
                     ,value: data.email
@@ -230,6 +193,21 @@
         })
     })
 
+    function submitleave(){//提交请假
+        params = {
+            Title:document.getElementById("Title").value,
+            startTime:$("#startDate").val(),
+            endTime:$("#endDate").val(),
+            holidayDay:$("#days").val(),
+            hour:$("#hour").val(),
+            Remark:$("#Remark").val(),
+            type:'empleave'
+        }
+        back = function(data){
+            $("#windows").css("display","none")
+        }
+        $.post("${pageContext.request.contextPath}/empLeave/addLeave",params,back,"text");
+    }
 </script>
 </body>
 </html>

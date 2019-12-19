@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>学生成绩</title>
+    <title>修改学生成绩</title>
     <jsp:include page="../include.jsp"/>
 </head>
 <body>
@@ -34,8 +34,6 @@
             data: ${stu}, //数据接口,
             id: layTableId,
             toolbar: '#top', //开启头部工具栏，并为其绑定左侧模板
-            page: true, //开启分页
-            totalRow: true,//开启合计行
             cols: [[ //表头
                 {field: 'scoreId', title: '成绩id', width: 100,hide:'true'},
                 {field: 'Studid', title: '学生id', width: 100,hide:'true'},

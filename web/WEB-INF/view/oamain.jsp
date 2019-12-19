@@ -59,7 +59,7 @@
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test" lay-accordion>
                 <li class="layui-nav-item">
                     <a href="javascript:;" lay-tips="员工管理" lay-direction="2">
                         <i class="layui-icon layui-icon-user"></i>
@@ -84,7 +84,7 @@
                                data-id="谈心记录" data-title="谈心记录" >谈心记录</a></dd>
                         <dd>
                             <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/empLeave/toleave"
+                               data-url="${pageContext.request.contextPath}/zeroLeave/toleave"
                                data-id="请假管理" data-title="请假管理">请假管理</a>
                         </dd>
 
@@ -106,6 +106,7 @@
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/zeroStudent/toClass"
                                data-id="班级管理" data-title="班级管理">班级管理</a></dd>
+                        <dd><a href="javascript:void(0);">班级管理</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/toPage/stuFloor"
                                data-id="楼栋管理" data-title="楼栋管理">楼栋管理</a></dd>
@@ -169,7 +170,9 @@
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toEvaluationContext"
                                data-id="考评内容" data-title="考评内容">考评内容</a></dd>
-                        <dd><a href="javascript:void(0);">教师考评</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/jack/toTeacherListE"
+                               data-id="教师考评" data-title="教师考评">教师考评</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -200,19 +203,23 @@
                                data-url="${pageContext.request.contextPath}/systemLog/toEveryDayPage"
                                data-id="日常考核" data-title="日常考核">日常考核</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/systemLog/toWorkTime"
+                               data-url="${pageContext.request.contextPath}/systemLog/toHolidayPage"
                                data-id="员工请假统计" data-title="员工请假统计">员工请假统计</a></dd>
                         <dd><a href="javascript:void(0);">学生请假统计</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/systemLog/toHolidayEmp"
+                               data-url="${pageContext.request.contextPath}/systemLog/toWorkTime"
                                data-id="未打卡说明统计" data-title="未打卡说明统计">未打卡说明统计</a></dd>
-                        <dd><a href="javascript:void(0);">宿舍统计报表</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/systemLog/toStuHour"
+                               data-id="宿舍统计报表" data-title="宿舍统计报表">宿舍统计报表</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;" lay-tips="通知公告" lay-direction="2"><i class="layui-icon layui-icon-file"></i><cite>通知公告</cite></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">通知公告</a></dd>
+                        <dd><a href="javascript:;"class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/toPage/Notice"
+                               data-id="通知公告" data-title="通知公告">通知公告</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">

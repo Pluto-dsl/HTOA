@@ -32,7 +32,7 @@
             <tr>
                 <td>说明:</td>
                 <td>
-                    <input type="text" id="Remark" name="remark" required lay-verify="required" placeholder="请输入考评类型" autocomplete="off" class="layui-input">
+                    <input type="text" id="Remark" name="remark" placeholder="请输入考评类型" autocomplete="off" class="layui-input">
                 </td>
             </tr>
             <tr align="center">

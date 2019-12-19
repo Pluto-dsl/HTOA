@@ -17,9 +17,24 @@ public interface Ljw_SystemLogService {
     AduitLogVo getAduitLog(int auditId);//获取指定的考核巡查记录
 
     /*
+    * 员工请假统计
+    * */
+    List<Map> getHolidayEmp(HttpServletRequest request,int page,int limit);
+    int getHolidayEmpSize(HttpServletRequest request);
+    List<Map> getHolidayListByEmp(HttpServletRequest request,int page,int limit);
+    int getHolidayListByEmpSize(HttpServletRequest request);
+
+    /*
     * 未打卡说明统计
     * */
-    List<AttendanceVo> getAttendance(int page,int limit);
-    int getAttendanceSize();
+    List<AttendanceVo> getAttendance(HttpServletRequest request,int page,int limit);
+    int getAttendanceSize(HttpServletRequest request);
 
+    /*
+    * 宿舍统计
+    * */
+    List<Map> getFloorList();
+    List<Map> getHourListNames(int floor);
+    List<Map> getStuHourList(HttpServletRequest request,int page,int limit);
+    int getStuHourSize(HttpServletRequest request);
 }

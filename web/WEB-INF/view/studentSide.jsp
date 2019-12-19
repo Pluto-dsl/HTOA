@@ -48,7 +48,7 @@
                     ${user.stuname}
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="/logout">注销</a></dd>
+                    <dd><a href="${pageContext.request.contextPath}}/logout">注销</a></dd>
                 </dl>
             </li>
         </ul>

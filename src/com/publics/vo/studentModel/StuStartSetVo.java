@@ -3,7 +3,7 @@ package com.publics.vo.studentModel;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "studentFloor")
+@Table(name = "studentSet")
 public class StuStartSetVo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

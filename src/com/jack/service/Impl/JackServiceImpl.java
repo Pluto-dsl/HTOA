@@ -35,7 +35,6 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
     }
     @Override
     public void insertAtt(AttendanceVo attVo) {
-        System.out.println(attVo);
         addObject(attVo);
     }
     @Override
@@ -175,7 +174,7 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
                 "INNER JOIN aduitModel am on ag.aduitModelid = am.aduitModelid) INNER JOIN dep d on e.depId = d.depid\n" +
                 "where ag.aduitLogid";
         if(!(empName == null || "".equals(empName))){  //根据员工查询
-             sql += " and e.empName like '"+empName+"' ";
+             sql += " and e.empName like \"%"+empName+"%\" ";
         }else if(!(depId == null || "".equals(depId))){ //根据部门查询
             sql += " and  d.depid = "+depId+"";
         }else if(!(startDate == null || "".equals(startDate))){ //根据开始时间查询
@@ -185,7 +184,6 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
         }
         return listBySQL(sql);
     }
-
     @Override
     public int Conditional_queryCount(String empName, String depId, String startDate, String EndDate) {
         String sql = "select count(*) from \n" +
@@ -221,6 +219,39 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
         executeSQL("delete from evaluation where evaluationid = "+id+"");
     }
 
+    /** 教师考评 */
+    @Override
+    public List selTeacherListE(String name,String evaluationType,int currPage,int pageSize) {
+        String s = "select te.teacherTotalid,te.evaluationType,e.empName,sc.className,te.classTeacher,te.classId,SUM(te.teacherScore) as sum from \n" +
+                "((teacherTotal te inner join evaluation ev on te.evaluationid  = ev.evaluationid) INNER JOIN emp e on e.empId = te.classTeacher)\n" +
+                " INNER JOIN studentClass sc on te.classId = sc.classId GROUP BY te.classTeacher,te.classId \n" +
+                " having  te.teacherTotalid ";
+        if(!("".equals(name) || name == null)){
+            s += "and e.empName like \"%"+name+"%\" ";
+        }else if(!("".equals(evaluationType) || evaluationType == null)){
+            s += " and  te.evaluationType = "+evaluationType+" ";
+        }
+        s = s + "ORDER BY te.teacherTotalid desc ";
+        return pageBySQL(s,currPage,pageSize);
+    }
+
+    @Override
+    public List selScoreDetails(String teacher, String classid) {
+        return listBySQL("select te.TeachertotalId,ev.evaluationName,te.evaluationType,e.empName,sc.className,te.teacherScore,te.Optime from \n" +
+                "((teacherTotal te inner join evaluation ev on te.evaluationid  = ev.evaluationid) \n" +
+                "INNER JOIN emp e on e.empId = te.classTeacher) INNER JOIN studentClass sc \n" +
+                "on te.classid = sc.classId where e.empId="+teacher+" and sc.classId = "+classid+"");
+    }
+
+    @Override
+    public List selReportForm() {
+        return listBySQL("select te.teacherTotalid,(case when te.evaluationType = 1 then '授课老师' when te.evaluationType = 2 then '班主任' end )evaluation,te.sugges,e.empName,AVG(te.teacherScore) as avg from \n" +
+                "((teacherTotal te inner join evaluation ev \n" +
+                "on te.evaluationid  = ev.evaluationid) INNER JOIN emp e \n" +
+                "on e.empId = te.classTeacher) INNER JOIN studentClass sc \n" +
+                "on te.classId = sc.classId GROUP BY te.classTeacher ORDER BY avg desc\n");
+    }
+
     /** 学生端——教师考评 */
     @Override
     public List selHeadmasterTest(int stu) {
@@ -228,20 +259,22 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
                 "on stu.clazz = stc.classId) inner join emp e on stc.classTeacher = e.empId\n" +
                 "where Studid = "+stu+"");
     }
-
     @Override
     public List selHeadmasterType() {
         return listBySQL("select * from evaluation  where evaluationType = 2");
     }
-
     @Override
     public List selTeachatTest(int stu) {
         return null;
     }
-
     @Override
     public List selTeacharType() {
         return null;
+    }
+
+    @Override
+    public int addHeadmaster(String teacher, String classid, String evaluationType, String studentId, String sugges, String evaluationid, String teacherScore) {
+        return executeSQLE("insert into teacherTotal values(now(),"+teacher+","+classid+","+evaluationType+","+studentId+","+sugges+","+evaluationid+","+teacherScore+")");
     }
 
 

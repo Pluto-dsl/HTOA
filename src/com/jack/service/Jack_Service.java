@@ -8,7 +8,6 @@ import com.publics.vo.empModel.AttendanceVo;
 import com.publics.vo.empModel.evaluationVo;
 
 import java.util.List;
-import java.util.Map;
 
 public interface Jack_Service {
     /**
@@ -62,12 +61,17 @@ public interface Jack_Service {
     int Conditional_queryCount(String empName,String depId,String startDate,String EndDate); //条件查询
     /** 考评内容，教师考评 */
     List selHeadmasterList();
-    List selTeacherList();  //老师查看学生对老师的考评及总分
+    List selTeacherList();
     int addAevaluation(evaluationVo evaluatio);
     void delAevaluation(int id);
-
+    List selTeacherListE(String name,String evaluationType,int currPage,int pageSize); // 教师考评
+    List selScoreDetails(String teacher,String classid);
+    List selReportForm();
+    /** 学生端——教师考评 */
     List selHeadmasterTest(int stu);
     List selHeadmasterType();
     List selTeachatTest(int stu);
     List selTeacharType();
+
+    int addHeadmaster(String teacher,String classid,String evaluationType,String studentId,String sugges,String evaluationid,String teacherScore);
 }

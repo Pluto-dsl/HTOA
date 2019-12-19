@@ -50,17 +50,6 @@ public class Wtt_StuDuanServiceImpl extends BaseDao implements Wtt_StuDuanServic
     }
 
     @Override
-    public Map studentid(String name) {
-        String sql ="select * from student\n" +
-                "where phone = '"+name+"'";
-        List<Map> list = listBySQL(sql);
-        for (Map map:list) {
-            return map;
-        }
-        return null;
-    }
-
-    @Override
     public List<StudentLeaveVo> studentleave(int currpage, int pagesize) {
        String sql="select * from holidayStudent h left join student s on h.StudentId = s.Studid";
       return pageBySQL(sql,currpage,pagesize);

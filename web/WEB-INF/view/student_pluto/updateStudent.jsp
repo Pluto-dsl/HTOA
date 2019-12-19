@@ -23,7 +23,7 @@
         <table id="td" border="0" style="border-collapse:separate; border-spacing:20px;" align="center">
             <input type="hidden" name="Studid" id="stuId" value="${s.studid}"/>
             <input type="hidden" name="password" value="${s.password}"/>
-            <input type="hidden" name="oldss" value="${s.huor}">
+            <input type="hidden" name="oldss" value="${s.huor}"/>
             <tr>
                 <th colspan="4">
                     <font style="font-size: 25px;">
@@ -159,8 +159,8 @@
                     <label class="label-top">修&nbsp;改&nbsp;宿&nbsp;舍:</label>
                 </td>
                 <td>
-                    <select class="layui-form-label" name="hour" id="hour" editable="false" value="1" ditable="false" style="width:290px;">
-                        <c:forEach items="${ssList}" var="ss">
+                    <select class="layui-form-label" name="huor" id="hour" editable="false" value="1" ditable="false" style="width:290px;">
+                        <c:forEach items="${ssList}" var="ss" >
                             <option value="${ss.hourid}" <c:if test="${s.huor == ss.hourid}">selected="selected"</c:if>>${ss.huorName}</option>
                         </c:forEach>
                     </select>
