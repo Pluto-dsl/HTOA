@@ -17,9 +17,9 @@ import java.util.Map;
 public class Wtt_StuDuanServiceImpl extends BaseDao implements Wtt_StuDuanService {
 
     @Override
-    public List<FeedbackVo> feedback(int currpage, int pagesize) {
+    public List<FeedbackVo> feedback(int studentid,int currpage, int pagesize) {
         return pageBySQL("select f.feedbackId,s.stuname,d.depName,f.empName,f.feedBackType,f.feedbackTime,f.Image,f.opinion,f.remark,f.status from feedback f left join dep d on f.depId = d.depid\n" +
-                "left join student s on s.Studid = f.empId",currpage,pagesize);
+                "left join student s on s.Studid = f.empId where s.Studid = '"+studentid+"'"+" order by f.feedbackTime desc",currpage,pagesize);
     }
 
     @Override
@@ -37,10 +37,10 @@ public class Wtt_StuDuanServiceImpl extends BaseDao implements Wtt_StuDuanServic
         addObject(feedbackVo);
     }
     @Override
-    public Map student(String name) {
-        String sql = "select s.Studid,c.className from student s \n" +
+    public Map student(int id) {
+        String sql = "select c.className from student s \n" +
                 "left join studentClass c on s.clazz = c.classId\n" +
-                "where s.intrphone = '"+name+"'";
+                "where s.Studid= '"+id+"'";
         System.out.println(sql);
         List<Map> list = listBySQL(sql);
         for (Map map:list) {
@@ -74,5 +74,20 @@ public class Wtt_StuDuanServiceImpl extends BaseDao implements Wtt_StuDuanServic
     @Override
     public void leaveadd(StudentLeaveVo studentLeaveVo) {
         addObject(studentLeaveVo);
+    }
+
+    @Override
+    public Map selectteacher(int id) {
+        String sql = "select e.empName teacher,e2.empName classTeacher from student s\n" +
+                "left join studentClass cla on s.clazz = cla.classId\n" +
+                "left join emp e on cla.teacher = e.empId\n" +
+                "left join emp e2 on cla.classTeacher = e2.empId\n" +
+                "where s.Studid= '"+id+"'";
+        System.out.println(sql);
+        List<Map> list = listBySQL(sql);
+        for (Map map:list) {
+            return map;
+        }
+        return null;
     }
 }

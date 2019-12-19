@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: 梓怡
@@ -6,53 +7,40 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!doctype html>
 <html>
 <head>
     <title>Title</title>
     <jsp:include page="../include.jsp"></jsp:include>
 </head>
 <body>
-    <table class="layui-hide" lay-filter="test" id="test"></table>
-    <script type="text/html" id="barDemo">
-        <!--查看批注-->
-        <button type="button" <%--lay-event="select" --%>class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon layui-icon-search"></i>查看批注</button>
-    </script>
+    <table style="width: 100%;height: 50%" class="layui-table">
+        <tr>
+            <th>编号</th>
+            <th>请假人</th>
+            <th>假期天数</th>
+            <th>开始时间</th>
+            <th>结束时间</th>
+            <th>申请类型</th>
+            <th>请假事由</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+        <c:forEach items="${studentleavelist}" var="list">
+            <tr>
+                <td>${list.holidayid}</td>
+                <td>${list.stuname}</td>
+                <td>${list.holidayDay}</td>
+                <td>${list.startTime}</td>
+                <td>${list.endTime}</td>
+                <td>${list.ritle}</td>
+                <td>${list.remark}</td>
+                <td>${list.status}</td>
+                <td>
+                    <a href="<%=request.getContextPath()%>/student/studentexamine?taskid=${list.taskid}&instance=${list.processInstanceId}">查看详情</a>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
 </body>
-<script>
-    layui.use([ 'element', 'table', 'layer', 'form' ,'laydate','laypage'],function () {
-        var element = layui.element;
-        var layer = layui.layer;
-        var table = layui.table;
-        var form = layui.form;
-        var laypage = layui.laypage;
-        var laydate = layui.laydate;
-        table.render({
-            elem:'#test',
-            height:500,
-            url:'<%=request.getContextPath()%>/student/selectleave',
-            cols:[[
-                {type:'checkbox', fixed:'left'}
-                ,{field:'holidayid',title:'编号', width:100, fixed: 'left', unresize: true, sort: true}
-                ,{field:'StudentIdd', title:'请假人', width:100}
-                ,{field:'holidayDay', title:'假期天数', width:170,sort:true}
-                ,{field:'startTime', title:'开始时间', width:200,templet:'<div>{{ layui.util.toDateString(d.startTime,"yyyy-MM-dd HH:mm:ss")}}</div>'}
-                ,{field:'endTime', title:'结束时间', width:200,templet:'<div>{{ layui.util.toDateString(d.endTime,"yyyy-MM-dd HH:mm:ss")}}</div>'}
-                ,{field:'Title', title:'请假类型',width:200}
-                ,{field:'Remark', title:'请假事由', width:200}
-                ,{field:'Status', title:'状态', width:200}
-                ,{fixed: '', width:300, title:'操作', align:'center', toolbar: '#barDemo'}
-            ]]
-            ,page:true,
-            limits:[5,10,15,25]
-        });
-        table.on('tool(test)', function(obj){
-            var datas = obj.data;//获取当前行数据
-            var event = obj.event;//获得lay-event 对应的值（编辑，删除）
-            /*if(event=='select'){
-                var id = obj.data.weeklogid;
-                location.href='<%=request.getContextPath()%>/emp/lookEmpPaperPage/'+id;
-            }*/
-        });
-    })
-</script>
 </html>

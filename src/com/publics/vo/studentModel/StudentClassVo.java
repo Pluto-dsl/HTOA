@@ -114,4 +114,21 @@ public class StudentClassVo {
     public void setMajorId(int majorId) {
         this.majorId = majorId;
     }
+
+
+    public int getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(int teacher) {
+        this.teacher = teacher;
+    }
+
+    public int getClassTeacher() {
+        return classTeacher;
+    }
+
+    public void setClassTeacher(int classTeacher) {
+        this.classTeacher = classTeacher;
+    }
 }

@@ -12,7 +12,7 @@ import java.util.Map;
 
 public interface Wtt_StuDuanService {
     //查询学生问题反馈
-    List<FeedbackVo> feedback( int currpage, int pagesize);
+    List<FeedbackVo> feedback(int id,int currpage, int pagesize);
     //查询总行数
     int pagecount();
     //查询部门
@@ -20,7 +20,7 @@ public interface Wtt_StuDuanService {
     //新增学生问题反馈
     void add(FeedbackVo feedbackVo);
     //查询学生
-    Map student(String name);
+    Map student(int id);
     //根据登录用户查出用户id
     Map studentid(String name);
     //查询学生请假
@@ -29,4 +29,6 @@ public interface Wtt_StuDuanService {
     int leavepagecount();
     //新增学生请假
     void leaveadd(StudentLeaveVo studentLeaveVo);
+    //根据学生id去查找任课老师和班主任
+    Map selectteacher(int id);
 }

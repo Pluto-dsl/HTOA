@@ -3,11 +3,8 @@ package com.wtt.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.publics.vo.empModel.WeeklogVo;
 import com.publics.vo.empModel.emp.EmpVo;
-import com.publics.vo.empModel.emp.JobVo;
-import com.publics.vo.sys.DepVo;
 import com.wtt.service.Wtt_EmpService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +16,10 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 /*import java.util.Date;*/
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/emp")
@@ -35,12 +33,14 @@ public class Wtt_EmpsController {
     }
     //周报查询
     @RequestMapping(value = "/selectEmpPaper")
-    public void toEmpPaper(HttpServletResponse response, int page, int limit, HttpServletRequest request){
+    public void toEmpPaper(HttpSession session,HttpServletResponse response, int page, int limit, HttpServletRequest request){
         response.setContentType("text/html;charset=utf-8");
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        int empid = empVo.getEmpId();
         //当前页
-        List<WeeklogVo> list = empService.weekpaper(request,page,limit);
+        List<WeeklogVo> list = empService.weekpaper(empid,request,page,limit);
         //获取总行数
-        int rows =empService.pagecount(request);
+        int rows =empService.pagecount(empid,request);
         System.out.println("总行数:"+rows);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","提示");
@@ -64,16 +64,23 @@ public class Wtt_EmpsController {
     }
     //新增我的周报
     @RequestMapping(value = "/addEmpPaper")
-    public String addEmpPaper(WeeklogVo weeklogVo){
+    public String addEmpPaper(HttpSession session,WeeklogVo weeklogVo){
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        int id = empVo.getEmpId();
         weeklogVo.setWorkday(new Date());
-        weeklogVo.setEmpid(1);
+        weeklogVo.setEmpid(id);
         empService.add(weeklogVo);
         return "redirect:/emp/toEmpPaper";
     }
 
     //修改操作
     @RequestMapping(value = "/update")
-    public String update(WeeklogVo weeklogVo){
+    public String update(WeeklogVo weeklogVo) throws ParseException {
+        int id = weeklogVo.getWeeklogid();
+
+        WeeklogVo weeklogVo1 = empService.weeklogvo(id);
+        weeklogVo.setEmpid(weeklogVo1.getEmpid());
+        weeklogVo.setWorkday(weeklogVo1.getWorkday());
         empService.update(weeklogVo);
         return "redirect:/emp/toEmpPaper";
     }

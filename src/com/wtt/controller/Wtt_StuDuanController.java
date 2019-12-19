@@ -51,10 +51,13 @@ public class Wtt_StuDuanController {
     }
     //学生端查询问题反馈
     @RequestMapping(value = "/selectproblem")
-    public void selectproblem(HttpServletResponse response, int page, int limit){
+    public void selectproblem(HttpServletResponse response, int page, int limit,HttpSession session){
         response.setContentType("text/html;charset=utf-8");
+        //获取存在session中的用户(电话号码)
+        StudentVo studentVo = (StudentVo) session.getAttribute("user");
+        int stuid = studentVo.getStudid();
         //当前页
-        List<FeedbackVo> list = wtt_stuDuanService.feedback(page,limit);
+        List<FeedbackVo> list = wtt_stuDuanService.feedback(stuid,page,limit);
         //获取总行数
         int rows =wtt_stuDuanService.pagecount();
         /*System.out.println("总行数:"+rows);*/
@@ -107,11 +110,11 @@ public class Wtt_StuDuanController {
         feedbackVo.setFeedbackTime(new java.util.Date());
         //获取存在session中的用户(电话号码)
         StudentVo studentVo = (StudentVo) session.getAttribute("user");
-        String name = studentVo.getStuname();
-        Map map = wtt_stuDuanService.student(name);
-        int id = (int) map.get("Studid");
-        System.out.println("学生id:"+id);
-        feedbackVo.setEmpId(id);
+        int studentid = studentVo.getStudid();
+        Map map = wtt_stuDuanService.student(studentid);
+        /*int id = (int) map.get("Studid");*/
+        System.out.println("学生id:"+studentid);
+        feedbackVo.setEmpId(studentid);
         feedbackVo.setStatus(1);
         String classname = (String) map.get("className");
         System.out.println("班级名称:"+classname);
@@ -128,7 +131,11 @@ public class Wtt_StuDuanController {
 
     //查询学生请假
     @RequestMapping(value = "studentselectleave")
-    public void studentselectleave(int page,int limit,HttpServletResponse response){
+    public void studentselectleave(int page,int limit,HttpServletResponse response,HttpSession session){
+        //获取存在session中的用户(电话号码)
+        /*StudentVo studentVo = (StudentVo) session.getAttribute("user");
+        String name = studentVo.getStuname();*/
+
         response.setContentType("text/html;charset=utf-8");
         List<StudentLeaveVo> list = wtt_stuDuanService.studentleave(page,limit);
         //获取总行数
@@ -163,15 +170,19 @@ public class Wtt_StuDuanController {
         map.put("holidayid",studentLeaveVo.getHolidayid());
         map.put("StudentId",studentLeaveVo.getStudentId());
         map.put("day",studentLeaveVo.getHolidayDay());
-
+        System.out.println("map:"+map);
         //根据用户设置下一个办理人
-        map.put("assignee",studentVo.getStuname());
+        int studentid = studentVo.getStudid();
+        Map map1 = wtt_stuDuanService.selectteacher(studentid);
+        System.out.println(map1);
+        String names = (String) map1.get("teacher");
+        System.out.println(names);
+        map.put("assignee",names);
         //启动实例(通过流程定义的Key来启动一个实例)
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(studentLeaveVo.getTitle(),map);
-        System.out.println("启动实例id:"+processInstance);
+        System.out.println(studentLeaveVo.getTitle());
         //根据流程实例ID获取当前实例正在执行的任务
         Task task =taskService.createTaskQuery().processInstanceId(processInstance.getId()).orderByProcessInstanceId().desc().singleResult();
-        System.out.println("正在执行任务的id:"+task.getId());
         //通过任务ID完成任务
         taskService.complete(task.getId(),map);
         return "redirect:/studentduan/studentleaves";
