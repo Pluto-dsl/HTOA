@@ -84,4 +84,18 @@ public class WeeklogVo {//周报
                 ", weekNext='" + weekNext + '\'' +
                 '}';
     }
+
+    public WeeklogVo(int worklogid, int empid, Date workday, String weekCur, String studentQuestion, String idea, String weekNext) {
+        this.weeklogid = worklogid;
+        this.Empid = empid;
+        this.Workday = workday;
+        this.weekCur = weekCur;
+        this.studentQuestion = studentQuestion;
+        this.Idea = idea;
+        this.weekNext = weekNext;
+    }
+
+    public WeeklogVo(){
+
+    }
 }

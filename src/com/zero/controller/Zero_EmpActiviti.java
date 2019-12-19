@@ -1,19 +1,22 @@
 package com.zero.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.publics.vo.empModel.HolidayVo;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.zero.service.EmpActivitiService;
 import org.activiti.engine.*;
+import org.activiti.engine.history.HistoricActivityInstance;
+import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricVariableInstance;
 import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.pvm.PvmTransition;
 import org.activiti.engine.impl.pvm.process.ActivityImpl;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,6 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,7 +52,7 @@ public class Zero_EmpActiviti {
 
     @RequestMapping("/toleave")
     public String toLeave(){
-        return "emp/leave";
+        return "emp/leave/leave";
     }
 
     @RequestMapping("/returnData")
@@ -76,6 +81,8 @@ public class Zero_EmpActiviti {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        int startday = startDate.getDate();
+        int endday = endDate.getDate();
         EmpVo emp = (EmpVo)session.getAttribute("admin");
         String day = request.getParameter("holidayDay");
         String hour = request.getParameter("hour");
@@ -85,7 +92,7 @@ public class Zero_EmpActiviti {
         holidayVo.setStartTime(startDate);
         holidayVo.setEndTime(endDate);
         holidayVo.setHolidayDay(Integer.parseInt(day));
-        holidayVo.setHour(Integer.parseInt(hour));
+        holidayVo.setHour((endday-startday)*24+Integer.parseInt(hour));
         holidayVo.setRemark(Remark);
         holidayVo.setStatus(1);//状态 1:审批中 2：已完成 3：不批准
         holidayVo.setEmpid(emp.getEmpId());//设置请假员工
@@ -94,13 +101,11 @@ public class Zero_EmpActiviti {
         //设置流程实例变量集合
         Map<String,Object> variables = new HashMap<>();
         variables.put("user",(emp.getEmpName()));//用户名称
-        variables.put("day",holidayVo);//天数
+        variables.put("hour",holidayVo.getHour());//小时天数
         variables.put("holiday",holidayVo.getHolidayid());//单据ID
 
         //动态办理人 根据用户设置第一个办理人
-        String assigneeName = service.assignName(emp.getEmpId());
-        variables.put("assignee",assigneeName);
-
+        variables.put("assignee",service.assignName(emp.getEmpId()));
 
         //启动实例（通过流程定义的key来启动一个实例）
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(type,variables);
@@ -124,8 +129,24 @@ public class Zero_EmpActiviti {
         String user = emp.getEmpName();
         //通过办理人查询任务集合
         List<Task> mytask = taskService.createTaskQuery().taskAssignee(user).list();
-        model.addAttribute("tasklist",mytask);
-        return "emp/mytask";
+        System.out.println("任务集合"+mytask);
+        List<Map> holidays = new ArrayList<>();
+        for(Task task: mytask){
+            //根据任务id取得单据id
+            Object sid = taskService.getVariable(task.getId(),"holiday");
+            System.out.println("sid"+sid);
+            //如果有任务进入判断里面
+            if(service.mytask(Integer.parseInt((sid+""))).size()>0){
+                Map map = (Map) service.mytask(Integer.parseInt((sid+""))).get(0);
+                //任务Id
+                map.put("taskid",task.getId());
+                //流程实例id
+                map.put("processInstanceId",task.getProcessInstanceId());
+                holidays.add(map);
+            }
+        }
+        model.addAttribute("tasklist",holidays);
+        return "emp/leave/mytask";
     }
 
     @RequestMapping(value = "/taskDetaill")//查看任务详情
@@ -157,19 +178,87 @@ public class Zero_EmpActiviti {
                 map.put("id",pvm.getId());
                 map.put("name",pvm.getProperty("name"));
             }
-
             plist.add(map);
         }
 
         //获取请假id
-        int holidayid = Integer.parseInt(taskService.getVariable(taskId,"holidayid").toString());
+        int holidayid = Integer.parseInt(taskService.getVariable(taskId,"holiday").toString());
         //根据id查询对象
         HolidayVo holidayVo = service.seleHoliday(holidayid);
-        model.addAttribute("taskId",taskId);//批注list
-        model.addAttribute("commentList",commentList);
+        model.addAttribute("taskId",taskId);
+        model.addAttribute("commentList",commentList);//批注list
         model.addAttribute("plist",plist);
-        model.addAttribute("holiday",holidayVo);
-        return "emp/detail";
+        model.addAttribute("ho",holidayVo);
+        return "emp/leave/detail";
+    }
+
+    @RequestMapping(value = "/taskImg")//查看办理进度 流程图执行节点（红色框高亮）
+    public String logout(String holidayid,String instanceid,Model model){
+        String processInstanceId = "";//流程实例ID
+        if(holidayid!=null&&!"".equals(holidayid)){
+            //通过单据id查找实例对象
+            HistoricVariableInstance hvi = historyService.createHistoricVariableInstanceQuery().variableValueEquals("holiday", Integer.parseInt(holidayid)).singleResult();
+            //通过历史流程变量查询变量对象(获取流程实例ID)
+            processInstanceId = hvi.getProcessInstanceId();
+        }
+        //我的任务（查看办理进度）
+        if(instanceid!=null&&!"".equals(instanceid)){
+            processInstanceId=instanceid;
+        }
+        //获取历史任务实例
+        HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery()
+                .processInstanceId(processInstanceId).singleResult();
+
+        if(historicProcessInstance!=null){
+            //获取流程定义信息
+            ProcessDefinition pd = repositoryService.getProcessDefinition(historicProcessInstance.getProcessDefinitionId());
+            // 获取流程定义的实体（包含了流程中的任务节点信息，连线信息）
+            ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity)pd;
+            // 获取流程历史中已执行节点，并按照节点在流程中执行先后顺序排序
+            List<HistoricActivityInstance> historicActivityInstanceList = historyService.createHistoricActivityInstanceQuery()
+                    .processInstanceId(processInstanceId).orderByHistoricActivityInstanceId().asc().list();
+            // 已经激活的节点ID集合
+            //激活的节点（1.任务已经完成；2.任务已经开始，但还未结束）
+            List mapList = new ArrayList();
+            //获取已经激活的节点ID
+            for (HistoricActivityInstance activityInstance : historicActivityInstanceList) {
+                //getActivityId方法获取已经激活的节点id
+                ActivityImpl activityImpl = processDefinition.findActivity(activityInstance.getActivityId());
+                //获取当前节点在图片中的坐标位置，左上角坐标及长宽
+                int x = activityImpl.getX();
+                int y = activityImpl.getY();
+                int height = activityImpl.getHeight();
+                int width = activityImpl.getWidth();
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("x", x);
+                map.put("y", y);
+                map.put("height", height);
+                map.put("width", width);
+                mapList.add(map);
+            }
+            model.addAttribute("pd",pd);
+            model.addAttribute("mapList",mapList);
+        }
+        return "emp/leave/taskImg";
+    }
+
+    @RequestMapping(value = "/selectProgressDefineimg")
+    public String img(String did,String imageName,HttpServletResponse response) {//查看流程图
+        InputStream in = repositoryService.getResourceAsStream(did,imageName);
+        try {
+            OutputStream out = response.getOutputStream();
+            // 把图片的输入流程写入resp的输出流中
+            byte[] b = new byte[1024];
+            for (int len = -1; (len= in.read(b))!=-1; ) {
+                out.write(b, 0, len);
+            }
+            // 关闭流
+            out.close();
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @RequestMapping(value = "/ratify")//审批任务
@@ -191,7 +280,7 @@ public class Zero_EmpActiviti {
         Map mflow = new HashMap();
         mflow.put("flow",flow);
         //动态办理人，设置以后下一个办理人
-        mflow.put("assignee",service.xiaassignName(Integer.valueOf(holidayid)));
+        mflow.put("assignee",service.xiaassignName(Integer.valueOf(holidayVo.getEmpid())));
         //完成当前任务
         taskService.complete(taskId,mflow);
         //根据流程实例获取实例对象(完成流程的实例依然会存放在数据库中 但是查询出来是null的)
@@ -206,18 +295,18 @@ public class Zero_EmpActiviti {
                 service.updateholiday(holidayVo);
             }
         }
-        return "redirect: emp/mytask";
+        return "redirect: mytask";
     }
     //查看批注
     @RequestMapping(value = "/mycomment")
     public String mycomment(int holidayid,Model model){
         //通过jobId查询历史变量对象
-        HistoricVariableInstance hvi = historyService.createHistoricVariableInstanceQuery().variableValueEquals("holidayid", holidayid).singleResult();
+        HistoricVariableInstance hvi = historyService.createHistoricVariableInstanceQuery().variableValueEquals("holiday", holidayid).singleResult();
         System.out.println("实例id"+hvi.getProcessInstanceId());
         System.out.println("批注"+taskService.getProcessInstanceComments(hvi.getProcessInstanceId()).size());
         //获取流程实例id （查询历史批注）
         List<Comment> commentList = taskService.getProcessInstanceComments(hvi.getProcessInstanceId());
         model.addAttribute("commentList",commentList);
-        return "emp/mycomment";
+        return "emp/leave/mycomment";
     }
 }

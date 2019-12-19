@@ -52,4 +52,10 @@ public class EmpActivitiImpl extends BaseDao implements EmpActivitiService {
     public void updateholiday(HolidayVo holidayVo) {
         super.updObject(holidayVo);
     }
+
+    @Override
+    public List<Map> mytask(int holidayid) {
+        return super.listBySQL("select h.*,e.empName from holiday h " +
+                " left join emp e on e.empId = h.Empid where h.holidayid = "+holidayid);
+    }
 }
