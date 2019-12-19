@@ -7,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!doctype html>
 <html>
 <head>
     <title>Title</title>
@@ -14,9 +15,10 @@
 </head>
 
 <body>
-    <div id="windows" style="margin-left:5%;/*margin-top:2%;height:30%;*/display: none;">
+    <div id="windows" style="margin-left:5%; display: none;">
         <form class="layui-form" action="${pageContext.request.contextPath}/emp/update" method="post" style="text-align: center" lay-filter="formTestFilter">
             <input type="hidden" name="weeklogid">
+            <input type="hidden" >
             <h2 align="center" >正在修改周报中</h2><br>
             本周情况描述：<div style="margin-right:10px" class="layui-inline">
                             <textarea rows="5" cols="50" name="weekCur"/></textarea>
@@ -167,6 +169,7 @@
 
         //获取该id的数据
         function setFormValue(data){
+            console.log(data)
             form.val("formTestFilter", {
                 "weeklogid":data.weeklogid
                 ,"weekCur":data.weekCur

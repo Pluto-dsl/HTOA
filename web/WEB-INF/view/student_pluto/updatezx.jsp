@@ -47,9 +47,7 @@
                 <label class="label-top">情况记录:</label>
             </td>
             <td colspan="3">
-                <textarea placeholder="请输入内容" name="content" class="layui-textarea">
-                    ${zx.happening}
-                </textarea>
+                <textarea placeholder="请输入内容" name="content" class="layui-textarea">${zx.happening}</textarea>
             </td>
         </tr>
         <tr style="height: 40px">

@@ -15,4 +15,7 @@
     <br/>
     欢迎！
   </body>
+  <script>
+    window.location.href="${pageContext.request.contextPath}/toPage/login"
+  </script>
 </html>

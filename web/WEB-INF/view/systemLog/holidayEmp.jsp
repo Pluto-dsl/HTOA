@@ -15,59 +15,96 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <jsp:include page="../include.jsp"/>
+    <style>
+        .empBar{
+            width: 1316px;
+            height: 280px;
+            margin-bottom: 15px;
+            float: left;
+        }
+        .empLine{
+            width: 724px;
+            height: 248px;
+            float: left;
+        }
+        .titleBing{
+            background-color: #9F9F9F;
+            width: 250px;
+            height: 250px;
+            margin-left: 20%;
+            border-radius: 125px;
+            float: left;
+        }
+    </style>
 </head>
 <body>
-<table style="margin-top: 10px;margin-left: 10px">
-    <tr>
-        <td>
-            员工姓名:
-            <div class="layui-inline" style="padding-right: 15px">
-                <input class="layui-input" name="empName" id="empName" autocomplete="off">
-            </div>
-        </td>
-        <td>
-            <form class="layui-form">
-                <input type="radio" name="month" value="${month.lastMonth}" title="上一月(${month.lastMonth}月)" checked="">
-                <input type="radio" name="month" value="${month.thisMonth}" title="本月(${month.thisMonth}月)">
-                <input type="radio" name="month" value="0" title="所有月份">
-            </form>
-        </td>
-        <td>
-            <button class="layui-btn menu" id="btn">搜索</button>
-        </td>
-    </tr>
-</table>
-<table id="holiday" lay-filter="test"></table>
+<div class="layui-tab">
+    <ul class="layui-tab-title">
+        <li id="empListTitle" class="layui-this">表格展示</li>
+        <li id="stuListTitle">图例展示</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <table style="margin-top: 10px;margin-left: 10px">
+                <tr>
+                    <td>
+                        员工姓名:
+                        <div class="layui-inline" style="padding-right: 15px">
+                            <input class="layui-input" name="empName" id="empName" autocomplete="off">
+                        </div>
+                    </td>
+                    <td>
+                        <form class="layui-form">
+                            <input type="radio" name="month" value="${month.lastMonth}" title="上一月(${month.lastMonth}月)" checked="">
+                            <input type="radio" name="month" value="${month.thisMonth}" title="本月(${month.thisMonth}月)">
+                            <input type="radio" name="month" value="0" title="所有月份">
+                        </form>
+                    </td>
+                    <td>
+                        <button class="layui-btn menu" id="btn">搜索</button>
+                    </td>
+                </tr>
+            </table>
+            <table id="holidayEmp" lay-filter="holidayEmp"></table>
+            <table id="holidayInfo" lay-filter="holidayInfo"></table>
+        </div>
+        <div class="layui-tab-item">
+            <div id="empBar" class="empBar"></div>
+            <div id="empLine" class="empLine"></div>
+            <div id="titleBing" class="titleBing"></div>
+        </div>
+    </div>
+</div>
 <script>
     layui.use(['form','table'], function () {
         var form = layui.form,
             table = layui.table;
 
         var holidayIns = table.render({
-            elem: '#holiday'
+            elem: '#holidayEmp'
             ,method:"post"
             ,url:'${pageContext.request.contextPath}/systemLog/getHolidayEmp'
             ,cols: [[
                 {field:'empId', title:'员工编号', fixed: 'left', unresize: true, sort: true}
                 ,{field:'empName', title:'员工名称'}
-                ,{field:'holiCount', title:'请假次数'}
-                ,{field:'holiday', title:'天数'}
-                ,{field:'hour', title:'小时'}
+                ,{field:'holiCount', title:'请假次数', unresize: true, sort: true}
+                ,{field:'holiday', title:'天数', unresize: true, sort: true}
+                ,{field:'hour', title:'小时', unresize: true, sort: true}
             ]]
             ,height:'full-300'
             ,page: {limit: 10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
 
         var holidayTableIns = table.render({
-            elem: '#holiday'
+            elem: '#holidayInfo'
             ,method:"post"
             ,url:'${pageContext.request.contextPath}/systemLog/getHolidayByEmp'
             ,cols: [[
-                {field:'empId', title:'员工姓名', fixed: 'left', unresize: true, sort: true}
-                ,{field:'holidayDay', title:'请假天数'}
-                ,{field:'hour', title:'请假小时'}
-                ,{field:'startTime', title:'开始时间'}
-                ,{field:'endTime', title:'结束时间'}
+                {field:'empName', title:'员工姓名', fixed: 'left', unresize: true, sort: true}
+                ,{field:'holidayDay', title:'请假天数', unresize: true, sort: true}
+                ,{field:'hour', title:'请假小时', unresize: true, sort: true}
+                ,{field:'startTime', title:'开始时间',templet:function (d){return createTime(d.startTime);}, unresize: true, sort: true}
+                ,{field:'endTime', title:'结束时间',templet:function (d){return createTime(d.endTime);}, unresize: true, sort: true}
                 ,{field:'Title', title:'类型'}
                 ,{field:'Remark', title:'备注'}
                 ,{field:'status', title:'状态',templet:function (d) {
@@ -78,21 +115,21 @@
                         }else if (d.status === 3){
                             return '不批准';
                         }
-                    }}
+                    }, unresize: true, sort: true}
             ]]
             ,height:'220'
-            ,page: {limit: 10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
+            ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
 
         //监听行单击事件(员工列表)
-        table.on('row(test)', function(obj){
+        table.on('row(holidayEmp)', function(obj){
             var data = obj.data;//当前行数据
             var tr = obj.tr;//当前行对象
-            everyIns.reload({
+            holidayTableIns.reload({
                 where:{
                     empId:data.empId
                 }
-            });
+            })
         });
 
         //重载表格
@@ -115,6 +152,78 @@
             });
         });
     });
+    layui.use('element',function () {
+        var $ = layui.jquery;
+        var element = layui.element;
+    })
+</script>
+<script>
+    // 基于准备好的dom，初始化echarts实例
+    $(document).ready(function () {
+        $.post("${pageContext.request.contextPath}/echarts/getEmpBarData",{},function (data) {
+            var myChart = echarts.init(document.getElementById('empBar'));
+            // 指定图表的配置项和数据
+            myChart.setOption({
+                title: {
+                    text: '员工请假次数'
+                },
+                tooltip: {},
+                xAxis: {
+                    type: 'category',
+                    data: data.xAxis
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: data.data,
+                    type: 'bar'
+                }]
+            });
+        },"json");
+        $.post("${pageContext.request.contextPath}/echarts/getEmpLineData",{},function (data) {
+            var myChart = echarts.init(document.getElementById('empLine'));
+            // 指定图表的配置项和数据
+            myChart.setOption({
+                title: {
+                    text: '请假总数变化'
+                },
+                tooltip: {},
+                xAxis: {
+                    type: 'category',
+                    data: data.xAxis
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: data.data,
+                    type: 'line'
+                }]
+            });
+        },"json");
+    });
+</script>
+<script type="text/javascript">
+    function createTime(v){
+        console.log(v);
+        if(v == undefined || v ==''){
+            return "";
+        }else {
+            var date = new Date(v);
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            m = m < 10 ? '0' + m : m;
+            var d = date.getDate();
+            d = d < 10 ? ("0" + d) : d;
+            var h = date.getHours();
+            h = h < 10 ? ("0" + h) : h;
+            var M = date.getMinutes();
+            M = M < 10 ? ("0" + M) : M;
+            var str = y + "-" + m + "-" + d + " " + h + ":" + M;
+            return str;
+        }
+    }
 </script>
 </body>
 </html>

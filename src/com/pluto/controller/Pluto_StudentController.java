@@ -1,14 +1,14 @@
 package com.pluto.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.pluto.service.Pluto_StudentMsg;
-import com.publics.vo.studentModel.StudentClassVo;
-import com.publics.vo.studentModel.StudentDormitoryVo;
-import com.publics.vo.studentModel.StudentHappeningVo;
-import com.publics.vo.studentModel.StudentVo;
+import com.publics.utills.StringUtill;
+import com.publics.vo.studentModel.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/student")
@@ -30,6 +31,10 @@ public class Pluto_StudentController {
     @RequestMapping("/stuList")
     public String getStudentList(HttpServletRequest request){
         List hList = service.getHourList("from StudentDormitoryVo");
+        List cList = service.getListByHql("from StudentClassVo");
+        List sList = service.getListByHql("from StuStartSetVo");
+        request.setAttribute("cList",cList);
+        request.setAttribute("sList",sList);
         request.setAttribute("ssList",hList);
         return "student_pluto/student_list";
     }
@@ -49,6 +54,17 @@ public class Pluto_StudentController {
         return "student_pluto/updateStudent";
     }
 
+    @RequestMapping("/seekStuList")
+    @ResponseBody
+    public void seekStuList(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setContentType("text/html;charset=utf-8");
+        String json = service.seekStuList(request);
+        PrintWriter pw = response.getWriter();
+        pw.print(json);
+        pw.flush();
+        pw.close();
+    }
 
 
     @RequestMapping("/updateStu")
@@ -65,6 +81,9 @@ public class Pluto_StudentController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        studentVo.setBirthday(bd);
+        studentVo.setEntertime(ed);
+
         int newss = studentVo.getHuor();
         if(newss!=oldss){
             StudentDormitoryVo s1 = service.getHourById(newss);
@@ -74,10 +93,6 @@ public class Pluto_StudentController {
             service.updateHour(s1);
             service.updateHour(s2);
         }
-
-        studentVo.setBirthday(bd);
-        studentVo.setEntertime(ed);
-        System.out.println(studentVo.toString());
         service.updateStudent(studentVo);
         return "1";
     }
@@ -134,7 +149,6 @@ public class Pluto_StudentController {
         service.updateHour(olds);
         service.updateHour(s);
 
-
         return "1";
     }
 
@@ -150,8 +164,9 @@ public class Pluto_StudentController {
     @RequestMapping("/biye")
     @ResponseBody
     public String setBiye(int Studid){
+        System.out.println("shezhibiye");
         StudentVo studentVo = service.getStudentById(Studid);
-        studentVo.setStat(6);
+        studentVo.setStat(5);
         service.updateStudent(studentVo);
         StudentDormitoryVo huor = service.getHourById(studentVo.getHuor());
         huor.setCount(huor.getCount()-1);
@@ -249,8 +264,8 @@ public class Pluto_StudentController {
 
     @RequestMapping("/addZx")
     @ResponseBody
-    public void addZx(int Studid,String content,HttpServletRequest request){
-        service.addZx(Studid,content,request);
+    public void addZx(int stuid,String content,HttpServletRequest request){
+        service.addZx(stuid,content,request);
     }
 
     @RequestMapping("/updatezx")
@@ -262,7 +277,6 @@ public class Pluto_StudentController {
     @RequestMapping("/delzx")
     @ResponseBody
     public String updatezx(int happenid){
-        System.out.println("在校记录id="+happenid);
         service.deletezx(happenid);
         return "1";
     }
@@ -277,4 +291,120 @@ public class Pluto_StudentController {
 
         return "student_pluto/updatezx";
     }
+
+
+//    -家庭信息-----------------------
+    @RequestMapping("/familyData")
+    @ResponseBody
+    public void toFamilyDate(int stuid,HttpServletResponse response) throws IOException {
+        String json = service.getFamilyListJsonbyId(stuid);
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter pw = response.getWriter();
+        pw.print(json);
+        pw.flush();
+        pw.close();
+    }
+
+    @RequestMapping("/deljt")
+    @ResponseBody
+    public String deljt(int familyid) throws IOException {
+        StudentFamilyVo s = service.getFamilyById(familyid);
+        service.delFamily(s);
+
+        return "1";
+    }
+
+    @RequestMapping("/toAddJtPage")
+    public String toAddJtPage(int stuid,Model model){
+        StudentVo s = service.getStudentById(stuid);
+        model.addAttribute("s",s);
+        return "student_pluto/addFamily";
+    }
+
+    @RequestMapping("/addJt")
+    @ResponseBody
+    public String AddJt(StudentFamilyVo familyVo){
+
+        service.addStudentFamily(familyVo);
+        return "1";
+    }
+
+    @RequestMapping("/toUpdateJt")
+    public String toUpdateJt(int familyid,Model model){
+        StudentFamilyVo studentFamilyVo = service.getFamilyById(familyid);
+        StudentVo s = service.getStudentById(studentFamilyVo.getStuid());
+        model.addAttribute("s",s);
+        model.addAttribute("f",studentFamilyVo);
+        return "student_pluto/updFamily";
+    }
+
+    @RequestMapping("/updJt")
+    @ResponseBody
+    public String updJt(String familyname,int familyid,int stuid,String relation,String familyhone){
+        StudentFamilyVo familyVo = new StudentFamilyVo();
+        familyVo.setFamilyid(familyid);
+        familyVo.setFamilyhone(familyhone);
+        familyVo.setRelation(relation);
+        familyVo.setStuid(stuid);
+        familyVo.setFamilyname(familyname);
+
+        service.updFamily(familyVo);
+        return "1";
+    }
+
+//    ---------考试成绩-------------
+    @RequestMapping("/examData")
+    @ResponseBody
+    public void toExamDate(int stuid,HttpServletResponse response) throws IOException {
+        String json = service.getExamData(stuid);
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter pw = response.getWriter();
+        pw.print(json);
+        pw.flush();
+        pw.close();
+    }
+
+    @RequestMapping("/toUpdateExam")
+    public String toUpdateExam(int scoreId, Model model){
+        List kList = service.getKemuList();
+        List xList = service.getxueqiList();
+        Map sc = service.getStudentScoreVoById(scoreId);
+
+
+        StudentVo s = service.getStudentById((Integer) sc.get("stuid"));
+        model.addAttribute("s",s);
+        model.addAttribute("sc",sc);
+        model.addAttribute("kList",kList);
+        model.addAttribute("xList",xList);
+
+        return "student_pluto/updateExam";
+    }
+
+    @RequestMapping("/dbData")
+    @ResponseBody
+    public void dbData(int stuid,HttpServletResponse response) throws IOException {
+        String json = service.getDbData(stuid);
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter pw = response.getWriter();
+        pw.print(json);
+        pw.flush();
+        pw.close();
+    }
+
+    @RequestMapping("/toUpdDb")
+    public String toUpdDb(int replyId, Model model){
+        List elist = service.getListByHql("from EmpVo");
+        ReplyScoreVo r = (ReplyScoreVo) service.getObjById(new ReplyScoreVo().getClass(),replyId);
+        StudentVo s = (StudentVo) service.getObjById(new StudentVo().getClass(),r.getStudentId());
+        ProjectNameVo p = (ProjectNameVo) service.getObjById(new ProjectNameVo().getClass(),r.getProjectId());
+        model.addAttribute("pro",p);
+        model.addAttribute("p",r);
+        model.addAttribute("s",s);
+        model.addAttribute("eList",elist);
+
+
+        return "student_pluto/updateDb";
+    }
+
 }
+

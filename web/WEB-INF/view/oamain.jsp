@@ -99,7 +99,7 @@
                                data-id="谈心记录" data-title="谈心记录" >谈心记录</a></dd>
                         <dd>
                             <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/empLeave/toleave"
+                               data-url="${pageContext.request.contextPath}/zeroLeave/toleave"
                                data-id="请假管理" data-title="请假管理">请假管理</a>
                         </dd>
 
@@ -116,7 +116,7 @@
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/student/leave"
+                               data-url="${pageContext.request.contextPath}/student/selectleave"
                                data-id="学生请假" data-title="学生请假" >学生请假</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/zeroStudent/toClass"
@@ -220,7 +220,9 @@
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/systemLog/toHolidayPage"
                                data-id="员工请假统计" data-title="员工请假统计">员工请假统计</a></dd>
-                        <dd><a href="javascript:void(0);">学生请假统计</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/systemLog/toHolidayStuPage"
+                               data-id="学生请假统计" data-title="学生请假统计">学生请假统计</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/systemLog/toWorkTime"
                                data-id="未打卡说明统计" data-title="未打卡说明统计">未打卡说明统计</a></dd>
@@ -232,13 +234,17 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="tt" lay-tips="通知公告" lay-direction="2"><i class="layui-icon layui-icon-file"></i><cite>通知公告</cite></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">通知公告</a></dd>
+                        <dd><a href="javascript:;"class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/toPage/Notice"
+                               data-id="通知公告" data-title="通知公告">通知公告</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="tt" lay-tips="安全管理" lay-direction="2"><i class="layui-icon layui-icon-auz"></i><cite>安全管理</cite></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:void(0);">权限管理</a></dd>
+                        <dd><a href="javascript:;"class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/controller/toUserList"
+                               data-id="权限管理" data-title="权限管理">权限管理</a></dd>
                         <dd><a href="javascript:void(0);">流程管理</a></dd>
                     </dl>
                 </li>

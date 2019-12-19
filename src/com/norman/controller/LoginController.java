@@ -42,8 +42,6 @@ public class LoginController {
             }
         }else if (stu != null) {
             if (stu.getPassword() != null && stu.getPassword().equals(pwd)){
-                System.out.println("=====================");
-                System.out.println(stu);
                 session.setAttribute("user",stu);
                 result = "{\"code\":\"user\"}";
             }else {

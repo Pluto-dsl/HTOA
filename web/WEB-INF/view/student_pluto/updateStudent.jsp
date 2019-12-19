@@ -23,7 +23,7 @@
         <table id="td" border="0" style="border-collapse:separate; border-spacing:20px;" align="center">
             <input type="hidden" name="Studid" id="stuId" value="${s.studid}"/>
             <input type="hidden" name="password" value="${s.password}"/>
-            <input type="hidden" name="oldss" value="${s.huor}">
+            <input type="hidden" name="oldss" value="${s.huor}"/>
             <tr>
                 <th colspan="4">
                     <font style="font-size: 25px;">
@@ -159,8 +159,8 @@
                     <label class="label-top">修&nbsp;改&nbsp;宿&nbsp;舍:</label>
                 </td>
                 <td>
-                    <select class="layui-form-label" name="hour" id="hour" editable="false" value="1" ditable="false" style="width:290px;">
-                        <c:forEach items="${ssList}" var="ss">
+                    <select class="layui-form-label" name="huor" id="hour" editable="false" value="1" ditable="false" style="width:290px;">
+                        <c:forEach items="${ssList}" var="ss" >
                             <option value="${ss.hourid}" <c:if test="${s.huor == ss.hourid}">selected="selected"</c:if>>${ss.huorName}</option>
                         </c:forEach>
                     </select>
@@ -172,12 +172,12 @@
                     <select class="layui-form-label" name="stat" id="stat" editable="false" value="1" ditable="false"
                             style="width:290px;">
 <%--                        //    状态名称：1意向学生、2预定报名学生、3试学学生、4在读学生、5已毕业学生--%>
-                        <option value="1" <c:if test="${s.studid == 1}">selected="selected"</c:if> >意向学生</option>
-                        <option value="2" <c:if test="${s.studid == 2}">selected="selected"</c:if> >预定报名学生</option>
-                        <option value="3" <c:if test="${s.studid == 3}">selected="selected"</c:if> >试学学生</option>
-                        <option value="4" <c:if test="${s.studid == 4}">selected="selected"</c:if> >在读学生</option>
-                        <option value="5" <c:if test="${s.studid == 5}">selected="selected"</c:if> >已毕业学生</option>
-                        <option value="6" <c:if test="${s.studid == 5}">selected="selected"</c:if> >退学</option>
+                        <option value="1" <c:if test="${s.stat == 1}">selected="selected"</c:if> >意向学生</option>
+                        <option value="2" <c:if test="${s.stat == 2}">selected="selected"</c:if> >预定报名学生</option>
+                        <option value="3" <c:if test="${s.stat == 3}">selected="selected"</c:if> >试学学生</option>
+                        <option value="4" <c:if test="${s.stat == 4}">selected="selected"</c:if> >在读学生</option>
+                        <option value="5" <c:if test="${s.stat == 5}">selected="selected"</c:if> >已毕业学生</option>
+                        <option value="6" <c:if test="${s.stat == 5}">selected="selected"</c:if> >退学</option>
                     </select>
                 </td>
             </tr >            <tr style="height: 40px">

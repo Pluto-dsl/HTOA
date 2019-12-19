@@ -42,8 +42,8 @@ public class Zhq_DepServiceImpl extends BaseDao implements Zhq_DepService {
 
     //修改部门
     @Override
-    public void updateDep(DepVo depVo) {
-        updObject(depVo);
+    public void updateDep(DepVo depName) {
+        updObject(depName);
     }
 
     //删除部门
@@ -51,6 +51,7 @@ public class Zhq_DepServiceImpl extends BaseDao implements Zhq_DepService {
     public void deleteDep(DepVo  depId) {
         delObject(depId);
     }
+
 
     @Override
     public Object selObjId(Class clazz, Integer id) {

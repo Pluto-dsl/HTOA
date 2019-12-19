@@ -6,11 +6,10 @@ import com.publics.vo.studentModel.StudentLeaveVo;
 import com.publics.vo.studentModel.StudentVo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface Wtt_StudentService {
-    List<StudentLeaveVo> studentleave(int currpage, int pagesize);
-
-    StudentVo student(int id);
+    List<StudentLeaveVo> studentleave(int id);
     //查询总页数
     int pagecounts();
     //查询总页数
@@ -27,4 +26,16 @@ public interface Wtt_StudentService {
     void update(FeedbackVo feedbackVo);
     //根据id去查找问题反馈
     FeedbackVo feedbackvo(int id);
+    //根据单据ID查找单据内容
+    StudentLeaveVo leavelist(int jobid);
+    //根据单据id查找学生名字
+    String name(int jobid);
+    //修改单据的状态
+    void updateleave(StudentLeaveVo studentLeaveVo);
+    //根据员工id去找部门负责人
+    String chairman(int empid);
+    //根据单据id查找学生
+    Map studentid(int jobid);
+    //查找所有班主任
+    List selclassteacher(String sql);
 }

@@ -22,7 +22,15 @@ public interface Ljw_SystemLogService {
     List<Map> getHolidayEmp(HttpServletRequest request,int page,int limit);
     int getHolidayEmpSize(HttpServletRequest request);
     List<Map> getHolidayListByEmp(HttpServletRequest request,int page,int limit);
+    int getHolidayListByEmpSize(HttpServletRequest request);
 
+    /*
+     * 员工请假统计
+     * */
+    List<Map> getHolidayStu(HttpServletRequest request,int page,int limit);
+    int getHolidayStuSize(HttpServletRequest request);
+    List<Map> getHolidayListByStu(HttpServletRequest request,int page,int limit);
+    int getHolidayListByStuSize(HttpServletRequest request);
 
     /*
     * 未打卡说明统计

@@ -21,7 +21,7 @@ public class StudentLeaveVo {
     private float holidayDay;//假期天数
     private Date startTime;//开始时间
     private Date endTime;//结束时间
-    private String Title;//标题
+    private String Title;//申请类型
     private String Remark;//内容
     private String Status;//审批中，审批通过，审批未通过
 
