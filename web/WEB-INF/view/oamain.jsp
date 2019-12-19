@@ -101,7 +101,7 @@
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/student/leave"
+                               data-url="${pageContext.request.contextPath}/student/selectleave"
                                data-id="学生请假" data-title="学生请假" >学生请假</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/zeroStudent/toClass"

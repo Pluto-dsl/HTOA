@@ -15,6 +15,9 @@
 <body>
 <div id="windows" style="margin-left:5%; margin-top:1%; display: none;">
     <form method="post" class="layui-form" enctype="multipart/form-data" action="<%=request.getContextPath()%>/studentduan/addstudentleave">
+        <input type="hidden" name="title" value="myProcess_1"/>
+        <input type="hidden" name="name" value="请假条">
+        <input type="hidden" name="userId" value="${actorname}">
         <table style="border-collapse:separate;border-spacing:0px 20px;margin-left: 15%">
             <tr>
                 <th>请假类型:</th>
@@ -65,6 +68,10 @@
     <table class="layui-hide" lay-filter="test" id="test">
 
     </table>
+    <script type="text/html" id="barDemo">
+        <!--查看批注-->
+        <button type="button" lay-event="select" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon layui-icon-search"></i>查看批注</button>
+    </script>
 </body>
 <script>
     layui.use([ 'element', 'table', 'layer', 'form' ,'laydate','laypage'],function () {
@@ -86,9 +93,10 @@
                 ,{field:'holidayDay', title:'假期天数', width:170,sort:true}
                 ,{field:'startTime', title:'开始时间', width:200,templet:'<div>{{ layui.util.toDateString(d.startTime,"yyyy-MM-dd HH:mm:ss")}}</div>'}
                 ,{field:'endTime', title:'结束时间', width:200,templet:'<div>{{ layui.util.toDateString(d.endTime,"yyyy-MM-dd HH:mm:ss")}}</div>'}
-                ,{field:'Title', title:'请假类型',width:200}
+                /*,{field:'Title', title:'请假类型',width:200}*/
                 ,{field:'Remark', title:'请假事由', width:200}
                 ,{field:'Status', title:'状态', width:200}
+                ,{fixed: '', width:163, title:'操作', align:'center', toolbar: '#barDemo'}
             ]]
             ,page:true,
             limits:[5,10,15,25]
@@ -112,6 +120,14 @@
                     });
                     break;
             };
+        });
+        //行工具栏
+        table.on('tool(test)', function(obj){
+            var datas = obj.data;//获取当前行数据
+            var event = obj.event;//获得lay-event 对应的值（编辑，删除）
+            if(event == 'select') {
+
+            }
         });
         //时间选择器
         laydate.render({
