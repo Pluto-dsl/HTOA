@@ -16,8 +16,6 @@ public class ForwordController {
 
     @RequestMapping("/toPage/{path}")
     public String tomain(@PathVariable("path") String path, HttpSession session){
-//        EmpVo emp = service.getemp(13);
-//        session.setAttribute("admin",emp);
         return path;
     }
 }

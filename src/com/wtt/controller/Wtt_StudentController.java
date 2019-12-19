@@ -9,8 +9,21 @@ import com.publics.vo.feedback.Collect_OpinionsVo;
 import com.publics.vo.feedback.FeedbackVo;
 import com.publics.vo.studentModel.StudentLeaveVo;
 import com.publics.vo.studentModel.StudentVo;
+import com.wtt.service.Wtt_StuDuanService;
 import com.wtt.service.Wtt_StudentService;
+import org.activiti.bpmn.model.Activity;
+import org.activiti.engine.*;
+import org.activiti.engine.impl.identity.Authentication;
+import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
+import org.activiti.engine.impl.pvm.PvmActivity;
+import org.activiti.engine.impl.pvm.PvmTransition;
+import org.activiti.engine.impl.pvm.process.ActivityImpl;
+import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Comment;
+import org.activiti.engine.task.Task;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -21,8 +34,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/student")
@@ -31,49 +43,164 @@ public class Wtt_StudentController {
     Wtt_StudentService studentService;
     @Resource
     LoginService loginService;
-    //去到学生请假页面
-    @RequestMapping(value = "leave")
-    public String leave(){
-        return "emp_wtt/studentleave";
-    }
+    @Resource
+    private ProcessEngine processEngine;
+    @Resource
+    private TaskService taskService;
+    @Resource
+    private RuntimeService runtimeService;
+    @Resource
+    private HistoryService historyService;
+    @Resource
+    private RepositoryService repositoryService;
+    @Resource
+    private Wtt_StuDuanService wtt_stuDuanService;
 
     //学生请假查询
     @RequestMapping(value = "selectleave")
-    public void toEmpPaper(HttpServletResponse response, int page, int limit){
+    public String toEmpPaper(HttpServletResponse response,Map map2, HttpSession session, ModelMap modelMap){
         response.setContentType("text/html;charset=utf-8");
-        //当前页
-        List<StudentLeaveVo> list = studentService.studentleave(page,limit);
-        JSONArray jsonArray = new JSONArray();
-        for(StudentLeaveVo studentLeaveVo:list){
-            StudentVo studentVo = studentService.student(studentLeaveVo.getHolidayid());
-            JSONObject jsonObject1 = new JSONObject();
-            jsonObject1.put("holidayid",studentLeaveVo.getHolidayid());
-            jsonObject1.put("StudentId",studentVo.getStuname());
-            jsonObject1.put("holidayDay",studentLeaveVo.getHolidayDay());
-            jsonObject1.put("startTime",studentLeaveVo.getStartTime());
-            jsonObject1.put("endTime",studentLeaveVo.getEndTime());
-            jsonObject1.put("Title",studentLeaveVo.getTitle());
-            jsonObject1.put("Remark",studentLeaveVo.getRemark());
-            jsonObject1.put("Status",studentLeaveVo.getStatus());
-            jsonArray.add(jsonObject1);
+        //获取当前登录用户,根据用户名去查询任务列表
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        String name = empVo.getEmpName();
+        int empid = empVo.getEmpId();
+        List<Task> tasks =taskService.createTaskQuery().taskAssignee(name).list();
+       /* System.out.println("任务："+tasks);*/
+        //单据
+        List studentleave = new ArrayList();
+        for(Task task:tasks){
+            System.out.println(task.getId());
+            //根据任务id取得单据id
+            Object sid = taskService.getVariable(task.getId(),"holidayid");
+            /*System.out.println("id=========="+(int)sid);*/
+            //如果有任务进入判断里面
+            if(studentService.studentleave(Integer.parseInt((sid+""))).size()>0){
+                Map map = (Map) studentService.studentleave(Integer.parseInt((sid+""))).get(0);
+                //任务Id
+                map.put("taskid",task.getId());
+                //流程实例id
+                map.put("processInstanceId",task.getProcessInstanceId());
+                studentleave.add(map);
+                /*System.out.println("单据："+studentleave);*/
+            }
         }
-        //获取总行数
-        int rows =studentService.pagecounts();
-        JSONObject jsonObjects = new JSONObject();
-        jsonObjects.put("msg","提示");
-        jsonObjects.put("code",0);
-        jsonObjects.put("data",jsonArray);
-        jsonObjects.put("count",rows);
-        try {
-            PrintWriter pw = response.getWriter();
-            pw.print(jsonObjects.toJSONString());
-            pw.flush();
-            pw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        map2.put("studentleavelist",studentleave);
+        return "emp_wtt/studentleave";
     }
+    //根据选中的请假id去到审批页面
+    @RequestMapping(value = "/studentexamine")
+    public String studentexamine(String taskid,String instance,Model model){
+        System.out.println("我进来了，你拦我啊！！");
+        //根据流程实例Id查询流程实例
+        ProcessInstance processInstance =runtimeService.createProcessInstanceQuery().processInstanceId(instance).singleResult();
+        //根据任务ID查询任务实例
+        Task task = taskService.createTaskQuery().taskId(taskid).singleResult();
+        /*System.out.println("任务实例："+task);*/
+        //历史审批信息
+        List<Comment> comments = taskService.getProcessInstanceComments(instance);
+        /*System.out.println("历史审批信息:"+comments);*/
+        //获取流程定义ID
+        String defindid =task.getProcessDefinitionId();
+        /*System.out.println("流程定义ID:"+defindid);*/
+        //根据流程定义ID查询流程定义实体对象
+        ProcessDefinitionEntity processDefinitionEntity = (ProcessDefinitionEntity) processEngine.getRepositoryService().getProcessDefinition(defindid);
+        //根据流程实例对象获取活动ID
+        String activityid =processInstance.getActivityId();
+        /*System.out.println("当前活动ID:"+activityid);*/
+        //查询当前活动
+        ActivityImpl activityimpl = processDefinitionEntity.findActivity(activityid);
+        //获取当前活动的连线
+        List<PvmTransition> pvmTransitions =activityimpl.getOutgoingTransitions();
+        List list = new ArrayList();
+        for(PvmTransition pvmTransition:pvmTransitions){
+            Map map = new HashMap();
+            if(pvmTransition.getProperty("name")==null  ){
+                map.put("id",0);
+                map.put("name","审批");
+            }else {
+                map.put("id",pvmTransition.getId());
+                map.put("name",pvmTransition.getProperty("name"));
+            }
+            list.add(map);
+        }
+        //获取单据Id
+        int danjuid = Integer.parseInt(taskService.getVariable(taskid,"holidayid").toString());
+        /*System.out.println("单据id:"+danjuid);*/
+        StudentLeaveVo studentLeaveVo= studentService.leavelist(danjuid);
+        /*System.out.println(studentLeaveVo);*/
+        String name = studentService.name(danjuid);
+        model.addAttribute("name",name);
+        //任务ID
+        model.addAttribute("taskid",taskid);
+        //备注
+        model.addAttribute("comment",comments);
+        //实体对象
+        model.addAttribute("leavevo",studentLeaveVo);
+        //连线
+        model.addAttribute("opinion",list);
+        return "emp_wtt/examineStudent";
+    }
+    //审批
+    @RequestMapping(value = "/complete")
+    public String complete(int id,String taskid,String comment,String opinion,HttpSession session){
+        //根据任务id查找任务对象
+        Task task =taskService.createTaskQuery().taskId(taskid).singleResult();
+        System.out.println("任务对象："+task);
+        //根据任务对象得到流程实例ID
+        String processinstanceid= task.getProcessInstanceId();
+        //根据单据ID得到实体对象
+        StudentLeaveVo studentLeaveVo =studentService.leavelist(id);
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        String name_bl = empVo.getEmpName();//办理人姓名
+        int empid = empVo.getEmpId();
+        //当前办理人
+        Authentication.setAuthenticatedUserId(name_bl);
+        //设置备注信息（任务ID,实例ID,备注的信息）
+        taskService.addComment(taskid,processinstanceid,comment);
+        //判断当前审批人是否为班主任
+        String assignee = "";
+        List clist = studentService.selclassteacher("select * from emp where postName like '班主任'");
+        System.out.println("班主任:"+clist);
+        for(int i = 0;i < clist.size(); i++){
+            Map map = (Map) clist.get(i);
+            System.out.println("----"+map.get("empName"));
+            if(name_bl.equals(map.get("empName"))){
+                String name = studentService.chairman(empid);
+                System.out.println("部门负责人："+name);
+                assignee = name;
+                break;
+            }
+        }
 
+        Map map = new HashMap();
+        map.put("opinion",opinion);
+        if(!"".equals(assignee)){
+            map.put("assignee",assignee);
+        }else {
+            Map studnetmap = studentService.studentid(id);
+            int studentid = (int) studnetmap.get("Studid");
+            Map map1 = wtt_stuDuanService.selectteacher(studentid);
+            System.out.println("班主任姓名："+map1);
+            String names = (String) map1.get("classTeacher");
+            System.out.println("names");
+            map.put("assignee",names);
+        }
+
+        //完成任务
+        taskService.complete(taskid,map);
+        //根据流程实例获取实例对象
+        ProcessInstance processInstance =runtimeService.createProcessInstanceQuery().processInstanceId(processinstanceid).singleResult();
+        if(processInstance==null){
+            if(opinion.equals("拒绝")){
+                studentLeaveVo.setStatus("审批不通过");
+                System.out.println("审批不通过");
+            }else{
+                studentLeaveVo.setStatus("审批通过");
+            }
+            studentService.updateleave(studentLeaveVo);
+        }
+        return "redirect:/student/selectleave";
+    }
     //去到问题反馈查询页面
     @RequestMapping(value = "/questionPage")
     public String question(){
@@ -110,7 +237,6 @@ public class Wtt_StudentController {
         int ids = Integer.parseInt(request.getParameter("wid"));
         System.out.println("id为："+ids);
         List<Collect_OpinionsVo> list = studentService.selectyijian(ids);
-//      request.setAttribute("list",list);
         PrintWriter pw = response.getWriter();
         pw.print(JSONArray.toJSONString(list));
         pw.close();

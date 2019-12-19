@@ -18,12 +18,12 @@ import java.util.Map;
 @Service
 public class Wtt_EmpServiceImpl extends BaseDao implements Wtt_EmpService {
     @Override
-    public List<WeeklogVo> weekpaper(HttpServletRequest request,int currpage, int pagesize) {
+    public List<WeeklogVo> weekpaper(int id,HttpServletRequest request,int currpage, int pagesize) {
         String starttime = request.getParameter("startTime");
         String endtitme = request.getParameter("endTime");
         String sql = "select w.weeklogid,e.empName,w.Idea,w.Workday,w.studentQuestion,w.weekCur,w.weekNext from weeklog w\n" +
                 "left join emp e on w.Empid = e.empId\n" +
-                "where w.Workday";
+                "where e.empId= '"+id+"'"+" and w.Workday";
         if(!("".equals(starttime) || starttime == null)){
             sql+=" between '"+starttime+" 00:00:00'";
         }
@@ -43,7 +43,7 @@ public class Wtt_EmpServiceImpl extends BaseDao implements Wtt_EmpService {
         WeeklogVo weeklogVo = (WeeklogVo) getObject(WeeklogVo.class,id);
         EmpVo empVo = (EmpVo) getObject(EmpVo.class,weeklogVo.getEmpid());
         DepVo dep = (DepVo) getObject(DepVo.class,empVo.getDepId());
-
+        System.out.println("部门名称："+dep.getDepName());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
         JSONObject jsonObject = new JSONObject();
@@ -68,6 +68,11 @@ public class Wtt_EmpServiceImpl extends BaseDao implements Wtt_EmpService {
     }
 
     @Override
+    public WeeklogVo weeklogvo(int id) {
+        return (WeeklogVo) getObject(new WeeklogVo().getClass(),id);
+    }
+
+    @Override
     public void delete(int id) {
         WeeklogVo weeklogVo = new WeeklogVo();
         weeklogVo.setWeeklogid(id);
@@ -75,10 +80,11 @@ public class Wtt_EmpServiceImpl extends BaseDao implements Wtt_EmpService {
     }
 
     @Override
-    public int pagecount(HttpServletRequest request) {
+    public int pagecount(int id,HttpServletRequest request) {
         String starttime = request.getParameter("startTime");
         String endtitme = request.getParameter("endTime");
-        String sql = "select count(*) from weeklog w left join emp e on w.Empid = e.empId where w.Workday";
+        String sql = "select count(*) from weeklog w left join emp e on w.Empid = e.empId \n" +
+                "where e.empId= '"+id+"'"+" and w.Workday";
         if(!("".equals(starttime) || starttime == null)){
             sql+=" between '"+starttime+" 00:00:00'";
         }
@@ -109,11 +115,6 @@ public class Wtt_EmpServiceImpl extends BaseDao implements Wtt_EmpService {
     @Override
     public List jobmap(int id) {
         String sql ="select j.companyName,j.degree,j.startDate,j.endDate from emp e left join job j on j.Empid= e.empId where e.empId = '"+id+"'";
-        /*List<Map> list = listBySQL(sql);
-        for (Map map:list) {
-            return map;
-        }
-        return null;*/
         return listBySQL(sql);
     }
 
