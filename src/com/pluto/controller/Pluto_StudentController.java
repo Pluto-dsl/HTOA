@@ -164,8 +164,9 @@ public class Pluto_StudentController {
     @RequestMapping("/biye")
     @ResponseBody
     public String setBiye(int Studid){
+        System.out.println("shezhibiye");
         StudentVo studentVo = service.getStudentById(Studid);
-        studentVo.setStat(6);
+        studentVo.setStat(5);
         service.updateStudent(studentVo);
         StudentDormitoryVo huor = service.getHourById(studentVo.getHuor());
         huor.setCount(huor.getCount()-1);

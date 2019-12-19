@@ -225,7 +225,9 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" lay-tips="安全管理" lay-direction="2"><i class="layui-icon layui-icon-auz"></i><cite>安全管理</cite></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:void(0);">权限管理</a></dd>
+                        <dd><a href="javascript:;"class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/controller/toUserList"
+                               data-id="权限管理" data-title="权限管理">权限管理</a></dd>
                         <dd><a href="javascript:void(0);">流程管理</a></dd>
                     </dl>
                 </li>
