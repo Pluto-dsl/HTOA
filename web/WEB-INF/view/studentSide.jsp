@@ -71,12 +71,14 @@
                         <i class="layui-icon layui-icon-help"></i>
                         <cite>问题反馈</cite>
                     </a>
-                </li><li class="layui-nav-item">
-                <a href="javascript:;" lay-tips="报修申请" lay-direction="2">
-                    <i class="layui-icon layui-icon-set-fill"></i>
-                    <cite>报修申请</cite>
-                </a>
-            </li>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" lay-tips="报修申请" lay-direction="2" class="site-demo-active" data-type="tabAdd" data-url="${pageContext.request.contextPath}/myRepair/toStuRepair"
+                       data-id="报修申请" data-title="报修申请">
+                        <i class="layui-icon layui-icon-help"></i>
+                        <cite>报修申请</cite>
+                    </a>
+                </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;" lay-tips="教师考评" lay-direction="2" class="site-demo-active" data-type="tabAdd"
                        data-url="${pageContext.request.contextPath}/jack/toTeacharEva"
