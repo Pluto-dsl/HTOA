@@ -205,7 +205,9 @@
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/systemLog/toHolidayPage"
                                data-id="员工请假统计" data-title="员工请假统计">员工请假统计</a></dd>
-                        <dd><a href="javascript:void(0);">学生请假统计</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/systemLog/toHolidayStuPage"
+                               data-id="学生请假统计" data-title="学生请假统计">学生请假统计</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/systemLog/toWorkTime"
                                data-id="未打卡说明统计" data-title="未打卡说明统计">未打卡说明统计</a></dd>

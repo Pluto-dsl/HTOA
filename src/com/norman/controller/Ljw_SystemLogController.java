@@ -134,8 +134,8 @@ public class Ljw_SystemLogController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/getHolidayByEmp")
-    public void getHolidayBayEm(HttpServletRequest request,HttpServletResponse response,int page,int limit) throws IOException {
+    @RequestMapping(value = "/getHolidayByEmp")//通过员工id获取对应的员工请假记录
+    public void getHolidayBayEmp(HttpServletRequest request,HttpServletResponse response,int page,int limit) throws IOException {
         response.setContentType("text/html;charset=utf-8");
         JSONObject result = new JSONObject();
         List<Map> list = systemLogService.getHolidayListByEmp(request,page,limit);
@@ -150,9 +150,53 @@ public class Ljw_SystemLogController {
         out.close();
     }
 
+    @RequestMapping(value = "/toHolidayStuPage")//去学生请假列表
+    public String toHolidayStuPage(Model model){
+        JSONObject result = new JSONObject();
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.MONTH);
+        result.put("lastMonth",month);
+        result.put("thisMonth",month +1);
+        model.addAttribute("month",result);
+        return "systemLog/holidayStu";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getHolidayStu")//获取所有学生请假列表
+    public void getHolidayStu(HttpServletRequest request,HttpServletResponse response,int page,int limit) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        JSONObject result = new JSONObject();
+        List<Map> list = systemLogService.getHolidayStu(request,page,limit);
+        int count = systemLogService.getHolidayStuSize(request);
+        result.put("code",0);
+        result.put("msg","");
+        result.put("count",count);
+        result.put("data",list);
+        PrintWriter out = response.getWriter();
+        out.print(result);
+        out.flush();
+        out.close();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getHolidayByStu")//通过学生id获取学生请假记录
+    public void getHolidayBayStu(HttpServletRequest request,HttpServletResponse response,int page,int limit) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        JSONObject result = new JSONObject();
+        List<Map> list = systemLogService.getHolidayListByStu(request,page,limit);
+        int count = systemLogService.getHolidayListByStuSize(request);
+        result.put("code",0);
+        result.put("msg","");
+        result.put("count",count);
+        result.put("data",list);
+        PrintWriter out = response.getWriter();
+        out.print(result);
+        out.flush();
+        out.close();
+    }
 
     @RequestMapping(value = "/toWorkTime")//去往未打卡说明统计
-    public String toHolidayEmp(Model model){
+    public String toWorkTime(Model model){
         JSONObject result = new JSONObject();
         Calendar cal = Calendar.getInstance();
         int month = cal.get(Calendar.MONTH);
