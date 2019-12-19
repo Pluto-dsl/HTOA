@@ -76,15 +76,6 @@ public class BaseDao {
         session.close();
     }
 
-    public int executeSQLE(String sql) {
-        Session session =  getSession();
-        SQLQuery sqlquery =session.createSQLQuery(sql);
-        int a = sqlquery.executeUpdate();
-        session.close();
-        return a;
-
-    }
-
     /**
      * SQL查询总行数
      */

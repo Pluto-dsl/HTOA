@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!doctype html>
 <html>
 <head>
     <title>Title</title>
@@ -116,7 +117,7 @@
                 ,{field:'auditDate', title:'考核时间 ',templet : "<div>{{layui.util.toDateString(d.auditDate, 'yyyy年MM月dd日')}}</div>" , width:150}
                 ,{field:'auditPerson', title:'录入人员', width:120}
                 ,{field:'Remark', title:'说明', width:200}
-                ,{title:'操作',toolbar:'#barDemo',width:250}
+                ,{title:'操作',toolbar:'#barDemo',fixed: 'right',width:250}
             ]]
             ,page: true
             ,limit:15

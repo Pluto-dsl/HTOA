@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!doctype html>
 <html>
 <head>
     <title>Title</title>
@@ -17,7 +18,8 @@
         <table align="center" style="margin-top: 5%;border-collapse: separate;border-spacing: 10px 30px;">
             <tr>
                 <th id="className">班级:（<font color="#ff4500">${evaluate.className}</font>）</th>
-                <th id="teacharName">班主任:（<font color="#ff4500">${evaluate.empName}</font>）</th>
+                <th id="teacharName">${teacher}:（<font color="#ff4500">${evaluate.empName}</font>）</th>
+                <input type="hidden" value="${teacher}" name="type" />
                 <input name="classid" type="hidden" value="${evaluate.classId}" />
                 <input name="teacherid" type="hidden" value="${evaluate.empId}" />
             </tr>

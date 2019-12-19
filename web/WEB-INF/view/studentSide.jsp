@@ -48,7 +48,7 @@
                     ${user.stuname}
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="/logout">注销</a></dd>
+                    <dd><a href="${pageContext.request.contextPath}/logout">注销</a></dd>
                 </dl>
             </li>
         </ul>
@@ -142,7 +142,6 @@
                 })
             }
         };
-
 
         //当点击有site-demo-active属性的标签时，即左侧菜单栏中内容 ，触发点击事件
         $('.site-demo-active').on('click', function() {
