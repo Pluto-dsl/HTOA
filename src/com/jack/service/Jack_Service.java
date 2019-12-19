@@ -6,13 +6,14 @@ import com.publics.vo.educ.CourseTypeVo;
 import com.publics.vo.educ.CourseVo;
 import com.publics.vo.empModel.AttendanceVo;
 import com.publics.vo.empModel.evaluationVo;
+import com.publics.vo.empModel.teacherTotalVo;
 
 import java.util.List;
 
 public interface Jack_Service {
     /**
-     *  这里是考勤管理部分
-     * */
+    *  这里是考勤管理部分
+    * */
     List selAtt(int Aid, int currPage, int pageSize); //查询考勤表
     int selAttCount(int Aname); //查询总页数
     String selDepChairman(int AName); //查询部门负责人
@@ -22,8 +23,8 @@ public interface Jack_Service {
     void delAtt(int id);
 
     /**
-     * 课程类型业务部分
-     * */
+    * 课程类型业务部分
+    * */
     List selCourse(int currPage, int pageSize); //查询课程类型表
     int selCouCount(); //查询课程类型总数
     int UpdateCourse(CourseTypeVo course);
@@ -31,8 +32,8 @@ public interface Jack_Service {
     int AddCurse(CourseTypeVo courseTypeVo);
 
     /**
-     *  课程管理业务
-     * */
+    *  课程管理业务
+    * */
     List selCourseMgt(int currPage, int pageSize); //查询课程管理表
     int selCouCountM(); //获取课程总数
     List selCourseName();//获取课程类型种类
@@ -70,8 +71,13 @@ public interface Jack_Service {
     /** 学生端——教师考评 */
     List selHeadmasterTest(int stu);
     List selHeadmasterType();
-    List selTeachatTest(int stu);
-    List selTeacharType();
+    List selTeacherTest(int stu);
+    List selTeacherType();
+    void addHeadmaster(teacherTotalVo totalVo); //插入考评分数
+    void addTeacher(teacherTotalVo totalVo);    //插入考评分数
+    List selMonthly_assessment(int stuid,int etype);
 
-    int addHeadmaster(String teacher,String classid,String evaluationType,String studentId,String sugges,String evaluationid,String teacherScore);
+    /** 公告 */
+    int selChatRecordCount(int empid); //谈心查询
+    int selClockCount(int empid); //未打卡查询
 }

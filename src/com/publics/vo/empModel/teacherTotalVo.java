@@ -8,13 +8,15 @@ import java.util.Date;
 public class teacherTotalVo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int TeachertotalId;
-    private int classTeacher;
-    private int classid;
-    private int studentId;
-    private Date Optime;
-    private String sugges;
-    private int evaluationType;
+    private int TeachertotalId; //教师考评编号
+    private int classTeacher;   //老师/班主任的id
+    private int classid;    //班级id
+    private int studentId;  //学生id
+    private int teacherScore;   //学生给老师的评分
+    private int evaluationid;   //考评内容的主键id
+    private Date Optime;    //考评的时间
+    private String sugges;  //问题与意见
+    private int evaluationType; //员工的教师职位
 
     @Override
     public String toString() {
@@ -23,6 +25,8 @@ public class teacherTotalVo {
                 ", classTeacher=" + classTeacher +
                 ", classid=" + classid +
                 ", studentId=" + studentId +
+                ", teacherScore=" + teacherScore +
+                ", evaluationid=" + evaluationid +
                 ", Optime=" + Optime +
                 ", sugges='" + sugges + '\'' +
                 ", evaluationType=" + evaluationType +
@@ -59,6 +63,22 @@ public class teacherTotalVo {
 
     public void setStudentId(int studentId) {
         this.studentId = studentId;
+    }
+
+    public int getTeacherScore() {
+        return teacherScore;
+    }
+
+    public void setTeacherScore(int teacherScore) {
+        this.teacherScore = teacherScore;
+    }
+
+    public int getEvaluationid() {
+        return evaluationid;
+    }
+
+    public void setEvaluationid(int evaluationid) {
+        this.evaluationid = evaluationid;
     }
 
     public Date getOptime() {
