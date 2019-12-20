@@ -9,8 +9,10 @@ import com.publics.vo.educ.CourseVo;
 import com.publics.vo.empModel.AttendanceVo;
 import com.publics.vo.empModel.evaluationVo;
 import com.publics.vo.empModel.teacherTotalVo;
+import com.publics.vo.studentModel.StudentVo;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -310,8 +312,22 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
     }
 
     @Override
-    public int selClockCount(int empid) {
-        return selTotalRow("select count(*) from attendance att inner join emp e on att.empid = e.empid where att.auditor = "+empid+" and att.status = 2");
+    public int selClockCount(String empid) {
+        return selTotalRow("select count(*) from attendance att inner join emp e on att.empid = e.empid where att.auditor = '"+empid+"'and att.status = 2");
+    }
+
+    @Override
+    public List selNoticeList() {
+        return listBySQL("select n.noticeId,n.title,n.content,n.empid,n.noticeTime,re.isRead from notice n \n" +
+                "LEFT join recipient re on n.noticeId = re.noticeId\n" +
+                "where re.type = 2 and n.noticeType in(1,3)");
+    }
+
+    @Override
+    public int selNoticeCount() {
+        return selTotalRow("select count(*) from notice n \n" +
+                "LEFT join recipient re on n.noticeId = re.noticeId\n" +
+                "where re.isRead = 2 and re.type = 2 and n.noticeType in(1,3)");
     }
 
 

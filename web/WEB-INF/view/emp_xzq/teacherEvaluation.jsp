@@ -62,7 +62,6 @@
             obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
             //选中radio样式
             obj.tr.find('i[class="layui-anim layui-icon"]').trigger("click");
-            settable(data.Studid);
         });
 
         //员工考核列表

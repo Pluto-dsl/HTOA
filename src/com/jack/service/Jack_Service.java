@@ -8,7 +8,9 @@ import com.publics.vo.empModel.AttendanceVo;
 import com.publics.vo.empModel.evaluationVo;
 import com.publics.vo.empModel.teacherTotalVo;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 public interface Jack_Service {
     /**
@@ -19,7 +21,7 @@ public interface Jack_Service {
     String selDepChairman(int AName); //查询部门负责人
     void insertAtt(AttendanceVo attVo); //插入未打卡说明
     void updataAtt(AttendanceVo attendanceVo); //审批修改
-    List selApprover(String Aname,int state);
+    List selApprover(String Aname, int state);
     void delAtt(int id);
 
     /**
@@ -42,7 +44,7 @@ public interface Jack_Service {
     int delCourseMgt(int cid); //删除课程
 
     /** 考核管理业务 */
-    List selAssessment(int currPage,int pageSize); //考核指标查询
+    List selAssessment(int currPage, int pageSize); //考核指标查询
     int selAssCount(); //获取数据总数
     List selDepList(); //查询部门列表
     void addAssessment(AduitModelVo aduitModelVo); //添加考核
@@ -53,20 +55,20 @@ public interface Jack_Service {
     List selAss(); //查询所有的考核指标
     List selEmp();  //查询所有的员工
     void addAduit(AduitLogVo aduitLogVo); //员工考核录入
-    List selAduitLog(int currPage,int pageSize); //员工考核列表
+    List selAduitLog(int currPage, int pageSize); //员工考核列表
     int selAdCount();
     List selAdDetails(int id); //考核详情
     void delAduitLog(int id);//删除考核
     List selDep(); //获取部门名称列表
-    List Conditional_query(String empName,String depId,String startDate,String EndDate,int currPage,int pageSize); //条件查询
-    int Conditional_queryCount(String empName,String depId,String startDate,String EndDate); //条件查询
+    List Conditional_query(String empName, String depId, String startDate, String EndDate, int currPage, int pageSize); //条件查询
+    int Conditional_queryCount(String empName, String depId, String startDate, String EndDate); //条件查询
     /** 考评内容，教师考评 */
     List selHeadmasterList();
     List selTeacherList();
     int addAevaluation(evaluationVo evaluatio);
     void delAevaluation(int id);
-    List selTeacherListE(String name,String evaluationType,int currPage,int pageSize); // 教师考评
-    List selScoreDetails(String teacher,String classid);
+    List selTeacherListE(String name, String evaluationType, int currPage, int pageSize); // 教师考评
+    List selScoreDetails(String teacher, String classid);
     List selReportForm();
     /** 学生端——教师考评 */
     List selHeadmasterTest(int stu);
@@ -75,9 +77,12 @@ public interface Jack_Service {
     List selTeacherType();
     void addHeadmaster(teacherTotalVo totalVo); //插入考评分数
     void addTeacher(teacherTotalVo totalVo);    //插入考评分数
-    List selMonthly_assessment(int stuid,int etype);
+    List selMonthly_assessment(int stuid, int etype);
 
     /** 公告 */
     int selChatRecordCount(int empid); //谈心查询
-    int selClockCount(int empid); //未打卡查询
+    int selClockCount(String empid); //未打卡查询
+
+    List selNoticeList();
+    int selNoticeCount();
 }
