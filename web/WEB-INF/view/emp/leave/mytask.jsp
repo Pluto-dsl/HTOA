@@ -48,7 +48,7 @@
                 <td>${t.Remark}</td>
                 <td>
                     <a class="layui-btn layui-btn-primary layui-btn-sm" href="<%=request.getContextPath()%>/zeroLeave/taskDetaill?taskId=${t.taskid}&instanceid=${t.processInstanceId}">查看详情</a>
-                    <a class="layui-btn layui-btn-primary layui-btn-sm" href="<%=request.getContextPath()%>/zeroLeave/taskImg?holidayid=${t.holidayid}&instanceid=${t.processInstanceId}">办理进度</a>
+                    <a target="_blank" class="layui-btn layui-btn-primary layui-btn-sm" href="<%=request.getContextPath()%>/zeroLeave/taskImg?holidayid=${t.holidayid}&instanceid=${t.processInstanceId}">办理进度</a>
                 </td>
             </tr>
         </c:forEach>
@@ -57,11 +57,10 @@
 </body>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看详情</a>
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="taskImg">办理进度</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="taskImg" >办理进度</a>
 </script>
 <script>
     function toleave() {
-        layer.msg('加载中,请稍后!')
         window.location.href="<%=request.getContextPath()%>/zeroLeave/toleave";
     }
 </script>

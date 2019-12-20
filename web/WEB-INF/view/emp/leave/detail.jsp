@@ -1,3 +1,5 @@
+<%@ page import="org.activiti.engine.task.Comment" %>
+<%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%--
@@ -27,7 +29,7 @@
         </tr>
         <tr>
             <td align="right">请假人:</td>
-            <td>${ho.empid}</td>
+            <td>${empname}</td>
         </tr>
         <tr bgcolor="white">
             <td align="right">请假开始时间：</td>
@@ -83,13 +85,11 @@
         <th>审批人</th>
         <th>批注内容</th>
     </tr>
-    <c:forEach items="${commentList}" var="t">
-        <tr bgcolor="white">
-            <td>${t.id}</td>
-            <td>${t.time} </td>
-            <td>${t.userId}</td>
-            <td>${t.fullMessage}</td>
-        </tr>
+    <c:forEach items="${commentList}" var="t" varStatus="xh">
+        <td>${t.id }</td>
+        <td><fmt:formatDate timeStyle="yyyy年MM月dd日"  value="${t.time}"></fmt:formatDate></td>
+        <td>${username[xh.index]}</td>
+        <td>${t.fullMessage}</td>
     </c:forEach>
 </table>
 </body>
