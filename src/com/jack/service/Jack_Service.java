@@ -87,12 +87,12 @@ public interface Jack_Service {
     /** 学生公告 */
     List selNoticeList(int id);
     int selNoticeCount(int id);
-    void UpdateRead(int stuid,int notid);
+    void UpdateRead(int stuid, int notid);
 
     /** 员工公告 */
     List selNoticeListemp(int id);
     int selNoticeCountemp(int id);
     int selUnreadCountemp(int id);
-    void UpdateReademp(int stuid,int notid);
+    void UpdateReademp(int stuid, int notid);
 
 }

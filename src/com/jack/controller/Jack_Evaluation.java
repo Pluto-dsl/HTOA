@@ -151,7 +151,7 @@ public class Jack_Evaluation {
     }
 
     @RequestMapping("/toHeadmasterEva")
-    public String toHeadmasterEva(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+    public String toHeadmasterEva(HttpServletRequest request, HttpServletResponse response,HttpSession session) throws IOException {
         String type = request.getParameter("type");
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html,charset=utf-8");
