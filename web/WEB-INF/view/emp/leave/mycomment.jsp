@@ -31,11 +31,11 @@
         <th>批注内容</th>
     </tr>
     </thead>
-    <c:forEach items="${commentList}" var="t">
-        <tr bgcolor="white">
+    <c:forEach items="${commentList}" var="t" varStatus="xh">
+        <tr>
             <td>${t.id }</td>
             <td><fmt:formatDate timeStyle="yyyy年MM月dd日"  value="${t.time}"></fmt:formatDate></td>
-            <td>${t.userId}</td>
+            <td>${username[xh.index]}</td>
             <td>${t.fullMessage}</td>
         </tr>
     </c:forEach>
