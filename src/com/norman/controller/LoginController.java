@@ -24,8 +24,6 @@ public class LoginController {
 
         EmpVo emp = loginService.empByAcc(phone);
         StudentVo stu = loginService.stuByAcc(phone);
-        System.out.println(emp);
-        System.out.println(stu);
 
         PrintWriter out = response.getWriter();
         String result = "";
