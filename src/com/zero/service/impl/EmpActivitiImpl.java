@@ -3,6 +3,7 @@ package com.zero.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.publics.dao.BaseDao;
 import com.publics.vo.empModel.HolidayVo;
+import com.publics.vo.empModel.emp.EmpVo;
 import com.zero.service.EmpActivitiService;
 import org.springframework.stereotype.Service;
 
@@ -33,14 +34,22 @@ public class EmpActivitiImpl extends BaseDao implements EmpActivitiService {
 
     @Override
     public String assignName(int empid) {
-        Map map = (Map) super.listBySQL("select chairman from dep where depid = (select depid from emp where empId = "+empid+")").get(0);
-        return (String) map.get("chairman");
+        String sql ="select personnel from dep where depid = (select depid from emp where empId = "+empid+")";
+        Map map = (Map) super.listBySQL(sql).get(0);
+        return map.get("personnel").toString();
+    }
+
+    @Override
+    public String assignDep(int depid) {
+        Map map = (Map) super.listBySQL("select personnel from dep where depid = (select parentId from dep where depid = "+depid+")").get(0);
+        return map.get("personnel").toString();
     }
 
     @Override
     public String xiaassignName(int empid) {
-        Map map = (Map) super.listBySQL("select chairman from dep where depid = (select parentId from dep where depid = (select depid from emp where empId = "+empid+"))").get(0);
-        return (String) map.get("chairman");
+        String sql = "select personnel from dep where depid = (select parentId from dep where depid = (select depid from emp where empId = "+empid+"))";
+        Map map = (Map) super.listBySQL(sql).get(0);
+        return  map.get("personnel").toString();
     }
 
     @Override
@@ -49,7 +58,31 @@ public class EmpActivitiImpl extends BaseDao implements EmpActivitiService {
     }
 
     @Override
+    public String name(int empid) {
+        List<Map> list = super.listBySQL("select empName from emp where empId ="+empid);
+        return list.get(0).get("empName").toString();
+    }
+
+    @Override
     public void updateholiday(HolidayVo holidayVo) {
         super.updObject(holidayVo);
+    }
+
+    @Override
+    public List<Map> mytask(int holidayid) {
+        return super.listBySQL("select h.*,e.empName from holiday h " +
+                " left join emp e on e.empId = h.Empid where h.holidayid = "+holidayid);
+    }
+
+    @Override
+    public String isper(int depid, int empid) {
+        List list =  super.listBySQL("select * from dep where depid = "+depid+" and personnel = "+empid);
+        String res ="";
+        if (list.size()==1){
+            res = "yes";
+        }else {
+            res = "no";
+        }
+        return res;
     }
 }

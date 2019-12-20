@@ -45,7 +45,7 @@
     </div>
 </script>
 <script type="text/html" id="toolDemo">
-    <button lay-event="del" class="layui-btn layui-btn-sm layui-btn-danger" ><i class="layui-icon-delete"></i>删除</button>
+    <button lay-event="del" class="layui-btn layui-btn-sm layui-btn-danger" ><i class="layui-icon layui-icon-delete"></i>删除</button>
 </script>
 <script type="text/javascript">
     function createTime(v){
@@ -107,7 +107,7 @@
                             return '申请失败'
                         }
                     },title:'状态', width:120}
-                ,{toolbar:'#toolDemo', title:'操作', width:100}
+                ,{toolbar:'#toolDemo',fixed: 'right', title:'操作', width:100}
             ]]
             ,page: true
             ,limit:5

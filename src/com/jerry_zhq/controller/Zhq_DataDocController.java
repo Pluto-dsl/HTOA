@@ -16,9 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.*;
 import java.net.*;
 import java.util.Date;
@@ -40,11 +38,13 @@ import java.net.HttpURLConnection;
 
 
 @Controller
+@RequestMapping("/zhq")
 public class Zhq_DataDocController {
 
     @Resource
     Zhq_DataDocService zhq_dataDocService;
-    @RequestMapping("/toPage/DataDoc")
+
+    @RequestMapping("/DataDoc")
     public String toPageDataDoc(){
         return "/doc_zhq/DataDoc";
     }
@@ -84,15 +84,17 @@ public class Zhq_DataDocController {
 
     //文件上传
     @RequestMapping("/addDoc")
-    public String addDoc(DataDocVo dataDocVo, MultipartFile file, HttpServletRequest request,HttpServletResponse response) throws IOException {
+    public String addDoc(DataDocVo dataDocVo, MultipartFile file, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         response.setContentType("application/force-download");
         String remark = request.getParameter("remark");
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+
         dataDocVo.setRemark(remark);
         dataDocVo.setOpTime(new Date());
-        dataDocVo.setEmpId(1);
+        dataDocVo.setEmpId(empVo.getEmpId());
         zhq_dataDocService.addDoc(dataDocVo,file,request);
 
-        return "redirect:/toPage/DataDoc";
+        return "redirect:/zhq/DataDoc";
     }
 
     //删除

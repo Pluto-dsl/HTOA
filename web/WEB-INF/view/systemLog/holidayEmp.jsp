@@ -15,30 +15,64 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <jsp:include page="../include.jsp"/>
+    <style>
+        .empBar{
+            width: 1316px;
+            height: 280px;
+            margin-bottom: 15px;
+            float: left;
+        }
+        .empLine{
+            width: 724px;
+            height: 248px;
+            float: left;
+        }
+        .titleBing{
+            width: 400px;
+            height: 250px;
+            margin-left: 5%;
+            float: left;
+        }
+    </style>
 </head>
 <body>
-<table style="margin-top: 10px;margin-left: 10px">
-    <tr>
-        <td>
-            员工姓名:
-            <div class="layui-inline" style="padding-right: 15px">
-                <input class="layui-input" name="empName" id="empName" autocomplete="off">
-            </div>
-        </td>
-        <td>
-            <form class="layui-form">
-                <input type="radio" name="month" value="${month.lastMonth}" title="上一月(${month.lastMonth}月)" checked="">
-                <input type="radio" name="month" value="${month.thisMonth}" title="本月(${month.thisMonth}月)">
-                <input type="radio" name="month" value="0" title="所有月份">
-            </form>
-        </td>
-        <td>
-            <button class="layui-btn menu" id="btn">搜索</button>
-        </td>
-    </tr>
-</table>
-<table id="holidayEmp" lay-filter="holidayEmp"></table>
-<table id="holidayInfo" lay-filter="holidayInfo"></table>
+<div class="layui-tab">
+    <ul class="layui-tab-title">
+        <li id="empListTitle" class="layui-this">表格展示</li>
+        <li id="stuListTitle">图例展示</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <table style="margin-top: 10px;margin-left: 10px">
+                <tr>
+                    <td>
+                        员工姓名:
+                        <div class="layui-inline" style="padding-right: 15px">
+                            <input class="layui-input" name="empName" id="empName" autocomplete="off">
+                        </div>
+                    </td>
+                    <td>
+                        <form class="layui-form">
+                            <input type="radio" name="month" value="${month.lastMonth}" title="上一月(${month.lastMonth}月)" checked="">
+                            <input type="radio" name="month" value="${month.thisMonth}" title="本月(${month.thisMonth}月)">
+                            <input type="radio" name="month" value="0" title="所有月份">
+                        </form>
+                    </td>
+                    <td>
+                        <button class="layui-btn menu" id="btn">搜索</button>
+                    </td>
+                </tr>
+            </table>
+            <table id="holidayEmp" lay-filter="holidayEmp"></table>
+            <table id="holidayInfo" lay-filter="holidayInfo"></table>
+        </div>
+        <div class="layui-tab-item">
+            <div id="empBar" class="empBar"></div>
+            <div id="empLine" class="empLine"></div>
+            <div id="titleBing" class="titleBing"></div>
+        </div>
+    </div>
+</div>
 <script>
     layui.use(['form','table'], function () {
         var form = layui.form,
@@ -115,6 +149,86 @@
                 }
             });
         });
+    });
+    layui.use('element',function () {
+        var $ = layui.jquery;
+        var element = layui.element;
+    })
+</script>
+<script>
+    // 基于准备好的dom，初始化echarts实例
+    $(document).ready(function () {
+        $.post("${pageContext.request.contextPath}/echarts/getEmpBarData",{},function (data) {
+            var myChart = echarts.init(document.getElementById('empBar'));
+            // 指定图表的配置项和数据
+            myChart.setOption({
+                title: {
+                    text: '员工请假次数'
+                },
+                tooltip: {},
+                xAxis: {
+                    type: 'category',
+                    data: data.xAxis
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: data.data,
+                    type: 'bar'
+                }]
+            });
+        },"json");
+        $.post("${pageContext.request.contextPath}/echarts/getEmpLineData",{},function (data) {
+            var myChart = echarts.init(document.getElementById('empLine'));
+            // 指定图表的配置项和数据
+            myChart.setOption({
+                title: {
+                    text: '请假总数变化'
+                },
+                tooltip: {},
+                xAxis: {
+                    type: 'category',
+                    data: data.xAxis
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: data.data,
+                    type: 'line'
+                }]
+            });
+        },"json");
+        $.post("${pageContext.request.contextPath}/echarts/getTitleBingData",{},function (data) {
+            var mychart = echarts.init(document.getElementById('titleBing'), 'shine');
+            //给图表设置属性
+            var option = {
+                title: {
+                    text: '请假类型比例',
+                    x: 'left' //标题的水平显示位置 left默认  center right
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    orient: 'vertical', //设置图例的方向 vertical(垂直) horizontal(水平)
+                    left: 'right',
+                    data: data.selected
+                },
+                series: {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: '100',//半径大小
+                    center: ['50%', '50%'],//圆心位置
+                    data: data.seriesData
+
+                }
+            };
+
+            //把属性设置给图表
+            mychart.setOption(option);
+        },"json");
     });
 </script>
 <script type="text/javascript">

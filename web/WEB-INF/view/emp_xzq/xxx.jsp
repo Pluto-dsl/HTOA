@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!doctype html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -114,7 +115,7 @@
                             return '审核失败'
                         }
                     },title:'状态', width:120}
-                ,{title:'操作',align:'center' , width:80 , toolbar:'#barDemo'}]]
+                ,{title:'操作',align:'center' , width:80 ,fixed: 'right', toolbar:'#barDemo'}]]
             ,page: false
         });
 

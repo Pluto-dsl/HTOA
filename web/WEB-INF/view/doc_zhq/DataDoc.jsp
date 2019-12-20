@@ -21,7 +21,7 @@
     <table id="demo"  lay-filter="test"></table>
 
     <div  id="windows"  style="display: none;">
-        <form method="post" class="layui-form" lay-filter="aaa" enctype="multipart/form-data" action="${pageContext.request.contextPath}/addDoc">
+        <form method="post" class="layui-form" lay-filter="aaa" enctype="multipart/form-data" action="${pageContext.request.contextPath}/zhq/addDoc">
 
             <div class="layui-upload uploadbuchong" style="margin-top: 20px;margin-left: 60px;">
                 <button type="button" class="layui-btn layui-btn-normal" id="test8" name="file">选择文件</button>
@@ -45,7 +45,6 @@
 </body>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    <%--<a href="文件路径" download="文件名称">下载文件</a>--%>
     <a  class="layui-btn  layui-btn-xs" lay-event="download">下载文件</a>
 </script>
 <script>
@@ -63,7 +62,7 @@
             elem: '#demo', //指定原始表格元素选择器（推荐id选择器）
             height: 356, //容器高度
             title:'宿舍管理',
-            url:"${pageContext.request.contextPath}/selDoc",
+            url:"${pageContext.request.contextPath}/zhq/selDoc",
             cols: [[ //标题栏
                 {field: 'docId', title: '编号', width: 200, sort: true}
                 ,{field: 'dataName', title: '资料名称', width: 300}
@@ -106,7 +105,7 @@
             if(obj.event ==='del'){
                 layer.confirm('真的删除行么', function(index){
                     $.ajax({
-                        url:"${pageContext.request.contextPath}/deleteDoc",
+                        url:"${pageContext.request.contextPath}/zhq/deleteDoc",
                         type:"post",
                         data:{
                             docId:obj.data.docId
@@ -116,16 +115,18 @@
                             obj.del();
                             layer.close(index);
                             layer.msg('删除成功');
+                            table.reload("demo");
                         },
                         error:function () {
                             obj.del();
                             layer.close(index);
-                            layer.msg('删除失败');
+                            layer.msg('删除成功');
+                            table.reload("demo");
                         }
                     })
                 });
             }else if(obj.event ==='download'){
-                location.href='${pageContext.request.contextPath}/download.do?docId='+data.docId;
+                location.href='${pageContext.request.contextPath}/zhq/download.do?docId='+data.docId;
             }
         })
     })

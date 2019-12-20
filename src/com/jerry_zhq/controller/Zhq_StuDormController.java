@@ -21,11 +21,12 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequestMapping("/zhq")
 public class Zhq_StuDormController {
     @Resource
     Zhq_StuDormService zhq_stuDormService;
 
-    @RequestMapping("/toPage/stuDorm")
+    @RequestMapping("/stuDorm")
     public String dorm(HttpServletRequest request){
         List<Map> dormitoryVoList =zhq_stuDormService.selFloorName();
         request.setAttribute("floor",dormitoryVoList);
@@ -84,7 +85,7 @@ public class Zhq_StuDormController {
         List<StudntBuildingVo> list = zhq_stuDormService.selFloorName();
         System.out.println(list.toString());
         request.setAttribute("list",list);
-        return "stu_zhq/addStuDorm";
+        return "/stu_zhq/addStuDorm";
     }
 
     //确定添加
@@ -112,7 +113,7 @@ public class Zhq_StuDormController {
         studentDormitoryVo.setHuorName(name);
 
         zhq_stuDormService.update(studentDormitoryVo);
-        return "redirect:/toPage/stuDorm";
+        return "redirect:/zhq/stuDorm";
     }
 
     //查询宿舍学生
