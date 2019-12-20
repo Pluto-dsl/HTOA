@@ -43,7 +43,6 @@
 <script type="text/html" id="barDemo">
     <button class="layui-btn layui-btn-sm layui-btn layui-btn-normal" lay-event="ScoreDetails"><i class="layui-icon layui-icon-survey"></i>老师评分详情</button>
     <button class="layui-btn layui-btn-sm layui-btn layui-btn-danger" lay-event="ReportForm"><i class="layui-icon layui-icon-chart"></i>统计报表</button>
-    <span style="margin-left: 20px;">是否开启考评</span><input type="checkbox" lay-filter="switchTest" id="switchTest" lay-skin="switch" lay-text="ON|OFF">
 </script>
 </body>
 <script>
@@ -55,14 +54,15 @@
         var laydate = layui.laydate;
         var upload = layui.upload;
 
-        $("#switchTest").prop('checked', true);
-        form.on('switch(switchTest)', function(data){
-            var x=data.elem.checked;
-            console.log(x)
+        table.on('row(teacherList)',function(obj){
+            var oo = obj.tr; //得到当前行元素对象
+            var data = obj.data; //得到当前行数据
+            selected =  data;
+            //选中行样式
+            obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+            //选中radio样式
+            obj.tr.find('i[class="layui-anim layui-icon"]').trigger("click");
         });
-
-        // $("#switchTest").removeAttr("checked");
-
 
         //员工考核列表
         table.render({
@@ -93,23 +93,6 @@
             ,limits: [15, 20, 30, 40, 50]
 
         });
-        table.on('row(teacherList)',function(obj){
-            var oo = obj.tr; //得到当前行元素对象
-            var data = obj.data; //得到当前行数据
-            selected =  data;
-            //选中行样式
-            obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
-            //选中radio样式
-
-            obj.tr.find('i[class="layui-anim layui-icon"]').trigger("click");
-
-            // if(obj.tr.hasClass('layui-table-click')){
-            //     obj.tr.removeClass('layui-table-click');
-            // }else {
-            //     obj.tr.addClass('layui-table-click');
-            //     obj.tr.find('i[class="layui-anim layui-icon"]').trigger("click");
-            // }
-        });
 
         table.on('toolbar(teacherList)',function (obj) {
             var checkStatus = table.checkStatus('teacherList');
@@ -125,17 +108,18 @@
                         classid = data[index].classId;
                         teacherid = data[index].classTeacher;
                     });
-                    layer.open({
+                    var index = layer.open({
                         type: 2,
-                        title:'教师考评详情',
+                        title:'老师考评详情',
                         skin: 'layui-layer-demo', //样式类名
                         closeBtn: 1, //不显示关闭按钮
-                        area: ['1000px', '450px'],
+                        area: ['auto', 'auto'],
                         fixed: false, //不固定
                         maxmin: true,
                         shadeClose: false, //开启遮罩关闭
                         content: ['${pageContext.request.contextPath}/jack/toScoreDetails?classid='+classid+'&teacherid='+teacherid,'no']
                     });
+                    layer.full(index);
 
                 }
             }else if(obj.event === 'ReportForm'){

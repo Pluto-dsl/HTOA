@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>HT软件DSL</title>
+    <title>HT软件</title>
     <jsp:include page="include.jsp" />
     <style>
         a{
@@ -32,7 +32,7 @@
             position: absolute;
             transition: all 0.5s;
             transition-timing-function:ease;
-            box-shadow: 9px 9px 20px 0px #151515;
+            box-shadow: 6px 6px 11px 0px #000000;
             border-radius: 3px;
             z-index: 100;
         }
@@ -43,7 +43,6 @@
             height: 50px;
             padding-left: 15%;
             padding-top: 10px;
-            background-color: #ffffffde;
         }
         .title{
             margin-top: 12%;
@@ -135,7 +134,7 @@
 
 </div>
 <div id="top">
-    <span style="font-size: 29px;color: #474747;">︱宏图软件教育-办公管理系统</span>
+    <span style="font-size: 29px;color: #ffffff;">︱宏图软件教育-办公管理系统</span>
 </div>
 <div id="login" align="center">
     <%--        <form class="layui-form" action="${pageContext.request.contextPath}/jack/login" method="post">--%>

@@ -36,6 +36,24 @@
             border-bottom-color: #393d49;
             border-bottom-width: 1px;
         }
+        .layui-col-space10 {
+            margin: 1px;
+        }
+        .layui-card-body {
+            position: relative;
+            padding: 10px 15px;
+            line-height: 45px;
+        }
+        .layui-col-xs3{
+            float: none;
+            width: 100%;
+        }
+        .layui-col-xs3:hover{
+            background-color: #dddbe0;
+        }
+        .layui-col-md6 {
+            width: 30%;
+        }
     </style>
 </head>
 <body class="layui-layout-body">
@@ -61,15 +79,12 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test" lay-accordion>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" lay-tips="员工管理" lay-direction="2">
+                    <a href="javascript:;" class="tt" lay-tips="员工管理" lay-direction="2">
                         <i class="layui-icon layui-icon-user"></i>
                         <cite>员工管理</cite>
                     </a>
                     <dl class="layui-nav-child">
                         <%-- 例子  可修改 照着写就行了 --%>
-                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/toPage/dep"
-                               data-id="部门管理" data-title="部门管理">部门管理</a></dd>
                         <dd> <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                 data-url="<%=request.getContextPath()%>/zeroEmp/toemp"
                                 data-id="员工资料" data-title="员工资料" >员工资料</a></dd>
@@ -87,7 +102,6 @@
                                data-url="${pageContext.request.contextPath}/zeroLeave/toleave"
                                data-id="请假管理" data-title="请假管理">请假管理</a>
                         </dd>
-
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toAtt"
                                data-id="考勤管理" data-title="考勤管理" >考勤管理</a>
@@ -95,7 +109,7 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" lay-tips="学生管理" lay-direction="2">
+                    <a href="javascript:;" class="tt" lay-tips="学生管理" lay-direction="2">
                         <i class="layui-icon layui-icon-face-smile-b"></i>
                         <cite>学生管理</cite>
                     </a>
@@ -125,7 +139,7 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" lay-tips="教务管理" lay-direction="2">
+                    <a href="javascript:;" class="tt" lay-tips="教务管理" lay-direction="2">
                         <i class="layui-icon layui-icon-read"></i>
                         <cite>教务管理</cite>
                     </a>
@@ -145,7 +159,7 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" lay-tips="后勤管理" lay-direction="2"><i class="layui-icon layui-icon-template-1"></i><cite>后勤管理</cite></a>
+                    <a href="javascript:;" class="tt" lay-tips="后勤管理" lay-direction="2"><i class="layui-icon layui-icon-template-1"></i><cite>后勤管理</cite></a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/logs/toMyRepair"
@@ -156,7 +170,7 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" lay-tips="考核管理" lay-direction="2"><i class="layui-icon layui-icon-survey"></i><cite>考核管理</cite></a>
+                    <a href="javascript:;" class="tt" lay-tips="考核管理" lay-direction="2"><i class="layui-icon layui-icon-survey"></i><cite>考核管理</cite></a>
                     <dl class="layui-nav-child">
                         <dd><a layadmin-event="refresh" href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toAssessmentPage"
@@ -176,7 +190,7 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" lay-tips="问题反馈" lay-direction="2">
+                    <a href="javascript:;" class="tt" lay-tips="问题反馈" lay-direction="2">
                         <i class="layui-icon layui-icon-chat"></i>
                         <cite>问题反馈</cite></a>
                     <dl class="layui-nav-child">
@@ -186,7 +200,7 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" lay-tips="文件管理" lay-direction="2">
+                    <a href="javascript:;" class="tt" lay-tips="文件管理" lay-direction="2">
                         <i class="layui-icon layui-icon-tabs"></i>
                         <cite>文件管理</cite></a>
                     <dl class="layui-nav-child">
@@ -196,7 +210,7 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" lay-tips="系统报表" lay-direction="2"><i class="layui-icon layui-icon-layouts"></i>
+                    <a href="javascript:;" class="tt" lay-tips="系统报表" lay-direction="2"><i class="layui-icon layui-icon-layouts"></i>
                         <cite>系统报表</cite></a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
@@ -205,7 +219,9 @@
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/systemLog/toHolidayPage"
                                data-id="员工请假统计" data-title="员工请假统计">员工请假统计</a></dd>
-                        <dd><a href="javascript:void(0);">学生请假统计</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/systemLog/toHolidayStuPage"
+                               data-id="学生请假统计" data-title="学生请假统计">学生请假统计</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/systemLog/toWorkTime"
                                data-id="未打卡说明统计" data-title="未打卡说明统计">未打卡说明统计</a></dd>
@@ -215,7 +231,7 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" lay-tips="通知公告" lay-direction="2"><i class="layui-icon layui-icon-file"></i><cite>通知公告</cite></a>
+                    <a href="javascript:;" class="tt" lay-tips="通知公告" lay-direction="2"><i class="layui-icon layui-icon-file"></i><cite>通知公告</cite></a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;"class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/toPage/Notice"
@@ -223,14 +239,16 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" lay-tips="安全管理" lay-direction="2"><i class="layui-icon layui-icon-auz"></i><cite>安全管理</cite></a>
+                    <a href="javascript:;" class="tt" lay-tips="安全管理" lay-direction="2"><i class="layui-icon layui-icon-auz"></i><cite>安全管理</cite></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:void(0);">权限管理</a></dd>
+                        <dd><a href="javascript:;"class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/controller/toUserList"
+                               data-id="权限管理" data-title="权限管理">权限管理</a></dd>
                         <dd><a href="javascript:void(0);">流程管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" lay-tips="系统设置" lay-direction="2"><i class="layui-icon layui-icon-util"></i><cite>系统设置</cite></a>
+                    <a href="javascript:;" class="tt" lay-tips="系统设置" lay-direction="2"><i class="layui-icon layui-icon-util"></i><cite>系统设置</cite></a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/system/systemPage"
@@ -245,11 +263,72 @@
         <div style="height: 93%;width: 100%;">
             <div class="layui-tab layui-tab-brief" lay-filter="demo" lay-allowClose="true">
                 <ul class="layui-tab-title">
-                    <li style="" class="first-tab" lay-id="首页">首页</li>
+                    <li style="" class="first-tab layui-this" lay-id="首页">首页</li>
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
-                        xxxx
+                        <%--内容主体--%>
+                        <div class="layui-col-md6" style="margin: 5% 1%;border: solid 1px #fbf38a;">
+                            <div class="layui-card">
+                                <div class="layui-card-header" style="background-color: #f9e7cf;font-size: 20px;">我的任务 <i class="layui-icon layui-icon-refresh-3" style="cursor: pointer;float: right" id="flush"></i></div>
+                                <div class="layui-card-body" style="background-color: antiquewhite;">
+                                    <div class="layui-carousel layadmin-carousel layadmin-shortcut">
+                                        <ul style="background-color: #fff7e4;" class="layui-row layui-col-space10">
+                                            <li class="layui-col-xs3">
+                                                <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                                                   data-url="${pageContext.request.contextPath}/zeroLeave/toleave"
+                                                   data-id="请假管理" data-title="请假管理">
+                                                    <i class="layui-icon layui-icon-list"></i>
+                                                    <cite>员工请假待审批(<span id="emp"></span>)</cite>
+                                                </a>
+                                            </li>
+                                            <li class="layui-col-xs3">
+                                                <a  href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                                                    data-url="${pageContext.request.contextPath}/student/selectleave"
+                                                    data-id="学生请假" data-title="学生请假" >
+                                                    <i class="layui-icon layui-icon-star"></i>
+                                                    <cite>学生请假待审批(<span id="stu"></span>)</cite>
+                                                </a>
+                                            </li>
+                                            <li class="layui-col-xs3">
+                                                <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                                                   data-url="${pageContext.request.contextPath}/jack/toAtt"
+                                                   data-id="考勤管理" data-title="考勤管理" >
+                                                    <i class="layui-icon layui-icon-form"></i>
+                                                    <cite>未打卡待审批(<span id="clock"></span>)</cite>
+                                                </a>
+                                            </li>
+                                            <li class="layui-col-xs3">
+                                                <a href="javascript:;"class="site-demo-active" data-type="tabAdd"
+                                                   data-url="${pageContext.request.contextPath}/toPage/Notice"
+                                                   data-id="通知公告" data-title="通知公告">
+                                                    <i class="layui-icon layui-icon-face-surprised"></i>
+                                                    <cite>未读通知公告(<span id="Notice"></span>)</cite>
+                                                </a>
+                                            </li>
+                                            <li class="layui-col-xs3">
+                                                <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                                                   data-url="${pageContext.request.contextPath}/emp/toEmpPaper"
+                                                   data-id="我的周报" data-title="我的周报" >
+                                                    <i class="layui-icon layui-icon-note"></i>
+                                                    <cite>本周工作周报(<span id="weekly"></span>)</cite>
+                                                    <span style="color:red;margin-left:10px;font-size: 11px;">周日17:00前提交</span>
+                                                </a>
+                                            </li>
+                                            <li class="layui-col-xs3">
+                                                <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                                                   data-url="${pageContext.request.contextPath}/ljw/toChatRecordPage"
+                                                   data-id="谈心记录" data-title="谈心记录" >
+                                                    <i class="layui-icon layui-icon-face-smile"></i>
+                                                    <cite>月谈心记录(已完成<span id="talk"></span>个)</cite>
+                                                    <span style="color:red;margin-left:10px;font-size: 11px;">每月需完成5个</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -266,6 +345,24 @@
     layui.use('element', function(){
         var element = layui.element;
         var $ = layui.jquery;
+        yb();
+
+        $("#flush").on('click',function () {
+            yb();
+        });
+
+        function yb(){
+        $.post('${pageContext.request.contextPath}/jack/MyMission',{},function (data) {
+            console.log(data);
+            $("#emp").text(data.emp);
+            $("#Notice").text(data.Notice);
+            $("#stu").text(data.stu);
+            $("#talk").text(data.talk);
+            $("#clock").text(data.clock);
+            $("#weekly").text(data.weekly);
+        });
+        }
+
         //触发事件
         var active = {
             //在这里给active绑定几项事件，后面可通过active调用这些事件
@@ -293,6 +390,11 @@
                 })
             }
         };
+
+        //手风琴只打开一栏
+        $(".layui-nav-item").on('click',function (e) {
+            $(this).siblings().removeClass("layui-nav-itemed");
+        });
 
 
         //当点击有site-demo-active属性的标签时，即左侧菜单栏中内容 ，触发点击事件

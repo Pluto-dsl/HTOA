@@ -42,7 +42,7 @@ public class LoginController {
             }
         }else if (stu != null) {
             if (stu.getPassword() != null && stu.getPassword().equals(pwd)){
-                session.setAttribute("admin",stu);
+                session.setAttribute("user",stu);
                 result = "{\"code\":\"user\"}";
             }else {
                 result = "{\"code\":\"notPwd\"}";

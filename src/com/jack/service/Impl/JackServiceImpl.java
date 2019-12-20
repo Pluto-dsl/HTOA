@@ -8,8 +8,13 @@ import com.publics.vo.educ.CourseTypeVo;
 import com.publics.vo.educ.CourseVo;
 import com.publics.vo.empModel.AttendanceVo;
 import com.publics.vo.empModel.evaluationVo;
+import com.publics.vo.empModel.teacherTotalVo;
+import com.publics.vo.studentModel.StudentVo;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -264,17 +269,65 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
         return listBySQL("select * from evaluation  where evaluationType = 2");
     }
     @Override
-    public List selTeachatTest(int stu) {
-        return null;
+    public List selTeacherTest(int stu) {
+        return listBySQL("select stc.classId,stc.className,e.empId,e.empName from (student stu inner join studentClass stc \n" +
+                "on stu.clazz = stc.classId) inner join emp e on stc.teacher = e.empId\n" +
+                "where Studid = "+stu+"");
     }
     @Override
-    public List selTeacharType() {
-        return null;
+    public List selTeacherType() {
+        return listBySQL("select * from evaluation  where evaluationType = 1");
     }
 
     @Override
-    public int addHeadmaster(String teacher, String classid, String evaluationType, String studentId, String sugges, String evaluationid, String teacherScore) {
-        return executeSQLE("insert into teacherTotal values(now(),"+teacher+","+classid+","+evaluationType+","+studentId+","+sugges+","+evaluationid+","+teacherScore+")");
+    public void addHeadmaster(teacherTotalVo teacherTotal) {
+        addObject(teacherTotal);
+    }
+
+    @Override
+    public void addTeacher(teacherTotalVo totalVo) {
+        addObject(totalVo);
+    }
+
+    @Override
+    public List selMonthly_assessment(int stuid, int etype) {
+        return listBySQL("select * from teacherTotal where Optime>(select DATE_ADD(now(),interval -day(now())+1 day)) and Optime<=(select last_day(now())) and studentId = "+stuid+" and evaluationType = "+etype+"");
+    }
+
+    @Override
+    public int selChatRecordCount(int empid) {
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        month++;
+        String sql = "select count(*) from chatRecord where teacher = "+empid+" and chatDate >= '"+year+"-"+month+"-01 00:00:00'";
+
+        cal.add(Calendar.MONTH,1);
+        year = cal.get(Calendar.YEAR);
+        month = cal.get(Calendar.MONTH);
+        month++;
+        sql +=" and chatDate < '"+year+"-"+month+"-01 00:00:00'";
+        System.out.println(sql);
+        return selTotalRow(sql);
+    }
+
+    @Override
+    public int selClockCount(String empid) {
+        return selTotalRow("select count(*) from attendance att inner join emp e on att.empid = e.empid where att.auditor = '"+empid+"'and att.status = 2");
+    }
+
+    @Override
+    public List selNoticeList() {
+        return listBySQL("select n.noticeId,n.title,n.content,n.empid,n.noticeTime,re.isRead from notice n \n" +
+                "LEFT join recipient re on n.noticeId = re.noticeId\n" +
+                "where re.type = 2 and n.noticeType in(1,3)");
+    }
+
+    @Override
+    public int selNoticeCount() {
+        return selTotalRow("select count(*) from notice n \n" +
+                "LEFT join recipient re on n.noticeId = re.noticeId\n" +
+                "where re.isRead = 2 and re.type = 2 and n.noticeType in(1,3)");
     }
 
 

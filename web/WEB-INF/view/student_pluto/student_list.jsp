@@ -388,9 +388,8 @@
                         if (data==null || data==""){
                             layer.msg('请选择你要设置的学生！', {icon: 1});
                         }else{
-                            layer.confirm('确定要设置'+data.stuname+'同学为已毕业吗？', function(index){
-
-                                $.post("${pageContext.request.contextPath}/student/biye",{id:data.Studid},function (data) {
+                            layer.confirm('确定要设置'+data[0].stuname+'同学为已毕业吗？', function(index){
+                                $.post("${pageContext.request.contextPath}/student/biye",{Studid:data[0].Studid},function (data) {
                                     table.reload('test');
                                     layer.msg('设置成功！')
                                 },'text')
