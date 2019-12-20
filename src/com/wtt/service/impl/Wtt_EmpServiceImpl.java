@@ -30,6 +30,7 @@ public class Wtt_EmpServiceImpl extends BaseDao implements Wtt_EmpService {
         if(!("".equals(endtitme) || endtitme == null)){
             sql+=" and '"+endtitme+" 23:59:59'";
         }
+        System.out.println("sql:"+sql);
         return pageBySQL(sql,currpage,pagesize);
     }
 

@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: 梓怡
@@ -7,25 +8,42 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!doctype html>
 <html>
 <head>
     <title>Title</title>
     <jsp:include page="../include.jsp"></jsp:include>
+    <style>
+        li{
+            list-style-type:disc;
+        }
+        .ques{
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <form lay-filter="formTestFilter" class="layui-form" action="<%=request.getContextPath()%>/student/addcollect/">
-        <div id="windows" style="margin-top:2%; display: none;height: 90%;margin-left: 1px" >
+        <div id="windows" style="display: none;height:95%;" >
             <input type="hidden" name="feedbackId">
-            <div style="background-color:pink;height: 10%;width: 100%">
-                <h2>问题发起人:<input type="text" name="stuname" style="border: none;width:80px" disabled="true">
-                                问题:<input type="text" name="remark" style="border: none" disabled="true"></h2>
+            <div style="background-color: #ffffff;height: 12%;width: 100%;border-bottom: solid 2px #de76b1;">
+                <span style="font-size: 20px;margin-right: 20px;float: right;margin-top: 5px;">发问人:<label id="stuname"></label></span>
+                <label style="float: right;margin-top: 40px; margin-right: -128px;" id="feedbackTime"></label>
+                    <br>
+                <span style="font-size: 20px;margin-left: 20px;">问题:<label id="remark" class="ques" style="display:inline-block;width:25%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height: 30px;
+    font-size: 15px;position: absolute;" ></label></span>
+                    <%--提出时间:<input type="text" name="feedbackTime" style="border: none;width:80px" disabled="true">--%>
             </div>
-            <div style="height:50%;width: 100%;overflow-y:auto" id="contents">
+            <div style="height:411.2px;width:100%;overflow-y:auto" id="contents">
 
             </div>
-            <div style="background-color:skyblue;height:20%;width: 100%/*;border-style:solid*//*; border-width:1px; border-color:red*/">
-                <textarea rows="5" cols="50" style="margin-top:2px" id="txt" name="content"></textarea>
-                <button type="submit" onclick="showInput()">发送</button>
+            <div style="background-color: #389cb7;height: 15%;width: 100%;">
+                <textarea rows="10" cols="60" style="width: 80%;height:55%;margin-left: 15px;margin-top: 8px;font-size: 20px;padding: 10px 10px;" id="txt" name="content" ></textarea>
+                <button class="layui-btn layui-btn layui-btn-warm" type="submit" onclick="showInput()" style="float: right;margin-right: 20px;margin-top: 20px;background-color: red;">发送</button>
             </div>
         </div>
     </form>
@@ -44,6 +62,17 @@
         var laypage = layui.laypage;
         var laydate = layui.laydate;
         var upload = layui.upload;
+
+        $(".ques").on('mouseover mouseout',function (event) {
+            var $title=$(this).text();
+            var $self=$(this);
+            if (event.type=='mouseover') {
+                $self.attr('title', function() { return $title });
+            }else if(event.type=='mouseout'){
+                $self.attr('title', '');
+            }
+        })
+
         table.render({
             elem: '#test',
             height:700,
@@ -93,15 +122,26 @@
                         wid:datas.feedbackId
                     },
                     success: function (data) {
-                       $(data).each(function (index,element) {
-                           var name = element.empName+":"+element.content+"<br><br>";
-                           $("#contents").append(name);
-                        })
+                        var carNewsList = "<ul id='ol'  style='margin-left: 3%'>";
+                        $(data).each(function (index,element) {
+                            var name =element.empName;
+                            var time = element.puttime;
+
+                            var content = element.content;
+                            carNewsList += "<li style='border-bottom: solid 1.5px #4e4b4e21;width: 95%;height: 55px;'>" +
+                                                "<div style='width: 100%;height:80px'>" +
+                                                    "<div style='margin-top: 18px;'>"+name+"--"+createTime(time)+"</div>" +
+                                                    "<div style='margin-left: 3%;margin-top: 7px;font-size: 14px;'>"+"回复:"+content+"</div>" +
+                                                "</div>" +
+                                            "</li>";
+
+                        });
+                        carNewsList += "</ul>";
+                        document.getElementById("contents").innerHTML=carNewsList;
                     },
                     error:function () {
                         console.log("失败啦")
                     }
-
                 });
                 $("#contents").empty();
                 layer.open({
@@ -109,7 +149,7 @@
                     title:'提出意见',
                     skin: 'layui-layer-demo', //样式类名
                     closeBtn: 1, //不显示关闭按钮
-                    area: ['700px', '550px'],
+                    area: ['700px', '600px'],
                     fixed: false, //不固定
                     maxmin: true,
                     shadeClose: true, //开启遮罩关闭
@@ -120,14 +160,11 @@
 
         //获取该id的数据
        function setFormValue(data){
-           /*console.log(data)*/
-            form.val("formTestFilter", {
-                "feedbackId":data.feedbackId
-                ,"stuname":data.stuname
-                ,"remark":data.remark
-            });
-            form.render(null,'formTestFilter')
+           $("#stuname").html(data.stuname);
+           $("#remark").html(data.remark);
+           $("#feedbackTime").html(createTime(data.feedbackTime));
        }
+        $("li").removeClass("style"); //移除
     })
 </script>
 <script type=text/javascript>
@@ -136,6 +173,20 @@
         var corl = document.getElementById("txt");   // 取得输入框对象
         var val = name+":"+corl.value;                           // 取得输入的内容
         $("#contents").append(val);     //将输入内容显示到DIV
+    }
+    //时间修改方法
+    function createTime(v){
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        /*m = m<10?'0'+m:m;*/
+        var d = date.getDate();
+        var h = date.getHours();
+        var f =date.getMinutes();
+        var s = date.getSeconds();
+        /*d = d<10?("0"+d):d;*/
+        var str = y+"-"+m+"-"+d+" "+h+":"+f+":"+s;
+        return str;
     }
 </script>
 </html>
