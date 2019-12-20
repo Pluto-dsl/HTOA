@@ -25,17 +25,13 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequestMapping("/zhq")
 public class Zhq_DepController {
 
     @Resource
     Zhq_DepService zhqDepService;
 
-    @RequestMapping("oamain")
-    public String oamain(){
-        return "oamain";
-    }
-
-    @RequestMapping("/toPage/dep")
+    @RequestMapping("/dep")
     public String dep(HttpServletRequest request){
         //部门
         List<DepVo> depList = zhqDepService.selDep();
@@ -171,7 +167,7 @@ public class Zhq_DepController {
 
 
         zhqDepService.updateDep(depVo);
-        return "redirect:/toPage/dep";
+        return "redirect:/zhq/dep";
     }
 
     //删除

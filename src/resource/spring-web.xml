@@ -33,7 +33,7 @@
 <!--            &lt;!&ndash; 拦截URL,拦截请求的url 黑名单 &ndash;&gt;-->
 <!--            <mvc:mapping path="/**"/>-->
 <!--            &lt;!&ndash; 白名单 &ndash;&gt;-->
-<!--            <mvc:exclude-mapping path="/toPage/login"/>-->
+<!--            <mvc:exclude-mapping path="/user/toLogin"/>-->
 <!--            &lt;!&ndash; 拦截请求交给，哪个拦截器 &ndash;&gt;-->
 <!--            <bean class="com.pluto.Interceptor.ControllerInterceptor"/>-->
 <!--        </mvc:interceptor>-->

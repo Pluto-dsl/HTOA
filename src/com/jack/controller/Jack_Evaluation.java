@@ -2,17 +2,21 @@ package com.jack.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jack.service.Jack_Service;
+import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.empModel.evaluationVo;
+import com.publics.vo.empModel.teacherTotalVo;
+import com.publics.vo.studentModel.StudentVo;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 @Controller
@@ -147,13 +151,14 @@ public class Jack_Evaluation {
     }
 
     @RequestMapping("/toHeadmasterEva")
-    public String toHeadmasterEva(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+    public String toHeadmasterEva(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         String type = request.getParameter("type");
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html,charset=utf-8");
+        StudentVo stu = (StudentVo) session.getAttribute("user");
         //进入班主任考评
         if("Headmaster".equals(type)){
-            List evaluate = service.selHeadmasterTest(2);
+            List evaluate = service.selHeadmasterTest(stu.getStudid());
             List problem = service.selHeadmasterType();
             System.out.println(evaluate);
             Map json = new HashMap();
@@ -164,36 +169,172 @@ public class Jack_Evaluation {
                 json.put("className",map.get("className"));
                 json.put("empName",map.get("empName"));
             }
+            request.setAttribute("teacher","班主任");
             request.setAttribute("evaluate",json);
             System.out.println(problem);
             request.setAttribute("problem",problem);
             return "emp_xzq/HeadmasterEva";
         }else if("Teachar".equals(type)){ //进入教师考评
-            request.setAttribute("Te","Te");
+            List evaluate = service.selTeacherTest(stu.getStudid());
+            List problem = service.selTeacherType();
+            Map json = new HashMap();
+            for(int a=0;a<evaluate.size();a++){
+                Map map=(Map)evaluate.get(a);
+                json.put("empId",map.get("empId"));
+                json.put("classId",map.get("classId"));
+                json.put("className",map.get("className"));
+                json.put("empName",map.get("empName"));
+            }
+            request.setAttribute("teacher","授课老师");
+            request.setAttribute("evaluate",json);
+            System.out.println(problem);
+            request.setAttribute("problem",problem);
             return "emp_xzq/HeadmasterEva";
         }
         return "error";
     }
 
+    @RequestMapping(value = "/ajax")
+    @ResponseBody
+    public String ajax(HttpServletRequest request,HttpSession session){
+        String type = request.getParameter("type");
+        StudentVo stu = (StudentVo) session.getAttribute("user");
+        if("headM".equals(type)){
+            List list = service.selMonthly_assessment(stu.getStudid(),2);
+            if(list.size() > 0){
+                return "2";
+            }
+        }
+        if("teacherM".equals(type)){
+            List list = service.selMonthly_assessment(stu.getStudid(),1);
+            if(list.size() > 0){
+                return "1";
+            }
+        }
+        return "";
+    }
+    //插入教师考评-
+
     @RequestMapping(value = "/ajaxEvaluate")
-    public String ajaxEvaluate(HttpServletRequest request){
+    public String ajaxEvaluate(HttpServletRequest request,HttpSession session){
         String [] list1  = request.getParameterValues("number");
         String [] list2  = request.getParameterValues("evaluationid");
-        String classid = request.getParameter("classid");
-        String teacherid = request.getParameter("teacherid");
+        int classid = Integer.parseInt(request.getParameter("classid"));
+        int teacherid = Integer.parseInt(request.getParameter("teacherid"));
         String sugges = request.getParameter("sugges");
+        String type = request.getParameter("type");
+        StudentVo stu = (StudentVo) session.getAttribute("user");
+        teacherTotalVo teacher = new teacherTotalVo();
+        teacher.setClassid(classid);
+        teacher.setClassTeacher(teacherid);
+        teacher.setSugges(sugges);
+        teacher.setStudentId(stu.getStudid());
         List number = new ArrayList();
         List evaluationid = new ArrayList();
-        for (int i=0;i<list1.length;i++){
-            number.add(list1[i]);
-            evaluationid.add(list2[i]);
-
+        String number1 = "";
+        String evaluation = "";
+        teacher.setOptime(new Date());
+        if ("班主任".equals(type)){
+            teacher.setEvaluationType(2);
+            for (int i = 0; i < list1.length; i++) {
+                number.add(list1[i]);
+                evaluationid.add(list2[i]);
+                System.out.println(number);
+                System.out.println(evaluationid);
+                evaluation = (String) evaluationid.get(i);
+                number1 = (String) number.get(i);
+                teacher.setTeacherScore(Integer.parseInt(number1));
+                teacher.setEvaluationid(Integer.parseInt(evaluation));
+                service.addHeadmaster(teacher);
+                System.out.println(teacher);
+            }
+        }else if("授课老师".equals(type)) {
+            teacher.setEvaluationType(1);
+            for (int i = 0; i < list1.length; i++) {
+                number.add(list1[i]);
+                evaluationid.add(list2[i]);
+                System.out.println(number);
+                System.out.println(evaluationid);
+                evaluation = (String) evaluationid.get(i);
+                number1 = (String) number.get(i);
+                teacher.setTeacherScore(Integer.parseInt(number1));
+                teacher.setEvaluationid(Integer.parseInt(evaluation));
+                service.addTeacher(teacher);
+                System.out.println(teacher);
+            }
         }
-        System.out.println(number+"----------------");
-        System.out.println(evaluationid);
-        System.out.println(classid);
-        System.out.println(teacherid);
-        System.out.println(sugges);
+
         return "emp_xzq/stu_selectWindows";
+    }
+    @RequestMapping(value = "/MyMission")
+    @ResponseBody
+    public Map MyMission(HttpSession session){
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        Map map = new HashMap();
+        int talk = service.selChatRecordCount(emp.getEmpId());
+        int clock = service.selClockCount(emp.getEmpName());
+        int Notice = service.selUnreadCountemp(emp.getEmpId());
+        map.put("emp",0);
+        map.put("stu",0);
+        map.put("clock",clock);
+        map.put("Notice",Notice);
+        map.put("weekly","未完成");
+        map.put("talk",talk);
+        return map;
+    }
+
+    /** 学生端——我的公告 */
+    @RequestMapping(value = "/toMyAnno")
+    public String toMyAnno(Model model,HttpServletRequest request,HttpSession session){
+        StudentVo stu = (StudentVo) session.getAttribute("user");
+        List<Map> list = service.selNoticeList(stu.getStudid());
+        model.addAttribute("list",list);
+        return "emp_xzq/stu_MyAnnouncement";
+    }
+    @RequestMapping(value = "/MyAnno")
+    @ResponseBody
+    public Map MyAnno(HttpSession session){
+        Map map = new HashMap();
+        StudentVo stu = (StudentVo) session.getAttribute("user");
+        int count = service.selNoticeCount(stu.getStudid());
+        map.put("count",count);
+        return map;
+    }
+    @RequestMapping(value = "/MyAddRead")
+    @ResponseBody
+    public String MyAnno(String noticeId,HttpSession session,HttpServletResponse response){
+        StudentVo stu = (StudentVo) session.getAttribute("user");
+        service.UpdateRead(stu.getStudid(),Integer.parseInt(noticeId));
+        return noticeId;
+    }
+
+    /** 教师端——我的公告 */
+    @RequestMapping(value = "/toMyAnnoEmp")
+    public String toMyAnnoEmp(Model model,HttpServletRequest request,HttpSession session){
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        List<Map> list = service.selNoticeListemp(emp.getEmpId());
+        model.addAttribute("list",list);
+        return "emp_xzq/emp_MyAnnouncement";
+    }
+    @RequestMapping(value = "/MyAnnoEmp")
+    @ResponseBody
+    public Map MyAnnoEmp(HttpSession session){
+        Map map = new HashMap();
+        //公告总数
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        int count = service.selNoticeCountemp(emp.getEmpId());
+        map.put("count",count);
+        //未读取的数据
+        int UnreadCount = service.selUnreadCountemp(emp.getEmpId());
+        map.put("UnreadCount",UnreadCount);
+
+        return map;
+    }
+    @RequestMapping(value = "/MyAddReadEmp")
+    @ResponseBody
+    public String MyAddReadEmp(String noticeId,HttpSession session,HttpServletResponse response){
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        service.UpdateReademp(emp.getEmpId(),Integer.parseInt(noticeId));
+        return noticeId;
     }
 }

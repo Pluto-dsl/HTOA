@@ -11,8 +11,6 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class ForwordController {
-    @Resource
-    Pluto_StudentMsg service;
 
     @RequestMapping("/toPage/{path}")
     public String tomain(@PathVariable("path") String path, HttpSession session){

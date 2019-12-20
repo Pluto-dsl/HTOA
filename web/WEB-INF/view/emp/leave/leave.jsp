@@ -13,7 +13,9 @@
 </head>
 <body>
 <div id="windows" style="margin-left: 5%;display: none;">
-        <table align="center" style="width:55%;margin-top: -2%;border-collapse:separate; border-spacing:0px 20px;">
+    <form id="holidayform" class="layui-form" method="post">
+        <input type="hidden" name="type" value="empLeave"/>
+        <table align="center" style="width:55%;margin-top: -2%;border-collapse:separate; border-spacing:0px 20px;" >
             <tr>
                 <th colspan="2">
                     <font style="text-align: center">员工请假</font>
@@ -36,13 +38,13 @@
             <tr>
                 <th>开始时间：</th>
                 <td>
-                    <input type="text" class="layui-input" name="startTime" id="startDate" placeholder="选择开始时间">
+                    <input autocomplete="off" type="text" class="layui-input" name="startTime" id="startDate" placeholder="选择开始时间">
                 </td>
             </tr>
             <tr>
                 <th>结束时间：</th>
                 <td>
-                    <input type="text" class="layui-input" name="endTime" id="endDate" placeholder="选择结束时间">
+                    <input autocomplete="off" type="text" class="layui-input" name="endTime" id="endDate" placeholder="选择结束时间">
                 </td>
             </tr>
             <tr>
@@ -51,7 +53,7 @@
                 </th>
                 <td style="">
                     <input type="text" id="days" name="holidayDay" style="width: 50px;height: 30px;" >天,
-                    <select name="hour" id="hour" style="width: 80px;height: 30px;">
+                    <select name="hour" id="hour" style="width: 80px;height: 30px;" lay-ignore>
                         <option value="0">默认</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -71,17 +73,18 @@
             </tr>
             <tr>
                 <td colspan="2" style="text-align: center;">
-                    <button type="button" class="layui-btn" style="width: 100px;" onclick="submitleave()">提交</button>
+                    <button  type="submit" class="layui-btn"  lay-submit lay-filter="Action" style="width: 100px;"  <%--onclick="submitleave()"--%>>提交</button>
                 </td>
             </tr>
         </table>
+    </form>
 </div>
 <table class="layui-hide" id="test" lay-filter="test" style="text-align: center;"></table>
 <div id="page"></div>
 <script type="text/html" id="topBar">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="add">申请请假</a>
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="mytask">我的任务</a>
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="history">历史任务</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="add"><i class="layui-icon">&#xe654;</i>申请请假</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="mytask"><i class="layui-icon">&#xe705;</i>我的任务</a>
+    <!--<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="history">历史任务</a>-->
 </script>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看批注</a>
@@ -140,7 +143,7 @@
                 {field: 'holidayid', title: 'ID', width:80, sort: true, fixed: 'left', totalRowText: '合计：'}
                 ,{field: 'Empid', title: 'id', width:100,hide:'true'}
                 ,{field: 'empName', title: '请假人', width:100}
-                ,{field: 'holidayDay', title: '请假时长', width:110, sort: true, totalRow: true}
+                ,{field: 'hour', title: '请假时长(小时)', width:150, sort: true, totalRow: true}
                 ,{field: 'startTime', title: '开始时间', width:150, sort: true,templet : "<div>{{layui.util.toDateString(d.startDate, 'yyyy年MM月dd日')}}</div>"}
                 ,{field: 'endTime', title: '结束时间', width: 150, sort: true, totalRow: true,templet : "<div>{{layui.util.toDateString(d.endTime, 'yyyy年MM月dd日')}}</div>"}
                 ,{field: 'status', title: '状态', width: 100}
@@ -195,11 +198,44 @@
                 window.location.href="<%=request.getContextPath()%>/zeroLeave/mycomment?holidayid="+data.holidayid;
             }
         })
+        form.on('submit(Action)', function(data){
+            layer.msg('正在提交,请稍后!')
+            console.log(data.field);
+            $.ajax({
+                type: 'post',
+                url: "<%=request.getContextPath()%>/zeroLeave/addLeave", // ajax请求路径
+                async:true,
+                dataType: "text",
+                data:data.field,
+                success: function(data){
+                    if(data='yes'){
+                        layer.close(win);
+                        layer.msg('提交成功!')
+                        table.reload(
+                            'etabe',{
+                            done: function(res, page, count){
+                            $("[data-field='status']").children().each(function(){
+                                if($(this).text()=='1'){
+                                    $(this).text("审批中")
+                                }else if($(this).text()=='2'){
+                                    $(this).text("已完成")
+                                } else if($(this).text()=='3'){
+                                    $(this).text("不批准")
+                                }
+                            })
+                        }}
+                        );
+                        document.getElementById("holidayform").reset();
+                    }
+                }
+            });
+            return false;//禁止跳转，否则会提交两次，且页面会刷新
+        });
     })
 
-    function submitleave(){//提交请假
+    /*function submitleave(){//提交请假
         layer.msg('正在提交,请稍等!')
-        params = {
+        var params = {
             Title:document.getElementById("Title").value,
             startTime:$("#startDate").val(),
             endTime:$("#endDate").val(),
@@ -215,7 +251,7 @@
         }
         $.post("${pageContext.request.contextPath}/zeroLeave/addLeave",params,back,"text");
 
-    }
+    }*/
 </script>
 </body>
 </html>

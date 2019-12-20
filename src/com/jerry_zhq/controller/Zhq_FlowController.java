@@ -23,6 +23,7 @@ import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 @Controller
+@RequestMapping("/zhq")
 public class Zhq_FlowController {
     @Resource
     private ProcessEngine processEngine;
@@ -38,7 +39,7 @@ public class Zhq_FlowController {
     @Resource
     private Zhq_FlowService zhq_flowService;
 
-    @RequestMapping("/toPage/flow")
+    @RequestMapping("/flow")
     public String flow(){
         return "/flow_zhq/flow";
     }
@@ -75,7 +76,7 @@ public class Zhq_FlowController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "redirect:/toPage/flow";
+        return "redirect:/zhq/flow";
     }
     /**
      * 下载流程图

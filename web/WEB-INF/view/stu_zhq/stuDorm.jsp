@@ -21,7 +21,7 @@
     <table id="demo"  lay-filter="test"></table>
     <!--修改-->
     <div  id="windows"  style="margin-left: 5%;display: none;">
-        <form method="post" class="layui-form" lay-filter="aaa" action="${pageContext.request.contextPath}/updateDorm">
+        <form method="post" class="layui-form" lay-filter="aaa" action="${pageContext.request.contextPath}/zhq/updateDorm">
             <input type="hidden" name="hourid" id="hourid">
             <div class="layui-form-item">
                 <label class="layui-form-label">宿舍楼栋：</label>
@@ -87,7 +87,7 @@
             elem: '#demo', //指定原始表格元素选择器（推荐id选择器）
             height: 356, //容器高度
             title:'宿舍管理',
-            url:"${pageContext.request.contextPath}/selDorm",
+            url:"${pageContext.request.contextPath}/zhq/selDorm",
             cols: [[ //标题栏
                 {field: 'hourid', title: '编号', width: 150, sort: true}
                 ,{field: 'huoeIddsc', title: '序号', width: 150}
@@ -116,7 +116,7 @@
             if(obj.event ==='del'){
                 layer.confirm('真的删除行么', function(index){
                     $.ajax({
-                        url:"${pageContext.request.contextPath}/deleteStuDorm",
+                        url:"${pageContext.request.contextPath}/zhq/deleteStuDorm",
                         type:"post",
                         data:{
                             stuId:obj.data.hourid
@@ -126,11 +126,13 @@
                             obj.del();
                             layer.close(index);
                             layer.msg('删除成功');
+                            table.reload("demo");
                         },
                         error:function () {
                             obj.del();
                             layer.close(index);
                             layer.msg('删除成功');
+                            table.reload("demo");
                         }
                     })
                 });
@@ -152,7 +154,7 @@
                     elem: '#demo2', //指定原始表格元素选择器（推荐id选择器）
                     height: 356, //容器高度
                     title:'查看宿舍学生',
-                    url:"${pageContext.request.contextPath}/selStuDormit?id="+data.hourid,
+                    url:"${pageContext.request.contextPath}/zhq/selStuDormit?id="+data.hourid,
                     cols: [[ //标题栏
                         {field: 'huorName', title: '宿舍房号', width: 150}
                         ,{field: 'className', title: '所在班级', width: 200}
@@ -182,7 +184,7 @@
             layer.open({
                 title:"添加宿舍",
                 type:2,
-                content:['${pageContext.request.contextPath}/addStuDormit'],
+                content:['${pageContext.request.contextPath}/zhq/addStuDormit'],
                 area:['500','400'],
                 resize:false
             })

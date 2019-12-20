@@ -71,7 +71,7 @@
                 ,{field:'status', title:'状态',width: 80, minWidth: 200}
                 ,{fixed:'right', title:'操作',templet:function(d){
                     console.log(d);
-                    if (d.status==='未完成'){
+                    if (d.status==='待处理'){
                         return '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
                     }else {
                         return ''
