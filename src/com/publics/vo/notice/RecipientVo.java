@@ -13,14 +13,16 @@ public class RecipientVo {//接收人
     private int noticeId;//关联管理通知公告
     private int receiver;//接收人
     private int isRead;//是否已读,1:已读,2:未读
+    private int type;//是否已读,1:已读,2:未读
 
     @Override
     public String toString() {
-        return "Recipient{" +
+        return "RecipientVo{" +
                 "receiverId=" + receiverId +
                 ", noticeId=" + noticeId +
                 ", receiver=" + receiver +
                 ", isRead=" + isRead +
+                ", type=" + type +
                 '}';
     }
 
@@ -54,5 +56,13 @@ public class RecipientVo {//接收人
 
     public void setIsRead(int isRead) {
         this.isRead = isRead;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

@@ -42,7 +42,10 @@
         .layui-card-body {
             position: relative;
             padding: 10px 15px;
-            line-height: 45px;
+            line-height: 24px;
+            overflow: auto;
+            height: 40%;
+
         }
         .layui-col-xs3{
             float: none;
@@ -53,6 +56,23 @@
         }
         .layui-col-md6 {
             width: 30%;
+        }
+        .layui-card-header {
+            position: relative;
+            height: 42px;
+            line-height: 42px;
+            padding: 0 15px;
+            border-bottom: 10px solid #f6f6f6;
+            color: #333;
+            border-radius: 2px 2px 0 0;
+            font-size: 14px;
+        }
+        .layui-icon {
+            font-family: layui-icon!important;
+            font-size: 17px;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
     </style>
 </head>
@@ -268,17 +288,17 @@
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
                         <%--内容主体--%>
-                        <div class="layui-col-md6" style="margin: 5% 1%;border: solid 1px #fbf38a;">
+                        <div class="layui-col-md6" style="margin: 1% 15%;float:right;">
                             <div class="layui-card">
-                                <div class="layui-card-header" style="background-color: #f9e7cf;font-size: 20px;">我的任务 <i class="layui-icon layui-icon-refresh-3" style="cursor: pointer;float: right" id="flush"></i></div>
-                                <div class="layui-card-body" style="background-color: antiquewhite;">
+                                <div class="layui-card-header" style="background-color:#333333;font-size: 20px;color: #fffaf5">我的任务 <i class="layui-icon layui-icon-refresh-3" style="cursor: pointer;float: right" id="flush"></i></div>
+                                <div class="layui-card-body">
                                     <div class="layui-carousel layadmin-carousel layadmin-shortcut">
-                                        <ul style="background-color: #fff7e4;" class="layui-row layui-col-space10">
+                                        <ul class="layui-row layui-col-space10">
                                             <li class="layui-col-xs3">
                                                 <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                                    data-url="${pageContext.request.contextPath}/zeroLeave/toleave"
                                                    data-id="请假管理" data-title="请假管理">
-                                                    <i class="layui-icon layui-icon-list"></i>
+                                                    <i class="layui-icon layui-icon-survey"></i>
                                                     <cite>员工请假待审批(<span id="emp"></span>)</cite>
                                                 </a>
                                             </li>
@@ -299,9 +319,7 @@
                                                 </a>
                                             </li>
                                             <li class="layui-col-xs3">
-                                                <a href="javascript:;"class="site-demo-active" data-type="tabAdd"
-                                                   data-url="${pageContext.request.contextPath}/toPage/Notice"
-                                                   data-id="通知公告" data-title="通知公告">
+                                                <a>
                                                     <i class="layui-icon layui-icon-face-surprised"></i>
                                                     <cite>未读通知公告(<span id="Notice"></span>)</cite>
                                                 </a>
@@ -329,6 +347,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        <iframe frameborder="0" src="${pageContext.request.contextPath}/jack/toMyAnnoEmp" style="width:50%;height:80%;position: absolute;margin-left: 65px;" id="test1"></iframe>
                     </div>
                 </div>
             </div>
@@ -352,15 +372,15 @@
         });
 
         function yb(){
-        $.post('${pageContext.request.contextPath}/jack/MyMission',{},function (data) {
-            console.log(data);
-            $("#emp").text(data.emp);
-            $("#Notice").text(data.Notice);
-            $("#stu").text(data.stu);
-            $("#talk").text(data.talk);
-            $("#clock").text(data.clock);
-            $("#weekly").text(data.weekly);
-        });
+            $.post('${pageContext.request.contextPath}/jack/MyMission',{},function (data) {
+                console.log(data);
+                $("#emp").text(data.emp);
+                $("#Notice").text(data.Notice);
+                $("#stu").text(data.stu);
+                $("#talk").text(data.talk);
+                $("#clock").text(data.clock);
+                $("#weekly").text(data.weekly);
+            });
         }
 
         //触发事件
