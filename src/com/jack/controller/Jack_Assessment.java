@@ -134,7 +134,7 @@ public class Jack_Assessment {
             //将上传文件保存到一个目标文档中
             File file1 = new File(path + File.separator + filename);
             file.transferTo(file1);
-            Map<String, Object> res = new HashMap<>();
+            Map<String,Object> res = new HashMap<>();
             //返回的是一个url对象
             res.put("url", url);
             return res;

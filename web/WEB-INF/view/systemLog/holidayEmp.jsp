@@ -28,11 +28,9 @@
             float: left;
         }
         .titleBing{
-            background-color: #9F9F9F;
-            width: 250px;
+            width: 400px;
             height: 250px;
-            margin-left: 20%;
-            border-radius: 125px;
+            margin-left: 5%;
             float: left;
         }
     </style>
@@ -201,6 +199,35 @@
                     type: 'line'
                 }]
             });
+        },"json");
+        $.post("${pageContext.request.contextPath}/echarts/getTitleBingData",{},function (data) {
+            var mychart = echarts.init(document.getElementById('titleBing'), 'shine');
+            //给图表设置属性
+            var option = {
+                title: {
+                    text: '请假类型比例',
+                    x: 'left' //标题的水平显示位置 left默认  center right
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    orient: 'vertical', //设置图例的方向 vertical(垂直) horizontal(水平)
+                    left: 'right',
+                    data: data.selected
+                },
+                series: {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: '100',//半径大小
+                    center: ['50%', '50%'],//圆心位置
+                    data: data.seriesData
+
+                }
+            };
+
+            //把属性设置给图表
+            mychart.setOption(option);
         },"json");
     });
 </script>

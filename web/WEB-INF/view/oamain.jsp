@@ -42,11 +42,17 @@
         .layui-card-body {
             position: relative;
             padding: 10px 15px;
-            line-height: 45px;
+            line-height: 24px;
+            overflow: auto;
+            height: 40%;
+
         }
         .layui-col-xs3{
             float: none;
-            width: 90%;
+            width: 100%;
+        }
+        .layui-col-xs3:hover{
+            background-color: #dddbe0;
         }
         .layui-col-md6 {
             width: 30%;
@@ -206,7 +212,7 @@
                         <cite>文件管理</cite></a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/zhq/DataDoc"
+                               data-url="${pageContext.request.contextPath}/toPage/DataDoc"
                                data-id="资料文档" data-title="资料文档" >资料文档</a></dd>
                     </dl>
                 </li>
@@ -269,26 +275,32 @@
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
                         <%--内容主体--%>
-                        <div class="layui-col-md6" style="margin: 5% 1%;border: solid 1px #fbf38a;">
+                        <div class="layui-col-md6" style="margin: 1% 15%;float:right;">
                             <div class="layui-card">
-                                <div class="layui-card-header" style="background-color: #f9e7cf;">我的任务</div>
+                                <div class="layui-card-header" style="background-color:#333333;font-size: 20px;color: #fffaf5">我的任务 <i class="layui-icon layui-icon-refresh-3" style="cursor: pointer;float: right" id="flush"></i></div>
                                 <div class="layui-card-body">
                                     <div class="layui-carousel layadmin-carousel layadmin-shortcut">
-                                        <ul style="background-color: #fff7e4;" class="layui-row layui-col-space10">
+                                        <ul class="layui-row layui-col-space10">
                                             <li class="layui-col-xs3">
-                                                <a lay-href="">
-                                                    <i class="layui-icon layui-icon-list"></i>
+                                                <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                                                   data-url="${pageContext.request.contextPath}/zeroLeave/toleave"
+                                                   data-id="请假管理" data-title="请假管理">
+                                                    <i class="layui-icon layui-icon-survey"></i>
                                                     <cite>员工请假待审批(<span id="emp"></span>)</cite>
                                                 </a>
                                             </li>
                                             <li class="layui-col-xs3">
-                                                <a lay-href="">
+                                                <a  href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                                                    data-url="${pageContext.request.contextPath}/student/selectleave"
+                                                    data-id="学生请假" data-title="学生请假" >
                                                     <i class="layui-icon layui-icon-star"></i>
                                                     <cite>学生请假待审批(<span id="stu"></span>)</cite>
                                                 </a>
                                             </li>
                                             <li class="layui-col-xs3">
-                                                <a lay-href="">
+                                                <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                                                   data-url="${pageContext.request.contextPath}/jack/toAtt"
+                                                   data-id="考勤管理" data-title="考勤管理" >
                                                     <i class="layui-icon layui-icon-form"></i>
                                                     <cite>未打卡待审批(<span id="clock"></span>)</cite>
                                                 </a>
@@ -296,11 +308,13 @@
                                              <li class="layui-col-xs3">
                                                 <a lay-href="">
                                                     <i class="layui-icon layui-icon-face-surprised"></i>
-                                                    <cite>未读通知公告(${fl})</cite>
+                                                    <cite>未读通知公告(<span id="Notice"></span>)</cite>
                                                 </a>
                                             </li>
                                             <li class="layui-col-xs3">
-                                                <a lay-href="">
+                                                <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                                                   data-url="${pageContext.request.contextPath}/emp/toEmpPaper"
+                                                   data-id="我的周报" data-title="我的周报" >
                                                     <i class="layui-icon layui-icon-note"></i>
                                                     <cite>本周工作周报(<span id="weekly"></span>)</cite>
                                                     <span style="color:red;margin-left:10px;font-size: 11px;">周日17:00前提交</span>
@@ -318,6 +332,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        <iframe frameborder="0" src="${pageContext.request.contextPath}/jack/toMyAnnoEmp" style="width:50%;height:80%;position: absolute;margin-left: 65px;" id="test1"></iframe>
                     </div>
                 </div>
             </div>
@@ -335,15 +351,21 @@
         var element = layui.element;
         var $ = layui.jquery;
 
-        $.post('${pageContext.request.contextPath}/jack/MyMission',{},function (data) {
-            console.log(data);
-            $("#emp").text(data.emp);
-            $("#Notice").text(data.Notice);
-            $("#stu").text(data.stu);
-            $("#talk").text(data.talk);
-            $("#clock").text(data.clock);
-            $("#weekly").text(data.weekly);
+        $("#flush").on('click',function () {
+            yb();
         });
+
+        function yb(){
+            $.post('${pageContext.request.contextPath}/jack/MyMission',{},function (data) {
+                console.log(data);
+                $("#emp").text(data.emp);
+                $("#Notice").text(data.Notice);
+                $("#stu").text(data.stu);
+                $("#talk").text(data.talk);
+                $("#clock").text(data.clock);
+                $("#weekly").text(data.weekly);
+            });
+        }
 
         //触发事件
         var active = {

@@ -12,17 +12,23 @@
     <title>新增员工</title>
     <jsp:include page="../include.jsp"/>
 </head>
+<style>
+    .layui-form-select{
+        width: 200px;
+    }
+</style>
 <body>
 <center>
+    <h1>新增员工资料</h1>
     <form  class="layui-form layui-form-pane"  accept-charset="UTF-8" οnsubmit="document.charset='UTF-8'"  action="<%=request.getContextPath()%>/zeroEmp/addemp" method="post">
-        <table style="height: 370px;width: 800px;margin-top: 10px" border="0">
+        <table style="height: 370px;width: 800px;margin-top: 10px;border-collapse:separate; border-spacing:10px;" border="0" >
             <tr style="height: 40px">
                 <td align="right">员工姓名:</td>
                 <td align="left"><input class="layui-input" lay-verify="required"  id="empName" name="empName" placeholder="请输入员工姓名"
                                         value="" style="width:200px;"></td>
                 <td align="right">部门名称:</td>
                 <td align="left">
-                    <select id="depId" name="depId" lay-verify="required" style="width:205px;">
+                    <select id="depId" name="depId" lay-verify="required" style="width:50px;">
                         <c:forEach var="d" items="${dep}">
                             <option value="${d.depid}">${d.depName}</option>
                         </c:forEach>
@@ -54,13 +60,12 @@
             <tr style="height: 40px">
                 <td align="right">出生日期:</td>
                 <td align="left">
-                    <input lay-verify="required|date" class="layui-input" type="text" id="birthday" name="birthday" value="" placeholder="可根据身份证号获取出生日期"  style="width:200px;">
+                    <input autocomplete="off" lay-verify="required|date" class="layui-input" type="text" id="birthday" name="birthday" value=""   style="width:200px;">
                     <%--<input class="layui-input" type="button"  onclick="hqbirthday();" value="获取日期" style="height: 33px;width: 60px;">--%>
                 </td>
                 <td align="right">籍贯:</td>
                 <td align="left">
                     <input class="layui-input" type="text" id="nation" name="nation" value=""   style="width:200px;">
-                    <%--<input class="layui-input" type="button"  onclick="addcity();" value="选择籍贯" style="height: 33px;width: 60px;">--%>
                 </td>
             </tr>
 
@@ -104,9 +109,9 @@
             </tr>
 
             <tr style="height: 40px">
-                <td align="right">专业:</td>
+                <td align="right">入职日期:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="major"  name="major" value=""placeholder="请输入专业" style="width:200px;">
+                    <input autocomplete="off" type="text"  required class="layui-input" id="joindate" style="width: 200px">
                 </td>
                 <td align="right">学历:</td>
                 <td align="left">
@@ -144,9 +149,9 @@
             </tr>
 
             <tr style="height: 40px">
-                <td align="right">入职日期:</td>
+                <td align="right">专业:</td>
                 <td align="left">
-                    <input type="text" required class="layui-input" id="joindate">
+                    <input class="layui-input" type="text" id="major"  name="major" value=""placeholder="请输入专业" style="width:200px;">
                 </td>
                 <td align="right">登录密码:</td>
                 <td align="left">
@@ -160,14 +165,19 @@
                     <textarea name="remark"  placeholder="请输入说明" class="layui-textarea"style="width:500px; height: 60px;"></textarea>
                 </td>
             </tr>
-            <tr style="height:140px">
-                <td align="right" >
-                    <button type="submit" class="layui-btn layui-btn-normal layui-btn-radius" lay-submit="">保 存</button>
+            <tr style="height:90px">
+                <td>
+                </td>
+                <td>
+                    <center> <button type="submit" class="layui-btn layui-btn-normal layui-btn-radius" lay-submit="">保 存</button>
+                    </center>
                 </td>
                 <td align="left">
                     <a href="javascript:void(0);"onclick="exit()">
-                    <button type="button" class="layui-btn layui-btn-primary layui-btn-radius">返 回</button>
+                        <button type="button" class="layui-btn layui-btn-primary layui-btn-radius">返 回</button>
                     </a>
+                </td>
+                <td>
                 </td>
             </tr>
         </table>
@@ -186,6 +196,9 @@
         //执行一个laydate实例
         laydate.render({
             elem: '#joindate' //指定元素
+        });
+        laydate.render({
+            elem: '#birthday' //指定元素
         });
     });
     function exit() {//返回员工资料页

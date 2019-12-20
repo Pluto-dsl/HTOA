@@ -9,8 +9,11 @@ import com.publics.vo.educ.CourseVo;
 import com.publics.vo.empModel.AttendanceVo;
 import com.publics.vo.empModel.evaluationVo;
 import com.publics.vo.empModel.teacherTotalVo;
+import com.publics.vo.notice.RecipientVo;
+import com.publics.vo.studentModel.StudentVo;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -309,9 +312,51 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
         return selTotalRow(sql);
     }
 
+
+    /** 学生端_我的公告 */
     @Override
-    public int selClockCount(int empid) {
-        return selTotalRow("select count(*) from attendance att inner join emp e on att.empid = e.empid where att.auditor = "+empid+" and att.status = 2");
+    public int selClockCount(String empid) {
+        return selTotalRow("select count(*) from attendance att inner join emp e on att.empid = e.empid where att.auditor = '"+empid+"'and att.status = 2");
+    }
+    @Override
+    public List selNoticeList(int id) {
+        return listBySQL("select n.noticeId,n.title,n.content,n.empid,n.noticeTime,re.isRead from notice n \n" +
+                "LEFT join recipient re on n.noticeId = re.noticeId\n" +
+                "where re.type = 2 and n.noticeType in(1,3) and re.receiver = "+id+" ORDER BY n.noticeTime desc");
+    }
+    @Override
+    public int selNoticeCount(int id) {
+        return selTotalRow("select count(*) from notice n \n" +
+                "LEFT join recipient re on n.noticeId = re.noticeId\n" +
+                "where re.type = 2 and n.noticeType in(1,3) and re.receiver = "+id+"");
+    }
+    @Override
+    public void UpdateRead(int stuid,int notid) {
+        executeSQL("UPDATE recipient set isRead = 1 where receiver = "+stuid+" and noticeId = "+notid+"");
+    }
+
+    /** 员工端_我的公告 */
+    @Override
+    public List selNoticeListemp(int id) {
+        return listBySQL("select  n.noticeId,n.title,n.content,n.empid,n.noticeTime,re.isRead from notice n \n" +
+                "LEFT join recipient re on n.noticeId = re.noticeId\n" +
+                "where re.type = 1 and n.noticeType in(1,2) and re.receiver = "+id+" ORDER BY n.noticeTime desc ");
+    }
+    @Override
+    public int selNoticeCountemp(int id) {
+        return selTotalRow("select count(*) from notice n \n" +
+                "LEFT join recipient re on n.noticeId = re.noticeId\n" +
+                "where re.type = 1 and n.noticeType in(1,2) and re.receiver = "+id+"");
+    }
+    @Override
+    public int selUnreadCountemp(int id) {
+        return selTotalRow("select count(*) from notice n \n" +
+                "LEFT join recipient re on n.noticeId = re.noticeId\n" +
+                "where re.isRead = 2 and re.type = 1 and n.noticeType in(1,2) and re.receiver = "+id+"");
+    }
+    @Override
+    public void UpdateReademp(int empid, int notid) {
+        executeSQL("UPDATE recipient set isRead = 1 where receiver = "+empid+" and noticeId = "+notid+"");
     }
 
 
