@@ -6,10 +6,21 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>Title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>document</title>
     <jsp:include page="../include.jsp"/>
+    <style>
+        td{
+            height: 150px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <div style="width:100%;height:100%">
@@ -41,7 +52,18 @@
             </tr>
             <tr>
                 <td align="center">
-                    <div style="height: 30px" onclick="alert('aaa')">
+                    <div style="height: 30px" onclick="" href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                         data-url="${pageContext.request.contextPath}/sysSet/toDeptList"
+                         data-id="院系设置" data-title="院系设置">
+                        <i class="layui-icon layui-icon-set" style="font-size:50px;color: #93D1FF"></i>
+                        <br>
+                        <span>院系设置</span>
+                    </div>
+                </td>
+                <td align="center">
+                    <div style="height: 30px" onclick="" href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                         data-url="${pageContext.request.contextPath}/sysSet/toMajorPage"
+                         data-id="专业设置" data-title="专业设置">
                         <i class="layui-icon layui-icon-set" style="font-size:50px;color: #93D1FF"></i>
                         <br>
                         专业设置
@@ -56,8 +78,10 @@
                         流程设置
                     </div>
                 </td>
+            </tr>
+            <tr>
                 <td align="center">
-                    <div style="height: 30px" onclick="alert('aaa')">
+                    <div style="height: 30px">
                         <i class="layui-icon layui-icon-set" style="font-size:50px;color: #93D1FF"></i>
                         <br>
                         答辩项目
@@ -68,8 +92,6 @@
     </div>
 </body>
     <script>
-
-
         layui.use([ 'element', 'table', 'layer', 'form' ,'laydate'],function() {
             var element = layui.element;
             var $ = layui.jquery;

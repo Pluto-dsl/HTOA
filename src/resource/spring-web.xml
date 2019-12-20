@@ -27,18 +27,18 @@
     <!--4、配置扫描器，扫描所有的Controller-->
     <context:component-scan base-package="com"/>
 
-    <mvc:interceptors>
-        <!--一个拦截器-->
+<!--    <mvc:interceptors>
+        &lt;!&ndash;一个拦截器&ndash;&gt;
         <mvc:interceptor>
-            <!-- 拦截URL,拦截请求的url 黑名单 -->
+            &lt;!&ndash; 拦截URL,拦截请求的url 黑名单 &ndash;&gt;
             <mvc:mapping path="/**"/>
-            <!-- 白名单 -->
+            &lt;!&ndash; 白名单 &ndash;&gt;
             <mvc:exclude-mapping path="/user/toLogin"/>
-            <!-- 拦截请求交给，哪个拦截器 -->
+            &lt;!&ndash; 拦截请求交给，哪个拦截器 &ndash;&gt;
             <bean class="com.pluto.Interceptor.ControllerInterceptor"/>
         </mvc:interceptor>
-        <!-- ... -->
-    </mvc:interceptors>
+        &lt;!&ndash; ... &ndash;&gt;
+    </mvc:interceptors>-->
 
     <!-- FastJson注入 -->
     <mvc:annotation-driven>
