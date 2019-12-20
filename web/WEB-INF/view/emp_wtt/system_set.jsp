@@ -73,7 +73,7 @@
                 </td>
                 <td align="center">
                     <div style="height: 30px" onclick="" href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                         data-url="${pageContext.request.contextPath}/toPage/flow"
+                         data-url="${pageContext.request.contextPath}/zhq/flow"
                          data-id="流程设置" data-title="流程设置">
                         <i class="layui-icon layui-icon-set" style="font-size:50px;color: #93D1FF"></i>
                         <br>

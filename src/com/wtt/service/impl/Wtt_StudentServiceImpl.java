@@ -3,6 +3,7 @@ package com.wtt.service.impl;
 import com.publics.dao.BaseDao;
 import com.publics.vo.feedback.Collect_OpinionsVo;
 import com.publics.vo.feedback.FeedbackVo;
+import com.publics.vo.studentModel.ClassCategoryVo;
 import com.publics.vo.studentModel.StudentLeaveVo;
 import com.publics.vo.studentModel.StudentVo;
 import com.wtt.service.Wtt_StudentService;
@@ -45,7 +46,7 @@ public class Wtt_StudentServiceImpl extends BaseDao implements Wtt_StudentServic
 
     @Override
     public List<Collect_OpinionsVo> selectyijian(int id) {
-        String sql = "select empName,content from collect_opinions where wid = '"+id+"'";
+        String sql = "select empName,puttime,content from collect_opinions where wid = '"+id+"'";
         return listBySQL(sql);
     }
 
@@ -119,5 +120,25 @@ public class Wtt_StudentServiceImpl extends BaseDao implements Wtt_StudentServic
     @Override
     public List selclassteacher(String sql) {
         return listBySQL(sql);
+    }
+
+    @Override
+    public List<ClassCategoryVo> selectclasscate(int currpage, int pagesize) {
+        return pageBySQL("select * from classType",currpage,pagesize);
+    }
+
+    @Override
+    public void addcategory(ClassCategoryVo classCategoryVo) {
+        addObject(classCategoryVo);
+    }
+
+    @Override
+    public void updatecate(ClassCategoryVo classCategoryVo) {
+        updObject(classCategoryVo);
+    }
+
+    @Override
+    public int pagecount(String sql) {
+        return selTotalRow(sql);
     }
 }

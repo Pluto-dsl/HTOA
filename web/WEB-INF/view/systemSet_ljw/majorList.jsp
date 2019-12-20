@@ -14,29 +14,28 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>专业设置</title>
+    <title>document</title>
     <jsp:include page="../include.jsp"/>
 </head>
 <body>
-<div id="windows" style="margin-left: 5%;display: none;">
-    <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/ljw/newChatRecord" method="post" onclick="selMyForm()">
+<div id="windows" style="margin-left: 1%;display: none;">
+    <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/sysSet/newMajor" method="post" lay-filter="MyForm">
         <br><br>
-        <input id="chatId" type="hidden" name="chatIds">
+        <input type="hidden" name="majorids">
         <div class="layui-form-item">
             <div class="layui-inline">
                 <label class="layui-form-label">专业名称</label>
                 <div class="layui-input-block">
-                    <input id="addr" type="text" name="addr" placeholder="请输入专业名称" autocomplete="off" class="layui-input">
+                    <input type="text" name="majorName" placeholder="请输入专业名称" autocomplete="off" class="layui-input">
                 </div>
             </div>
-            <div class="layui-inline">
+            <div class="layui-inline" style="margin-left: 15px;">
                 <label class="layui-form-label">选择系别</label>
                 <div class="layui-input-inline">
-                    <select id="teacher" name="teacher" class="layui-select">
-                        <%--<c:forEach items="${requestScope.empList}" var="emp">
-                            <option value="${emp.empId}">${emp.empName}</option>
-                        </c:forEach>--%>
-                            <option value="1">电子竞技系</option>
+                    <select name="deptid" class="layui-select">
+                        <c:forEach items="${requestScope.list}" var="dept">
+                            <option value="${dept.deptid}">${dept.deptName}</option>
+                        </c:forEach>
                     </select>
                 </div>
             </div>
@@ -44,7 +43,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">说明</label>
             <div class="layui-input-block" style="width: 515px">
-                <textarea id="sayscon" name="sayscon" placeholder="在此输入专业说明" class="layui-textarea"></textarea>
+                <textarea name="remark" placeholder="在此输入专业说明" class="layui-textarea"></textarea>
             </div>
         </div>
         <br>
@@ -60,61 +59,32 @@
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="delChatRecordList">删除所选数据</button>
         <button class="layui-btn layui-btn-sm" lay-event="newChatRecord">新增专业</button>
     </div>
 </script>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <button class="layui-btn layui-btn-xs" lay-event="edit">编辑</button>
 </script>
 </body>
 <script>
-    layui.use('table', function(){
+    layui.use(['table','form'], function(){
         var table = layui.table;
+        var form = layui.form;
         var tableIns = table.render({
             elem: '#majorList'
-            ,url:'${pageContext.request.contextPath}/ljw/getChatRecordData'
+            ,url:'${pageContext.request.contextPath}/sysSet/getMajorData'
             ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             ,defaultToolbar: ['filter', 'exports', 'print']
             ,title: '用户数据表'
             ,cols: [[
-                {type: 'checkbox', fixed: 'left'}
-                ,{field:'chatId', title:'ID', width:60, fixed: 'left', unresize: true, sort: true}
-                ,{field:'sayFace', title:'学生名称', width:90, fixed: 'left'}
-                ,{field:'teacher', title:'员工名称', width:90, fixed: 'left'}
-                ,{field:'chatDate', title:'时间', width:120, fixed: 'left', unresize: true, sort: true}
-                ,{field:'addr', title:'地址', width:170, fixed: 'left'}
-                ,{field:'sayscon', title:'谈心内容',width: '45%', minWidth: 200, fixed: 'left'}
-                ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:120}
+                {field:'majorid', title:'专业编号', width:120, fixed: 'left', unresize: true, sort: true}
+                ,{field:'majorName', title:'专业设置', width:160}
+                ,{field:'deptName', title:'院系名称', width:160}
+                ,{field:'deptid',hide:true}
+                ,{field:'remark', title:'备注', width:809}
+                ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:80}
             ]]
             ,page: {limit: 10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
-        });
-
-        //重载表格
-        $("#btn").click(function () {
-            //获取条件
-            var empName = $('input[name="empName"]').val();
-            var depId = $('select[name="depId"] option:selected').val();
-            var startDay = $('input[name="startDay"]').val();
-            var endDay = $('input[name="endDay"]').val();
-            console.log(empName);
-            console.log(depId);
-            console.log(startDay);
-            console.log(endDay);
-            //调用重载方法
-            tableIns.reload({
-                where: { //设定异步数据接口的额外参数，任意设
-                    empName:empName,
-                    depId:depId,
-                    startDay:startDay,
-                    endDay:endDay
-                }
-                ,method:'post'
-                ,page: {
-                    curr: 1 //重新从第 1 页开始
-                }
-            });
         });
 
         //头工具栏事件
@@ -128,7 +98,7 @@
                         title:'添加谈心记录',
                         skin: 'layui-layer-demo', //样式类名
                         closeBtn: 1, //是否显示关闭按钮
-                        area: ['700px', '420px'],
+                        area: ['700px', '350px'],
                         fixed: false, //不固定
                         maxmin: true,
                         shadeClose: false, //是否点击遮罩时关闭
@@ -141,81 +111,31 @@
                         }
                     });
                     break;
-                case 'delChatRecordList':
-                    var data = checkStatus.data;
-                    var msg = "是要删除ID为：";
-                    $(data).each(function (index,elemnt) {
-                        console.log(elemnt.chatId);
-                        msg +=elemnt.chatId+"、";
-                    });
-                    msg = msg.substr(0,msg.length-1);
-                    msg +="的记录吗?";
-                    layer.confirm(msg, {
-                        btn: ['是的','取消']
-                        //按钮
-                    }, function(index){
-                        $(data).each(function (index,elemnt) {
-                            delChatRecord(elemnt.chatId);
-                        });
-                        tableIns.reload({
-                            method:'post'
-                        });
-                        layer.close(index);
-                    },function (index) {
-                        layer.close(index);
-                    });
-                    break;
             }
         });
 
         //监听行工具事件
         table.on('tool(test)', function(obj){
             var data = obj.data;
-            if(obj.event === 'del'){
-                layer.confirm('是要删除这条记录吗', function(index){
-                    obj.del();
-                    layer.close(index);
-                    delChatRecord(obj.data.chatid)
-                });
-            } else if(obj.event === 'edit'){
-                console.log(data);
+            if(obj.event === 'edit'){
                 //重置表单数据
                 $("#MyForm")[0].reset();
                 layui.form.render();
-                //为表单赋值
-                $("#chatId").val(data.chatId);
-                $("#chatDate").val(data.chatDate);
-                $("#addr").val(data.addr);
-                $("#sayscon").val(data.sayscon);
-                $("#teacher").children().each(function (index,element) {
-                    if ($(element).text() === data.teacher) {
-                        $(element).attr("selected","selected");
-                    }else {
-                        $(element).removeAttr("selected")
-                    }
-                });
 
-                $("#sayface").children().each(function (index,element) {
-                    if ($(element).text() === data.sayface) {
-                        $(element).attr("selected","selected");
-                    }else {
-                        $(element).removeAttr("selected")
-                    }
+                console.log(data);
+                form.val('MyForm',{
+                    majorids:data.majorid,
+                    majorName:data.majorName,
+                    deptName:data.deptid,
+                    remark:data.remark
                 });
-
-                //重新渲染表单
-                layui.use('form', function() {
-                    var element = layui.form;
-                    element.render();
-                });
-
                 //打开窗口
                 layer.open({
                     type: 1,
                     title:'修改谈心记录',
                     skin: 'layui-layer-demo', //样式类名
                     closeBtn: 1, //是否显示关闭按钮
-                    area: ['700px', '420px'],
+                    area: ['700px', '350px'],
                     fixed: false, //不固定
                     maxmin: true,
                     shadeClose: false, //是否点击遮罩时关闭

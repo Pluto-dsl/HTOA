@@ -2,8 +2,10 @@ package com.norman.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.norman.service.Ljw_sysSetService;
+import com.publics.vo.studentModel.MajorVo;
 import com.publics.vo.sys.DeptVo;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -19,7 +21,8 @@ public class Ljw_SystemSettingController {
     private Ljw_sysSetService service;
 
     @RequestMapping(value = "/toMajorPage")
-    public String toMajorPage(){
+    public String toMajorPage(Model model){
+        model.addAttribute("list",service.selDeptList());
         return "systemSet_ljw/majorList";
     }
 
@@ -87,5 +90,16 @@ public class Ljw_SystemSettingController {
         out.print(result);
         out.flush();
         out.close();
+    }
+
+    @RequestMapping(value = "/newMajor")
+    public String newMajor(Integer majorids, MajorVo vo){
+        if (majorids != null && majorids != 0){
+            vo.setMajorid(majorids);
+            service.updMajor(vo);
+        }else {
+            service.insMajor(vo);
+        }
+        return "redirect:/sysSet/toMajorPage";
     }
 }

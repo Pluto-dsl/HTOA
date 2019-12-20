@@ -7,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!doctype html>
 <html>
 <head>
     <title>Title</title>
@@ -44,7 +45,7 @@
             <tr>
                 <th>请假天数:</th>
                 <td>
-                    <input type="text" class="layui-input" name="holidayDay" >
+                    <input type="text" class="layui-input" name="holidayDay" autocomplete="off">
                 </td>
             </tr>
             <tr>
@@ -126,7 +127,8 @@
             var datas = obj.data;//获取当前行数据
             var event = obj.event;//获得lay-event 对应的值（编辑，删除）
             if(event == 'select') {
-
+                var id = obj.data.holidayid;
+                location.href='<%=request.getContextPath()%>/studentduan/pizhu/'+id;
             }
         });
         //时间选择器

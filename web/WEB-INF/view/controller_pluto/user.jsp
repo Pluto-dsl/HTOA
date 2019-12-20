@@ -65,7 +65,6 @@
                             area: ['450px', '250px'],
                             content: '${pageContext.request.contextPath}/controller/toAddUser' //iframe的url
                         });
-
                         break;
                 };
             });
@@ -82,8 +81,17 @@
                         },"text");
 
                     });
-                }else if(obj.event === 'exit'){
-
+                }else if(obj.event === 'edit'){
+                    layer.open({
+                        type: 2,
+                        title: '新增学生',
+                        shadeClose: true,
+                        shade: 0.4,
+                        shadeclose:true,
+                        area: ['300px', '450px'],
+                        content: '${pageContext.request.contextPath}/controller/toUpdC?id='+data.characterId
+                        //iframe的url
+                    });
                 }else if(obj.event === 'shouquan'){
 
                 }

@@ -19,6 +19,7 @@ public interface Ljw_sysSetService {
     * 专业设置
     * */
     List<MajorVo> selMajorList(int page,int limit);//获取专业数据
+    List<DeptVo> selDeptList();
     int selMajorSize();//获取专业数据大小
     void insMajor(MajorVo vo);//新增专业
     void updMajor(MajorVo vo);//修改专业

@@ -13,11 +13,12 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
+@RequestMapping("/zhq")
 public class Zhq_StuFloorController {
     @Resource
     Zhq_StuFloorService zhq_stuFloorService;
 
-    @RequestMapping("/toPage/stuFloor")
+    @RequestMapping("/stuFloor")
     public String stuFloor(){
         return "stu_zhq/stuFloor";
     }
@@ -32,9 +33,6 @@ public class Zhq_StuFloorController {
         List<StudntBuildingVo> data= zhq_stuFloorService.selFloor(hql,page,limit);
         int count = zhq_stuFloorService.selCount();
 
-
-
-
         jsonObject.put("msg","");
         jsonObject.put("code",0);
         jsonObject.put("count",count);
@@ -45,17 +43,19 @@ public class Zhq_StuFloorController {
     //删除
     @RequestMapping("/deleteStu")
     @ResponseBody
-    public String delDept(int stuId){
-        System.out.println("获取到的id是"+stuId);
+    public String delDept(int floorId){
+        System.out.println("获取到的id是"+floorId);
         StudntBuildingVo sb = new StudntBuildingVo();
-        sb.setFloorId(stuId);
+        sb.setFloorId(floorId);
+
         zhq_stuFloorService.deleteStuBiu(sb);
         return "success";
     }
     //添加
     @RequestMapping("/addStuFloor")
-    public String addStuFloor(StudntBuildingVo studntBuildingVo){
+    public String addStuFloor(StudntBuildingVo studntBuildingVo,HttpServletResponse response){
+        response.setContentType("text/html;charset=utf-8");
         zhq_stuFloorService.addStuBiu(studntBuildingVo);
-        return "redirect:/toPage/stuFloor";
+        return "redirect:/zhq/stuFloor";
     }
 }

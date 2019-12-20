@@ -21,7 +21,7 @@
 
     <!--弹出窗-->
     <div  id="windows"  style="margin-left: 5%;display: none;">
-        <form class="layui-form" action="${pageContext.request.contextPath}/addStuFloor" lay-filter="example" style="margin-right: 100px;margin-top: 35px;" >
+        <form class="layui-form" method="post" action="${pageContext.request.contextPath}/zhq/addStuFloor" lay-filter="example" style="margin-right: 100px;margin-top: 35px;" >
             <div class="layui-form-item">
                 <label class="layui-form-label">楼栋名称</label>
                 <div  class="layui-input-block">
@@ -50,7 +50,7 @@
                 elem: '#demo2', //指定原始表格元素选择器（推荐id选择器）
                 height: 356, //容器高度
                 title:'楼栋管理',
-                url:"${pageContext.request.contextPath}/selFloor",
+                url:"${pageContext.request.contextPath}/zhq/selFloor",
                 cols: [[ //标题栏
                     {field: 'floorId', title: '楼栋ID', width: 500, sort: true}
                     ,{field: 'floorName', title: '楼栋名称', width: 500}
@@ -65,22 +65,23 @@
                 if(obj.event ==='del'){
                     layer.confirm('真的删除行么', function(index){
                         $.ajax({
-                            url:"${pageContext.request.contextPath}/deleteStu",
+                            url:"${pageContext.request.contextPath}/zhq/deleteStu",
                             type:"post",
                             data:{
-                                stuId:obj.data.floorId
+                                floorId:obj.data.floorId
                             },
                             dataType:"json",
                             success: function (data) {
                                 obj.del();
                                 layer.close(index);
                                 layer.msg('删除成功');
+                                table.reload("demo2");
                             },
                             error:function () {
                                 obj.del();
                                 layer.close(index);
-                                layer.msg('删除成功');;
-
+                                layer.msg('删除成功');
+                                table.reload("demo2");
                             }
                         })
                     });

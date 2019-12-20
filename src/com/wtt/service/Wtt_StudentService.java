@@ -2,6 +2,7 @@ package com.wtt.service;
 
 import com.publics.vo.feedback.Collect_OpinionsVo;
 import com.publics.vo.feedback.FeedbackVo;
+import com.publics.vo.studentModel.ClassCategoryVo;
 import com.publics.vo.studentModel.StudentLeaveVo;
 import com.publics.vo.studentModel.StudentVo;
 
@@ -38,4 +39,13 @@ public interface Wtt_StudentService {
     Map studentid(int jobid);
     //查找所有班主任
     List selclassteacher(String sql);
+    //查询班级类别
+    List<ClassCategoryVo> selectclasscate(int currpage, int pagesize);
+    //新增班级类别
+    void addcategory(ClassCategoryVo classCategoryVo);
+    //修改班级类别
+    void updatecate(ClassCategoryVo classCategoryVo);
+    //总页数
+    int pagecount(String sql);
+
 }

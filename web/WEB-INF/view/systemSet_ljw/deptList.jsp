@@ -98,42 +98,13 @@
                         }
                     });
                     break;
-                case 'delChatRecordList':
-                    var data = checkStatus.data;
-                    var msg = "是要删除院系编号为：";
-                    $(data).each(function (index,elemnt) {
-                        msg +=elemnt.deptid+"、";
-                    });
-                    msg = msg.substr(0,msg.length-1);
-                    msg +="的记录吗?";
-                    layer.confirm(msg, {
-                        btn: ['是的','取消']
-                        //按钮
-                    }, function(index){
-                        $(data).each(function (index,elemnt) {
-                            delDept(elemnt.deptid);
-                        });
-                        tableIns.reload({
-                            method:'post'
-                        });
-                        layer.close(index);
-                    },function (index) {
-                        layer.close(index);
-                    });
-                    break;
             }
         });
 
         //监听行工具事件
         table.on('tool(test)', function(obj){
             var data = obj.data;
-            if(obj.event === 'del'){
-                layer.confirm('是要删除这条记录吗', function(index){
-                    obj.del();
-                    layer.close(index);
-                    delDept(obj.data.deptid)
-                });
-            } else if(obj.event === 'edit'){
+            if(obj.event === 'edit'){
                 console.log(data);
                 //重置表单数据
                 $("#MyForm")[0].reset();
@@ -142,8 +113,6 @@
                 $("input[name='deptIds']").val(data.deptid);
                 $("input[name='deptName']").val(data.deptName);
                 $("textarea[name='remark']").val(data.remark);
-
-
                 //打开窗口
                 layer.open({
                     type: 1,

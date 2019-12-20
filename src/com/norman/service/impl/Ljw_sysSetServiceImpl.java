@@ -42,12 +42,19 @@ public class Ljw_sysSetServiceImpl extends BaseDao implements Ljw_sysSetService 
 
     @Override
     public List<MajorVo> selMajorList(int page, int limit) {
-        return super.pageByHql("FROM MajorVo",page,limit);
+        return super.pageBySQL("SELECT m.majorid,m.majorName,d.deptid,d.deptName,m.remark FROM major m \n" +
+                "LEFT JOIN dept d on m.deptid=d.deptid",page,limit);
+    }
+
+    @Override
+    public List<DeptVo> selDeptList() {
+        return listByHql("FROM DeptVo");
     }
 
     @Override
     public int selMajorSize() {
-        return super.listByHql("FROM MajorVo").size();
+        return super.listBySQL("SELECT m.majorid,m.majorName,d.deptid,d.deptName,m.remark FROM major m \n" +
+                "LEFT JOIN dept d on m.deptid=d.deptid").size();
     }
 
     @Override
