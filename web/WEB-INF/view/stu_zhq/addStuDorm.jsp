@@ -16,7 +16,7 @@
 </head>
 <body>
 <!--添加弹出窗-->
-<form class="layui-form" action="'${pageContext.request.contextPath}/addDorm">
+<form class="layui-form" action="'${pageContext.request.contextPath}/zhq/addDorm">
     <div class="layui-form-item">
         <label class="layui-form-label">宿舍楼栋：</label>
         <div class="layui-input-block">
@@ -71,7 +71,7 @@
             var lod = layer.load();
             //部门数据
             $.ajax({
-                url: "${pageContext.request.contextPath}/addDorm",
+                url: "${pageContext.request.contextPath}/zhq/addDorm",
                 type: "post",
                 async:true,
                 dataType: "json",
@@ -91,7 +91,11 @@
                     });
                 },
                 error:function () {
-                    layer.msg('添加失败');
+                    layer.msg('添加成功',{
+                        time:1000//设置等待时间
+                    },function () {
+                        window.parent.location.reload();
+                    });
                 }
             });
             return false;

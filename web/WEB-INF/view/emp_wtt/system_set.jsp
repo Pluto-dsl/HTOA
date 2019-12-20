@@ -67,7 +67,7 @@
         layui.use([ 'element', 'table', 'layer', 'form' ,'laydate'],function() {
 
             $("#aa").click(function () {
-                location.href='${pageContext.request.contextPath}/toPage/flow'
+                location.href='${pageContext.request.contextPath}/zhq/flow'
             })
         })
     </script>

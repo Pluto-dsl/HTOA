@@ -83,7 +83,7 @@
                     <dl class="layui-nav-child">
                         <%-- 例子  可修改 照着写就行了 --%>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/toPage/dep"
+                               data-url="${pageContext.request.contextPath}/zhq/dep"
                                data-id="部门管理" data-title="部门管理">部门管理</a></dd>
                         <dd> <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                 data-url="<%=request.getContextPath()%>/zeroEmp/toemp"
@@ -123,10 +123,10 @@
                                data-id="班级管理" data-title="班级管理">班级管理</a></dd>
                         <dd><a href="javascript:void(0);">班级管理</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/toPage/stuFloor"
+                               data-url="${pageContext.request.contextPath}/zhq/stuFloor"
                                data-id="楼栋管理" data-title="楼栋管理">楼栋管理</a></dd>
                         <dd><a href="javascript:void(0);"class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/toPage/stuDorm"
+                               data-url="${pageContext.request.contextPath}/zhq/stuDorm"
                                data-id="宿舍管理" data-title="宿舍管理" >宿舍管理</a></dd>
                         <dd><a href="javascript:void(0);"class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/student/stuList"
@@ -206,7 +206,7 @@
                         <cite>文件管理</cite></a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/toPage/DataDoc"
+                               data-url="${pageContext.request.contextPath}/zhq/DataDoc"
                                data-id="资料文档" data-title="资料文档" >资料文档</a></dd>
                     </dl>
                 </li>
@@ -235,7 +235,7 @@
                     <a href="javascript:;" class="tt" lay-tips="通知公告" lay-direction="2"><i class="layui-icon layui-icon-file"></i><cite>通知公告</cite></a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;"class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/toPage/Notice"
+                               data-url="${pageContext.request.contextPath}/zhq/Notice"
                                data-id="通知公告" data-title="通知公告">通知公告</a></dd>
                     </dl>
                 </li>
@@ -293,10 +293,10 @@
                                                     <cite>未打卡待审批(<span id="clock"></span>)</cite>
                                                 </a>
                                             </li>
-                                            <li class="layui-col-xs3">
+                                             <li class="layui-col-xs3">
                                                 <a lay-href="">
                                                     <i class="layui-icon layui-icon-face-surprised"></i>
-                                                    <cite>未读通知公告(<span id="Notice"></span>)</cite>
+                                                    <cite>未读通知公告(${fl})</cite>
                                                 </a>
                                             </li>
                                             <li class="layui-col-xs3">
@@ -419,6 +419,11 @@
         }
     <!--每200毫秒加载一次-->
     window.setInterval("reinitIframe()",200);
+</script>
+<script>
+    layui.use([ 'element', 'table', 'layer', 'form' ,'laydate','layedit'],function() {
+
+    })
 </script>
 </body>
 </html>
