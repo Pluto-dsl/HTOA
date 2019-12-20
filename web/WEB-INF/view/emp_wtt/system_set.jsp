@@ -27,7 +27,9 @@
         <table align="center" style="width: 100%;height: 100%">
             <tr>
                 <td align="center">
-                    <div style="height: 30px" >
+                    <div style="height: 30px" href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                         data-url=${pageContext.request.contextPath}/zeroStudent/tofall"
+                         data-id="届别设置" data-title="届别设置">
                         <i class="layui-icon layui-icon-set" style="font-size:50px;color: #93D1FF"></i>
                         <br>
                         届别设置
@@ -35,9 +37,6 @@
                 </td>
                 <td align="center">
                     <div style="height: 30px">
-                    <div style="height: 30px" href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                             data-url="${pageContext.request.contextPath}/student/classCategory"
-                         data-id="班级类别" data-title="班级类别" >
                         <i class="layui-icon layui-icon-set" style="font-size:50px;color: #93D1FF"></i>
                         <br>
                         班级类别

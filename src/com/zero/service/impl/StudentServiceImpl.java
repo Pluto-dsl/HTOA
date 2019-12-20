@@ -24,7 +24,7 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
                 "left join classType ct on c.classType = ct.classTypeId " +
                 "left join studentFall sf on c.falled= sf.fallid " +
                 "left join dept d on c.deptId = d.deptid " +
-                "left join major m on m.deptid = d.deptid ");
+                "left join major m on m.majorid = c.majorId ");
     }
 
     @Override
@@ -83,7 +83,15 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
         }else{
             super.updObject(classVo);
         }
+    }
 
+    @Override
+    public void addFall(StudentFallVo fallVo) {
+        if(fallVo.getFallid()==0){//新增
+            super.addObject(fallVo);
+        }else{
+            super.updObject(fallVo);
+        }
     }
 
     @Override
