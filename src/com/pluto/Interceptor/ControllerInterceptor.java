@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class ControllerInterceptor implements HandlerInterceptor {
-    private String[] whiteList = {"/toPage/login"};
+    private String[] whiteList = {"/toPage/login","/toPage/oamain"};
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         boolean flag = false;

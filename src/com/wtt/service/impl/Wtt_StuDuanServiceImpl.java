@@ -23,8 +23,8 @@ public class Wtt_StuDuanServiceImpl extends BaseDao implements Wtt_StuDuanServic
     }
 
     @Override
-    public int pagecount() {
-        return selTotalRow("select count(*) from feedback");
+    public int pagecount(int stuid) {
+        return selTotalRow("select count(*) from feedback where empId= '"+stuid+"'");
     }
 
     @Override
@@ -46,6 +46,16 @@ public class Wtt_StuDuanServiceImpl extends BaseDao implements Wtt_StuDuanServic
         for (Map map:list) {
             return map;
         }
+        return null;
+    }
+
+    /*@Override
+    public Map studentid(String name) {
+        return null;
+    }*/
+
+    @Override
+    public Map studentid(String name) {
         return null;
     }
 
