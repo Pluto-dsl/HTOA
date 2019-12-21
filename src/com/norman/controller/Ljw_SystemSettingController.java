@@ -3,6 +3,7 @@ package com.norman.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.norman.service.Ljw_sysSetService;
 import com.publics.vo.studentModel.MajorVo;
+import com.publics.vo.studentModel.TermVo;
 import com.publics.vo.sys.DeptVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,15 +21,20 @@ public class Ljw_SystemSettingController {
     @Resource
     private Ljw_sysSetService service;
 
+    @RequestMapping(value = "/toDeptList")
+    public String toDeptList(){
+        return "systemSet_ljw/deptList";
+    }
+
     @RequestMapping(value = "/toMajorPage")
     public String toMajorPage(Model model){
         model.addAttribute("list",service.selDeptList());
         return "systemSet_ljw/majorList";
     }
 
-    @RequestMapping(value = "/toDeptList")
-    public String toDeptList(){
-        return "systemSet_ljw/deptList";
+    @RequestMapping(value = "/toTermPage")
+    public String toTermPage(){
+        return "systemSet_ljw/termList";
     }
 
     /*
@@ -62,12 +68,14 @@ public class Ljw_SystemSettingController {
         out.close();
     }
 
+    @ResponseBody
     @RequestMapping(value = "/delDept")
     public void delDept(HttpServletResponse response,int id) throws IOException {
-        service.delDept(id);
+        System.out.println("delDept");
+        String result = service.delDept(id);
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();
-        out.print("200");
+        out.print(result);
         out.flush();
         out.close();
     }
@@ -101,5 +109,56 @@ public class Ljw_SystemSettingController {
             service.insMajor(vo);
         }
         return "redirect:/sysSet/toMajorPage";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/delMajor")
+    public void delMajor(HttpServletResponse response,int id) throws IOException {
+        String result = service.delMajor(id);
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter out = response.getWriter();
+        out.print(result);
+        out.flush();
+        out.close();
+    }
+
+    /*
+    * 学期设置
+    * */
+    @RequestMapping(value = "/newTerm")
+    public String newTerm(Integer termIds, TermVo vo){
+        if (termIds != null && termIds != 0){
+            vo.setTermid(termIds);
+            service.updTerm(vo);
+        }else {
+            service.insTerm(vo);
+        }
+        return "redirect:/sysSet/toTermPage";
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getTermData")
+    public void getTermData(HttpServletResponse response,int page ,int limit) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        JSONObject result = new JSONObject();
+        result.put("code",0);
+        result.put("msg","成功");
+        result.put("count",service.selTermSize());
+        result.put("data",service.selTermList(page,limit));
+
+        PrintWriter out = response.getWriter();
+        out.print(result);
+        out.flush();
+        out.close();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/delTerm")
+    public void delTerm(HttpServletResponse response,int id) throws IOException {
+        String result = service.delTerm(id);
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter out = response.getWriter();
+        out.print(result);
+        out.flush();
+        out.close();
     }
 }

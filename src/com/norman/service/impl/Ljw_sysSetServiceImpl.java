@@ -3,6 +3,7 @@ package com.norman.service.impl;
 import com.norman.service.Ljw_sysSetService;
 import com.publics.dao.BaseDao;
 import com.publics.vo.studentModel.MajorVo;
+import com.publics.vo.studentModel.TermVo;
 import com.publics.vo.sys.DeptVo;
 import org.springframework.stereotype.Service;
 
@@ -34,10 +35,17 @@ public class Ljw_sysSetServiceImpl extends BaseDao implements Ljw_sysSetService 
     }
 
     @Override
-    public void delDept(int id) {
+    public String delDept(int id) {
+        System.out.println(id);
+        if (super.listBySQL("SELECT * FROM studentClass WHERE deptId = "+id).size() >= 1){
+            return "isUsed";
+        }else if (super.listBySQL("SELECT * FROM major WHERE deptid = "+id).size() >= 1){
+            return "isUsed";
+        }
         DeptVo dept = new DeptVo();
         dept.setDeptid(id);
         super.delObject(dept);
+        return "success";
     }
 
     @Override
@@ -68,9 +76,45 @@ public class Ljw_sysSetServiceImpl extends BaseDao implements Ljw_sysSetService 
     }
 
     @Override
-    public void delMajor(int id) {
+    public String delMajor(int id) {
+        if (super.listBySQL("SELECT * FROM studentClass WHERE majorId = "+id).size() >= 1){
+            return "isUsed";
+        }
         MajorVo major = new MajorVo();
         major.setMajorid(id);
         super.delObject(major);
+        return "success";
+    }
+
+    @Override
+    public List<TermVo> selTermList(int page, int limit) {
+        return super.pageByHql("FROM TermVo",page,limit);
+    }
+
+    @Override
+    public int selTermSize() {
+        return super.listByHql("FROM TermVo").size();
+    }
+
+    @Override
+    public void insTerm(TermVo vo) {
+        super.addObject(vo);
+    }
+
+
+    @Override
+    public void updTerm(TermVo vo) {
+        super.updObject(vo);
+    }
+
+    @Override
+    public String delTerm(int id) {
+        if (super.listBySQL("SELECT * FROM studentScore WHERE termid = "+id).size() >= 1){
+            return "isUsed";
+        }
+        TermVo termVo = new TermVo();
+        termVo.setTermid(id);
+        super.delObject(termVo);
+        return "success";
     }
 }
