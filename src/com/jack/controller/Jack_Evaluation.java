@@ -335,6 +335,12 @@ public class Jack_Evaluation {
     public String MyAddReadEmp(String noticeId,HttpSession session,HttpServletResponse response){
         EmpVo emp = (EmpVo) session.getAttribute("admin");
         service.UpdateReademp(emp.getEmpId(),Integer.parseInt(noticeId));
+
+        int trueCount = service.trueCount(Integer.parseInt(noticeId));//查询已读
+        int falseCount =service.falseCount(Integer.parseInt(noticeId));//查询未读
+
+        service.updateCountNotice(trueCount,falseCount,Integer.parseInt(noticeId));//更改已读未读状态
+
         return noticeId;
     }
 }

@@ -54,9 +54,10 @@ public interface Jack_Service {
 
     /** 考核管理 */
     List selAss(); //查询所有的考核指标
-    List selEmp();  //查询所有的员工
+    List selEmp(int id);  //查询所有的员工
     void addAduit(AduitLogVo aduitLogVo); //员工考核录入
     List selAduitLog(int currPage, int pageSize); //员工考核列表
+    int selScores(int id); //查询考核分数
     int selAdCount();
     List selAdDetails(int id); //考核详情
     void delAduitLog(int id);//删除考核
@@ -94,5 +95,13 @@ public interface Jack_Service {
     int selNoticeCountemp(int id);
     int selUnreadCountemp(int id);
     void UpdateReademp(int stuid, int notid);
+
+    //根据公告id查询已读的人数
+    int trueCount(int noticeId);
+    //根据公告id查询未读的人数
+    int falseCount(int noticeId);
+
+    //根据查询出来的已读未读人数修改Notice表中的已读未读人数
+    void updateCountNotice(int trueCount,int falseCount,int noticeId);
 
 }
