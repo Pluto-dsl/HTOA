@@ -1,6 +1,5 @@
 package com.jack.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jack.service.Jack_Service;
 import com.publics.vo.empModel.emp.EmpVo;
@@ -18,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 @Controller
@@ -153,7 +151,7 @@ public class Jack_Evaluation {
     }
 
     @RequestMapping("/toHeadmasterEva")
-    public String toHeadmasterEva(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+    public String toHeadmasterEva(HttpServletRequest request, HttpServletResponse response,HttpSession session) throws IOException {
         String type = request.getParameter("type");
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html,charset=utf-8");
@@ -275,31 +273,68 @@ public class Jack_Evaluation {
         Map map = new HashMap();
         int talk = service.selChatRecordCount(emp.getEmpId());
         int clock = service.selClockCount(emp.getEmpName());
+        int Notice = service.selUnreadCountemp(emp.getEmpId());
         map.put("emp",0);
         map.put("stu",0);
         map.put("clock",clock);
-        map.put("Notice",0);
+        map.put("Notice",Notice);
         map.put("weekly","未完成");
         map.put("talk",talk);
         return map;
     }
 
+    /** 学生端——我的公告 */
     @RequestMapping(value = "/toMyAnno")
-    public String toMyAnno(Model model,HttpServletRequest request){
-        List<Map> list = service.selNoticeList();
+    public String toMyAnno(Model model,HttpServletRequest request,HttpSession session){
+        StudentVo stu = (StudentVo) session.getAttribute("user");
+        List<Map> list = service.selNoticeList(stu.getStudid());
         model.addAttribute("list",list);
         return "emp_xzq/stu_MyAnnouncement";
     }
-
     @RequestMapping(value = "/MyAnno")
     @ResponseBody
-    public Map MyAnno(String noticeId){
+    public Map MyAnno(HttpSession session){
         Map map = new HashMap();
-        int count = service.selNoticeCount();
+        StudentVo stu = (StudentVo) session.getAttribute("user");
+        int count = service.selNoticeCount(stu.getStudid());
         map.put("count",count);
-        if("2".equals(noticeId)){
-
-        }
         return map;
+    }
+    @RequestMapping(value = "/MyAddRead")
+    @ResponseBody
+    public String MyAnno(String noticeId,HttpSession session,HttpServletResponse response){
+        StudentVo stu = (StudentVo) session.getAttribute("user");
+        service.UpdateRead(stu.getStudid(),Integer.parseInt(noticeId));
+        return noticeId;
+    }
+
+    /** 教师端——我的公告 */
+    @RequestMapping(value = "/toMyAnnoEmp")
+    public String toMyAnnoEmp(Model model,HttpServletRequest request,HttpSession session){
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        List<Map> list = service.selNoticeListemp(emp.getEmpId());
+        model.addAttribute("list",list);
+        return "emp_xzq/emp_MyAnnouncement";
+    }
+    @RequestMapping(value = "/MyAnnoEmp")
+    @ResponseBody
+    public Map MyAnnoEmp(HttpSession session){
+        Map map = new HashMap();
+        //公告总数
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        int count = service.selNoticeCountemp(emp.getEmpId());
+        map.put("count",count);
+        //未读取的数据
+        int UnreadCount = service.selUnreadCountemp(emp.getEmpId());
+        map.put("UnreadCount",UnreadCount);
+
+        return map;
+    }
+    @RequestMapping(value = "/MyAddReadEmp")
+    @ResponseBody
+    public String MyAddReadEmp(String noticeId,HttpSession session,HttpServletResponse response){
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        service.UpdateReademp(emp.getEmpId(),Integer.parseInt(noticeId));
+        return noticeId;
     }
 }

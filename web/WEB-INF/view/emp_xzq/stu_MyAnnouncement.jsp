@@ -7,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!doctype html>
 <html>
 <head>
     <title>Title</title>
@@ -14,10 +15,14 @@
     <style>
         p{
             margin-bottom: 20px;
-            font-size: 12px;
+            font-size: 13px;
             color: #949494;
             margin-top: 5px;
-            text-indent:2em;
+            text-indent: 2em;
+            width: 50%;
+            word-wrap: break-word;
+            word-break: break-all;
+            overflow: hidden;
         }
         .layui-text h3 {
             font-size: 18px;
@@ -29,6 +34,7 @@
         li:hover{
             background-color: #EEE;
         }
+
     </style>
 </head>
 <body>
@@ -48,7 +54,7 @@
                                     <input type="hidden" class="noticeId" value="${list.noticeId}">
                                     <input type="hidden" class="isRead" value="${list.isRead}">
                                     <div class="layui-serachlist-text">
-                                        <h3>
+                                        <h3 style="border-bottom:solid 1px #82828245;">
                                             <span class="title">${list.title}</span>
                                             <c:if test="${list.isRead == 2}">
                                                 <i class="layui-icon layui-icon-notice" id="myTitle" style="margin-left:10px;"></i>
@@ -76,19 +82,25 @@
         var form = layui.form;
         var laydate = layui.laydate;
         var upload = layui.upload;
+        count();
 
-        $.post('${pageContext.request.contextPath}/jack/MyAnno',{},function (data) {
-           $("#count").text(data.count);
-        },'json');
+        function count(){
+            $.post('${pageContext.request.contextPath}/jack/MyAnno',{},function (data) {
+               $("#count").text(data.count);
+            },'json');
+        }
 
         $(".readWin").on('click',function () {
             var noticeId = $(this).children(".noticeId").val();
             var isRead = $(this).children(".isRead").val();
             console.log(isRead);
-            if(isRead === 2){
-                $.post('${pageContext.request.contextPath}/jack/MyAnno',{noticeId:noticeId},function () {
+            console.log($(this).find("#myTitle"));
+            if(isRead === '2'){
+                $.get('${pageContext.request.contextPath}/jack/MyAddRead',{noticeId:noticeId},function (da) {
                     layer.msg("已读取");
-                });
+                    window.location.reload()
+
+                },"text");
             }
 
         });

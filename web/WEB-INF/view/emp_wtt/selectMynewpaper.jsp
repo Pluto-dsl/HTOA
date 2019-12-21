@@ -13,12 +13,10 @@
     <title>Title</title>
     <jsp:include page="../include.jsp"></jsp:include>
 </head>
-
 <body>
     <div id="windows" style="margin-left:5%; display: none;">
         <form class="layui-form" action="${pageContext.request.contextPath}/emp/update" method="post" style="text-align: center" lay-filter="formTestFilter">
             <input type="hidden" name="weeklogid">
-            <input type="hidden" >
             <h2 align="center" >正在修改周报中</h2><br>
             本周情况描述：<div style="margin-right:10px" class="layui-inline">
                             <textarea rows="5" cols="50" name="weekCur"/></textarea>

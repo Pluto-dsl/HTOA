@@ -22,7 +22,7 @@
     <div id="tt"></div>
     <!--弹出窗-->
     <div  id="windows"  style="margin-left: 5%;display: none;">
-        <form class="layui-form" method="post" action="${pageContext.request.contextPath}/delUpdate" lay-filter="example" style="margin-right: 100px;margin-top: 35px;">
+        <form class="layui-form" method="post" action="${pageContext.request.contextPath}/zhq/delUpdate" lay-filter="example" style="margin-right: 100px;margin-top: 35px;">
             <input type="hidden" name="depid" id="depid">
             <input type="hidden" name="parentId" id="parentId">
             <div class="layui-form-item">
@@ -84,7 +84,7 @@
                     tree.render({
                         elem: '#tt', //绑定元素
                         showLine: false,//是否为连线性
-                        spread:true,
+                        accordion:true,
                         data:d,
                         edit:['del'],
                         operate:function(obj){
@@ -97,7 +97,7 @@
                            if(type === 'del'){ //删除节点
                                 var lod = layer.load();
                                 $.ajax({
-                                    url: "${pageContext.request.contextPath}/delDept",
+                                    url: "${pageContext.request.contextPath}/zhq/delDept",
                                     type: "post",
                                     async:true,
                                     dataType: "json",
@@ -120,7 +120,7 @@
                             var data = obj.data;
                             console.log(data);
                             $.ajax({
-                                url:"${pageContext.request.contextPath}/selDepAll?type=treeOpen",
+                                url:"${pageContext.request.contextPath}/zhq/selDepAll?type=treeOpen",
                                 type:"post",
                                 data:{
                                     name:obj.data.title
@@ -155,7 +155,7 @@
                     });
                 });
             };
-            $.post('${pageContext.request.contextPath}/tree',param,backdata,"json");
+            $.post('${pageContext.request.contextPath}/zhq/tree',param,backdata,"json");
 
 
 
@@ -164,7 +164,7 @@
                 layer.open({
                     title:'添加部门',
                     type:2,
-                    content:['${pageContext.request.contextPath}/selDep'],
+                    content:['${pageContext.request.contextPath}/zhq/selDep'],
                     area: ['500px', '450px'],
                     resize:false
                 });

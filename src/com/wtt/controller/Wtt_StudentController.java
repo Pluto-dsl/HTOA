@@ -7,12 +7,15 @@ import com.publics.utills.StringUtill;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.feedback.Collect_OpinionsVo;
 import com.publics.vo.feedback.FeedbackVo;
+import com.publics.vo.studentModel.ClassCategoryVo;
 import com.publics.vo.studentModel.StudentLeaveVo;
 import com.publics.vo.studentModel.StudentVo;
+import com.sun.deploy.net.HttpResponse;
 import com.wtt.service.Wtt_StuDuanService;
 import com.wtt.service.Wtt_StudentService;
 import org.activiti.bpmn.model.Activity;
 import org.activiti.engine.*;
+import org.activiti.engine.history.HistoricVariableInstance;
 import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.pvm.PvmActivity;
@@ -65,14 +68,12 @@ public class Wtt_StudentController {
         String name = empVo.getEmpName();
         int empid = empVo.getEmpId();
         List<Task> tasks =taskService.createTaskQuery().taskAssignee(name).list();
-       /* System.out.println("任务："+tasks);*/
         //单据
         List studentleave = new ArrayList();
         for(Task task:tasks){
             System.out.println(task.getId());
             //根据任务id取得单据id
             Object sid = taskService.getVariable(task.getId(),"holidayid");
-            /*System.out.println("id=========="+(int)sid);*/
             //如果有任务进入判断里面
             if(studentService.studentleave(Integer.parseInt((sid+""))).size()>0){
                 Map map = (Map) studentService.studentleave(Integer.parseInt((sid+""))).get(0);
@@ -81,7 +82,6 @@ public class Wtt_StudentController {
                 //流程实例id
                 map.put("processInstanceId",task.getProcessInstanceId());
                 studentleave.add(map);
-                /*System.out.println("单据："+studentleave);*/
             }
         }
         map2.put("studentleavelist",studentleave);
@@ -201,6 +201,7 @@ public class Wtt_StudentController {
         }
         return "redirect:/student/selectleave";
     }
+
     //去到问题反馈查询页面
     @RequestMapping(value = "/questionPage")
     public String question(){
@@ -237,6 +238,7 @@ public class Wtt_StudentController {
         int ids = Integer.parseInt(request.getParameter("wid"));
         System.out.println("id为："+ids);
         List<Collect_OpinionsVo> list = studentService.selectyijian(ids);
+        System.out.println("查询意见:"+list);
         PrintWriter pw = response.getWriter();
         pw.print(JSONArray.toJSONString(list));
         pw.close();
@@ -261,5 +263,47 @@ public class Wtt_StudentController {
         //新增意见
         studentService.add(collect_opinionsVo);
         return "redirect:/student/questionPage";
+    }
+
+    //去到班级类别页面
+    @RequestMapping(value = "/classCategory")
+    public String classCategory(){
+        return "emp_wtt/classCategory";
+    }
+
+    //查询班级类别
+    @RequestMapping(value = "/selectCategory")
+    public void selectCategory(HttpServletResponse response,int page, int limit){
+        response.setContentType("text/html;charset=utf-8");
+        List<ClassCategoryVo> list = studentService.selectclasscate(page,limit);
+        //获取总行数
+        int rows =studentService.pagecount("select count(*) from classType");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("msg","提示");
+        jsonObject.put("code",0);
+        jsonObject.put("data",list);
+        jsonObject.put("count",rows);
+        try {
+            PrintWriter printWriter = response.getWriter();
+            printWriter.print(jsonObject.toJSONString());
+            printWriter.flush();
+            printWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //新增班级类别
+    @RequestMapping(value = "/addcate")
+    public String addcate(ClassCategoryVo classCategoryVo){
+        studentService.addcategory(classCategoryVo);
+        return "redirect:/student/classCategory";
+    }
+
+    //编辑班级类别
+    @RequestMapping(value = "/updatecate")
+    public String updatecate(ClassCategoryVo classCategoryVo){
+        studentService.updatecate(classCategoryVo);
+        return "redirect:/student/classCategory";
     }
 }

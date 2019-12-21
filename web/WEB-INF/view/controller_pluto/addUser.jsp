@@ -59,6 +59,7 @@
 
 
             form.on('submit(sub)', function(data){
+                alert("aaa");
                 var data = data.field;
 
                 $.ajax({

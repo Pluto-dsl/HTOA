@@ -7,6 +7,7 @@ import com.publics.vo.educ.CourseVo;
 import com.publics.vo.empModel.AttendanceVo;
 import com.publics.vo.empModel.evaluationVo;
 import com.publics.vo.empModel.teacherTotalVo;
+import com.publics.vo.notice.RecipientVo;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -83,6 +84,15 @@ public interface Jack_Service {
     int selChatRecordCount(int empid); //谈心查询
     int selClockCount(String empid); //未打卡查询
 
-    List selNoticeList();
-    int selNoticeCount();
+    /** 学生公告 */
+    List selNoticeList(int id);
+    int selNoticeCount(int id);
+    void UpdateRead(int stuid, int notid);
+
+    /** 员工公告 */
+    List selNoticeListemp(int id);
+    int selNoticeCountemp(int id);
+    int selUnreadCountemp(int id);
+    void UpdateReademp(int stuid, int notid);
+
 }

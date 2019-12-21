@@ -17,7 +17,7 @@
 <body>
 
     <!--添加弹出窗-->
-    <form class="layui-form" action="'${pageContext.request.contextPath}/addDep">
+    <form class="layui-form" action="'${pageContext.request.contextPath}/zhq/addDep">
         <div class="layui-form-item">
             <label class="layui-form-label">部门名称：</label>
             <div class="layui-input-inline">
@@ -74,7 +74,7 @@
             var lod = layer.load();
             //部门数据
             $.ajax({
-                url: "${pageContext.request.contextPath}/addDep",
+                url: "${pageContext.request.contextPath}/zhq/addDep",
                 type: "post",
                 async:true,
                 dataType: "json",
@@ -106,18 +106,5 @@
     });
 
 
-
-
-
-
-
-
-    layui.use([ 'element', 'table', 'layer', 'form' ,'laydate'],function() {
-        var element = layui.element;
-        var layer = layui.layer;
-        var table = layui.table;
-        var form = layui.form;
-        var laydate = layui.laydate;
-    })
 </script>
 </html>

@@ -21,7 +21,7 @@
 <table id="demo"  lay-filter="test"></table>
 
 <div  id="windows"  style="display: none;">
-    <form method="post" class="layui-form" lay-filter="aaa" enctype="multipart/form-data" action="${pageContext.request.contextPath}/addFlow">
+    <form method="post" class="layui-form" lay-filter="aaa" enctype="multipart/form-data" action="${pageContext.request.contextPath}/zhq/addFlow">
 
         <div class="layui-upload uploadbuchong" style="margin-top: 20px;margin-left: 60px;">
             <button type="button" class="layui-btn layui-btn-normal" id="test8" name="file">选择文件</button>
@@ -56,7 +56,7 @@
             elem: '#demo', //指定原始表格元素选择器（推荐id选择器）
             height: 356, //容器高度
             title:'宿舍管理',
-            url:"${pageContext.request.contextPath}/selFlow",
+            url:"${pageContext.request.contextPath}/zhq/selFlow",
             cols: [[ //标题栏
                 {field: 'ID_', title: '流程编号', width: 300, sort: true}
                 ,{field: 'NAME_', title: '流程名称', width: 300}
@@ -69,9 +69,9 @@
         table.on('tool(test)',function (obj) {
             var data = obj.data;
             if(obj.event ==='download'){
-                location.href = '${pageContext.request.contextPath}/toExport?id='+data.ID_;
+                location.href = '${pageContext.request.contextPath}/zhq/toExport?id='+data.ID_;
             }else if(obj.event ==='sel'){
-                location.href = '${pageContext.request.contextPath}/viewProcessImage?did='+data.DEPLOYMENT_ID_+'&imageName='+data.DGRM_RESOURCE_NAME_;
+                location.href = '${pageContext.request.contextPath}/zhq/viewProcessImage?did='+data.DEPLOYMENT_ID_+'&imageName='+data.DGRM_RESOURCE_NAME_;
             }
         });
 

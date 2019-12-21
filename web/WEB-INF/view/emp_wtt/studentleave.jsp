@@ -21,7 +21,7 @@
             <th>假期天数</th>
             <th>开始时间</th>
             <th>结束时间</th>
-            <th>申请类型</th>
+           <%-- <th>申请类型</th>--%>
             <th>请假事由</th>
             <th>状态</th>
             <th>操作</th>
@@ -33,7 +33,7 @@
                 <td>${list.holidayDay}</td>
                 <td>${list.startTime}</td>
                 <td>${list.endTime}</td>
-                <td>${list.ritle}</td>
+                <%--<td>${list.ritle}</td>--%>
                 <td>${list.remark}</td>
                 <td>${list.status}</td>
                 <td>
@@ -41,6 +41,21 @@
                 </td>
             </tr>
         </c:forEach>
+        <%--<tr>
+            <td colspan="8" align="center">
+                <div id="demo2"></div>
+            </td>
+        </tr>--%>
     </table>
 </body>
+<%--<script>
+    layui.use(['laypage', 'layer'], function(){
+        var laypage = layui.laypage;
+        laypage.render({
+            elem: 'demo2'
+            ,count: 100
+            ,theme: '#1E9FFF'
+        });
+    })
+</script>--%>
 </html>
