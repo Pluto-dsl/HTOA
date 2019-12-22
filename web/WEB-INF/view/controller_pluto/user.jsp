@@ -58,14 +58,13 @@
                         // var data = checkStatus.data;
                         layer.open({
                             type: 2,
-                            title: '新增学生',
+                            title: '新增角色',
                             shadeClose: true,
                             shade: 0.4,
                             shadeclose:true,
                             area: ['450px', '250px'],
                             content: '${pageContext.request.contextPath}/controller/toAddUser' //iframe的url
                         });
-
                         break;
                 };
             });
@@ -82,10 +81,32 @@
                         },"text");
 
                     });
-                }else if(obj.event === 'exit'){
-
+                }else if(obj.event === 'edit'){
+                    layer.open({
+                        type: 2,
+                        title: '添加权限',
+                        shadeClose: true,
+                        shade: 0.4,
+                        area: ['300px', '450px'],
+                        fixed: false,
+                        resize:false,
+                        anim: 5,
+                        content: '${pageContext.request.contextPath}/controller/toUpdC?id='+data.characterId
+                        //iframe的url
+                    });
                 }else if(obj.event === 'shouquan'){
-
+                    layer.open({
+                        type: 2,
+                        title: '用户授权',
+                        shadeClose: true,
+                        shade: 0.4,
+                        fixed: false,
+                        resize:false,
+                        anim: 5,
+                        area: ['300px', '450px'],
+                        content: '${pageContext.request.contextPath}/controller/toAccUser?id='+data.characterId
+                        //iframe的url
+                    });
                 }
             });
         });

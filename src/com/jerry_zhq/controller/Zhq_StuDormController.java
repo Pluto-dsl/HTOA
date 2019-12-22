@@ -88,7 +88,7 @@ public class Zhq_StuDormController {
     @RequestMapping("/addStuDormit")
     public String addStuDormit(HttpServletRequest request){
         List<StudntBuildingVo> list = zhq_stuDormService.selFloorName();
-        System.out.println(list.toString());
+         //System.out.println(list.toString());
         request.setAttribute("list",list);
         return "/stu_zhq/addStuDorm";
     }

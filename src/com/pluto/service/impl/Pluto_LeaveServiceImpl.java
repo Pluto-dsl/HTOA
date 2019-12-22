@@ -57,7 +57,7 @@ public class Pluto_LeaveServiceImpl extends BaseDao implements Pluto_LeaveServic
         holidayVo.setRemark(Remark);
         holidayVo.setStatus(1);//状态 1:审批中 2：已完成 3：不批准
         holidayVo.setEmpid(1);//设置请假员工
-        System.out.println(holidayVo.toString());
+         //System.out.println(holidayVo.toString());
         super.addObject(holidayVo);
     }
 }

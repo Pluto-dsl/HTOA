@@ -17,7 +17,7 @@
     <jsp:include page="../include.jsp" />
 </head>
 <body>
-<form class="layui-form" action="${pageContext.request.contextPath}/controller/addUser" id="form1" method="post">
+<form class="layui-form"  id="form1"  method="post">
 
     <table id="td" border="0" style="border-collapse:separate; border-spacing:20px;" align="center">
         <input type="hidden" name="characterId" id="characterId" value="0"/>
@@ -34,7 +34,7 @@
 
             </td>
             <td>
-                <input name="characterName" id="characterName" autocomplete="off" class="layui-input" value=""
+                <input name="characterName" id="characterName" lay-verify="required" autocomplete="off" class="layui-input" value=""
                        style="width:290px;">
             </td>
         </tr>
@@ -66,10 +66,10 @@
                     url: "${pageContext.request.contextPath}/controller/addUser", // ajax请求路径
                     async:true,
                     dataType: "text",
-                    data:data.field,
+                    data:data,
                     success: function(data){
                         document.getElementById("form1").reset();
-                        layer.msg('修改成功！');
+                        layer.msg('新增成功！');
                     }
                 });
                 window.parent.location.reload();

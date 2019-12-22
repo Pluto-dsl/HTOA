@@ -29,7 +29,7 @@
             <select  name="empId" id="empId" >
                 <option value="0">--未选择--</option>
                 <c:forEach var="e" items="${teacher}">
-                    <option value="${e.empId}">${e.empName}</option>
+                    <option value="${e.empId}" <c:if test="${e.empId eq emp}">selected="selected"</c:if> >${e.empName}</option>
                 </c:forEach>
             </select>
         </from>

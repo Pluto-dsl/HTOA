@@ -59,11 +59,12 @@
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="newChatRecord">新增专业</button>
+        <button class="layui-btn layui-btn-sm" lay-event="newMajor">新增专业</button>
     </div>
 </script>
 <script type="text/html" id="barDemo">
     <button class="layui-btn layui-btn-xs" lay-event="edit">编辑</button>
+    <button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button>
 </script>
 </body>
 <script>
@@ -81,8 +82,8 @@
                 ,{field:'majorName', title:'专业设置', width:160}
                 ,{field:'deptName', title:'院系名称', width:160}
                 ,{field:'deptid',hide:true}
-                ,{field:'remark', title:'备注', width:809}
-                ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:80}
+                ,{field:'remark', title:'备注', width:769}
+                ,{fixed:'right', title:'操作', toolbar: '#barDemo', width:120}
             ]]
             ,page: {limit: 10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
@@ -92,10 +93,10 @@
             console.log(obj);
             var checkStatus = table.checkStatus(obj.config.id);
             switch(obj.event){
-                case 'newChatRecord':
+                case 'newMajor':
                     layer.open({
                         type: 1,
-                        title:'添加谈心记录',
+                        title:'添加专业',
                         skin: 'layui-layer-demo', //样式类名
                         closeBtn: 1, //是否显示关闭按钮
                         area: ['700px', '350px'],
@@ -148,6 +149,11 @@
                         return false;
                     }
                 });
+            } else if (obj.event === 'del'){
+                layer.confirm('确定删除该专业吗', function(index){
+                    layer.close(index);
+                    delMajor(obj,obj.data.majorid)
+                });
             }
         });
     });
@@ -167,12 +173,18 @@
     });
 </script>
 <script>
-    //删除谈心记录的方法
-    function delChatRecord(id) {
+    //删除专业的方法
+    function delMajor(obj,id) {
         var data = {id:id};
-        $.post("${pageContext.request.contextPath}/ljw/delChatRecord",data,function (data) {
-            console.log(data)
-        },"json");
+        $.post("${pageContext.request.contextPath}/sysSet/delTerm",data,function (data) {
+            console.log(data);
+            if("isUsed" === data){
+                layer.msg('删除失败，该学期正在被使用');
+            }else {
+                obj.del();
+                layer.msg("删除成功")
+            }
+        },"text");
     }
 </script>
 </html>

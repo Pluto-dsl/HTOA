@@ -105,7 +105,7 @@ public class Zero_StudentScore {
     @RequestMapping(value = "/scoreseek")
     @ResponseBody
     public Map seek(int term,int classId,int type,int course,int page,int limit){//分页
-        System.out.println("进入方法");
+         //System.out.println("进入方法");
         String sql = "";
         if (classId!=0){
             sql+=" and s.clazz = "+classId;
@@ -221,10 +221,12 @@ public class Zero_StudentScore {
 
     @RequestMapping(value = "/toeditReply")//去修改学生答辩成绩页
     public String toeditscore(int classid,int projectId, Model model) throws ParseException {
-        model.addAttribute("stu",JSONArray.toJSONString(service.toeditReplyscore(classid,projectId)));
+        List<Map> tea =  service.toeditReplyscore(classid,projectId);//成绩数据
+        model.addAttribute("stu",JSONArray.toJSONString(tea));
         model.addAttribute("cls",service.nowclass(classid));//班级信息
         model.addAttribute("project",service.nowproject(projectId));//项目信息
         //评分人员
+        model.addAttribute("emp",tea.get(0).get("empId"));
         model.addAttribute("teacher",studentService.teacher());
         return "student_zero/editReply";
     }
@@ -253,4 +255,9 @@ public class Zero_StudentScore {
         writer.write("ok");
     }
 
+
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
 }

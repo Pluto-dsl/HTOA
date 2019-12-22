@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.jack.service.Jack_Service;
 import com.publics.vo.assess.AduitLogVo;
 import com.publics.vo.assess.AduitModelVo;
+import com.publics.vo.empModel.emp.EmpVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +29,11 @@ public class Jack_Assessment {
     @Resource
     private Jack_Service service;
 
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
+
     /** 考核指标 */
     @RequestMapping(value = "/toAssessmentPage")
     public String toAssessmentPage(){
@@ -43,7 +49,7 @@ public class Jack_Assessment {
     @ResponseBody
     public Map select(){
         List list = service.selDepList();
-        System.out.println(list);
+         //System.out.println(list);
         Map map = new HashMap<>();
         map.put("names",list);
         return map;
@@ -51,7 +57,7 @@ public class Jack_Assessment {
     @RequestMapping(value = "/editAss")
     @ResponseBody
     public String editAss(AduitModelVo aduitModelVo){
-        System.out.println(aduitModelVo+"-----------------");
+         //System.out.println(aduitModelVo+"-----------------");
         service.editAssessment(aduitModelVo);
         return "成功";
     }
@@ -61,7 +67,7 @@ public class Jack_Assessment {
         String type = request.getParameter("type");
 
         if("duo".equals(type)){
-            System.out.println(request.getParameter("cid"));
+             //System.out.println(request.getParameter("cid"));
             service.delAssessment(Integer.parseInt(request.getParameter("cid")));
         }else {
             service.delAssessment(Integer.parseInt(request.getParameter("Aid")));
@@ -74,7 +80,7 @@ public class Jack_Assessment {
         int currPage = Integer.parseInt(request.getParameter("page"));
         int pageSize = Integer.parseInt(request.getParameter("limit"));
         response.setContentType("text/html;charset=utf-8");
-        System.out.println(currPage+"----"+pageSize);
+         //System.out.println(currPage+"----"+pageSize);
         List list = service.selAssessment(currPage,pageSize);
         int pageCount = service.selAssCount();
         PrintWriter out = response.getWriter();
@@ -83,7 +89,7 @@ public class Jack_Assessment {
         json.put("code","0");
         json.put("data",list);
         json.put("count",pageCount);
-        System.out.println(json.toJSONString());
+         //System.out.println(json.toJSONString());
         out.print(json);
         out.close();
     }
@@ -105,18 +111,28 @@ public class Jack_Assessment {
     /** 查询员工列表 */
     @RequestMapping(value = "/emp")
     @ResponseBody
-    public Map emp(){
+    public Map emp(HttpSession session){
         Map emap = new HashMap();
-        List list = service.selEmp();
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        List list = service.selEmp(emp.getEmpId());
         emap.put("names",list);
         return emap;
     }
+
+    /** 查询考核分数 */
+    @RequestMapping(value = "/Scores")
+    @ResponseBody
+    public String Scores(String Scores){
+        String scores = String.valueOf(service.selScores(Integer.parseInt(Scores)));
+        return scores;
+    }
+
     /** 文件上传 */
     @RequestMapping(value = "/uploadImg")
     @ResponseBody
     public Map<String, Object> updatePersonal(@RequestParam(required=false)MultipartFile file,HttpServletRequest request) throws IllegalStateException, IOException{
         //如果文件内容不为空，则写入上传路径
-        System.out.println(file+"=========");
+         //System.out.println(file+"=========");
         if (!file.isEmpty()) {
             //上传文件路径
             String path = request.getSession().getServletContext().getRealPath("\\WEB-INF\\static\\imgs");
@@ -159,14 +175,14 @@ public class Jack_Assessment {
         aduitLogVo.setAduitModelid(Integer.parseInt(aduitModelid));
         aduitLogVo.setEmpid(Integer.parseInt(Empid));
         aduitLogVo.setScores(Integer.parseInt(Scores));
-        System.out.println(auditDate);
+         //System.out.println(auditDate);
         DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
         Date date = format1.parse(auditDate);
         aduitLogVo.setAuditDate(date);
         aduitLogVo.setRemark(Remark);
         aduitLogVo.setAuditPerson(auditPerson);
         aduitLogVo.setImage(Image);
-        System.out.println(aduitLogVo);
+         //System.out.println(aduitLogVo);
         service.addAduit(aduitLogVo);
 
         return 0;
@@ -184,7 +200,7 @@ public class Jack_Assessment {
         int currPage = Integer.parseInt(request.getParameter("page"));
         int pageSize = Integer.parseInt(request.getParameter("limit"));
         response.setContentType("text/html;charset=utf-8");
-        System.out.println(currPage+"----"+pageSize);
+         //System.out.println(currPage+"----"+pageSize);
         List list = service.selAduitLog(currPage,pageSize);
         int pageCount = service.selAdCount();
         PrintWriter out = response.getWriter();
@@ -193,16 +209,16 @@ public class Jack_Assessment {
         json.put("code","0");
         json.put("data",list);
         json.put("count",pageCount);
-        System.out.println(json.toJSONString());
+         //System.out.println(json.toJSONString());
         out.print(json);
         out.close();
     }
 
     @RequestMapping(value = "/toSelAduitLog")
     public String toSelAduitLog(HttpServletRequest request){
-        System.out.println("进来了----------");
+         //System.out.println("进来了----------");
         String id = request.getParameter("aduitLogid");
-        System.out.println(id);
+         //System.out.println(id);
         request.setAttribute("id",id);
         return "emp_xzq/selAduitLog";
     }
@@ -210,14 +226,14 @@ public class Jack_Assessment {
     @RequestMapping(value = "/selAduitLog")
     public void selAduitLog(String id,HttpServletResponse response,HttpServletRequest request) throws IOException {
         List list = service.selAdDetails(Integer.parseInt(id));
-        System.out.println(list+"++++++++++++++++++++++++++");
+         //System.out.println(list+"++++++++++++++++++++++++++");
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();
         JSONObject json = new JSONObject();
         json.put("msg","提示");
         json.put("code","0");
         json.put("data",list);
-        System.out.println(json.toJSONString());
+         //System.out.println(json.toJSONString());
         out.print(json);
         out.close();
     }
@@ -261,7 +277,7 @@ public class Jack_Assessment {
         json.put("code","0");
         json.put("data",list);
         json.put("count",count);
-        System.out.println(json.toJSONString());
+         //System.out.println(json.toJSONString());
         out.print(json);
         out.close();
     }

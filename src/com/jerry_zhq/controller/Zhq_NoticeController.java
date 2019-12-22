@@ -19,10 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/zhq")
@@ -54,15 +51,15 @@ public class Zhq_NoticeController {
             map.put("noticeTime",noticeVo.getNoticeTime());//发布时间
             map.put("trueContent",noticeVo.getTrueContent());//已读
             map.put("falseContent",noticeVo.getFalseContent());//未读
-
-            noticeVo.getContent();//内容
+            map.put("noticeType",noticeVo.getNoticeType());
+          /*  noticeVo.getContent();//内容
             if(noticeVo.getNoticeType() == 1){//类型;1:所有人，2员工 3学生
                 map.put("noticeType","所有人");
             }else if(noticeVo.getNoticeType() == 2){
                 map.put("noticeType","员工");
             }else if(noticeVo.getNoticeType() == 3){
-                map.put("noticeType","学生");
-            }
+
+            }*/
             jsonArray.add(map);
         }
         int count = zhq_noticeService.selCount();
@@ -93,7 +90,7 @@ public class Zhq_NoticeController {
         int empCount = zhq_noticeService.selEmpCount();//查询员工总条数
         int stuCount = zhq_noticeService.selStuCount();//查询学生总条数
 
-        if(noticeVo.getNoticeType() ==1){//所有人
+        if(noticeVo.getNoticeType() ==3){//所有人
            int all = empCount+stuCount;
            noticeVo.setFalseContent(all-1);//未读
            zhq_noticeService.addNotice(noticeVo);
@@ -118,7 +115,7 @@ public class Zhq_NoticeController {
                 zhq_noticeService.addRecipient(recipientVo);//添加
             }
 
-        }else if(noticeVo.getNoticeType() ==2){//员工
+        }else if(noticeVo.getNoticeType() ==1){//员工
             noticeVo.setFalseContent(empCount-1);//未读
             zhq_noticeService.addNotice(noticeVo);
 
@@ -134,7 +131,7 @@ public class Zhq_NoticeController {
                 zhq_noticeService.addRecipient(recipientVo);//添加
             }
 
-        }else if(noticeVo.getNoticeType() ==3){//学生
+        }else if(noticeVo.getNoticeType() ==2){//学生
             noticeVo.setFalseContent(stuCount-1);//未读
             zhq_noticeService.addNotice(noticeVo);
 
@@ -158,7 +155,7 @@ public class Zhq_NoticeController {
         NoticeVo noticeVo = new NoticeVo();
         NoticeVo noticeVo1 = (NoticeVo) zhq_noticeService.selNoticeId(noticeVo.getClass(),noticeId);
         noticeVo1.getNoticeTime();
-        System.out.println(noticeVo1.getNoticeTime());
+         //System.out.println(noticeVo1.getNoticeTime());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String noticeTime = simpleDateFormat.format(noticeVo1.getNoticeTime());
         request.setAttribute("noticeTime",noticeTime);
@@ -215,10 +212,20 @@ public class Zhq_NoticeController {
     //查看公告详情
     @RequestMapping("/selNoticeParticulars")
     @ResponseBody
-    public JSONObject selNoticeParticulars(int noticeId){
+    public JSONObject selNoticeParticulars(int noticeId,int noticeType){
         JSONObject jsonObject = new JSONObject();
-        List<Map> list = zhq_noticeService.selParticulars(noticeId);
-
+         //System.out.println("获取到的类型数字是"+noticeType);
+        List list = new ArrayList();
+        if(noticeType ==1){
+            list = zhq_noticeService.selParticulars(noticeId);//查询员工
+        }else if(noticeType ==2){
+            list= zhq_noticeService.selParticulars2(noticeId);//查询学生
+        }else if(noticeType ==3){
+            list = zhq_noticeService.selParticulars(noticeId);//查询员工
+            List<Map> list2 = zhq_noticeService.selParticulars2(noticeId);//查询学生
+            list.addAll(list2);
+        }
+        //查询所有
         jsonObject.put("msg","");
         jsonObject.put("code",0);
         jsonObject.put("data",list);

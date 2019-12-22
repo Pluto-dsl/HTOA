@@ -47,6 +47,8 @@ public interface Zhq_NoticeService {
 
     //根据id查询公告详情
     List selParticulars(int noticeId);
+    //根据id查询公告详情
+    List selParticulars2(int noticeId);
 
     //根据id查询是否未读公告
     List selTFParticulars(int empId);
