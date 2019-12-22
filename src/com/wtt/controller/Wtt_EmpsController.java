@@ -41,7 +41,7 @@ public class Wtt_EmpsController {
         List<WeeklogVo> list = empService.weekpaper(empid,request,page,limit);
         //获取总行数
         int rows =empService.pagecount(empid,request);
-        System.out.println("总行数:"+rows);
+         //System.out.println("总行数:"+rows);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","提示");
         jsonObject.put("code",0);
@@ -88,7 +88,7 @@ public class Wtt_EmpsController {
     //删除
     @RequestMapping(value = "/deleteEmpPaper")
     public String deleteEmpPaperPage(HttpServletResponse response,int id){
-        System.out.println("id为："+id);
+         //System.out.println("id为："+id);
         empService.delete(id);
         try {
             PrintWriter printWriter = response.getWriter();
@@ -119,7 +119,7 @@ public class Wtt_EmpsController {
         //获取当前登录用户
         EmpVo empVo = (EmpVo) session.getAttribute("admin");
         int id = empVo.getEmpId();
-        System.out.println("员工Id:"+id);
+         //System.out.println("员工Id:"+id);
         String name = empService.name(id);
 
         List edlist = empService.edmap(id);

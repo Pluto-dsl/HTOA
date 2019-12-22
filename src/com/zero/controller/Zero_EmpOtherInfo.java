@@ -226,7 +226,7 @@ public class Zero_EmpOtherInfo {
     @RequestMapping(value = "/addannex")//添加证件
     public String addannex(int empId, MultipartFile annexPath,String annexName,String Remark, HttpServletRequest request,HttpSession session) throws IOException {
         String oldName = annexPath.getOriginalFilename();
-        System.out.println(annexPath.getOriginalFilename());
+         //System.out.println(annexPath.getOriginalFilename());
         //文件后缀名
         String hou = oldName.substring(oldName.indexOf("."));
         //构造文件写入路径
@@ -240,7 +240,7 @@ public class Zero_EmpOtherInfo {
         String newName = UUID.randomUUID().toString()+hou;
         //拼凑完整的文件路径
         String filepath = path+newName;
-        //System.out.println("保存路径"+filepath);
+        // //System.out.println("保存路径"+filepath);
         File file = new File(filepath);
         //保存文件
         try {

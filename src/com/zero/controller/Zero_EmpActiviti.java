@@ -73,8 +73,8 @@ public class Zero_EmpActiviti {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date startDate = new Date();
         Date endDate = new Date();
-        //System.out.println("startTime"+startTime);
-        //System.out.println("endTime"+endTime);
+        // //System.out.println("startTime"+startTime);
+        // //System.out.println("endTime"+endTime);
         try {
             startDate = sdf.parse(startTime);
             endDate = sdf.parse(endTime);
@@ -84,7 +84,7 @@ public class Zero_EmpActiviti {
         int startday = startDate.getDate();
         int endday = endDate.getDate();
         EmpVo emp = (EmpVo)session.getAttribute("admin");
-        //System.out.println("员工id"+emp.getEmpId());
+        // //System.out.println("员工id"+emp.getEmpId());
         String day = request.getParameter("holidayDay");
         String hour = request.getParameter("hour");
         String Remark = request.getParameter("Remark");
@@ -98,7 +98,7 @@ public class Zero_EmpActiviti {
         holidayVo.setStatus(1);//状态 1:审批中 2：已完成 3：不批准
         holidayVo.setEmpid(emp.getEmpId());//设置请假员工
         String depperson = service.isper(emp.getDepId(),emp.getEmpId());//是否部门负责人
-        //System.out.println("是否部门负责人"+depperson);
+        // //System.out.println("是否部门负责人"+depperson);
         service.addLeave(holidayVo);//上传员工请假
         //设置流程实例变量集合
         Map<String,Object> variables = new HashMap<>();
@@ -109,21 +109,21 @@ public class Zero_EmpActiviti {
 
         if(depperson.equals("yes")){//是部门负责人
             String id = service.assignDep(emp.getDepId());
-            //System.out.println("是部门负责人"+id);
+            // //System.out.println("是部门负责人"+id);
             variables.put("assignee",id);
         }else {//不是部门负责人
             //动态办理人 根据用户设置第一个办理人
             String id = service.assignName(emp.getEmpId());
-            //System.out.println("不是部门负责人"+id);
+            // //System.out.println("不是部门负责人"+id);
             variables.put("assignee",id);
         }
         //启动实例（通过流程定义的key来启动一个实例）
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(type,variables);
-        //System.out.println("流程实例 "+processInstance.getId());
+        // //System.out.println("流程实例 "+processInstance.getId());
 
         //根据流程实例ID获取当前实例正在执行的任务
         Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).orderByProcessInstanceId().desc().singleResult();
-        //System.out.println("任务ID："+task.getId());
+        // //System.out.println("任务ID："+task.getId());
 
         //完成任务(通过任务ID完成该任务)
         taskService.complete(task.getId(),variables);
@@ -139,12 +139,12 @@ public class Zero_EmpActiviti {
         String userid = String.valueOf(emp.getEmpId());
         //通过办理人查询任务集合
         List<Task> mytask = taskService.createTaskQuery().taskAssignee(userid).list();
-        //System.out.println("任务集合"+mytask);
+        // //System.out.println("任务集合"+mytask);
         List<Map> holidays = new ArrayList<>();
         for(Task task: mytask){
             //根据任务id取得单据id
             Object sid = taskService.getVariable(task.getId(),"holiday");
-            System.out.println("sid"+sid);
+             //System.out.println("sid"+sid);
             //如果有任务进入判断里面
             if(service.mytask(Integer.parseInt((sid+""))).size()>0){
                 Map map = (Map) service.mytask(Integer.parseInt((sid+""))).get(0);
@@ -173,7 +173,7 @@ public class Zero_EmpActiviti {
         ProcessDefinitionEntity pdentity = (ProcessDefinitionEntity)processEngine.getRepositoryService().getProcessDefinition(processDefineId);
         //获取当前活动id
         String activeId = pi.getActivityId();
-        //System.out.println("当前活动ID "+activeId);
+        // //System.out.println("当前活动ID "+activeId);
         //获取当前活动(usertask2)
         ActivityImpl impl = pdentity.findActivity(activeId);
         //获取当前活动的连线
@@ -196,8 +196,8 @@ public class Zero_EmpActiviti {
         int holidayid = Integer.parseInt(taskService.getVariable(taskId,"holiday").toString());
         //通过holidayid查询历史变量对象
         HistoricVariableInstance hvi = historyService.createHistoricVariableInstanceQuery().variableValueEquals("holiday", holidayid).singleResult();
-        //System.out.println("实例id"+hvi.getProcessInstanceId());
-        //System.out.println("批注"+taskService.getProcessInstanceComments(hvi.getProcessInstanceId()).size());
+        // //System.out.println("实例id"+hvi.getProcessInstanceId());
+        // //System.out.println("批注"+taskService.getProcessInstanceComments(hvi.getProcessInstanceId()).size());
         //获取流程实例id （查询历史批注）
         List<Comment> comment = taskService.getProcessInstanceComments(hvi.getProcessInstanceId());
         List<String> username = new ArrayList<>();
@@ -221,8 +221,8 @@ public class Zero_EmpActiviti {
     public String mycomment(int holidayid,Model model){
         //通过holidayid查询历史变量对象
         HistoricVariableInstance hvi = historyService.createHistoricVariableInstanceQuery().variableValueEquals("holiday", holidayid).singleResult();
-        //System.out.println("实例id"+hvi.getProcessInstanceId());
-        //System.out.println("批注"+taskService.getProcessInstanceComments(hvi.getProcessInstanceId()).size());
+        // //System.out.println("实例id"+hvi.getProcessInstanceId());
+        // //System.out.println("批注"+taskService.getProcessInstanceComments(hvi.getProcessInstanceId()).size());
         //获取流程实例id （查询历史批注）
         List<Comment> commentList = taskService.getProcessInstanceComments(hvi.getProcessInstanceId());
         List<String> username = new ArrayList<>();
@@ -312,7 +312,7 @@ public class Zero_EmpActiviti {
         String processInstId = task.getProcessInstanceId();
         //根据单据id查询单据对象
         HolidayVo holidayVo = service.seleHoliday(Integer.parseInt(holidayid));
-        //System.out.println("审批vo"+holidayVo);
+        // //System.out.println("审批vo"+holidayVo);
         EmpVo emp = (EmpVo)session.getAttribute("admin");
         //获得用户
         String userid = String.valueOf(emp.getEmpId());
@@ -331,7 +331,7 @@ public class Zero_EmpActiviti {
         }else{//当前用户是部门负责人
             //动态办理人，设置以后下一个办理人
             String id = service.xiaassignName(Integer.valueOf(holidayVo.getEmpid()));
-            //System.out.println("下一个办理人"+id);
+            // //System.out.println("下一个办理人"+id);
             mflow.put("assignee",id);
         }
         //完成当前任务

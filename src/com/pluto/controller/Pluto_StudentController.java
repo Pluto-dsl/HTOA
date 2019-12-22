@@ -164,7 +164,7 @@ public class Pluto_StudentController {
     @RequestMapping("/biye")
     @ResponseBody
     public String setBiye(int Studid){
-        System.out.println("shezhibiye");
+         //System.out.println("shezhibiye");
         StudentVo studentVo = service.getStudentById(Studid);
         studentVo.setStat(5);
         service.updateStudent(studentVo);
@@ -218,7 +218,7 @@ public class Pluto_StudentController {
         }
         studentVo.setBirthday(bd);
         studentVo.setEntertime(ed);
-        System.out.println(studentVo.toString());
+         //System.out.println(studentVo.toString());
         service.addStudent(studentVo);
         return "1";
     }
@@ -284,7 +284,7 @@ public class Pluto_StudentController {
     @RequestMapping("/toUpdateZx")
     public String toUpdateZx(int zid,Model model){
         StudentHappeningVo sh = service.getHappeningById(zid);
-        System.out.println(sh.toString());
+         //System.out.println(sh.toString());
         StudentVo s = service.getStudentById(sh.getStuid());
         model.addAttribute("zx",sh);
         model.addAttribute("s",s);

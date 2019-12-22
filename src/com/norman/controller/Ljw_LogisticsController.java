@@ -111,15 +111,15 @@ public class Ljw_LogisticsController {
     @ResponseBody
     @RequestMapping(value = "/manageRepair")
     public void updRepair(int repairId,String result){
-        System.out.println(repairId);
-        System.out.println(result);
+         //System.out.println(repairId);
+         //System.out.println(result);
         EquipmentRepairVo vo = logsService.getRepair(repairId);
-        System.out.println(vo);
+         //System.out.println(vo);
         vo.setStatus(1);
         vo.setEndTime(new Date());
         vo.setResult(result);
         vo.setEmpId(1);
-        System.out.println(vo);
+         //System.out.println(vo);
         logsService.updRepair(vo);
     }
 

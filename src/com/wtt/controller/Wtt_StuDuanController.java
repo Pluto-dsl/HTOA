@@ -64,7 +64,7 @@ public class Wtt_StuDuanController {
         List<FeedbackVo> list = wtt_stuDuanService.feedback(stuid,page,limit);
         //获取总行数
         int rows =wtt_stuDuanService.pagecount(stuid);
-        /*System.out.println("总行数:"+rows);*/
+        /* //System.out.println("总行数:"+rows);*/
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","提示");
         jsonObject.put("code",0);
@@ -83,13 +83,13 @@ public class Wtt_StuDuanController {
     //新增学生问题反馈
     @RequestMapping(value = "/addproblems",method = RequestMethod.POST)
     public String addproblem(FeedbackVo feedbackVo, /*@RequestParam(value = "file")*/ MultipartFile images, HttpServletRequest request,HttpSession session){
-        /*System.out.println("部门id:"+request.getParameter("depId"));*/
+        /* //System.out.println("部门id:"+request.getParameter("depId"));*/
         //获取旧文件名
         String oldname = images.getOriginalFilename();
-       /* System.out.println("获取旧文件名:"+oldname);*/
+       /*  //System.out.println("获取旧文件名:"+oldname);*/
         //获取旧文件名的后缀名
         String substr = oldname.substring(oldname.indexOf("."));
-       /* System.out.println("后缀名:"+substr);*/
+       /*  //System.out.println("后缀名:"+substr);*/
         //给上传文件加上年月日
         Date date = new Date(new java.util.Date().getTime());
         //设计新文件名
@@ -120,7 +120,7 @@ public class Wtt_StuDuanController {
         feedbackVo.setEmpId(studentid);
         feedbackVo.setStatus(1);
         String classname = (String) map.get("className");
-        /*System.out.println("班级名称:"+classname);*/
+        /* //System.out.println("班级名称:"+classname);*/
         feedbackVo.setEmpName(classname);
         wtt_stuDuanService.add(feedbackVo);
         return "redirect:/studentduan/problem_feedback";
@@ -173,17 +173,17 @@ public class Wtt_StuDuanController {
         map.put("holidayid",studentLeaveVo.getHolidayid());
         map.put("StudentId",studentLeaveVo.getStudentId());
         map.put("day",studentLeaveVo.getHolidayDay());
-       /* System.out.println("map:"+map);*/
+       /*  //System.out.println("map:"+map);*/
         //根据用户设置下一个办理人
         int studentid = studentVo.getStudid();
         Map map1 = wtt_stuDuanService.selectteacher(studentid);
-        /*System.out.println(map1);*/
+        /* //System.out.println(map1);*/
         String names = (String) map1.get("teacher");
-        /*System.out.println(names);*/
+        /* //System.out.println(names);*/
         map.put("assignee",names);
         //启动实例(通过流程定义的Key来启动一个实例)
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(studentLeaveVo.getTitle(),map);
-        /*System.out.println(studentLeaveVo.getTitle());*/
+        /* //System.out.println(studentLeaveVo.getTitle());*/
         //根据流程实例ID获取当前实例正在执行的任务
         Task task =taskService.createTaskQuery().processInstanceId(processInstance.getId()).orderByProcessInstanceId().desc().singleResult();
         //通过任务ID完成任务
@@ -194,8 +194,8 @@ public class Wtt_StuDuanController {
     //查看我的批注
     @RequestMapping(value = "/pizhu/{id}")
     public String selectmypizhu(@PathVariable(value = "id") int id, Model model){
-        /*System.out.println("Saaaaaaa");*/
-        /*System.out.println("id:"+holidayid);*/
+        /* //System.out.println("Saaaaaaa");*/
+        /* //System.out.println("id:"+holidayid);*/
         //根据单据id查询历史变量对象
         HistoricVariableInstance historicVariableInstance = historyService.createHistoricVariableInstanceQuery().variableValueEquals("holidayid",id).singleResult();
         //查询历史批注

@@ -71,7 +71,7 @@ public class Ljw_SystemSettingController {
     @ResponseBody
     @RequestMapping(value = "/delDept")
     public void delDept(HttpServletResponse response,int id) throws IOException {
-        System.out.println("delDept");
+         //System.out.println("delDept");
         String result = service.delDept(id);
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();

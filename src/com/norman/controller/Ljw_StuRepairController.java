@@ -25,7 +25,7 @@ public class Ljw_StuRepairController {
 
     @RequestMapping(value = "/toStuRepair")
     public String toMyRepair(){
-        System.out.println("学生");
+         //System.out.println("学生");
         return "repair_ljw/stuRepair";
     }
 

@@ -54,7 +54,7 @@ public class Wtt_ArrangeController {
         }
         //获取总行数
         int rows =wtt_arrangeService.pagecount();
-        System.out.println("总行数:"+rows);
+         //System.out.println("总行数:"+rows);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","提示");
         jsonObject.put("code",0);

@@ -125,7 +125,7 @@ public class Pluto_Controller {
     @ResponseBody
     public int updC(int mid, @RequestParam("checkIds[]")int[] cheks) throws IOException {
 
-        System.out.println(mid);
+         //System.out.println(mid);
         boolean flag = service.judge(mid);
         if(flag){//true代表有数据
             service.deleteCharModel(mid);

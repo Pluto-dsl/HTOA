@@ -97,7 +97,7 @@ public class Ljw_SystemLogController {
         obj.put("start",0);
         obj.put("data",data);
 
-        System.out.println(obj.toJSONString());
+         //System.out.println(obj.toJSONString());
 
         PrintWriter out = response.getWriter();
         out.print(obj);
