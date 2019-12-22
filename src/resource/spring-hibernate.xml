@@ -6,11 +6,6 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <!-- 1、Spring对目录下的@Repository、@Service、@@Component、@Controler注解标注的bean进行自动扫描 -->
-    <!--<context:component-scan base-package="com.ht.service.impl">-->
-    <!--&lt;!&ndash; 扫描时跳过 @Controller 注解的JAVA类（控制器）以免重复扫描 &ndash;&gt;-->
-    <!--<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
-    <!--</context:component-scan>-->
 
     <!--2、引入参数文件-->
     <context:property-placeholder location="classpath:resource/jdbc.properties"/>
@@ -36,6 +31,7 @@
         <property name="dataSource" ref="dSource"/>
         <!---扫描实体类-->
         <property name="packagesToScan" value="com.publics.vo"/>
+
         <!--hibernate 参数-->
         <property name="hibernateProperties">
             <props>
@@ -45,6 +41,8 @@
                 <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>     <!--在控制台显示执行的数据哭操作语句（格式）-->
             </props>
         </property>
+
+
 
         <!--引入映射文件
         <property name="mappingResources">

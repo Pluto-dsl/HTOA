@@ -31,6 +31,11 @@ public class Jack_courseController {
     @Resource
     private Jack_Service service;
 
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
+
     /**
      * 课程类型部分
      * */

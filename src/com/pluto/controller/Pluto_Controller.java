@@ -3,9 +3,8 @@ package com.pluto.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.pluto.service.Pluto_LcController;
-import com.publics.vo.sys.CharModuleVo;
-import com.publics.vo.sys.CharactersVo;
-import com.publics.vo.sys.ModuleVo;
+import com.publics.vo.empModel.emp.EmpVo;
+import com.publics.vo.sys.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -94,13 +93,14 @@ public class Pluto_Controller {
     public String toUpdC(int id,Model model){
         model.addAttribute("id",id);
         List list = service.getListByHql("from CharModuleVo where characterId="+id);
-        JSONArray ids = new JSONArray();
-        for (int i = 0; i < list.size(); i++) {
+
+        JSONArray j = new JSONArray();
+        for (int i = 1; i < list.size(); i++) {
             CharModuleVo c = (CharModuleVo) list.get(i);
-            ids.add(c.getModuleId());
+            j.add(c.getModuleId());
         }
 
-        model.addAttribute("oldData",ids);
+        model.addAttribute("oldData",j);
         return "controller_pluto/updateController";
     }
 
@@ -125,7 +125,6 @@ public class Pluto_Controller {
     @ResponseBody
     public int updC(int mid, @RequestParam("checkIds[]")int[] cheks) throws IOException {
 
-         //System.out.println(mid);
         boolean flag = service.judge(mid);
         if(flag){//true代表有数据
             service.deleteCharModel(mid);
@@ -139,4 +138,65 @@ public class Pluto_Controller {
         return 0;
     }
 
+    @RequestMapping("/toAccUser")
+    public String toAddUser(int id,Model model){
+
+
+        List deptList = service.getListByHql("from DepVo");
+        List empList = service.getListByHql("from EmpVo");
+        JSONArray outerJson = new JSONArray();
+
+        for (int i = 0; i < deptList.size(); i++) {
+            DepVo d = (DepVo) deptList.get(i);
+            JSONObject deptJson = new JSONObject();
+            JSONArray deptSons = new JSONArray();
+            deptJson.put("id",d.getDepid());
+            deptJson.put("title",d.getDepName());
+            int tt = 0;
+            for (int j = 0; j < empList.size(); j++) {
+                EmpVo e = (EmpVo) empList.get(j);
+                if(d.getDepid()==e.getDepId()){
+                    JSONObject sonJson = new JSONObject();
+                    sonJson.put("id",e.getEmpId());
+                    sonJson.put("title",e.getEmpName());
+                    deptSons.add(sonJson);
+                    tt++;
+                }
+            }
+            if(tt!=0){
+                deptJson.put("children",deptSons);
+            }
+            outerJson.add(deptJson);
+        }
+
+        JSONArray selected = service.getUAC(id);
+        model.addAttribute("selected",selected);
+
+        model.addAttribute("json",outerJson.toJSONString());
+        model.addAttribute("id",id);
+        return "controller_pluto/accUser";
+    }
+
+    @RequestMapping("/addUserCs")
+    @ResponseBody
+    public String addUserCs(int mid, @RequestParam("checkIds[]")int[] cheks){
+        boolean flag = service.judgeUser(mid);
+        if(flag){//true代表有数据
+            service.deleteUAC(mid);
+        }
+
+        for (int i = 0; i < cheks.length; i++) {
+            UserAndControllerVo uac = new UserAndControllerVo();
+            uac.setEmpId(cheks[i]);
+            uac.setCharacterId(mid);
+            service.addObject(uac);
+        }
+        return "1";
+    }
+
+//    _____________________________________
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
 }

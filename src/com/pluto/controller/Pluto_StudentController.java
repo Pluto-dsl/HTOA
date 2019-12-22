@@ -25,6 +25,11 @@ import java.util.Map;
 @RequestMapping("/student")
 public class Pluto_StudentController {
 
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
+
     @Resource
     private Pluto_StudentMsg service;
 

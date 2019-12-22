@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.jack.service.Jack_Service;
 import com.publics.vo.assess.AduitLogVo;
 import com.publics.vo.assess.AduitModelVo;
+import com.publics.vo.empModel.emp.EmpVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +28,11 @@ public class Jack_Assessment {
 
     @Resource
     private Jack_Service service;
+
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
 
     /** 考核指标 */
     @RequestMapping(value = "/toAssessmentPage")
@@ -105,12 +111,22 @@ public class Jack_Assessment {
     /** 查询员工列表 */
     @RequestMapping(value = "/emp")
     @ResponseBody
-    public Map emp(){
+    public Map emp(HttpSession session){
         Map emap = new HashMap();
-        List list = service.selEmp();
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        List list = service.selEmp(emp.getEmpId());
         emap.put("names",list);
         return emap;
     }
+
+    /** 查询考核分数 */
+    @RequestMapping(value = "/Scores")
+    @ResponseBody
+    public String Scores(String Scores){
+        String scores = String.valueOf(service.selScores(Integer.parseInt(Scores)));
+        return scores;
+    }
+
     /** 文件上传 */
     @RequestMapping(value = "/uploadImg")
     @ResponseBody

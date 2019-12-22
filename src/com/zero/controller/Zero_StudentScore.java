@@ -255,4 +255,9 @@ public class Zero_StudentScore {
         writer.write("ok");
     }
 
+
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
 }

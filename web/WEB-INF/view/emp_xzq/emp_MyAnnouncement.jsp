@@ -18,11 +18,11 @@
             font-size: 13px;
             color: #949494;
             margin-top: 5px;
-            text-indent: 2em;
-            width: 50%;
+            width:60%;
             word-wrap: break-word;
             word-break: break-all;
             overflow: hidden;
+            margin-left: 20px;
         }
         .layui-text h3 {
             font-size: 18px;

@@ -265,4 +265,9 @@ public class Zero_EmpOtherInfo {
         service.delAnnex(allid);
         return "yes";
     }
+
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
 }
