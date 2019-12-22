@@ -101,7 +101,9 @@
             ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
 
-
+        $("").on('click',function () {
+            alert("dfdf");
+        })
 
         table.on('tool(test)',function (obj) {
             var data = obj.data;

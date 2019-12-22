@@ -52,14 +52,6 @@ public class Zhq_NoticeController {
             map.put("trueContent",noticeVo.getTrueContent());//已读
             map.put("falseContent",noticeVo.getFalseContent());//未读
             map.put("noticeType",noticeVo.getNoticeType());
-          /*  noticeVo.getContent();//内容
-            if(noticeVo.getNoticeType() == 1){//类型;1:所有人，2员工 3学生
-                map.put("noticeType","所有人");
-            }else if(noticeVo.getNoticeType() == 2){
-                map.put("noticeType","员工");
-            }else if(noticeVo.getNoticeType() == 3){
-
-            }*/
             jsonArray.add(map);
         }
         int count = zhq_noticeService.selCount();
@@ -201,10 +193,12 @@ public class Zhq_NoticeController {
     @ResponseBody
     public String EmpNoticeReceiptList(HttpSession session,String noticeId){
         EmpVo empVo = (EmpVo) session.getAttribute("admin");
+
         zhq_noticeService.updateType(empVo.getEmpId(),Integer.parseInt(noticeId));//更改状态
 
-        int trueCount = zhq_noticeService.trueCount(Integer.parseInt(noticeId));
-        int falseCount =zhq_noticeService.falseCount(Integer.parseInt(noticeId));
+        int trueCount = zhq_noticeService.trueCount(Integer.parseInt(noticeId));//查询已读
+        int falseCount =zhq_noticeService.falseCount(Integer.parseInt(noticeId));//查询未读
+
         zhq_noticeService.updateCountNotice(trueCount,falseCount,Integer.parseInt(noticeId));//更改已读未读状态
         return "success";
     }

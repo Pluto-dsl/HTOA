@@ -100,6 +100,8 @@ public class Zhq_NoticeServiceImpl extends BaseDao implements Zhq_NoticeService 
     public void updateCountNotice(int trueCount, int falseCount,int noticeId) {
         executeSQL("update notice set trueContent="+trueCount+",falseContent="+falseCount+" where noticeId="+noticeId);
     }
+
+
     //根据id查询公告详情
     @Override
     public List selParticulars(int noticeId) {
