@@ -72,11 +72,16 @@ public class Zhq_StuDormController {
     //删除
     @RequestMapping("/deleteStuDorm")
     @ResponseBody
-    public String delDept(int stuId){
+    public String delDept(int hourid){
         StudentDormitoryVo sd = new StudentDormitoryVo();
-        sd.setHourid(stuId);
-        zhq_stuDormService.delStuDorm(sd);
-        return "success";
+        sd.setHourid(hourid);
+        int studentsize = zhq_stuDormService.size(hourid);
+        if(studentsize<1){
+            zhq_stuDormService.delStuDorm(sd);
+            return "1";
+        }else {
+            return "0";
+        }
     }
 
     //点击了添加按钮

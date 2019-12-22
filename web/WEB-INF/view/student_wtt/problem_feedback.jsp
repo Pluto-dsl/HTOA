@@ -53,12 +53,24 @@
             </table>
         </form>
     </div>
+    <!--点击查看意见弹出来的框-->
+
+    <div id="yijianwindows" style="margin-left:5%; margin-top:1%; display: none;">
+        <div style="height:411.2px;width:100%;overflow-y:auto" id="contents">
+
+        </div>
+    </div>
     <!--问题反馈按钮-->
     <script type="text/html" id="toolbar">
         <button style="margin-left: 40%;margin-top:3%" type="button" lay-event="problem" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon"></i>问题反馈</button>
     </script>
 
     <table class="layui-hide" lay-filter="test" id="test"></table>
+
+    <script type="text/html" id="barDemo">
+        <!--查看意见-->
+        <button type="button" lay-event="opinion" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon"></i>查看意见</button>
+    </script>
 </body>
 <script>
     layui.use([ 'element', 'table', 'layer', 'form' ,'laydate','laypage','upload'],function () {
@@ -98,6 +110,7 @@
                         }
                     }, width:100
                 }
+                ,{fixed: '', width:163, title:'操作', align:'center', toolbar: '#barDemo'}
             ]]
             , page: true,
             limits: [5, 10, 15, 25]
@@ -123,19 +136,52 @@
             };
         });
 
-        //普通图片上传
-        /*upload.render({
-            elem: '#test1',
-            url:'<%=request.getContextPath()%>/studentduan/addproblems',
-            bindAction:'#tijiao',
-            auto:true,
-            before: function(obj){
-                //预读本地文件示例，不支持ie8
-                obj.preview(function(index, file, result){
-                    $('#demo1').attr('src', result); //图片链接（base64）
-                });
-            }
-        })*/
+        table.on('tool(test)', function(obj){
+            var datas = obj.data;//获取当前行数据
+            /*console.log(datas);*/
+            var event = obj.event;//获得lay-event 对应的值（编辑，删除）
+            $.ajax({
+                url: "${pageContext.request.contextPath}/student/selectcollect",
+                type: "post",
+                async:true,
+                dataType: "json",
+                data:{
+                    wid:datas.feedbackId
+                },
+                success: function (data) {
+                    var carNewsList = "<ul id='ol'  style='margin-left: 3%'>";
+                    $(data).each(function (index,element) {
+                        var name =element.empName;
+                        var time = element.puttime;
+
+                        var content = element.content;
+                        carNewsList += "<li style='border-bottom: solid 1.5px #4e4b4e21;width: 95%;height: 55px;'>" +
+                            "<div style='width: 100%;height:80px'>" +
+                            "<div style='margin-top: 18px;'>"+name+"--"+createTime(time)+"</div>" +
+                            "<div style='margin-left: 3%;margin-top: 7px;font-size: 14px;'>"+"回复:"+content+"</div>" +
+                            "</div>" +
+                            "</li>";
+
+                    });
+                    carNewsList += "</ul>";
+                    document.getElementById("contents").innerHTML=carNewsList;
+                },
+                error:function () {
+                    console.log("失败啦")
+                }
+            });
+            layer.open({
+                type: 1,
+                title:'查看意见',
+                skin: 'layui-layer-demo', //样式类名
+                closeBtn: 1, //不显示关闭按钮
+                area: ['700px', '600px'],
+                fixed: false, //不固定
+                maxmin: true,
+                shadeClose: true, //开启遮罩关闭
+                content: $('#yijianwindows')
+            });
+        })
 
     })
     //图片回显方法
@@ -150,6 +196,20 @@
                 document.getElementById("huixian").innerHTML = str;
             }
         }
+    }
+    //时间修改方法
+    function createTime(v){
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        /*m = m<10?'0'+m:m;*/
+        var d = date.getDate();
+        var h = date.getHours();
+        var f =date.getMinutes();
+        var s = date.getSeconds();
+        /*d = d<10?("0"+d):d;*/
+        var str = y+"-"+m+"-"+d+" "+h+":"+f+":"+s;
+        return str;
     }
 </script>
 </html>

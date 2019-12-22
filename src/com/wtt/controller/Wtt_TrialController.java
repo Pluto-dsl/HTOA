@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -21,6 +22,11 @@ import java.util.List;
 public class Wtt_TrialController {
     @Resource
     Wtt_TrialService wtt_trialService;
+    //无权时跳转页面
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
     //去到试讲培训页面
     @RequestMapping(value = "/rehearsal_trainingPage")
     public String rehearsal_trainingPage(ModelMap modelMap){
@@ -73,10 +79,9 @@ public class Wtt_TrialController {
         }
     }
 
-    //新增学生
+    //新增试讲培训
     @RequestMapping(value = "/addtrial")
-    public String addtrial(TrialVo trialVo){
-
+    public String addtrial(TrialVo trialVo, HttpSession session){
         wtt_trialService.add(trialVo);
         return "redirect:/training/rehearsal_trainingPage";
     }
@@ -85,14 +90,6 @@ public class Wtt_TrialController {
     @RequestMapping(value = "/deletetrial")
     public String deleteEmpPaperPage(HttpServletResponse response,int id){
         wtt_trialService.delete(id);
-        /*try {
-            PrintWriter printWriter = response.getWriter();
-            printWriter.println("");
-            printWriter.flush();
-            printWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
         return "redirect:/emp/selectEmpPaper";
     }
 }

@@ -17,7 +17,7 @@ public interface Wtt_EmpService {
     void add(WeeklogVo weeklogVo);
     //根据id所对应的对象
     JSONObject wekk(int id);
-    EmpVo emp(int id);
+   /* EmpVo emp(int id);*/
     //修改
     void update(WeeklogVo weeklogVo);
     //根据周报id查找数据

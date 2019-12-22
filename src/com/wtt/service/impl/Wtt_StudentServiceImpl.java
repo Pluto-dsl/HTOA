@@ -23,10 +23,10 @@ public class Wtt_StudentServiceImpl extends BaseDao implements Wtt_StudentServic
         return listBySQL(sql);
     }
 
-    @Override
+   /* @Override
     public int pagecounts() {
         return selTotalRow("select count(*) from holidayStudent");
-    }
+    }*/
 
     @Override
     public int wentipagecounts() {
@@ -50,7 +50,7 @@ public class Wtt_StudentServiceImpl extends BaseDao implements Wtt_StudentServic
         return listBySQL(sql);
     }
 
-    @Override
+   /* @Override
     public String student(String name) {
         String sql = "select s.stuname from student s where s.intrphone = '"+name+"'";
         System.out.println(sql);
@@ -59,7 +59,7 @@ public class Wtt_StudentServiceImpl extends BaseDao implements Wtt_StudentServic
             return map.get("stuname").toString();
         }
         return null;
-    }
+    }*/
 
     @Override
     public void update(FeedbackVo feedbackVo) {

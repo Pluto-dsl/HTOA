@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -20,6 +21,12 @@ import java.util.List;
 public class Wtt_ArrangeController {
     @Resource
     Wtt_ArrangeService wtt_arrangeService;
+
+    //无权限时跳转页面
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
 
     //去到值班管理页面
     @RequestMapping(value = "/arrangePage")
@@ -54,7 +61,7 @@ public class Wtt_ArrangeController {
         }
         //获取总行数
         int rows =wtt_arrangeService.pagecount();
-        System.out.println("总行数:"+rows);
+        /*System.out.println("总行数:"+rows);*/
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","提示");
         jsonObject.put("code",0);
