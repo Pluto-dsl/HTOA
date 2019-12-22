@@ -160,7 +160,7 @@ public class Ljw_LogsServiceImpl extends BaseDao implements Ljw_LogsService {
         //遍历结果集
         for (EquipmentRepairVo vo:
                 data) {
-            System.out.println(vo);
+             //System.out.println(vo);
             JSONObject jo = new JSONObject();
             //定义时间转换类
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");

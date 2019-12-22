@@ -136,7 +136,6 @@ public class Zero_EmpController {
         //输入的原密码是否正确
         int empid =((EmpVo)session.getAttribute("admin")).getEmpId();
         int i = empService.ispwd(empid,pwd);
-        System.out.println("i的大小"+i);
         if(empService.ispwd(empid,pwd)!=1){//原密码错误
             writer.print("error");
             writer.flush();

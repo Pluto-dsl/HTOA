@@ -155,7 +155,7 @@ public class Zhq_NoticeController {
         NoticeVo noticeVo = new NoticeVo();
         NoticeVo noticeVo1 = (NoticeVo) zhq_noticeService.selNoticeId(noticeVo.getClass(),noticeId);
         noticeVo1.getNoticeTime();
-        System.out.println(noticeVo1.getNoticeTime());
+         //System.out.println(noticeVo1.getNoticeTime());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String noticeTime = simpleDateFormat.format(noticeVo1.getNoticeTime());
         request.setAttribute("noticeTime",noticeTime);
@@ -214,7 +214,7 @@ public class Zhq_NoticeController {
     @ResponseBody
     public JSONObject selNoticeParticulars(int noticeId,int noticeType){
         JSONObject jsonObject = new JSONObject();
-        System.out.println("获取到的类型数字是"+noticeType);
+         //System.out.println("获取到的类型数字是"+noticeType);
         List list = new ArrayList();
         if(noticeType ==1){
             list = zhq_noticeService.selParticulars(noticeId);//查询员工

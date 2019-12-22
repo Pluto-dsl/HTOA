@@ -12,7 +12,7 @@ import java.util.Map;
 public interface Wtt_StudentService {
     List<StudentLeaveVo> studentleave(int id);
     //查询总页数
-    int pagecounts();
+    /*int pagecounts();*/
     //查询总页数
     int wentipagecounts();
     //查询问题反馈
@@ -22,7 +22,7 @@ public interface Wtt_StudentService {
     //查询意见
     List<Collect_OpinionsVo> selectyijian(int id);
     //查询学生
-    String student(String name);
+    /*String student(String name);*/
     //新增意见之后问题反馈的状态改为已处理（2）
     void update(FeedbackVo feedbackVo);
     //根据id去查找问题反馈

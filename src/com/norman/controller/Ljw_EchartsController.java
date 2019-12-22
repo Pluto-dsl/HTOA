@@ -19,6 +19,11 @@ public class Ljw_EchartsController {
     @Resource
     Ljw_EchartsService service;
 
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
+
     @ResponseBody
     @RequestMapping(value = "/getEmpBarData")//获取所有员工的请假次数
     public void getEmpBarData(HttpServletResponse response) throws IOException {

@@ -94,7 +94,7 @@ public class EmpInfoImpl extends BaseDao implements EmpInfo {
     @Override
     public int aduitSocre(int id) {
         Map map = (Map) (super.listBySQL("select Scores from aduitModel where aduitModelid ="+id)).get(0);
-        System.out.println("查出的值"+map.get("Scores"));
+         //System.out.println("查出的值"+map.get("Scores"));
         return (int) map.get("Scores");
     }
 

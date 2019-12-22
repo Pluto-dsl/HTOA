@@ -26,6 +26,11 @@ public class Jack_Evaluation {
     @Resource
     private Jack_Service service;
 
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
+
     @RequestMapping(value = "toEvaluationContext")
     public String toEvaluationContext(){
         return "emp_xzq/evaluation";
@@ -46,7 +51,7 @@ public class Jack_Evaluation {
     public Map teacherList(){
         Map map = new HashMap();
         List list = service.selTeacherList();
-        System.out.println(list+"================");
+         //System.out.println(list+"================");
         map.put("msg","提示");
         map.put("code","0");
         map.put("data",list);
@@ -56,14 +61,14 @@ public class Jack_Evaluation {
     @RequestMapping(value = "/addEvaluation")
     @ResponseBody
     public String addEvaluation(String evaluationName,String evaluationType,String remark){
-        System.out.println(evaluationName+evaluationType+remark+"---------------");
+         //System.out.println(evaluationName+evaluationType+remark+"---------------");
         evaluationVo evaluation = new evaluationVo();
         evaluation.setEvaluationName(evaluationName);
         evaluation.setEvaluationType(Integer.parseInt(evaluationType));
         evaluation.setScore(10);
         evaluation.setIsOpen(2);
         int a = service.addAevaluation(evaluation);
-        System.out.println(a+"-===-=-=-==-=-");
+         //System.out.println(a+"-===-=-=-==-=-");
         return "成功";
     }
 
@@ -85,7 +90,7 @@ public class Jack_Evaluation {
         int currPage = Integer.parseInt(request.getParameter("page"));
         int pageSize = Integer.parseInt(request.getParameter("limit"));
         response.setContentType("text/html;charset=utf-8");
-        System.out.println(Name+"fwfewf"+duties+"---------------");
+         //System.out.println(Name+"fwfewf"+duties+"---------------");
         List list = service.selTeacherListE(Name,duties,currPage,pageSize);
         PrintWriter out = response.getWriter();
         JSONObject json = new JSONObject();
@@ -93,7 +98,7 @@ public class Jack_Evaluation {
         json.put("code","0");
         json.put("data",list);
         json.put("count",list.size());
-        System.out.println(json.toJSONString());
+         //System.out.println(json.toJSONString());
         out.print(json);
         out.close();
     }
@@ -113,7 +118,7 @@ public class Jack_Evaluation {
         json.put("msg","提示");
         json.put("code","0");
         json.put("data",list);
-        System.out.println(json.toJSONString());
+         //System.out.println(json.toJSONString());
         out.print(json);
         out.close();
     }
@@ -132,14 +137,14 @@ public class Jack_Evaluation {
     @ResponseBody
     public void ScoreDetails(HttpServletResponse response) throws IOException {
         response.setContentType("text/html;charset=utf-8");
-        System.out.println(tid+"fwfewf"+cid+"---------------");
+         //System.out.println(tid+"fwfewf"+cid+"---------------");
         List list = service.selScoreDetails(tid,cid);
         PrintWriter out = response.getWriter();
         JSONObject json = new JSONObject();
         json.put("msg","提示");
         json.put("code","0");
         json.put("data",list);
-        System.out.println(json.toJSONString());
+         //System.out.println(json.toJSONString());
         out.print(json);
         out.close();
     }
@@ -160,7 +165,7 @@ public class Jack_Evaluation {
         if("Headmaster".equals(type)){
             List evaluate = service.selHeadmasterTest(stu.getStudid());
             List problem = service.selHeadmasterType();
-            System.out.println(evaluate);
+             //System.out.println(evaluate);
             Map json = new HashMap();
             for(int a=0;a<evaluate.size();a++){
                 Map map=(Map)evaluate.get(a);
@@ -171,7 +176,7 @@ public class Jack_Evaluation {
             }
             request.setAttribute("teacher","班主任");
             request.setAttribute("evaluate",json);
-            System.out.println(problem);
+             //System.out.println(problem);
             request.setAttribute("problem",problem);
             return "emp_xzq/HeadmasterEva";
         }else if("Teachar".equals(type)){ //进入教师考评
@@ -187,7 +192,7 @@ public class Jack_Evaluation {
             }
             request.setAttribute("teacher","授课老师");
             request.setAttribute("evaluate",json);
-            System.out.println(problem);
+             //System.out.println(problem);
             request.setAttribute("problem",problem);
             return "emp_xzq/HeadmasterEva";
         }
@@ -239,28 +244,28 @@ public class Jack_Evaluation {
             for (int i = 0; i < list1.length; i++) {
                 number.add(list1[i]);
                 evaluationid.add(list2[i]);
-                System.out.println(number);
-                System.out.println(evaluationid);
+                 //System.out.println(number);
+                 //System.out.println(evaluationid);
                 evaluation = (String) evaluationid.get(i);
                 number1 = (String) number.get(i);
                 teacher.setTeacherScore(Integer.parseInt(number1));
                 teacher.setEvaluationid(Integer.parseInt(evaluation));
                 service.addHeadmaster(teacher);
-                System.out.println(teacher);
+                 //System.out.println(teacher);
             }
         }else if("授课老师".equals(type)) {
             teacher.setEvaluationType(1);
             for (int i = 0; i < list1.length; i++) {
                 number.add(list1[i]);
                 evaluationid.add(list2[i]);
-                System.out.println(number);
-                System.out.println(evaluationid);
+                 //System.out.println(number);
+                 //System.out.println(evaluationid);
                 evaluation = (String) evaluationid.get(i);
                 number1 = (String) number.get(i);
                 teacher.setTeacherScore(Integer.parseInt(number1));
                 teacher.setEvaluationid(Integer.parseInt(evaluation));
                 service.addTeacher(teacher);
-                System.out.println(teacher);
+                 //System.out.println(teacher);
             }
         }
 
