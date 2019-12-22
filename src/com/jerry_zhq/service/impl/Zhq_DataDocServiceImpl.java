@@ -39,7 +39,7 @@ public class Zhq_DataDocServiceImpl extends BaseDao implements Zhq_DataDocServic
     public void addDoc(DataDocVo dataDocVo, MultipartFile file, HttpServletRequest request) throws IOException {
         //获取原文件的文件名
         String oldName = file.getOriginalFilename();
-        System.out.println("获取到的文件名是"+oldName);
+         //System.out.println("获取到的文件名是"+oldName);
 
 
         // 截取文件的扩展名
@@ -48,7 +48,7 @@ public class Zhq_DataDocServiceImpl extends BaseDao implements Zhq_DataDocServic
 
         //构造文件写入位置
         String paht = request.getSession().getServletContext().getRealPath("\\");
-        System.out.println("位置"+paht);
+         //System.out.println("位置"+paht);
 
         //给文件夹加上日期
         Calendar calendar = Calendar.getInstance();
@@ -59,7 +59,7 @@ public class Zhq_DataDocServiceImpl extends BaseDao implements Zhq_DataDocServic
         }
 
         paht +="WEB-INF\\"+"static\\"+ "upload\\" + calendar.get(Calendar.YEAR) + month2+ calendar.get(Calendar.DAY_OF_MONTH);
-        System.out.println(paht);
+         //System.out.println(paht);
 
         //判断文件是否存在
         File dir = new File(paht);
@@ -72,7 +72,7 @@ public class Zhq_DataDocServiceImpl extends BaseDao implements Zhq_DataDocServic
 
         //拼凑完整的的文件名
         String filePath = paht+"\\" +s+extName;
-        System.out.println("完整的文件名是"+ filePath);
+         //System.out.println("完整的文件名是"+ filePath);
         File file1 = new File(filePath);
         //保存文件
         file.transferTo(file1);

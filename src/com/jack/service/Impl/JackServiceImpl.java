@@ -316,7 +316,7 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
         month = cal.get(Calendar.MONTH);
         month++;
         sql +=" and chatDate < '"+year+"-"+month+"-01 00:00:00'";
-        System.out.println(sql);
+         //System.out.println(sql);
         return selTotalRow(sql);
     }
 

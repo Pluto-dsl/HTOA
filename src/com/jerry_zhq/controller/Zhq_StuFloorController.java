@@ -44,7 +44,7 @@ public class Zhq_StuFloorController {
     @RequestMapping("/deleteStu")
     @ResponseBody
     public String delDept(int floorId){
-        System.out.println("获取到的id是"+floorId);
+         //System.out.println("获取到的id是"+floorId);
         StudntBuildingVo sb = new StudntBuildingVo();
         sb.setFloorId(floorId);
         zhq_stuFloorService.deleteStuBiu(sb);

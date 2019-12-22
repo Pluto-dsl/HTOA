@@ -36,7 +36,7 @@ public class Ljw_sysSetServiceImpl extends BaseDao implements Ljw_sysSetService 
 
     @Override
     public String delDept(int id) {
-        System.out.println(id);
+         //System.out.println(id);
         if (super.listBySQL("SELECT * FROM studentClass WHERE deptId = "+id).size() >= 1){
             return "isUsed";
         }else if (super.listBySQL("SELECT * FROM major WHERE deptid = "+id).size() >= 1){

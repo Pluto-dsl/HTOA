@@ -18,14 +18,19 @@ public class LoginController {
     @Resource
     private LoginService loginService;
 
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
+
     @RequestMapping(value = "/login")
     public void login(HttpServletRequest request,HttpServletResponse response,String phone, String pwd) throws IOException {
         HttpSession session = request.getSession();
 
         EmpVo emp = loginService.empByAcc(phone);
         StudentVo stu = loginService.stuByAcc(phone);
-        System.out.println(emp);
-        //System.out.println(stu);
+         //System.out.println(emp);
+        // //System.out.println(stu);
 
         PrintWriter out = response.getWriter();
         String result = "";

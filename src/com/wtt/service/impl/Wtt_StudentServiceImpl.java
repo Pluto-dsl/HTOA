@@ -53,7 +53,7 @@ public class Wtt_StudentServiceImpl extends BaseDao implements Wtt_StudentServic
     @Override
     public String student(String name) {
         String sql = "select s.stuname from student s where s.intrphone = '"+name+"'";
-        System.out.println(sql);
+         //System.out.println(sql);
         List<Map> list = listBySQL(sql);
         for (Map map:list) {
             return map.get("stuname").toString();

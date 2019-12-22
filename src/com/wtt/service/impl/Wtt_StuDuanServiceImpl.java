@@ -41,7 +41,7 @@ public class Wtt_StuDuanServiceImpl extends BaseDao implements Wtt_StuDuanServic
         String sql = "select c.className from student s \n" +
                 "left join studentClass c on s.clazz = c.classId\n" +
                 "where s.Studid= '"+id+"'";
-        System.out.println(sql);
+         //System.out.println(sql);
         List<Map> list = listBySQL(sql);
         for (Map map:list) {
             return map;
@@ -77,7 +77,7 @@ public class Wtt_StuDuanServiceImpl extends BaseDao implements Wtt_StuDuanServic
                 "left join emp e on cla.teacher = e.empId\n" +
                 "left join emp e2 on cla.classTeacher = e2.empId\n" +
                 "where s.Studid= '"+id+"'";
-        System.out.println(sql);
+         //System.out.println(sql);
         List<Map> list = listBySQL(sql);
         for (Map map:list) {
             return map;

@@ -21,6 +21,11 @@ public class Ljw_SystemSettingController {
     @Resource
     private Ljw_sysSetService service;
 
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
+
     @RequestMapping(value = "/toDeptList")
     public String toDeptList(){
         return "systemSet_ljw/deptList";
@@ -71,7 +76,7 @@ public class Ljw_SystemSettingController {
     @ResponseBody
     @RequestMapping(value = "/delDept")
     public void delDept(HttpServletResponse response,int id) throws IOException {
-        System.out.println("delDept");
+         //System.out.println("delDept");
         String result = service.delDept(id);
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();

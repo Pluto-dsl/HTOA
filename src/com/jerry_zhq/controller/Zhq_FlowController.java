@@ -64,7 +64,7 @@ public class Zhq_FlowController {
     //上传
     @RequestMapping("/addFlow")
     public String addFlow(MultipartFile file){
-        System.out.println("获取到的文件名是"+file.getOriginalFilename());
+         //System.out.println("获取到的文件名是"+file.getOriginalFilename());
         try {
             //创建临时file对象
             File pdFile = File.createTempFile("tem",null);
@@ -72,7 +72,7 @@ public class Zhq_FlowController {
             file.transferTo(pdFile);
             //部署
             org.activiti.engine.repository.Deployment deployment = repositoryService.createDeployment().addZipInputStream(new ZipInputStream(new FileInputStream(pdFile))).deploy();
-            System.out.println("ID"+ deployment.getId());
+             //System.out.println("ID"+ deployment.getId());
         } catch (IOException e) {
             e.printStackTrace();
         }

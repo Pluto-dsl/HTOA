@@ -77,7 +77,7 @@ public class Pluto_StudentMsgImpl extends BaseDao implements Pluto_StudentMsg {
 
         sh.setHappening(content);
         sh.setOptime(time);
-        System.out.println("---------"+sh.toString());
+         //System.out.println("---------"+sh.toString());
         super.updObject(sh);
     }
 
