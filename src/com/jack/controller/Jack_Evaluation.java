@@ -26,10 +26,7 @@ public class Jack_Evaluation {
     @Resource
     private Jack_Service service;
 
-    @RequestMapping("/toNo")
-    public String toNo(){
-        return "controller_pluto/NO";
-    }
+
 
     @RequestMapping(value = "toEvaluationContext")
     public String toEvaluationContext(){
