@@ -1,5 +1,6 @@
 package com.pluto.service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.publics.vo.sys.CharModuleVo;
 import com.publics.vo.sys.CharactersVo;
 
@@ -13,4 +14,11 @@ public interface Pluto_LcController {
     boolean judge(int moduleId);
     void deleteCharModel(int moduleId);
     void addcharModule(CharModuleVo charModuleVo);
+    void addObject(Object o);
+    boolean judgeUser(int mid);
+    void deleteUAC(int mid);
+    JSONArray getUAC(int id);
+//    _________________
+    List getControllerList(int id);
+    List getControllerList2();
 }

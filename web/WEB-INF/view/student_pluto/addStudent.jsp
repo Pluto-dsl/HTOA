@@ -367,11 +367,6 @@
                     data:data.field,
                     success: function(data){
                         document.getElementById("form1").reset();
-
-                        // window.location.close();
-                        // window.parent.location.replace(location.href)//刷新父级页面
-                        // window.parent.location.reload();
-                        // parent.layer.closeAll();
                     }
                 });
                 window.parent.location.reload();

@@ -72,6 +72,9 @@
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="${pageContext.request.contextPath}/logout">注销</a></dd>
+                    <dd>
+                        <a href="http://wpa.qq.com/msgrd?v=3&uin=823465919&site=qq&menu=yes" target="_blank">客服交谈</a>
+                    </dd>
                 </dl>
             </li>
         </ul>
