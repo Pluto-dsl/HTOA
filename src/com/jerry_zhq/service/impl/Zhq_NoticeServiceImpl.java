@@ -103,9 +103,17 @@ public class Zhq_NoticeServiceImpl extends BaseDao implements Zhq_NoticeService 
     //根据id查询公告详情
     @Override
     public List selParticulars(int noticeId) {
-        return listBySQL("select  e.empName,n.title,n.empid,n.noticeTime,r.receiver,r.isRead from notice n\n" +
+        return listBySQL("select  e.empName as js,n.title,n.empid,n.noticeTime,r.receiver,r.isRead from notice n\n" +
                 "left join recipient r on n.noticeId=r.noticeId \n" +
-                "left join emp e on r.receiver = e.empid where n.noticeId ="+noticeId);
+                "left join emp e on r.receiver = e.empid where n.noticeId ="+noticeId + " and type=1");
+    }
+
+    @Override
+    public List selParticulars2(int noticeId) {
+        return listBySQL("select  s.stuname as js,n.title,n.empid,n.noticeTime,r.receiver,r.isRead from notice n\n" +
+                "left join recipient r on n.noticeId=r.noticeId \n" +
+                "left join student s on  r.receiver=s.Studid\n" +
+                "where n.noticeId ="+noticeId+" and type=2");
     }
 
     //根据id查询是否未读公告

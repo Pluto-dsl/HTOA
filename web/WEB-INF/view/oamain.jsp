@@ -287,7 +287,7 @@
                                                    data-url="${pageContext.request.contextPath}/zeroLeave/toleave"
                                                    data-id="请假管理" data-title="请假管理">
                                                     <i class="layui-icon layui-icon-survey"></i>
-                                                    <cite>员工请假待审批(<span id="emp"></span>)</cite>
+                                                    <cite>员工请假待审批(<span id="emp">0</span>)</cite>
                                                 </a>
                                             </li>
                                             <li class="layui-col-xs3">
@@ -295,7 +295,7 @@
                                                     data-url="${pageContext.request.contextPath}/student/selectleave"
                                                     data-id="学生请假" data-title="学生请假" >
                                                     <i class="layui-icon layui-icon-star"></i>
-                                                    <cite>学生请假待审批(<span id="stu"></span>)</cite>
+                                                    <cite>学生请假待审批(<span id="stu">0</span>)</cite>
                                                 </a>
                                             </li>
                                             <li class="layui-col-xs3">
@@ -303,13 +303,13 @@
                                                    data-url="${pageContext.request.contextPath}/jack/toAtt"
                                                    data-id="考勤管理" data-title="考勤管理" >
                                                     <i class="layui-icon layui-icon-form"></i>
-                                                    <cite>未打卡待审批(<span id="clock"></span>)</cite>
+                                                    <cite>未打卡待审批(<span id="clock">0</span>)</cite>
                                                 </a>
                                             </li>
                                              <li class="layui-col-xs3">
                                                 <a lay-href="">
                                                     <i class="layui-icon layui-icon-face-surprised"></i>
-                                                    <cite>未读通知公告(<span id="Notice"></span>)</cite>
+                                                    <cite>未读通知公告(<span id="Notice">0</span>)</cite>
                                                 </a>
                                             </li>
                                             <li class="layui-col-xs3">
@@ -324,7 +324,7 @@
                                             <li class="layui-col-xs3">
                                                 <a lay-href="">
                                                     <i class="layui-icon layui-icon-face-smile"></i>
-                                                    <cite>月谈心记录(已完成<span id="talk"></span>个)</cite>
+                                                    <cite>月谈心记录(已完成<span id="talk">0</span>个)</cite>
                                                     <span style="color:red;margin-left:10px;font-size: 11px;">每月需完成5个</span>
                                                 </a>
                                             </li>
@@ -351,6 +351,7 @@
     layui.use('element', function(){
         var element = layui.element;
         var $ = layui.jquery;
+        yb();
 
         $("#flush").on('click',function () {
             yb();

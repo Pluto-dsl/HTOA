@@ -17,4 +17,5 @@ public interface Zhq_StuFloorService {
 
     //添加
     void  addStuBiu(StudntBuildingVo studntBuildingVo);
+
 }

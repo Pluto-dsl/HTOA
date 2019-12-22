@@ -10,7 +10,7 @@
 <html>
 <jsp:include page="../include.jsp"/>
 <head>
-    <title>员工展示页</title>
+    <title>班级展示页</title>
     <style>
         .layui-form-item{
             width: 150px;

@@ -49,6 +49,10 @@ public class Wtt_StuDuanServiceImpl extends BaseDao implements Wtt_StuDuanServic
         return null;
     }
 
+    /*@Override
+    public Map studentid(String name) {
+        return null;
+    }*/
 
     @Override
     public List<StudentLeaveVo> studentleave(int currpage, int pagesize) {

@@ -54,7 +54,7 @@
                                     <input type="hidden" class="noticeId" value="${list.noticeId}">
                                     <input type="hidden" class="isRead" value="${list.isRead}">
                                     <div class="layui-serachlist-text">
-                                        <h3>
+                                        <h3 style="border-bottom:solid 1px #82828245;">
                                             <span class="title">${list.title}</span>
                                             <c:if test="${list.isRead == 2}">
                                                 <i class="layui-icon layui-icon-notice" id="myTitle" style="margin-left:10px;"></i>

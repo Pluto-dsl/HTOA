@@ -1,6 +1,9 @@
 package com.zero.controller;
 
+import com.alibaba.fastjson.JSONArray;
+import com.publics.utills.StringUtill;
 import com.publics.vo.studentModel.StudentClassVo;
+import com.publics.vo.studentModel.StudentFallVo;
 import com.zero.service.StudentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -34,6 +41,22 @@ public class Zero_StudentClass {
         return "student_zero/studentClass";
     }
 
+    @RequestMapping(value = "/tofall")
+    public String tofall(){//去届别管理页面
+        return "student_zero/studentFall";
+    }
+
+    @RequestMapping(value = "/StudentFall")
+    @ResponseBody//届别表格数据
+    public Map StudentFall(){
+        Map map = new HashMap();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",1);
+        map.put("data",service.allLevel());
+        return map;
+    }
+
     @RequestMapping(value = "/allClass")
     @ResponseBody
     public Map allClass(){//查询所有班级
@@ -44,7 +67,16 @@ public class Zero_StudentClass {
         map.put("data",service.allClas());
         return map;
     }
-
+    //新增或修改届别
+    @RequestMapping(value = "/addFall")
+    public void addFall(StudentFallVo fallVo, HttpServletResponse response) throws IOException {
+        service.addFall(fallVo);
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter writer = response.getWriter();
+        writer.print("ok");
+        writer.flush();
+        writer.close();
+    }
     @RequestMapping(value = "/seek")
     @ResponseBody
     public Map seek(int level){//筛选届别
@@ -58,9 +90,13 @@ public class Zero_StudentClass {
 
     @RequestMapping(value = "/deleteClass")
     @ResponseBody
-    public String deleteClass(int classId){//删除班级
+    public void deleteClass(int classId,HttpServletResponse response) throws IOException {//删除班级
         service.deleteClass(classId);
-        return "ok";
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter writer = response.getWriter();
+        writer.flush();
+        writer.close();
+        writer.write("ok");
     }
 
     @RequestMapping(value = "classStudent")
@@ -76,7 +112,6 @@ public class Zero_StudentClass {
 
     @RequestMapping(value = "addClass")
     public String addClass(StudentClassVo classVo){//新增or修改班级
-        System.out.println("新增班级:"+classVo);
         service.addClass(classVo);
         return "redirect:toClass";
     }

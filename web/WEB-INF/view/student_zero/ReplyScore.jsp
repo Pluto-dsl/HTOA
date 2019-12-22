@@ -140,12 +140,12 @@
                 , {field: 'className', title: '班级名称', width: 200}
                 , {field: 'projectName', title: '项目名称', width: 150}
                 , {field: 'empName', title: '评分老师', width: 150}
-                , {field: 'score1',title:'功能完善50',width:103,sort:'true'}
-                , {field: 'Score2',title:'技术难度10',width:105,sort:'true'}
-                , {field: 'Score3',title:'界面完美10',width:105,sort:'true'}
-                , {field: 'Score4',title:'回答问题10',width:105,sort:'true'}
-                , {field: 'Score5',title:'演示方法10',width:105,sort:'true'}
-                , {field: 'Score6',title:'语言表达10',width:105,sort:'true'}
+                , {field: 'score1',title:'功能完善50',width:120,sort:'true'}
+                , {field: 'Score2',title:'技术难度10',width:120,sort:'true'}
+                , {field: 'Score3',title:'界面完美10',width:120,sort:'true'}
+                , {field: 'Score4',title:'回答问题10',width:120,sort:'true'}
+                , {field: 'Score5',title:'演示方法10',width:120,sort:'true'}
+                , {field: 'Score6',title:'语言表达10',width:120,sort:'true'}
                 , {field: 'Score7',title:'总分100',width:100,sort:'true'}
                 , {field: 'Remark', title: '备注', width: 100}
             ]],

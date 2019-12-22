@@ -46,7 +46,7 @@
                     <option value="3">申请驳回</option>
                 </select>
             </div>
-        <br><br>审核说明:<div class="layui-input-inline"><input type="text" name="specification" required lay-verify="required" placeholder="请输入审核说明" autocomplete="off" class="layui-input"></div>
+        <br><br>审核说明:<div class="layui-input-inline"><input type="text" name="specification" placeholder="请输入审核说明" autocomplete="off" class="layui-input"></div>
         <br><br><br><button style="margin-left: 25%"  align="center" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
     </form>
 </div>

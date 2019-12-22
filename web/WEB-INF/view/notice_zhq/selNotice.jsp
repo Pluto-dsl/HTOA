@@ -31,9 +31,9 @@
                 <label class="layui-form-label">类别：</label>
                 <div class="layui-input-inline">
                     <select name="noticeType" lay-filter="parentId">
-                        <option value="3" selected>全体学生</option>
-                        <option value="2">全体员工</option>
-                        <option value="1">所有人</option>
+                        <option value="1" selected>全体员工</option>
+                        <option value="2">全体学生</option>
+                        <option value="3">所有人</option>
                     </select>
                 </div>
             </div>
@@ -81,7 +81,17 @@
                 {field: 'noticeId', title: '编号', width: 100, sort: true}
                 ,{field: 'title', title: '标题', width: 250}
                 ,{field: 'content', title: '通知内容', hide:true}
-                ,{field: 'noticeType', title: '类别', width: 100}
+                , {
+                    field: 'noticeType', title: '类别', width: 100, templet: function (d) {
+                        if (d.noticeType === 1) {
+                            return "员工"
+                        } else if (d.noticeType === 2) {
+                            return "学生"
+                        }else if (d.noticeType === 3) {
+                            return "所有人"
+                        }
+                    }
+                }
                 ,{field: 'empid', title: '发布人', width: 150}
                 ,{field: 'noticeTime', title: '发布时间', width: 250 ,templet:'<div>{{ layui.util.toDateString(d.noticeTime,"yyyy-MM-dd HH:mm:ss ")}}</div>'}
                 ,{field: 'trueContent', title: '已读人数', width: 100}
@@ -162,12 +172,12 @@
                     elem: '#particulars2', //指定原始表格元素选择器（推荐id选择器）
                     height: 'auto', //容器高度
                     title:'查看公告详情',
-                    url:"${pageContext.request.contextPath}/zhq/selNoticeParticulars?noticeId="+data.noticeId,
+                    url:"${pageContext.request.contextPath}/zhq/selNoticeParticulars?noticeId="+data.noticeId +"&noticeType="+data.noticeType,
                     cols: [[ //标题栏
                         {field: 'title', title: '标题', sort: true}
                         ,{field: 'empid', title: '发布人', sort: true}
                         ,{field: 'noticeTime', title: '发布时间', width:250,templet:'<div>{{ layui.util.toDateString(d.noticeTime,"yyyy-MM-dd HH:mm:ss ")}}</div>'}
-                        ,{field: 'empName', title: '接收人', sort: true}
+                        ,{field: 'js', title: '接收人', sort: true}
                         ,{field: 'isRead', title: '是否已读', sort: true,templet:function (d) {
                                 if (d.isRead === 1){
                                     return"已读"

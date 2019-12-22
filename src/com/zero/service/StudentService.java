@@ -19,5 +19,6 @@ public interface StudentService {
     List<MajorVo> major();//专业名称
     void deleteClass(int classid);//删除班级
     void addClass(StudentClassVo classVo);//新增or修改班级
+    void addFall(StudentFallVo fallVo);//新增or修改届别
     List<Map> classStudent(int classId);//查询选中班级所有学生
 }

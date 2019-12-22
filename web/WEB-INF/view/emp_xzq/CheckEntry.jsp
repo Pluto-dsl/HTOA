@@ -20,7 +20,7 @@
             <tr>
                 <td>考核指标:</td>
                 <td>
-                    <select id="aduitModelid" name="aduitModelid" lay-verify="required">
+                    <select id="aduitModelid" name="aduitModelid" lay-filter="kaohe" lay-verify="required">
                         <option value="">请选择考核指标</option>
                     </select>
                 </td>
@@ -34,27 +34,24 @@
             <tr>
                 <td>考核分数:</td>
                 <td>
-                    <input type="text" id="Scores" name="Scores" required lay-verify="number" placeholder="请输入考核分数" autocomplete="off" class="layui-input">
+                    <input type="text" id="Scores" readonly="readonly" name="Scores" required lay-verify="number" placeholder="请输入考核分数" autocomplete="off" class="layui-input">
                 </td>
-                <td>考核时间:</td>
-                <td>
-                    <input type="text" class="layui-input" id="auditDate" name="auditDate" autocomplete="off" placeholder="yyyy-MM-dd">
-                </td>
-            </tr>
-            <tr>
                 <td>考核说明:</td>
                 <td>
                     <input type="text" id="Remark" name="Remark" required lay-verify="required" placeholder="请输入考核说明" autocomplete="off" class="layui-input">
                 </td>
-                <td>录入人员:</td>
-                <td><input readonly="readonly" id="auditPerson" name="auditPerson" value="${sessionScope.admin.empName}" placeholder="请输入课程类型"  class="layui-input"></td>
             </tr>
             <tr>
+                <input type="hidden" name="auditDate" id="auditDate" value="" />
+                <td>录入人员:</td>
+                <td><input readonly="readonly" id="auditPerson" name="auditPerson" value="${sessionScope.admin.empName}" placeholder="请输入课程类型"  class="layui-input"></td>
                 <td align="center"  colspan="2" >
                     <button type="button" class="layui-btn" id="upload1">上传图片</button>
                     <input type="hidden" id="img_url" name="Image" value="" />
                 </td>
-                <td align="center"  colspan="2">
+            </tr>
+            <tr>
+                <td align="center"  colspan="4">
                     <div style="width:200px;height:200px;border:3px solid #0099CC;border-radius: 5px;padding: 3px;">
                         <img style="max-width: 200px;max-height:200px;" id="preview">
                         <div id="demoText"></div>
@@ -78,6 +75,8 @@
         var form = layui.form;
         var laydate = layui.laydate;
         var upload = layui.upload;
+
+        $("#auditDate").val(new Date);
 
         //执行一个laydate实例
         laydate.render({
@@ -112,6 +111,14 @@
                 });
             }
         });
+
+        /** 获取考核分数 */
+        form.on('select(kaohe)',function (data) {
+            $.get('${pageContext.request.contextPath}/jack/Scores',{Scores:data.value},function (data) {
+                $("#Scores").val(data);
+            });
+        });
+
 
         form.on('submit(Asubmit)', function (data) {
             console.log(data);
