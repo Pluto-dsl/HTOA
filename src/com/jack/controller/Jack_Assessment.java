@@ -29,6 +29,11 @@ public class Jack_Assessment {
     @Resource
     private Jack_Service service;
 
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
+
     /** 考核指标 */
     @RequestMapping(value = "/toAssessmentPage")
     public String toAssessmentPage(){
