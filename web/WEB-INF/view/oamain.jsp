@@ -488,7 +488,7 @@
                 data:data.field,
                 success:function (d) {
                     if(d=="error"){//原来密码错误
-                        layer.msg('您输入的原密码错误!')
+                        layer.msg('您输入的原密码错误!请重新输入!')
                         $("#pwd").focus()
                         return;
                     }

@@ -148,4 +148,10 @@ public class Zero_EmpController {
         writer.flush();
         writer.close();
     }
+
+
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
 }
