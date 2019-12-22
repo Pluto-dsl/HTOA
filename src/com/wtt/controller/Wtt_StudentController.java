@@ -59,11 +59,7 @@ public class Wtt_StudentController {
     @Resource
     private Wtt_StuDuanService wtt_stuDuanService;
 
-    //无权时跳转页面
-    @RequestMapping("/toNo")
-    public String toNo(){
-        return "controller_pluto/NO";
-    }
+
 
     //学生请假查询
     @RequestMapping(value = "selectleave")
@@ -268,6 +264,7 @@ public class Wtt_StudentController {
         studentService.update(feedbackVo);
         //新增意见
         studentService.add(collect_opinionsVo);
+        request.setAttribute("ids",id);
         return "redirect:/student/questionPage";
     }
 
