@@ -47,6 +47,12 @@ public class Wtt_StuDuanController {
     @Resource
     private RepositoryService repositoryService;
 
+    //无权时跳转页面
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
+
     @RequestMapping(value = "/problem_feedback")
     public String problem_feedback(ModelMap modelMap,HttpSession session){
         List deplist = wtt_stuDuanService.dep();

@@ -3,6 +3,7 @@ package com.jerry_zhq.service.impl;
 import com.jerry_zhq.service.Zhq_StuDormService;
 import com.publics.dao.BaseDao;
 import com.publics.vo.studentModel.StudentDormitoryVo;
+import com.publics.vo.studentModel.StudentVo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -78,7 +79,11 @@ public class Zhq_StuDormServiceImpl extends BaseDao implements Zhq_StuDormServic
         return getObject(vo,id);
     }
 
-
-
-
+    @Override
+    public int size (int hourid) {
+        String sql="select count(*) from student s \n" +
+                "left join studentHuor sh on s.huor = sh.Hourid\n" +
+                "where sh.hourid= '"+hourid+"'";
+        return selTotalRow(sql);
+    }
 }
