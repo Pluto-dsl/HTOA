@@ -18,7 +18,7 @@ public class LoginController {
     @Resource
     private LoginService loginService;
 
-    @RequestMapping("/toNo")
+    @RequestMapping("/asd/toNo")
     public String toNo(){
         return "controller_pluto/NO";
     }
