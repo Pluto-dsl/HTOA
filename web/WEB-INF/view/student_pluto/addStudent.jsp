@@ -70,13 +70,13 @@
                 </td>
             </tr>
             <tr style="height: 40px">
-                <td>
-                    <label class="label-top">担&nbsp;&nbsp;&nbsp;&nbsp;保&nbsp;&nbsp;&nbsp;人:</label>
-                </td>
-                <td>
-                    <input  name="guarantee" id="guarantee" value="" class="layui-input"
-                            style="width:290px;">
-                </td>
+<%--                <td>--%>
+<%--                    <label class="label-top">担&nbsp;&nbsp;&nbsp;&nbsp;保&nbsp;&nbsp;&nbsp;人:</label>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <input  name="guarantee" id="guarantee" value="" class="layui-input"--%>
+<%--                            style="width:290px;">--%>
+<%--                </td>--%>
                 <td>
                     <label class="label-top">毕业学校:</label>
                 </td>
