@@ -72,9 +72,7 @@
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="${pageContext.request.contextPath}/logout">注销</a></dd>
-                    <dd>
-                        <a href="http://wpa.qq.com/msgrd?v=3&uin=823465919&site=qq&menu=yes" target="_blank">客服交谈</a>
-                    </dd>
+                    <dd><a href="javaScript:void(0)" onclick="editpwd()">修改密码</a></dd>
                 </dl>
             </li>
         </ul>
@@ -445,8 +443,65 @@
     window.setInterval("reinitIframe()",200);
 </script>
 <script>
-    layui.use([ 'element', 'table', 'layer', 'form' ,'laydate','layedit'],function() {
-
+    function editpwd(){//打开修改密码窗口
+        layui.use(['layer'],function() {
+            layer.open({
+                type: 1,
+                title:'修改登录密码',
+                skin: 'layui-layer-demo', //样式类名
+                closeBtn: 1, //不显示关闭按钮
+                area: ['500px', '300px'],
+                fixed: false, //不固定
+                maxmin: true,
+                //shadeClose: true, //开启遮罩关闭
+                content: $('#editwindows')
+                ,cancel: function(index, layero){
+                    $("#pwd").val("");
+                    $("#pwd1").val("");
+                    $("#pwd2").val("");
+                }
+            });
+        })
+    }
+    layui.use(['form','layer'],function() {
+        var layer = layui.layer;
+        var form = layui.form;
+        form.on('submit(pwdAction)', function(data){
+            //新旧密码
+            var pwd = data.field.pwd;
+            var pwd1 = data.field.pwd1;
+            var pwd2 = data.field.pwd2;
+            if(pwd1!=pwd2){
+                layer.msg('两次输入的新密码不一样!请重新输入!')
+                $("#pwd1").focus()
+                return false;
+            }
+            if(pwd1.length<6||pwd1.length>16){
+                layer.msg('新密码的长度必须为6~16位!')
+                return false;
+            }
+            $.ajax({
+                url:'<%=request.getContextPath()%>/zeroEmp/editpwd',
+                type:'post',
+                async:true,
+                dataType:'text',
+                data:data.field,
+                success:function (d) {
+                    if(d=="error"){//原来密码错误
+                        layer.msg('您输入的原密码错误!请重新输入!')
+                        $("#pwd").focus()
+                        return;
+                    }
+                    if(d=="ok"){
+                        layer.msg('修改成功!即将跳转到登录页面!')
+                        setTimeout(function () {
+                            window.location.href="<%=request.getContextPath()%>/logout";
+                        },1000)
+                    }
+                }
+            })
+            return false;
+        })
     })
 </script>
 </body>
