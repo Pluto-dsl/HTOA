@@ -349,4 +349,9 @@ public class Zero_EmpActiviti {
         }
         return "redirect: mytask";
     }
+
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
 }

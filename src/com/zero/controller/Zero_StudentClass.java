@@ -116,4 +116,8 @@ public class Zero_StudentClass {
         return "redirect:toClass";
     }
 
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
 }

@@ -44,7 +44,7 @@
                 <label class="label-top">亲属姓名:</label>
             </td>
             <td colspan="3">
-                <input  name="familyname" value="" id="familyname" class="layui-input"
+                <input  name="familyname" value="" lay-verify="required" id="familyname" class="layui-input"
                         style="width:290px;">
             </td>
         </tr>

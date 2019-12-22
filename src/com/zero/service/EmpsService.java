@@ -18,4 +18,6 @@ public interface EmpsService {
     List<Map> seekEmp(String sql);//条件搜索员工
     int statue(int empId);//查询当前员工状态
     void status(int state,int empId);//修改员工状态
+    int ispwd(int empId,String pwd);//判断原密码是否正确
+    void updatePwd(int empId,String pwd);//修改密码
 }
