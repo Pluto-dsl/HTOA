@@ -30,6 +30,11 @@ public class Ljw_SystemLogController {
     @Resource
     private Ljw_EmpService empService;
 
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
+
     @RequestMapping("/toEveryDayPage")//去往员工日常考核
     public String toEveryDayPage(Model model){
         model.addAttribute("depList",empService.getDepList());

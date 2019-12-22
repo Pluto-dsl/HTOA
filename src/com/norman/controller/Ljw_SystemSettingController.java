@@ -21,6 +21,11 @@ public class Ljw_SystemSettingController {
     @Resource
     private Ljw_sysSetService service;
 
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
+
     @RequestMapping(value = "/toDeptList")
     public String toDeptList(){
         return "systemSet_ljw/deptList";

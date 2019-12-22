@@ -18,6 +18,11 @@ public class LoginController {
     @Resource
     private LoginService loginService;
 
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
+
     @RequestMapping(value = "/login")
     public void login(HttpServletRequest request,HttpServletResponse response,String phone, String pwd) throws IOException {
         HttpSession session = request.getSession();

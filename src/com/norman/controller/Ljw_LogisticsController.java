@@ -27,6 +27,12 @@ import java.util.List;
 public class Ljw_LogisticsController {
     @Resource
     private Ljw_LogsService logsService;
+
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
+
     /**
      * 报修申请相关方法
      * */

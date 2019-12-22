@@ -28,6 +28,11 @@ public class Ljw_EmpController {
     @Resource
     private Ljw_EmpService empService;
 
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
+
     @RequestMapping(value = "/toChatRecordPage")
     public String toChatRecordPage(HttpServletRequest request){
         List<EmpVo> empList = empService.getEmpList();
