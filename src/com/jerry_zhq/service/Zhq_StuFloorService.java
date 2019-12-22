@@ -1,5 +1,6 @@
 package com.jerry_zhq.service;
 
+import com.publics.vo.studentModel.StudentDormitoryVo;
 import com.publics.vo.studentModel.StudntBuildingVo;
 import com.publics.vo.sys.DepVo;
 
@@ -18,4 +19,6 @@ public interface Zhq_StuFloorService {
     //添加
     void  addStuBiu(StudntBuildingVo studntBuildingVo);
 
+    //根据楼栋id查找该楼栋的宿舍
+    List<StudentDormitoryVo> list(int florid);
 }

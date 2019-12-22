@@ -72,7 +72,7 @@ public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
                 for (int id:emps) {
                     empIds +=+id+",";
                 }
-                System.out.println(empIds);
+                 //System.out.println(empIds);
                 empIds = empIds.substring(0,empIds.length()-1);
                 hql +=" and sayface in ("+empIds+")";
             }else {
@@ -88,7 +88,7 @@ public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
         if (!("".equals(endDay) || null == endDay)){
             hql +=" and chatDate<='"+endDay+"'";
         }
-        System.out.println(hql);
+         //System.out.println(hql);
 
         List<ChatRecordVo> list = pageByHql(hql,page,limit);
         for (ChatRecordVo chatRecordVo:list) {
@@ -102,7 +102,7 @@ public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
             crJO.put("chatDate",sdf.format(chatRecordVo.getChatDate()));
             crJO.put("addr",chatRecordVo.getAddr());
             crJO.put("sayscon",chatRecordVo.getSayscon());
-            System.out.println(crJO);
+             //System.out.println(crJO);
             data.add(crJO);
         }
         return data;
@@ -134,7 +134,7 @@ public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
                 for (int id:emps) {
                     empIds +=+id+",";
                 }
-                System.out.println(empIds);
+                 //System.out.println(empIds);
                 empIds = empIds.substring(0,empIds.length()-1);
                 hql +=" and sayface in ("+empIds+")";
             }else {
@@ -150,7 +150,7 @@ public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
         if (!("".equals(endDay) || null == endDay)){
             hql +=" and Workday<='"+endDay+"'";
         }
-        System.out.println(hql);
+         //System.out.println(hql);
         List<WeeklogVo> list = pageByHql(hql,page,limit);
         for (WeeklogVo vo:list) {
             //查询员工姓名
@@ -164,7 +164,7 @@ public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
             wlJO.put("studentQuestion",vo.getStudentQuestion());
             wlJO.put("idea",vo.getIdea());
             wlJO.put("weekNext",vo.getWeekNext());
-            System.out.println(wlJO);
+             //System.out.println(wlJO);
             data.add(wlJO);
         }
         return data;
@@ -180,7 +180,7 @@ public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
         }else {
             depId = Integer.parseInt(depIdStr);
         }
-        System.out.println(depId);
+         //System.out.println(depId);
         String startDay = request.getParameter("startDay");
         String endDay = request.getParameter("endDay");
         String hql = "select count(*) from WeeklogVo where 1=1";
@@ -203,7 +203,7 @@ public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
         if (!("".equals(endDay) || null == endDay)){
             hql +=" and Workday<='"+endDay+"'";
         }
-        System.out.println(hql);
+         //System.out.println(hql);
         return getCountByHql(hql);
     }
 

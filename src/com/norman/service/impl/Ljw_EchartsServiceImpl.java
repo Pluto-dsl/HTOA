@@ -56,7 +56,7 @@ public class Ljw_EchartsServiceImpl extends BaseDao implements Ljw_EchartsServic
             month = cal.get(Calendar.MONTH);
             month++;
             sql +=" and startTime < '"+year+"-"+month+"-01 00:00:00'";
-            System.out.println(sql);
+             //System.out.println(sql);
 
             data.add(super.listBySQL(sql).size());
         }

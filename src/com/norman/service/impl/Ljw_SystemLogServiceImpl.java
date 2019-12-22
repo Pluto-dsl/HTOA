@@ -50,7 +50,7 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
                 for (int id:emps) {
                     empIds +=+id+",";
                 }
-                System.out.println(empIds);
+                 //System.out.println(empIds);
                 empIds = empIds.substring(0,empIds.length()-1);
                 sql +=" and Empid in ("+empIds+")";
             }else {
@@ -97,7 +97,7 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
                 for (int id:emps) {
                     empIds +=+id+",";
                 }
-                System.out.println(empIds);
+                 //System.out.println(empIds);
                 empIds = empIds.substring(0,empIds.length()-1);
                 sql +=" and h.Empid in ("+empIds+")";
             }else {
@@ -121,7 +121,7 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
             sql += " and h.startTime < '"+cal.get(Calendar.YEAR)+"-"+mon+"-01 00:00:00'";
         }
         sql +=" GROUP BY e.empId,e.empName";
-        System.out.println(sql);
+         //System.out.println(sql);
         return super.pageBySQL(sql,page,limit);
     }
 
@@ -143,7 +143,7 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
                 for (int id:emps) {
                     empIds +=+id+",";
                 }
-                System.out.println(empIds);
+                 //System.out.println(empIds);
                 empIds = empIds.substring(0,empIds.length()-1);
                 sql +=" and h.Empid in ("+empIds+")";
             }else {
@@ -167,7 +167,7 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
             sql += " and h.startTime < '"+cal.get(Calendar.YEAR)+"-"+mon+"-01 00:00:00'";
         }
         sql +=" GROUP BY e.empId,e.empName";
-        System.out.println(sql);
+         //System.out.println(sql);
         return listBySQL(sql).size();
     }
 
@@ -213,7 +213,7 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
                 for (int id:stus) {
                     stuIds +=+id+",";
                 }
-                System.out.println(stuIds);
+                 //System.out.println(stuIds);
                 stuIds = stuIds.substring(0,stuIds.length()-1);
                 sql +=" and hs.StudentId in ("+stuIds+")";
             }else {
@@ -231,7 +231,7 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
         }
         sql +=" GROUP BY stu.Studid,stu.stuname,stu.clazz\n" +
                 "HAVING stu.clazz in (SELECT classid FROM studentClass WHERE teacher = "+emp.getEmpId()+" or classTeacher = "+emp.getEmpId()+")";
-        System.out.println(sql);
+         //System.out.println(sql);
         return super.pageBySQL(sql,page,limit);
     }
 
@@ -257,7 +257,7 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
                 for (int id:stus) {
                     stuIds +=+id+",";
                 }
-                System.out.println(stuIds);
+                 //System.out.println(stuIds);
                 stuIds = stuIds.substring(0,stuIds.length()-1);
                 sql +=" and hs.StudentId in ("+stuIds+")";
             }else {
@@ -294,7 +294,7 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
         if ("".equals(stuId) || stuId==null ){
             return new ArrayList<>();
         }else {
-            System.out.println(sql);
+             //System.out.println(sql);
             return pageBySQL(sql,page,limit);
         }
     }
@@ -392,7 +392,7 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
             mon++;
             sql += " and punckClockTime < '"+cal.get(Calendar.YEAR)+"-"+mon+"-01 00:00:00'";
         }
-        System.out.println(sql);
+         //System.out.println(sql);
         return super.listBySQL(sql).size();
     }
 
@@ -446,8 +446,8 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
         String floor = request.getParameter("floor");
         String floorNum = request.getParameter("floorNum");
 
-        System.out.println(floor);
-        System.out.println(floorNum);
+         //System.out.println(floor);
+         //System.out.println(floorNum);
 
         //根据条件添加sql语句
         if (!("".equals(floor) || null == floor)){

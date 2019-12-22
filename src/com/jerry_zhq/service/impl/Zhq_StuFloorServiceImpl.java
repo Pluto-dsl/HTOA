@@ -2,6 +2,7 @@ package com.jerry_zhq.service.impl;
 
 import com.jerry_zhq.service.Zhq_StuFloorService;
 import com.publics.dao.BaseDao;
+import com.publics.vo.studentModel.StudentDormitoryVo;
 import com.publics.vo.studentModel.StudntBuildingVo;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,11 @@ public class Zhq_StuFloorServiceImpl extends BaseDao implements Zhq_StuFloorServ
         addObject(studntBuildingVo);
     }
 
-
-
-
+    @Override
+    public List<StudentDormitoryVo> list(int florid) {
+        String sql = "select s.Hourid,s.addr,s.count,s.floorId,s.huorName,s.numberBeds from studentHuor s\n" +
+                "left join studentFloor sf on s.floorId = sf.floorId\n" +
+                "where sf.floorId= '"+florid+"'";
+        return listBySQL(sql);
+    }
 }
