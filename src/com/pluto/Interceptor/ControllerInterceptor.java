@@ -33,8 +33,11 @@ public class ControllerInterceptor implements HandlerInterceptor {
             }
         }
         String UriPath = uri.substring(0,temp);
-
         Object obj = httpServletRequest.getSession().getAttribute("admin");
+        if(obj==null && "/toPage/oamain".equals(uri)){
+            httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+"/toPage/login");
+            return false;
+        }
         EmpVo emp = null;
         if("/login".equals(uri) || "/controller/toNo".equals(uri) || "/toPage/login".equals(uri) || "/imgs/login/backgroundImg.jpg".equals(uri)){
             return true;

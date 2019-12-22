@@ -29,10 +29,6 @@ public class Jack_AttController {
     @Resource
     private Jack_Service service;
 
-    @RequestMapping("/toNo")
-    public String toNo(){
-        return "controller_pluto/NO";
-    }
 
     @RequestMapping("/xxx")
     public String xxx(){
