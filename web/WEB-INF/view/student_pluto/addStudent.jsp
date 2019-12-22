@@ -62,7 +62,7 @@
                 </td>
                 <td>
                     <input class="textbox layui-input"
-                           lay-verify="required"
+                           lay-verify="required|identity"
                            name="cardid" id="cardid"
                            value=""
                            autocomplete="off"
@@ -108,7 +108,7 @@
                     <label class="label-top">出&nbsp;生&nbsp;日&nbsp;期:</label>
                 </td>
                 <td>
-                    <input class="layui-input" type="text" placeholder="请选择出生日期" value="" autocomplete="off" name="bir" id="birthday"
+                    <input class="layui-input" type="text" lay-verify="required" placeholder="请选择出生日期" value="" autocomplete="off" name="bir" id="birthday"
                            editable="false"  style="width:290px;">
                 </td>
                 <td>
@@ -159,7 +159,7 @@
                     <label class="label-top">民&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;族:</label>
                 </td>
                 <td>
-                    <input  name="nation" id="nation" value="" class="layui-input"
+                    <input  name="nation" id="nation" lay-verify="required" value="" class="layui-input"
                             style="width:290px;">
                 </td>
                 <td>

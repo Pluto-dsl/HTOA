@@ -34,7 +34,7 @@
 
             </td>
             <td>
-                <input name="characterName" id="characterName" autocomplete="off" class="layui-input" value=""
+                <input name="characterName" id="characterName" lay-verify="required" autocomplete="off" class="layui-input" value=""
                        style="width:290px;">
             </td>
         </tr>

@@ -21,14 +21,14 @@
         <i class="layui-icon layui-icon-face-surprised" style="font-size: 600px; color: #1E9FFF;margin-left: 33%;"></i>
 <%--        <i class="layui-icon-face-surprised"></i>--%>
         <br>
-        <font style="font-size: 30px;margin-left: 35%;">
-            抱歉，您没有此项权限！5秒后将返回主页！拜拜了您内！！！
+        <font style="font-size: 30px;margin-left: 40%;">
+            抱歉，您没有此项权限！
         </font>
     </div>
 </body>
-    <script>
-        setTimeout(function () {
-            window.location.href="${pageContext.request.contextPath}/toPage/oamain";
-        },5000)
-    </script>
+<%--    <script>--%>
+<%--        setTimeout(function () {--%>
+<%--            window.location.href="${pageContext.request.contextPath}/toPage/oamain";--%>
+<%--        },5000)--%>
+<%--    </script>--%>
 </html>

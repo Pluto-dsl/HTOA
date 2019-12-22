@@ -22,12 +22,21 @@ public class ControllerInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         boolean flag = false;
         String uri = httpServletRequest.getRequestURI();
-        System.out.println("uri==="+uri);
         uri = uri.substring(5,uri.length());
-        System.out.println("截取完以后的uri---"+uri);
+//        System.out.println(uri);
+        int temp = 0;
+        for (int i = 1; i < uri.length(); i++) {
+            char test = uri.charAt(i);
+            if(test=='/'){
+                temp=i;
+                break;
+            }
+        }
+        String UriPath = uri.substring(0,temp);
+
         Object obj = httpServletRequest.getSession().getAttribute("admin");
         EmpVo emp = null;
-        if("/login".equals(uri) || "/controller/toNo".equals(uri) || "/toPage/login".equals(uri)){
+        if("/login".equals(uri) || "/controller/toNo".equals(uri) || "/toPage/login".equals(uri) || "/imgs/login/backgroundImg.jpg".equals(uri)){
             return true;
         }
         if(obj!=null){
@@ -44,12 +53,12 @@ public class ControllerInterceptor implements HandlerInterceptor {
                 }
                 String s = aa.toString();
                 if(s.equals(uri)){
-                    httpServletRequest.getRequestDispatcher("controller/toNo").forward(httpServletRequest,httpServletResponse);
+                    httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+"/"+UriPath+"/toNo");
                     return false;
                 }
             }
         }else {
-            httpServletRequest.getRequestDispatcher("controller/toNo").forward(httpServletRequest,httpServletResponse);
+            httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+"/"+UriPath+"/toNo");
             return false;
         }
 

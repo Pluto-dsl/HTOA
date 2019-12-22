@@ -58,7 +58,7 @@
                         // var data = checkStatus.data;
                         layer.open({
                             type: 2,
-                            title: '新增学生',
+                            title: '新增角色',
                             shadeClose: true,
                             shade: 0.4,
                             shadeclose:true,
@@ -97,7 +97,7 @@
                 }else if(obj.event === 'shouquan'){
                     layer.open({
                         type: 2,
-                        title: '给用户授权',
+                        title: '用户授权',
                         shadeClose: true,
                         shade: 0.4,
                         fixed: false,

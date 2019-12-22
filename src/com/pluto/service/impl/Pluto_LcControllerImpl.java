@@ -40,7 +40,6 @@ public class Pluto_LcControllerImpl extends BaseDao implements Pluto_LcControlle
                 " INNER JOIN charModule c on u.characterId = c.characterId" +
                 " INNER JOIN module m on m.moduleId = c.moduleId" +
                 " where u.empId = "+id+")";
-        System.out.println(sql);
         List list = super.listBySQL(sql);
         return list;
     }
