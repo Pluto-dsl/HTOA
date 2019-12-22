@@ -143,8 +143,8 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
         return listBySQL("select aduitModelid,aduitName from aduitModel");
     }
     @Override
-    public List selEmp() {
-        return listBySQL("select empId,empName from emp");
+    public List selEmp(int id) {
+        return listBySQL("select empId,empName from emp where `status` = 1 and empId = "+id+"");
     }
     @Override
     public void addAduit(AduitLogVo aduitLogVo) {
@@ -154,6 +154,14 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
     public List selAduitLog(int currPage,int pageSize) {
         return listBySQL("select ag.aduitLogid,am.aduitName,e.empName,ag.Scores,ag.auditDate,ag.Image,ag.auditPerson,ag.Remark from (aduitLog ag inner join emp e on ag.Empid = e.empid) INNER JOIN aduitModel am on ag.aduitModelid = am.aduitModelid ORDER BY aduitLogid desc");
     }
+
+    @Override
+    public int selScores(int id) {
+        List list =  super.listBySQL("select Scores from aduitModel where aduitModelid = "+id+"");
+        Map m = (Map) list.get(0);
+        return (int) m.get("Scores");
+    }
+
     @Override
     public int selAdCount() {
        return selTotalRow("select count(*) from aduitLog");
@@ -320,15 +328,15 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
     }
     @Override
     public List selNoticeList(int id) {
-        return listBySQL("select n.noticeId,n.title,n.content,n.empid,n.noticeTime,re.isRead from notice n \n" +
+        return listBySQL("select  n.noticeId,n.title,n.content,n.empid,n.noticeTime,re.isRead from notice n \n" +
                 "LEFT join recipient re on n.noticeId = re.noticeId\n" +
-                "where re.type = 2 and n.noticeType in(1,3) and re.receiver = "+id+" ORDER BY n.noticeTime desc");
+                "where re.type in (2,3) and n.noticeType in(2,3) and re.receiver = "+id+" ORDER BY n.noticeTime desc");
     }
     @Override
     public int selNoticeCount(int id) {
         return selTotalRow("select count(*) from notice n \n" +
                 "LEFT join recipient re on n.noticeId = re.noticeId\n" +
-                "where re.type = 2 and n.noticeType in(1,3) and re.receiver = "+id+"");
+                "where re.type in (2,3) and n.noticeType in(2,3) and re.receiver = "+id+" ORDER BY n.noticeTime desc");
     }
     @Override
     public void UpdateRead(int stuid,int notid) {
@@ -340,24 +348,40 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
     public List selNoticeListemp(int id) {
         return listBySQL("select  n.noticeId,n.title,n.content,n.empid,n.noticeTime,re.isRead from notice n \n" +
                 "LEFT join recipient re on n.noticeId = re.noticeId\n" +
-                "where re.type = 1 and n.noticeType in(1,2) and re.receiver = "+id+" ORDER BY n.noticeTime desc ");
+                "where re.type in (1,3) and n.noticeType in(1,3) and re.receiver = "+id+" ORDER BY n.noticeTime desc ");
     }
     @Override
     public int selNoticeCountemp(int id) {
         return selTotalRow("select count(*) from notice n \n" +
                 "LEFT join recipient re on n.noticeId = re.noticeId\n" +
-                "where re.type = 1 and n.noticeType in(1,2) and re.receiver = "+id+"");
+                "where re.type in (1,3) and n.noticeType in(1,3) and re.receiver = "+id+"");
     }
     @Override
     public int selUnreadCountemp(int id) {
         return selTotalRow("select count(*) from notice n \n" +
                 "LEFT join recipient re on n.noticeId = re.noticeId\n" +
-                "where re.isRead = 2 and re.type = 1 and n.noticeType in(1,2) and re.receiver = "+id+"");
+                "where re.isRead = 2 and re.type in (1,3) and n.noticeType in(1,3) and re.receiver = "+id+"");
     }
     @Override
     public void UpdateReademp(int empid, int notid) {
         executeSQL("UPDATE recipient set isRead = 1 where receiver = "+empid+" and noticeId = "+notid+"");
     }
 
+    //根据公告id查询已读的人数
+    @Override
+    public int trueCount(int noticeId) {
+        return selTotalRow("select count(*) from recipient where type=1 and isRead=1 and noticeId="+noticeId);
+    }
+    //根据公告id查询未读的人数
+    @Override
+    public int falseCount(int noticeId) {
+        return selTotalRow("select count(*) from recipient where type=1 and isRead=2 and noticeId="+noticeId);
+    }
+
+    //根据查询出来的已读未读人数修改Notice表中的已读未读人数
+    @Override
+    public void updateCountNotice(int trueCount, int falseCount,int noticeId) {
+        executeSQL("update notice set trueContent="+trueCount+",falseContent="+falseCount+" where noticeId="+noticeId);
+    }
 
 }

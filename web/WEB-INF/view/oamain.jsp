@@ -77,35 +77,7 @@
             </li>
         </ul>
     </div>
-    <div  id="editwindows"  style="margin-left: 5%;display: none;">
-        <form id="editpwd" class="layui-form" <%--action="<%=request.getContextPath()%>/zeroEmpInfo/addjob"--%> style="margin-right: 100px;margin-top: 35px;" method="post">
-            <div class="layui-form-item">
-                <label class="layui-form-label">原密码:</label>
-                <div  class="layui-input-block">
-                    <input type="password" name="pwd" id="pwd" required lay-verify="required" placeholder="请输旧密码" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">新密码:</label>
-                <div class="layui-input-block">
-                    <input type="password" name="pwd1" id="pwd1" required lay-verify="required" placeholder="请输新入密码" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">请再输一次:</label>
-                <div class="layui-input-block">
-                    <input type="password" name="pwd2" id="pwd2" required lay-verify="required" placeholder="请再次输新入密码" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <div class="layui-input-block">
-                    <center>
-                        <button type="submit" class="layui-btn" lay-submit lay-filter="pwdAction">保存</button>
-                    </center>
-                </div>
-            </div>
-        </form>
-    </div>
+
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
@@ -313,7 +285,7 @@
                                                    data-url="${pageContext.request.contextPath}/zeroLeave/toleave"
                                                    data-id="请假管理" data-title="请假管理">
                                                     <i class="layui-icon layui-icon-survey"></i>
-                                                    <cite>员工请假待审批(<span id="emp"></span>)</cite>
+                                                    <cite>员工请假待审批(<span id="emp">0</span>)</cite>
                                                 </a>
                                             </li>
                                             <li class="layui-col-xs3">
@@ -321,7 +293,7 @@
                                                     data-url="${pageContext.request.contextPath}/student/selectleave"
                                                     data-id="学生请假" data-title="学生请假" >
                                                     <i class="layui-icon layui-icon-star"></i>
-                                                    <cite>学生请假待审批(<span id="stu"></span>)</cite>
+                                                    <cite>学生请假待审批(<span id="stu">0</span>)</cite>
                                                 </a>
                                             </li>
                                             <li class="layui-col-xs3">
@@ -329,13 +301,13 @@
                                                    data-url="${pageContext.request.contextPath}/jack/toAtt"
                                                    data-id="考勤管理" data-title="考勤管理" >
                                                     <i class="layui-icon layui-icon-form"></i>
-                                                    <cite>未打卡待审批(<span id="clock"></span>)</cite>
+                                                    <cite>未打卡待审批(<span id="clock">0</span>)</cite>
                                                 </a>
                                             </li>
                                              <li class="layui-col-xs3">
                                                 <a lay-href="">
                                                     <i class="layui-icon layui-icon-face-surprised"></i>
-                                                    <cite>未读通知公告(<span id="Notice"></span>)</cite>
+                                                    <cite>未读通知公告(<span id="Notice">0</span>)</cite>
                                                 </a>
                                             </li>
                                             <li class="layui-col-xs3">
@@ -350,7 +322,7 @@
                                             <li class="layui-col-xs3">
                                                 <a lay-href="">
                                                     <i class="layui-icon layui-icon-face-smile"></i>
-                                                    <cite>月谈心记录(已完成<span id="talk"></span>个)</cite>
+                                                    <cite>月谈心记录(已完成<span id="talk">0</span>个)</cite>
                                                     <span style="color:red;margin-left:10px;font-size: 11px;">每月需完成5个</span>
                                                 </a>
                                             </li>
@@ -370,12 +342,14 @@
 <%--    <iframe align="right" style="height: 100%;width: 1193px;" name="iframe1" class="layui-layer-iframe">--%>
 <%--        --%>
 <%--    </iframe>--%>
+
 </div>
 <script>
     //JavaScript代码区域
     layui.use('element', function(){
         var element = layui.element;
         var $ = layui.jquery;
+        yb();
 
         $("#flush").on('click',function () {
             yb();

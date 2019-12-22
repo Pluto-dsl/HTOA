@@ -41,12 +41,12 @@
             </div>
             <label class="layui-form-label">开始日期:</label>
             <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="startDate">
+                    <input type="text" autocomplete="off" class="layui-input" id="startDate">
             </div>
 
             <label class="layui-form-label">结束日期:</label>
             <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="EndDate">
+                    <input type="text" autocomplete="off" class="layui-input" id="EndDate">
             </div>
         </div>
         </form>

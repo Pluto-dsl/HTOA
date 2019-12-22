@@ -18,11 +18,11 @@
             font-size: 13px;
             color: #949494;
             margin-top: 5px;
-            text-indent: 2em;
-            width: 50%;
+            width:60%;
             word-wrap: break-word;
             word-break: break-all;
             overflow: hidden;
+            margin-left: 20px;
         }
         .layui-text h3 {
             font-size: 18px;
@@ -31,8 +31,12 @@
         #myTitle{
             color: #ff0000;
         }
+        li{
+            transition: 0.3s;
+            border-left: solid #ffffff;
+        }
         li:hover{
-            background-color: #EEE;
+            border-left:solid;
         }
         .layui-card-header {
             position: relative;
@@ -70,8 +74,8 @@
                             <input type="hidden" class="noticeId" value="${list.noticeId}">
                             <input type="hidden" class="isRead" value="${list.isRead}">
                             <div class="layui-serachlist-text">
-                                <h3>
-                                    <span class="title">${list.title}</span>
+                                <h3 style="border-bottom: solid 1px #82828245;height: 25px;">
+                                    <span class="title" style="margin-left: 10px;">${list.title}</span>
                                     <c:if test="${list.isRead == 2}">
                                         <i class="layui-icon layui-icon-notice" id="myTitle" style="margin-left:10px;"></i>
                                     </c:if>
@@ -120,7 +124,7 @@
                         count();
                         setTimeout(function () {
                             window.location.reload();
-                        },1000);
+                        },900);
 
                     },"text");
                 }

@@ -147,7 +147,6 @@
             ]]
             ,page: {limit: 10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
-
         //重载表格
         $("#btn").click(function () {
             //获取条件
@@ -173,7 +172,6 @@
                 }
             });
         });
-
         //头工具栏事件
         table.on('toolbar(test)', function(obj){
             console.log(obj);
@@ -224,7 +222,6 @@
                     break;
             }
         });
-
         //监听行工具事件
         table.on('tool(test)', function(obj){
             var data = obj.data;

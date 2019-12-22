@@ -16,7 +16,7 @@ public class NoticeVo {
     private int noticeId;//主键，标识列，自动生成
     private String title;//标题
     private String content;//通知内容
-    private int noticeType;//类型;1:所有人，2员工 3学生
+    private int noticeType;//类型;3:所有人，1员工 2学生
     private String empid;//发布人
     private Date noticeTime;//发布时间
     private int trueContent;//已读
