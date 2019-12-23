@@ -96,11 +96,15 @@ public interface Jack_Service {
     int selUnreadCountemp(int id);
     void UpdateReademp(int stuid, int notid);
 
+    /** 招生管理 */
+    List selEnrollmentList(int currPage,int pageSize);
+    int selEnrollmentCount();
+
+
     //根据公告id查询已读的人数
     int trueCount(int noticeId);
     //根据公告id查询未读的人数
     int falseCount(int noticeId);
-
     //根据查询出来的已读未读人数修改Notice表中的已读未读人数
     void updateCountNotice(int trueCount,int falseCount,int noticeId);
 

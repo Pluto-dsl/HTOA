@@ -188,15 +188,18 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
                 "INNER JOIN aduitModel am on ag.aduitModelid = am.aduitModelid) INNER JOIN dep d on e.depId = d.depid\n" +
                 "where ag.aduitLogid";
         if(!(empName == null || "".equals(empName))){  //根据员工查询
-             sql += " and e.empName like \"%"+empName+"%\" ";
-        }else if(!(depId == null || "".equals(depId))){ //根据部门查询
-            sql += " and  d.depid = "+depId+"";
-        }else if(!(startDate == null || "".equals(startDate))){ //根据开始时间查询
-            sql += " and auditDate >='"+startDate+"' ";
-        }else if(!(EndDate == null || "".equals(EndDate))){ //根据结束时间查询
+            sql += " and e.empName like '%"+empName+"%'";
+        }
+        if(!(depId == null || "".equals(depId))){ //根据部门查询
+            sql += " and d.depid = "+depId+"";
+        }
+        if(!(startDate == null || "".equals(startDate))){ //根据开始时间查询
+            sql += " and auditDate >='"+startDate+"'";
+        }
+        if(!(EndDate == null || "".equals(EndDate))){ //根据结束时间查询
             sql += " and auditDate <'"+EndDate+"'";
         }
-        return listBySQL(sql);
+        return pageBySQL(sql,currPage,pageSize);
     }
     @Override
     public int Conditional_queryCount(String empName, String depId, String startDate, String EndDate) {
@@ -205,12 +208,15 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
                 "INNER JOIN aduitModel am on ag.aduitModelid = am.aduitModelid) INNER JOIN dep d on e.depId = d.depid\n" +
                 "where ag.aduitLogid";
         if(!(empName == null || "".equals(empName))){  //根据员工查询
-            sql += " and e.empName like '%"+empName+"%' ";
-        }else if(!(depId == null || "".equals(depId))){ //根据部门查询
-            sql += " and  d.depid = "+depId+"";
-        }else if(!(startDate == null || "".equals(startDate))){ //根据开始时间查询
-            sql += " and auditDate >='"+startDate+"' ";
-        }else if(!(EndDate == null || "".equals(EndDate))){ //根据结束时间查询
+            sql += " and e.empName like '%"+empName+"%'";
+        }
+        if(!(depId == null || "".equals(depId))){ //根据部门查询
+            sql += " and d.depid = "+depId+"";
+        }
+        if(!(startDate == null || "".equals(startDate))){ //根据开始时间查询
+            sql += " and auditDate >='"+startDate+"'";
+        }
+        if(!(EndDate == null || "".equals(EndDate))){ //根据结束时间查询
             sql += " and auditDate <'"+EndDate+"'";
         }
         return selTotalRow(sql);
@@ -242,7 +248,8 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
                 " having  te.teacherTotalid ";
         if(!("".equals(name) || name == null)){
             s += "and e.empName like \"%"+name+"%\" ";
-        }else if(!("".equals(evaluationType) || evaluationType == null)){
+        }
+        if(!("".equals(evaluationType) || evaluationType == null)){
             s += " and  te.evaluationType = "+evaluationType+" ";
         }
         s = s + "ORDER BY te.teacherTotalid desc ";
@@ -367,6 +374,17 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
         executeSQL("UPDATE recipient set isRead = 1 where receiver = "+empid+" and noticeId = "+notid+"");
     }
 
+    @Override
+    public List selEnrollmentList(int currPage,int pageSize) {
+        return pageByHql("from EnrollmentVo",currPage,pageSize);
+    }
+
+    @Override
+    public int selEnrollmentCount() {
+        return selTotalRow("select count(*) from enrollment");
+    }
+
+
     //根据公告id查询已读的人数
     @Override
     public int trueCount(int noticeId) {
@@ -377,7 +395,6 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
     public int falseCount(int noticeId) {
         return selTotalRow("select count(*) from recipient where type=1 and isRead=2 and noticeId="+noticeId);
     }
-
     //根据查询出来的已读未读人数修改Notice表中的已读未读人数
     @Override
     public void updateCountNotice(int trueCount, int falseCount,int noticeId) {

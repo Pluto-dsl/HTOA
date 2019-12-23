@@ -110,8 +110,8 @@
                 ,{toolbar:'#toolDemo',fixed: 'right', title:'操作', width:100}
             ]]
             ,page: true
-            ,limit:5
-            ,limits: [5, 15, 20, 30, 40, 50]
+            ,limit:15
+            ,limits: [15, 25, 35, 45, 55]
             // ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
             //     layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
             //     //,curr: 1 //设定初始在第 1 页
