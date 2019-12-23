@@ -28,17 +28,24 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
     }
 
     @Override
-    public List<Map> seek(int level) {
-        String sql = "select c.*,e1.empName as teacherName,e2.empName as classTeacherName,ct.classTypeName,sf.level,d.deptName,m.majorName " +
-                "                from studentClass c  " +
-                "                left join emp e1 on c.teacher = e1.empId " +
-                "                left join emp e2 on c.classTeacher = e2.empId " +
-                "                left join classType ct on c.classType = ct.classTypeId " +
-                "                left join studentFall sf on c.falled= sf.fallid " +
-                "                left join dept d on c.deptId = d.deptid " +
-                "                left join major m on m.deptid = d.deptid";
+    public List<Map> seek(int level,String grade,int ctype) {
+        String sql = "select c.*,e1.empName as teacherName,e2.empName as classTeacherName,ct.classTypeName,sf.level,d.deptName,m.majorName ," +
+                " (select count(*) from student where  clazz = c.classId) ren " +
+                " from studentClass c " +
+                " left join emp e1 on c.teacher = e1.empId " +
+                " left join emp e2 on c.classTeacher = e2.empId " +
+                " left join classType ct on c.classType = ct.classTypeId " +
+                " left join studentFall sf on c.falled= sf.fallid " +
+                " left join dept d on c.deptId = d.deptid " +
+                " left join major m on m.majorid = c.majorId where 1=1 ";
         if(level!=0){
-            sql += (" where sf.fallid = "+level);
+            sql += (" and sf.fallid = "+level);
+        }
+        if(!grade.equals("0")){
+            sql+=(" and c.className like '%"+grade+"%'");
+        }
+        if (ctype!=0){
+            sql+=(" and ct.classTypeId = "+ctype);
         }
         return super.listBySQL(sql);
     }

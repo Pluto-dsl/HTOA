@@ -50,10 +50,11 @@ public class Zero_StudentClass {
     @ResponseBody//届别表格数据
     public Map StudentFall(){
         Map map = new HashMap();
+        List list = service.allLevel();
         map.put("code",0);
         map.put("msg","");
-        map.put("count",1);
-        map.put("data",service.allLevel());
+        map.put("count",list.size());
+        map.put("data",list);
         return map;
     }
 
@@ -61,10 +62,11 @@ public class Zero_StudentClass {
     @ResponseBody
     public Map allClass(){//查询所有班级
         Map map = new TreeMap();
+        List clist = service.allClas();
         map.put("code",0);
         map.put("msg","");
-        map.put("count",1);
-        map.put("data",service.allClas());
+        map.put("count",clist.size());
+        map.put("data",clist);
         return map;
     }
     //新增或修改届别
@@ -79,12 +81,13 @@ public class Zero_StudentClass {
     }
     @RequestMapping(value = "/seek")
     @ResponseBody
-    public Map seek(int level){//筛选届别
+    public Map seek(int level,String grade,int ctype){//筛选届别
         Map map = new TreeMap();
+        List clist = service.seek(level,grade,ctype);
         map.put("code",0);
         map.put("msg","");
-        map.put("count",1);
-        map.put("data",service.seek(level));
+        map.put("count",clist.size());
+        map.put("data",clist);
         return map;
     }
 
@@ -103,10 +106,11 @@ public class Zero_StudentClass {
     @ResponseBody
     public Map classStudent(int classId){//查看当前班级的学生
         Map map = new TreeMap();
+        List slist = service.classStudent(classId);
         map.put("code",0);
         map.put("msg","");
-        map.put("count",1);
-        map.put("data",service.classStudent(classId));
+        map.put("count",slist.size());
+        map.put("data",slist);
         return map;
     }
 
@@ -120,4 +124,11 @@ public class Zero_StudentClass {
     public String toNo(){
         return "controller_pluto/NO";
     }
+
+    @RequestMapping("/toallot")//去班级分配页面
+    public String toallot(){
+        return "student_zero/classAllot";
+    }
+
+
 }

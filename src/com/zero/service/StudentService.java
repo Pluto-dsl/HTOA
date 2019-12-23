@@ -11,7 +11,7 @@ import java.util.Map;
 
 public interface StudentService {
     List<Map> allClas();//查询所有班级
-    List<Map> seek(int level);//查询所有班级
+    List<Map> seek(int level,String grade,int ctype);//查询所有班级
     List<StudentFallVo> allLevel();//查询所有届别
     List<Map> teacher();//授课老师
     List<ClassCategoryVo> classtype();//班级类别
