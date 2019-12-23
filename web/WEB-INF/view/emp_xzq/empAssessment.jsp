@@ -27,39 +27,41 @@
 </head>
 <body>
     <div class="layui-form-item">
-        <form class="layui-form">
-        <div class="layui-inline ">
-            <label class="layui-form-label">员工姓名:</label>
-            <div class="layui-input-inline">
-                <input type="text" id="empName" required lay-verify="required" placeholder="请输入员工姓名搜索" autocomplete="off" class="layui-input">
-            </div>
-            <label class="layui-form-label">部门名称:</label>
-            <div class="layui-input-inline">
-                <select id="dep" lay-verify="type">
-                    <option value="">请选择部门</option>
-                </select>
-            </div>
-            <label class="layui-form-label">开始日期:</label>
-            <div class="layui-input-inline">
-                    <input type="text" autocomplete="off" class="layui-input" id="startDate">
-            </div>
 
-            <label class="layui-form-label">结束日期:</label>
-            <div class="layui-input-inline">
-                    <input type="text" autocomplete="off" class="layui-input" id="EndDate">
+        <div class="layui-inline ">
+            <form class="layui-form">
+                <label class="layui-form-label">员工姓名:</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="empName" placeholder="请输入员工姓名搜索" autocomplete="off" class="layui-input">
+                </div>
+                <label class="layui-form-label">部门名称:</label>
+                <div class="layui-input-inline">
+                    <select id="dep" lay-verify="type">
+                        <option value="">请选择部门</option>
+                    </select>
+                </div>
+                <label class="layui-form-label">开始日期:</label>
+                <div class="layui-input-inline">
+                        <input type="text" autocomplete="off" class="layui-input" id="startDate">
+                </div>
+
+                <label class="layui-form-label">结束日期:</label>
+                <div class="layui-input-inline">
+                        <input type="text" autocomplete="off" class="layui-input" id="EndDate">
+                </div>
+            </form>
+            <div style="float: right;position: absolute;width: 100px;" class="layui-input-inline">
+                <button lay-event="search" id="search" style="float: right;" class="layui-btn layui-btn layui-btn-warm"><i class="layui-icon layui-icon-search"></i>搜索</button>
             </div>
         </div>
-        </form>
+
     </div>
-
-
 
     <table class="layui-hide" id="AduitLoglist" lay-filter="AduitLoglist"></table>
 </body>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
         <button lay-event="batchDel" class="layui-btn layui-btn-sm layui-btn-danger" ><i class="layui-icon layui-icon-prev" style="font-size: 30px;"></i>批量删除</button>
-        <button lay-event="search" id="search" style="float: right;" class="layui-btn layui-btn-sm layui-btn-warm"><i class="layui-icon layui-icon-search"></i>搜索</button>
     </div>
 </script>
 <script type="text/html" id="barDemo">
@@ -125,6 +127,37 @@
 
         });
 
+        //搜索
+        $("#search").on("click",function () {
+            var empName = $("#empName").val();
+            var dep = $("#dep").val();
+            var startDate = $("#startDate").val();
+            var EndDate = $("#EndDate").val();
+            table.render({
+                elem: '#AduitLoglist'
+                ,url:'${pageContext.request.contextPath}/jack/searchSel?empName='+empName+'&dep='+dep+'&startDate='+startDate+'&EndDate='+EndDate
+                ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+                ,defaultToolbar:{}//自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                ,title: '用户数据表'
+                ,skin:'nob'
+                ,cols: [[
+                    {type: 'checkbox', fixed: 'left'}
+                    ,{field:'aduitLogid', title:'编号', width:80,unresize:true,sort: true}
+                    ,{field:'aduitName', title:'考核内容', width:200}
+                    ,{field:'empName', title:'员工', width:150}
+                    ,{field:'Scores', title:'考核分数  ', width:100}
+                    ,{field:'auditDate', title:'考核时间 ',templet : "<div>{{layui.util.toDateString(d.auditDate, 'yyyy年MM月dd日')}}</div>" , width:150}
+                    ,{field:'auditPerson', title:'录入人员', width:120}
+                    ,{field:'Remark', title:'说明', width:200}
+                    ,{title:'操作',toolbar:'#barDemo',width:250}
+                ]]
+                ,page: true
+                ,limit:15
+                ,limits: [15, 20, 30, 40, 50]
+
+            });
+        });
+
         table.on('toolbar(AduitLoglist)',function (obj) {
             var checkStatus = table.checkStatus('AduitLoglist');
             //批量删除
@@ -147,36 +180,6 @@
                     }
                     table.reload('AduitLoglist');
                     layer.close(index);
-                });
-            }
-            //搜索
-            else if(obj.event === 'search'){
-                var empName = $("#empName").val();
-                var dep = $("#dep").val();
-                var startDate = $("#startDate").val();
-                var EndDate = $("#EndDate").val();
-                table.render({
-                    elem: '#AduitLoglist'
-                    ,url:'${pageContext.request.contextPath}/jack/searchSel?empName='+empName+'&dep='+dep+'&startDate='+startDate+'&EndDate='+EndDate
-                    ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
-                    ,defaultToolbar:{}//自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
-                    ,title: '用户数据表'
-                    ,skin:'nob'
-                    ,cols: [[
-                        {type: 'checkbox', fixed: 'left'}
-                        ,{field:'aduitLogid', title:'编号', width:80,unresize:true,sort: true}
-                        ,{field:'aduitName', title:'考核内容', width:200}
-                        ,{field:'empName', title:'员工', width:150}
-                        ,{field:'Scores', title:'考核分数  ', width:100}
-                        ,{field:'auditDate', title:'考核时间 ',templet : "<div>{{layui.util.toDateString(d.auditDate, 'yyyy年MM月dd日')}}</div>" , width:150}
-                        ,{field:'auditPerson', title:'录入人员', width:120}
-                        ,{field:'Remark', title:'说明', width:200}
-                        ,{title:'操作',toolbar:'#barDemo',width:250}
-                    ]]
-                    ,page: true
-                    ,limit:15
-                    ,limits: [15, 20, 30, 40, 50]
-
                 });
             }
         });

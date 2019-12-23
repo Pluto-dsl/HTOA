@@ -134,14 +134,13 @@ public class Zero_EmpController {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter writer = response.getWriter();
         //输入的原密码是否正确
-        int empid =((EmpVo)session.getAttribute("admin")).getEmpId();
-        int i = empService.ispwd(empid,pwd);
-        if(empService.ispwd(empid,pwd)!=1){//原密码错误
+        EmpVo emp =(EmpVo)session.getAttribute("admin");
+        if(!pwd.equals(emp.getPassword())){//原密码错误
             writer.print("error");
             writer.flush();
             writer.close();
         }else {//密码正确
-            empService.updatePwd(empid,pwd1);
+            empService.updatePwd(emp.getEmpId(),pwd1);
         }
         writer.print("ok");
         writer.flush();

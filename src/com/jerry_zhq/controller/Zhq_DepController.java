@@ -28,6 +28,7 @@ import java.util.Map;
 @RequestMapping("/zhq")
 public class Zhq_DepController {
 
+
     @Resource
     Zhq_DepService zhqDepService;
 
@@ -87,45 +88,22 @@ public class Zhq_DepController {
 
     @RequestMapping("/selDepAll")
     public void selDepAll(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String type =request.getParameter("type");
-        String name = request.getParameter("name");
+        int id = Integer.parseInt(request.getParameter("id"));
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();
         JSONObject jsonObject = new JSONObject();
+        DepVo depVo = new DepVo();
+        DepVo list = (DepVo)zhqDepService.selDepAll(depVo.getClass(),id);  //根据id查询部门
+        jsonObject.put("list",list);
+        out.print(jsonObject);
 
-        if("treeOpen".equals(type)){
-            List<DepVo> list = zhqDepService.selDepAll(name);  //根据部门名查询所有部门
-            List<EmpVo> empVos = zhqDepService.selEmp();//查询员工
-            List<DepVo> depVoList = zhqDepService.selDep();//查询部门
-
-            for (DepVo d:depVoList) {
-                for (EmpVo e :empVos) {
-                    for (DepVo deVo: list) {
-                        jsonObject.put("depid",deVo.getDepid());
-                        jsonObject.put("depName",deVo.getDepName());//部门名称
-                        if(d.getDepid() == deVo.getParentId()){
-                            jsonObject.put("parentIdName",d.getDepName());
-                        }
-                        jsonObject.put("parentId",deVo.getParentId());
-                        jsonObject.put("chairman",deVo.getChairman());//部门负责人
-                        if(e.getEmpName().equals( deVo.getChairman())){
-                            jsonObject.put("empId",e.getEmpId());//员工
-                        }
-                        jsonObject.put("personnel",deVo.getPersonnel());//是否为人事部
-                        jsonObject.put("remark",deVo.getRemark());//备注
-                        request.setAttribute("depName",deVo.getDepName());
-                    }
-                }
-            }
-            out.print(jsonObject);
-        }
 
     }
 
     //添加部门
     @RequestMapping("/selDep")
     public String selDep(HttpServletRequest request){
-        List<DepVo> depList = zhqDepService.selDep();//查部门
+        List<DepVo> depList = zhqDepService.selParentId();//查部门
         List<EmpVo> empList = zhqDepService.selEmp();//查员工
         request.setAttribute("depList",depList);
         request.setAttribute("empList",empList);
@@ -144,24 +122,21 @@ public class Zhq_DepController {
     @RequestMapping("/delUpdate")
     public String delUpdate(HttpServletResponse response,HttpServletRequest request){
         response.setContentType("text/html;charset=utf-8");
-        int empId = Integer.valueOf(request.getParameter("empId"));
+        String chairman = request.getParameter("chairman");
+        System.out.println("获取到的"+chairman);
         int depId= Integer.valueOf(request.getParameter("depid"));
         String remark= request.getParameter("remark");
         String depName = request.getParameter("depName");
-        int parentId = Integer.valueOf(request.getParameter("parentId"));
+        int parentId = Integer.valueOf(request.getParameter("parentIdName"));
 
 
-
-        EmpVo empVo = new EmpVo();
-        //根据id查询员工
-        EmpVo empVo1 = (EmpVo) zhqDepService.selObjId(empVo.getClass(),empId);
 
         DepVo depVo = new DepVo();
 
         depVo.setDepid(depId);
         depVo.setDepName(depName);
         depVo.setParentId(parentId);
-        depVo.setChairman(empVo1.getEmpName());
+        depVo.setChairman(chairman);
         depVo.setRemark(remark);
         depVo.setPersonnel(0);
 
