@@ -61,11 +61,6 @@ public class EmpsServiceImpl extends BaseDao implements EmpsService {
     }
 
     @Override
-    public int ispwd(int empId, String pwd) {
-       return super.listBySQL("select * from emp where empId = "+empId+" and `password` = '"+pwd+"'").size();
-    }
-
-    @Override
     public void updatePwd(int empId, String pwd1) {
         super.executeSQL("UPDATE emp set `password` = '"+pwd1+"' where empId = "+empId);
     }

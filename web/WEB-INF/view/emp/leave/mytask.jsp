@@ -13,7 +13,8 @@
     <jsp:include page="../../include.jsp" />
 </head>
 <body>
-    <a href="javascript:void(0)" onclick="toleave()" class="layui-btn layui-btn-primary layui-btn-sm" lay-event="exit"> <i class="layui-icon">&#xe65c;</i>返回</a>
+    <h1 style="margin-left: 42%">请假审批</h1>
+    <a style="float: left;" href="javascript:void(0)" onclick="toleave()" class="layui-btn layui-btn-primary layui-btn-sm" lay-event="exit"> <i class="layui-icon">&#xe65c;</i>返回请假管理</a>
     <table class="layui-table" lay-filter="test">
         <colgroup>
             <col>

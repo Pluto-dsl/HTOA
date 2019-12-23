@@ -22,7 +22,7 @@
 <body>
 <from class="layui-form">
 <div style="margin-left: 30px;margin-top: 15px;" class="demoTable">
-    <table style="margin-bottom: -60px;margin-top: -3%;border-collapse: separate;border-spacing: 10px 30px;">
+    <table style="margin-bottom: -60px;margin-top: -2%;border-collapse: separate;border-spacing: 10px 30px;">
             <tr>
                 <td><span  style="float:left;line-height: 3;" >姓名-</span></td>
                 <td><input type="text" style="float:left;" class="layui-input" autocomplete="off" name="Name" id="Name"/></td>

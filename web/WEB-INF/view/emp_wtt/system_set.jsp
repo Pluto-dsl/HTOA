@@ -46,7 +46,7 @@
                 </td>
                 <td align="center">
                     <div style="height: 30px" href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                         data-url="${pageContext.request.contextPath}/toPage/dep"
+                         data-url="${pageContext.request.contextPath}/zhq/dep"
                          data-id="部门管理" data-title="部门管理">
                         <i class="layui-icon layui-icon-set" style="font-size:50px;color: #93D1FF"></i>
                         <br>

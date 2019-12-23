@@ -99,7 +99,9 @@
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button type="submit" class="layui-btn" lay-submit lay-filter="pwdAction" >保存</button>
+                    <center>
+                        <button type="submit" class="layui-btn" lay-submit lay-filter="pwdAction" >保存</button>
+                    </center>
                 </div>
             </div>
         </form>
@@ -115,9 +117,6 @@
                     </a>
                     <dl class="layui-nav-child">
                         <%-- 例子  可修改 照着写就行了 --%>
-                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/zhq/dep"
-                               data-id="部门管理" data-title="部门管理">部门管理</a></dd>
                         <dd> <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                 data-url="<%=request.getContextPath()%>/zeroEmp/toemp"
                                 data-id="员工资料" data-title="员工资料" >员工资料</a></dd>
@@ -154,6 +153,9 @@
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/zeroStudent/toClass"
                                data-id="班级管理" data-title="班级管理">班级管理</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="<%--${pageContext.request.contextPath}/zeroStudent/toClass--%>"
+                               data-id="班级管理" data-title="班级分配">班级分配</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/zhq/stuFloor"
                                data-id="楼栋管理" data-title="楼栋管理">楼栋管理</a></dd>
@@ -243,6 +245,16 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
+                    <a href="javascript:;" class="tt" lay-tips="文件管理" lay-direction="2">
+                        <i class="layui-icon layui-icon-tabs"></i>
+                        <cite>招生管理</cite></a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/jack/toEnrollment"
+                               data-id="招生信息" data-title="招生信息" >招生信息</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
                     <a href="javascript:;" class="tt" lay-tips="系统报表" lay-direction="2"><i class="layui-icon layui-icon-layouts"></i>
                         <cite>系统报表</cite></a>
                     <dl class="layui-nav-child">
@@ -308,7 +320,7 @@
                                         <ul class="layui-row layui-col-space10">
                                             <li class="layui-col-xs3">
                                                 <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                                                   data-url="${pageContext.request.contextPath}/zeroLeave/toleave"
+                                                   data-url="${pageContext.request.contextPath}/zeroLeave/mytask"
                                                    data-id="请假管理" data-title="请假管理">
                                                     <i class="layui-icon layui-icon-survey"></i>
                                                     <cite>员工请假待审批(<span id="emp">0</span>)</cite>
@@ -346,7 +358,9 @@
                                                 </a>
                                             </li>
                                             <li class="layui-col-xs3">
-                                                <a lay-href="">
+                                                <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                                                   data-url="${pageContext.request.contextPath}/ljw/toChatRecordPage"
+                                                   data-id="谈心记录" data-title="谈心记录" >
                                                     <i class="layui-icon layui-icon-face-smile"></i>
                                                     <cite>月谈心记录(已完成<span id="talk">0</span>个)</cite>
                                                     <span style="color:red;margin-left:10px;font-size: 11px;">每月需完成5个</span>
@@ -520,7 +534,7 @@
                         layer.msg('修改成功!即将跳转到登录页面!')
                         setTimeout(function () {
                             window.location.href="<%=request.getContextPath()%>/logout";
-                        },10500)
+                        },1500)
                     }
                 }
             })

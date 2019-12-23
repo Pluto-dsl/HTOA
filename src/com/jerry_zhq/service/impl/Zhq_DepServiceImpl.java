@@ -14,17 +14,22 @@ public class Zhq_DepServiceImpl extends BaseDao implements Zhq_DepService {
     public List selDep() {
         return listByHql("from DepVo");
     }
-    //根据部门名查询所有部门
+    //根据ID查询所有部门
     @Override
-    public List selDepAll(String d) {
-        return listByHql("from DepVo where depName='"+d+"'");
+    public Object selDepAll(Class clazz,int id) {
+        return getObject(clazz,id);
     }
-
 
     //查询员工
     @Override
     public List selEmp() {
         return listByHql("from EmpVo");
+    }
+
+    //查询父级id为0的
+    @Override
+    public List selParentId() {
+        return listByHql("FROM DepVo where parentId=0");
     }
 
     //添加部门

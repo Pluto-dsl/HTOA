@@ -6,7 +6,9 @@ import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.empModel.evaluationVo;
 import com.publics.vo.empModel.teacherTotalVo;
 import com.publics.vo.studentModel.StudentVo;
-import com.publics.vo.sys.DepVo;
+import com.zero.service.EmpActivitiService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.task.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +29,11 @@ public class Jack_Evaluation {
     @Resource
     private Jack_Service service;
 
+    @Resource
+    private TaskService taskService;
 
+    @Resource
+    EmpActivitiService zero_service;
 
     @RequestMapping(value = "toEvaluationContext")
     public String toEvaluationContext(){
@@ -273,18 +279,30 @@ public class Jack_Evaluation {
     @ResponseBody
     public Map MyMission(HttpSession session){
         EmpVo emp = (EmpVo) session.getAttribute("admin");
-        System.out.println(emp.getEmpId());
         Map map = new HashMap();
         int talk = service.selChatRecordCount(emp.getEmpId());
         int clock = service.selClockCount(emp.getEmpName());
         int Notice = service.selUnreadCountemp(emp.getEmpId());
-
-        /*Map map1 = service.deplist(emp.getEmpId());
-        int depid = (int) map1.get("depid");
-        System.out.println("部门id:"+depid);
-        int studentleave = service.selectleave();*/
-
-        map.put("emp",0);
+        //员工数量--------------------------------------------------------------------------------------
+        //通过办理人查询任务集合
+        List<Task> mytask = taskService.createTaskQuery().taskAssignee(emp.getEmpId()+"").list();
+        List<Map> holidays = new ArrayList<>();
+        for(Task task: mytask){
+            //根据任务id取得单据id
+            Object sid = taskService.getVariable(task.getId(),"holiday");
+            //System.out.println("sid"+sid);
+            //如果有任务进入判断里面
+            if(zero_service.mytask(Integer.parseInt((sid+""))).size()>0){
+                Map m = (Map) zero_service.mytask(Integer.parseInt((sid+""))).get(0);
+                //任务Id
+                m.put("taskid",task.getId());
+                //流程实例id
+                m.put("processInstanceId",task.getProcessInstanceId());
+                holidays.add(map);
+            }
+        }
+        //-------------------------------------------------------------------------------------------------
+        map.put("emp",holidays.size());
         map.put("stu",0);
         map.put("clock",clock);
         map.put("Notice",Notice);

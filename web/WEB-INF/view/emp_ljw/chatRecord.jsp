@@ -59,7 +59,7 @@
 </div>
 <button class="layui-btn menu" id="btn">搜索</button>
 <div id="windows" style="margin-left: 5%;display: none;">
-    <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/ljw/newChatRecord" method="post" onclick="selMyForm()">
+    <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/ljw/newChatRecord" method="post">
         <br><br>
         <input id="chatId" type="hidden" name="chatIds">
         <div class="layui-form-item">

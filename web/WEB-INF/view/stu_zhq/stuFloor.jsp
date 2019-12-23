@@ -48,7 +48,7 @@
             //执行渲染
             table.render({
                 elem: '#demo2', //指定原始表格元素选择器（推荐id选择器）
-                height: 356, //容器高度
+                height: 'auto', //容器高度
                 title:'楼栋管理',
                 url:"${pageContext.request.contextPath}/zhq/selFloor",
                 cols: [[ //标题栏

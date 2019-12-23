@@ -74,7 +74,7 @@
         //执行渲染
         table.render({
             elem: '#demo', //指定原始表格元素选择器（推荐id选择器）
-            height: 356, //容器高度
+            height: 'auto', //容器高度
             title:'宿舍管理',
             url:"${pageContext.request.contextPath}/zhq/selNotice",
             cols: [[ //标题栏
@@ -101,7 +101,9 @@
             ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
 
-
+        $("").on('click',function () {
+            alert("dfdf");
+        })
 
         table.on('tool(test)',function (obj) {
             var data = obj.data;
