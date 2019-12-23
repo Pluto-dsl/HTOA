@@ -6,6 +6,7 @@ import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.empModel.evaluationVo;
 import com.publics.vo.empModel.teacherTotalVo;
 import com.publics.vo.studentModel.StudentVo;
+import com.publics.vo.sys.DepVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -272,10 +273,17 @@ public class Jack_Evaluation {
     @ResponseBody
     public Map MyMission(HttpSession session){
         EmpVo emp = (EmpVo) session.getAttribute("admin");
+        System.out.println(emp.getEmpId());
         Map map = new HashMap();
         int talk = service.selChatRecordCount(emp.getEmpId());
         int clock = service.selClockCount(emp.getEmpName());
         int Notice = service.selUnreadCountemp(emp.getEmpId());
+
+        /*Map map1 = service.deplist(emp.getEmpId());
+        int depid = (int) map1.get("depid");
+        System.out.println("部门id:"+depid);
+        int studentleave = service.selectleave();*/
+
         map.put("emp",0);
         map.put("stu",0);
         map.put("clock",clock);
