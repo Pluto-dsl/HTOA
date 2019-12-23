@@ -139,7 +139,6 @@ public class Zero_EmpActiviti {
         String userid = String.valueOf(emp.getEmpId());
         //通过办理人查询任务集合
         List<Task> mytask = taskService.createTaskQuery().taskAssignee(userid).list();
-        // //System.out.println("任务集合"+mytask);
         List<Map> holidays = new ArrayList<>();
         for(Task task: mytask){
             //根据任务id取得单据id
