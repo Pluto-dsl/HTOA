@@ -154,6 +154,9 @@
                                data-url="${pageContext.request.contextPath}/zeroStudent/toClass"
                                data-id="班级管理" data-title="班级管理">班级管理</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                               data-url="<%--${pageContext.request.contextPath}/zeroStudent/toClass--%>"
+                               data-id="班级管理" data-title="班级分配">班级分配</a></dd>
+                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/zhq/stuFloor"
                                data-id="楼栋管理" data-title="楼栋管理">楼栋管理</a></dd>
                         <dd><a href="javascript:void(0);"class="site-demo-active" data-type="tabAdd"
@@ -317,7 +320,7 @@
                                         <ul class="layui-row layui-col-space10">
                                             <li class="layui-col-xs3">
                                                 <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                                                   data-url="${pageContext.request.contextPath}/zeroLeave/toleave"
+                                                   data-url="${pageContext.request.contextPath}/zeroLeave/mytask"
                                                    data-id="请假管理" data-title="请假管理">
                                                     <i class="layui-icon layui-icon-survey"></i>
                                                     <cite>员工请假待审批(<span id="emp">0</span>)</cite>
