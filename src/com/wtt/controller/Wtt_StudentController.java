@@ -262,6 +262,7 @@ public class Wtt_StudentController {
         studentService.update(feedbackVo);
         //新增意见
         studentService.add(collect_opinionsVo);
+        request.setAttribute("ids",id);
         return "redirect:/student/questionPage";
     }
 

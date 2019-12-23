@@ -39,9 +39,24 @@ public class ControllerInterceptor implements HandlerInterceptor {
             return false;
         }
         EmpVo emp = null;
-        if("/login".equals(uri) || "/controller/toNo".equals(uri) || "/toPage/login".equals(uri) || "/imgs/login/backgroundImg.jpg".equals(uri)){
-            return true;
+
+//        用户未登入和发送的请求不是跳转模块时同意所有的请求
+        List NoList = services.getControllerList2();
+        for (int i = 0; i < NoList.size(); i++) {
+            Map m = (Map) NoList.get(i);
+            if(m==null){
+                continue;
+            }
+            Object aa = m.get("controller");
+            if(aa==null){
+                continue;
+            }
+            String s = aa.toString();
+            if(obj==null && !uri.equals(s)){
+                return true;
+            }
         }
+
         if(obj!=null){
             emp= (EmpVo) obj;
             List nList = services.getControllerList(emp.getEmpId());
