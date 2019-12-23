@@ -72,11 +72,40 @@
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="${pageContext.request.contextPath}/logout">注销</a></dd>
+                    <dd><a href="javaScript:void(0)" onclick="editpwd()">修改密码</a></dd>
                 </dl>
             </li>
         </ul>
     </div>
-
+    <div id="editwindow"  style="margin-left: 5%;display: none;">
+        <form class="layui-form"  style="margin-right: 100px;margin-top: 35px;" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">原密码:</label>
+                <div class="layui-input-block">
+                    <input id="pwd" type="password" name="pwd" required lay-verify="required" placeholder="请输入原密码" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">新密码:</label>
+                <div class="layui-input-block">
+                    <input id="pwd1" type="password" name="pwd1" required lay-verify="required" placeholder="请输入新密码" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">再输一次:</label>
+                <div class="layui-input-block">
+                    <input id="pwd2" type="password" name="pwd2" required lay-verify="required" placeholder="请再次输入新密码" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <center>
+                        <button type="submit" class="layui-btn" lay-submit lay-filter="pwdAction" >保存</button>
+                    </center>
+                </div>
+            </div>
+        </form>
+    </div>
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
@@ -403,7 +432,6 @@
         //当点击有site-demo-active属性的标签时，即左侧菜单栏中内容 ，触发点击事件
         $('.site-demo-active').on('click', function() {
             var dataid = $(this);
-
             //这时会判断右侧.layui-tab-title属性下的有lay-id属性的li   的数目，即已经打开的tab项数目
             if ($(".layui-tab-title li[lay-id]").length <= 0) {
                 //如果比零小，则直接打开新的tab项
@@ -442,8 +470,64 @@
     window.setInterval("reinitIframe()",200);
 </script>
 <script>
-    layui.use([ 'element', 'table', 'layer', 'form' ,'laydate','layedit'],function() {
-
+    function editpwd(){//打开修改密码窗口
+        layui.use(['layer'],function() {
+            layer.open({
+                type: 1,
+                title:'修改登录密码',
+                skin: 'layui-layer-demo', //样式类名
+                closeBtn: 1, //不显示关闭按钮
+                area: ['450px', '300px'],
+                fixed: false, //不固定
+                maxmin: true,
+                //shadeClose: true, //开启遮罩关闭
+                content: $('#editwindow')
+                ,cancel: function(index, layero){
+                    $("#pwd").val("");
+                    $("#pwd1").val("");
+                    $("#pwd2").val("");
+                }
+            });
+        })
+    }
+    layui.use(['form','layer'],function() {
+        var layer = layui.layer;
+        var form = layui.form;
+        form.on('submit(pwdAction)', function(data){
+            //新旧密码
+            var pwd1 = data.field.pwd1;
+            var pwd2 = data.field.pwd2;
+            if(pwd1!=pwd2){
+                layer.msg('两次输入的新密码不一样!请重新输入!')
+                $("#pwd1").focus()
+                return false;
+            }
+            if(pwd1.length<6||pwd1.length>16){
+                layer.msg('新密码的长度必须为6~16位!')
+                return false;
+            }
+            $.ajax({
+                url:'<%=request.getContextPath()%>/zeroEmp/editpwd',
+                type:'post',
+                async:true,
+                dataType:'text',
+                data:data.field,
+                success:function (d) {
+                    if(d=="error"){//原来密码错误
+                        layer.msg('您输入的原密码错误!请重新输入!')
+                        $("#pwd").focus()
+                        return;
+                    }
+                    if(d=="ok"){
+                        layer.msg('修改成功!即将跳转到登录页面!')
+                        setTimeout(function () {
+                            window.location.href="<%=request.getContextPath()%>/logout";
+                        },1500)
+                    }
+                }
+            })
+            return false;
+        })
     })
 </script>
 </body>

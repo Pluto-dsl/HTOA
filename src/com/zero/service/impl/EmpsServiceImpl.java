@@ -60,5 +60,9 @@ public class EmpsServiceImpl extends BaseDao implements EmpsService {
         super.executeSQL("update emp set status = "+state+" where empId = "+empId);
     }
 
+    @Override
+    public void updatePwd(int empId, String pwd1) {
+        super.executeSQL("UPDATE emp set `password` = '"+pwd1+"' where empId = "+empId);
+    }
 
 }

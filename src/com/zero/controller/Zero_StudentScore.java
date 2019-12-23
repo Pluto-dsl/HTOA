@@ -105,7 +105,7 @@ public class Zero_StudentScore {
     @RequestMapping(value = "/scoreseek")
     @ResponseBody
     public Map seek(int term,int classId,int type,int course,int page,int limit){//分页
-        System.out.println("进入方法");
+         //System.out.println("进入方法");
         String sql = "";
         if (classId!=0){
             sql+=" and s.clazz = "+classId;
@@ -255,4 +255,9 @@ public class Zero_StudentScore {
         writer.write("ok");
     }
 
+
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
 }

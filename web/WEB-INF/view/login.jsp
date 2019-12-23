@@ -143,11 +143,11 @@
         <div class="hr"></div>
         <div class="login-row">
             <i class="login-icon layui-icon layui-icon-username"></i>
-            <input type="text" name="phone" placeholder="输入手机号" style="width: 90%;" autocomplete="off" class="layui-input" value="18270062525">
+            <input type="text" name="phone" placeholder="输入手机号" style="width: 90%;" autocomplete="off" class="layui-input" value="">
         </div>
         <div class="login-row">
             <i class="login-icon layui-icon layui-icon-password"></i>
-            <input type="password" name="pwd" placeholder="输入密码" style="width: 90%;" autocomplete="off" class="layui-input" value="123456"/>
+            <input type="password" name="pwd" placeholder="输入密码" style="width: 90%;" autocomplete="off" class="layui-input" value=""/>
         </div>
         <div id="varcode" class="login-row">
             <i class="login-icon layui-icon layui-icon-vercode"></i>

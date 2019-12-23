@@ -71,17 +71,19 @@
                                 floorId:obj.data.floorId
                             },
                             dataType:"json",
-                            success: function (data) {
-                                obj.del();
-                                layer.close(index);
-                                layer.msg('删除成功');
-                                table.reload("demo2");
-                            },
-                            error:function () {
-                                obj.del();
-                                layer.close(index);
-                                layer.msg('删除成功');
-                                table.reload("demo2");
+                            success: function (data){
+                                if(data==1){
+                                    obj.del();
+                                    layer.close(index);
+                                    layer.msg('删除成功');
+                                    table.reload("demo2");
+                                }
+                                if(data==0){
+                                    obj.del();
+                                    layer.close(index);
+                                    layer.msg('删除失败,该楼栋有宿舍，不能删哦！');
+                                    table.reload("demo2");
+                                }
                             }
                         })
                     });

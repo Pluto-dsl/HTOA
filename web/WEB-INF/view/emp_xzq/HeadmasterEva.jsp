@@ -11,6 +11,11 @@
 <head>
     <title>Title</title>
     <jsp:include page="../include.jsp" />
+    <style>
+        dl{
+            height: 255px;
+        }
+    </style>
 </head>
 <body>
 <div id="addWin">

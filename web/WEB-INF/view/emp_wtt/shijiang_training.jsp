@@ -22,7 +22,7 @@
                 <tr>
                     <th>日期:</th>
                     <td>
-                        <input type="text" class="layui-input" id="riqi" placeholder="yyyy-MM-dd" name="date" autocomplete="off">
+                        <input type="text" class="layui-input" id="riqi" placeholder="yyyy-MM-dd" name="date" autocomplete="off" lay-verify="required">
                     </td>
                 </tr>
 
@@ -75,12 +75,12 @@
                 <tr>
                     <th>说明:</th>
                     <td>
-                        <textarea rows="5" cols="50" name="remark"/></textarea>
+                        <textarea rows="5" cols="50" name="remark" lay-verify="required"/></textarea>
                     </td>
                 </tr>
                 <tr align="center">
                     <td colspan="2">
-                        <button style="text-align: center" style="margin-left: 25%" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>添加</button>
+                        <button style="text-align: center" style="margin-left: 25%" class="layui-btn layui-btn-warm" type="submit" lay-submit lay-filter="sub"><i class="layui-icon layui-icon-ok" ></i>添加</button>
                     </td>
                 </tr>
             </table>

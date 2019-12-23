@@ -119,20 +119,22 @@
                         url:"${pageContext.request.contextPath}/zhq/deleteStuDorm",
                         type:"post",
                         data:{
-                            stuId:obj.data.hourid
+                            hourid:obj.data.hourid
                         },
                         dataType:"json",
                         success: function (data) {
-                            obj.del();
-                            layer.close(index);
-                            layer.msg('删除成功');
-                            table.reload("demo");
-                        },
-                        error:function () {
-                            obj.del();
-                            layer.close(index);
-                            layer.msg('删除成功');
-                            table.reload("demo");
+                            if(data==1){
+                                obj.del();
+                                layer.close(index);
+                                layer.msg('删除成功');
+                                table.reload("demo");
+                            }
+                            if(data==0){
+                                obj.del();
+                                layer.close(index);
+                                layer.msg('删除失败，该宿舍还有学生');
+                                table.reload("demo");
+                            }
                         }
                     })
                 });

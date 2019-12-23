@@ -23,9 +23,14 @@ public class Ljw_StuRepairController {
     @Resource
     private Ljw_LogsService logsService;
 
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
+
     @RequestMapping(value = "/toStuRepair")
     public String toMyRepair(){
-        System.out.println("学生");
+         //System.out.println("学生");
         return "repair_ljw/stuRepair";
     }
 

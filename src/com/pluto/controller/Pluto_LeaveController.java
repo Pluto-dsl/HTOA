@@ -19,6 +19,11 @@ import java.util.Map;
 @RequestMapping("/empLeave")
 public class    Pluto_LeaveController {
 
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
+
     @Resource
     Pluto_LeaveService service;
 

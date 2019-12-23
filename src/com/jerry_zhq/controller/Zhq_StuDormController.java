@@ -72,18 +72,23 @@ public class Zhq_StuDormController {
     //删除
     @RequestMapping("/deleteStuDorm")
     @ResponseBody
-    public String delDept(int stuId){
+    public String delDept(int hourid){
         StudentDormitoryVo sd = new StudentDormitoryVo();
-        sd.setHourid(stuId);
-        zhq_stuDormService.delStuDorm(sd);
-        return "success";
+        sd.setHourid(hourid);
+        int studentsize = zhq_stuDormService.size(hourid);
+        if(studentsize<1){
+            zhq_stuDormService.delStuDorm(sd);
+            return "1";
+        }else {
+            return "0";
+        }
     }
 
     //点击了添加按钮
     @RequestMapping("/addStuDormit")
     public String addStuDormit(HttpServletRequest request){
         List<StudntBuildingVo> list = zhq_stuDormService.selFloorName();
-        System.out.println(list.toString());
+         //System.out.println(list.toString());
         request.setAttribute("list",list);
         return "/stu_zhq/addStuDorm";
     }

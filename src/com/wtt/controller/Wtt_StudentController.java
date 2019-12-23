@@ -71,7 +71,7 @@ public class Wtt_StudentController {
         //单据
         List studentleave = new ArrayList();
         for(Task task:tasks){
-            System.out.println(task.getId());
+            /*System.out.println(task.getId());*/
             //根据任务id取得单据id
             Object sid = taskService.getVariable(task.getId(),"holidayid");
             //如果有任务进入判断里面
@@ -90,7 +90,7 @@ public class Wtt_StudentController {
     //根据选中的请假id去到审批页面
     @RequestMapping(value = "/studentexamine")
     public String studentexamine(String taskid,String instance,Model model){
-        System.out.println("我进来了，你拦我啊！！");
+        /*System.out.println("我进来了，你拦我啊！！");*/
         //根据流程实例Id查询流程实例
         ProcessInstance processInstance =runtimeService.createProcessInstanceQuery().processInstanceId(instance).singleResult();
         //根据任务ID查询任务实例
@@ -145,7 +145,7 @@ public class Wtt_StudentController {
     public String complete(int id,String taskid,String comment,String opinion,HttpSession session){
         //根据任务id查找任务对象
         Task task =taskService.createTaskQuery().taskId(taskid).singleResult();
-        System.out.println("任务对象："+task);
+        /*System.out.println("任务对象："+task);*/
         //根据任务对象得到流程实例ID
         String processinstanceid= task.getProcessInstanceId();
         //根据单据ID得到实体对象
@@ -160,7 +160,7 @@ public class Wtt_StudentController {
         //判断当前审批人是否为班主任
         String assignee = "";
         List clist = studentService.selclassteacher("select * from emp where postName like '班主任'");
-        System.out.println("班主任:"+clist);
+        /*System.out.println("班主任:"+clist);*/
         for(int i = 0;i < clist.size(); i++){
             Map map = (Map) clist.get(i);
             System.out.println("----"+map.get("empName"));
@@ -236,9 +236,9 @@ public class Wtt_StudentController {
     public void selectcollect(HttpServletRequest request,HttpServletResponse response) throws IOException {
         response.setContentType("text/html;charset=utf-8");
         int ids = Integer.parseInt(request.getParameter("wid"));
-        System.out.println("id为："+ids);
+        /*System.out.println("id为："+ids);*/
         List<Collect_OpinionsVo> list = studentService.selectyijian(ids);
-        System.out.println("查询意见:"+list);
+        /*System.out.println("查询意见:"+list);*/
         PrintWriter pw = response.getWriter();
         pw.print(JSONArray.toJSONString(list));
         pw.close();
@@ -262,6 +262,7 @@ public class Wtt_StudentController {
         studentService.update(feedbackVo);
         //新增意见
         studentService.add(collect_opinionsVo);
+        request.setAttribute("ids",id);
         return "redirect:/student/questionPage";
     }
 

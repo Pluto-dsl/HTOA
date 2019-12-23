@@ -29,7 +29,7 @@
 <body>
     <form lay-filter="formTestFilter" class="layui-form" action="<%=request.getContextPath()%>/student/addcollect/">
         <div id="windows" style="display: none;height:95%;" >
-            <input type="hidden" name="feedbackId">
+            <input type="hidden" name="feedbackId" value="${id}">
             <div style="background-color: #ffffff;height: 12%;width: 100%;border-bottom: solid 2px #de76b1;">
                 <span style="font-size: 20px;margin-right: 20px;float: right;margin-top: 5px;">发问人:<label id="stuname"></label></span>
                 <label style="float: right;margin-top: 40px; margin-right: -128px;" id="feedbackTime"></label>

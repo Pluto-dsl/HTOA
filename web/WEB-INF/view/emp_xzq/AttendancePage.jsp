@@ -18,7 +18,7 @@
     <form id="Wfrom" class="layui-form" action="${pageContext.request.contextPath}/jack/Attadd" method="post" >
         <br><br>
         未打卡日期：<div style="margin-right:10px" class="layui-inline">
-        <input type="text" name="punckClockTime" class="layui-input" id="clockDate">
+        <input type="text"  autocomplete="off" name="punckClockTime" class="layui-input" id="clockDate">
     </div>
         时间点:
         <div class="layui-input-inline">

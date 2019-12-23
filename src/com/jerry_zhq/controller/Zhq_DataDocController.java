@@ -110,10 +110,10 @@ public class Zhq_DataDocController {
 
     @RequestMapping("/download.do")
     public void download(Integer docId,DataDocVo dataDocVo,HttpServletResponse response) throws Exception{
-        System.out.println("获取到的id是"+docId);
+         //System.out.println("获取到的id是"+docId);
         DataDocVo dataDocVO1 = (DataDocVo) zhq_dataDocService.selDocId(dataDocVo.getClass(),docId);
 
-        System.out.println("要下载的路径是"+dataDocVO1.getUrl());
+         //System.out.println("要下载的路径是"+dataDocVO1.getUrl());
         // 指定要下载的文件所在路径
         String path = dataDocVO1.getUrl();
         // 创建该文件对象

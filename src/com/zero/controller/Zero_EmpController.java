@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
@@ -126,5 +127,29 @@ public class Zero_EmpController {
         int state = empService.statue(empId) == 1?0:1;
         //修改状态
         empService.status(state,empId);
+    }
+
+    @RequestMapping(value = "/editpwd")
+    public void editpsd(String pwd,String pwd1,HttpSession session,HttpServletResponse response) throws IOException {//修改员工状态
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter writer = response.getWriter();
+        //输入的原密码是否正确
+        EmpVo emp =(EmpVo)session.getAttribute("admin");
+        if(!pwd.equals(emp.getPassword())){//原密码错误
+            writer.print("error");
+            writer.flush();
+            writer.close();
+        }else {//密码正确
+            empService.updatePwd(emp.getEmpId(),pwd1);
+        }
+        writer.print("ok");
+        writer.flush();
+        writer.close();
+    }
+
+
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
     }
 }

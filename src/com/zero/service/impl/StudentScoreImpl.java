@@ -77,7 +77,7 @@ public class StudentScoreImpl extends BaseDao implements StudentScoreService {
                 " left join term t on t.termid = sc.termid" +
                 " left join emp e on e.empId = sc.EmpId " +
                 " where 1=1 ";
-        System.out.println("语句:"+sql);
+         //System.out.println("语句:"+sql);
         sql = sql + where + " order by sc.scoreId desc";
         return super.pageBySQL(sql,page,limit);
     }
@@ -98,7 +98,7 @@ public class StudentScoreImpl extends BaseDao implements StudentScoreService {
                 " left join emp e on e.empId = sc.EmpId " +
                 " where 1=1 ";
         sql+=where;
-        System.out.println("count"+sql);
+         //System.out.println("count"+sql);
         return Integer.parseInt(((Map)super.listBySQL(sql).get(0)).get("co").toString());
     }
 

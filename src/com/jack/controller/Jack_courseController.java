@@ -31,6 +31,7 @@ public class Jack_courseController {
     @Resource
     private Jack_Service service;
 
+
     /**
      * 课程类型部分
      * */
@@ -43,7 +44,7 @@ public class Jack_courseController {
     @RequestMapping(value = "/addCourse")
     @ResponseBody
     public int addCourse(CourseTypeVo course, HttpServletRequest request, HttpServletResponse response){
-        System.out.println(course+"-------------------");
+         //System.out.println(course+"-------------------");
         int a = service.AddCurse(course);
         return a;
     }
@@ -52,7 +53,7 @@ public class Jack_courseController {
     @RequestMapping(value = "/editCourse")
     @ResponseBody
     public int editCourse(CourseTypeVo course,HttpServletRequest request, HttpServletResponse response){
-        System.out.println(course);
+         //System.out.println(course);
         int b = service.UpdateCourse(course);
         return b;
     }
@@ -62,7 +63,7 @@ public class Jack_courseController {
     @ResponseBody
     public int delCourse(HttpServletRequest request, HttpServletResponse response){
         int cid = Integer.parseInt(request.getParameter("cid"));
-        System.out.println(cid+"=======");
+         //System.out.println(cid+"=======");
         int c = service.delCourse(cid);
 
         return c;
@@ -101,7 +102,7 @@ public class Jack_courseController {
         PrintWriter out = response.getWriter();
         JSONObject json = new JSONObject();
         json.put("names",list);
-        System.out.println(list);
+         //System.out.println(list);
         out.print(json.toJSONString());
         out.close();
     }
@@ -109,8 +110,8 @@ public class Jack_courseController {
     @RequestMapping(value = "/addCourseMgt")
     @ResponseBody
     public String addCourseMgt(CourseVo courseVo){
-        System.out.println("进来了-------------");
-        System.out.println(courseVo);
+         //System.out.println("进来了-------------");
+         //System.out.println(courseVo);
         service.addCourseMgt(courseVo);
         return "";
     }
@@ -142,7 +143,7 @@ public class Jack_courseController {
         response.setContentType("text/html;charset=utf-8");
         List list = service.selCourseMgt(currPage1,pageSize1);
         int count = service.selCouCountM();
-        System.out.println(list.toString());
+         //System.out.println(list.toString());
         PrintWriter out = response.getWriter();
         JSONObject json = new JSONObject();
         json.put("msg","提示");
