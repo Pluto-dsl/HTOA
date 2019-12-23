@@ -157,9 +157,6 @@
                                data-url="${pageContext.request.contextPath}/zeroStudent/toClass"
                                data-id="班级管理" data-title="班级管理">班级管理</a></dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="<%--${pageContext.request.contextPath}/zeroStudent/toClass--%>"
-                               data-id="班级管理" data-title="班级分配">班级分配</a></dd>
-                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/zhq/stuFloor"
                                data-id="楼栋管理" data-title="楼栋管理">楼栋管理</a></dd>
                         <dd><a href="javascript:void(0);"class="site-demo-active" data-type="tabAdd"
