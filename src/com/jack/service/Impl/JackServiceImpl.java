@@ -386,6 +386,16 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
         return selTotalRow("select count(*) from enrollment");
     }
 
+    @Override
+    public List selClassTypeList() {
+        return listBySQL("select * from classType");
+    }
+
+    @Override
+    public List selMajorList() {
+        return listBySQL("select majorid,majorName from major");
+    }
+
 
     //根据公告id查询已读的人数
     @Override

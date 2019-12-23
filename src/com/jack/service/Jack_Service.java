@@ -104,6 +104,8 @@ public interface Jack_Service {
     /** 招生管理 */
     List selEnrollmentList(int currPage,int pageSize);
     int selEnrollmentCount();
+    List selClassTypeList();
+    List selMajorList();
 
 
     //根据公告id查询已读的人数
