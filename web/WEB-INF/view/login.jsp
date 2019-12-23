@@ -42,6 +42,7 @@
             height: 50px;
             padding-left: 15%;
             padding-top: 10px;
+            top: 0px;
         }
         .title{
             margin-top: 12%;
@@ -129,14 +130,60 @@
             height: 10%;
             background-color: #070707ed;
         }
+        .wrapper {
+            width: 100%;
+            height: 100%;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            -webkit-flex-direction: row;
+            -ms-flex-direction: row;
+            flex-direction: row;
+            -webkit-box-pack: center;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            background: url("${pageContext.request.contextPath}/imgs/login/backgroundImg.jpg") no-repeat center center fixed;
+            background-size: cover;
+        }
+        .element {
+            background-color: #000;
+            width: 100%;
+            height: 80px;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+        }
+        .log {
+            width: 100%;
+            height: 200%;
+            background: url("${pageContext.request.contextPath}/imgs/login/backgroundImg.jpg") no-repeat center center fixed;
+            background-size: cover;
+            position: absolute;
+            right: 0px;
+            filter: blur(8px);
+            top: -20px;
+        }
     </style>
 </head>
 <body>
-<div id="Bcontext">
-
+<div class="wrapper">
+    <div class="element">
+        <div class="log"></div>
+    </div>
 </div>
+<%--<div id="Bcontext">
+
+</div>--%>
 <div id="top">
-    <span style="font-size: 35px;color: #ffffff;">︱宏图软件教育-办公管理系统</span>
+    <span style="font-size: 35px;color: #ffffff;transition: all 1.5s" class="titleText">︱宏图软件教育-办公管理系统</span>
 </div>
 <div id="login" align="center">
     <%--        <form class="layui-form" action="${pageContext.request.contextPath}/jack/login" method="post">--%>

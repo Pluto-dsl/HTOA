@@ -17,19 +17,19 @@
     <jsp:include page="../include.jsp"/>
     <style>
         .empBar{
-            width: 1316px;
+            width: 1700px;
             height: 280px;
             margin-bottom: 15px;
             float: left;
         }
         .empLine{
-            width: 724px;
-            height: 248px;
+            width: 935px;
+            height: 400px;
             float: left;
         }
         .titleBing{
-            width: 400px;
-            height: 250px;
+            width: 500px;
+            height: 400px;
             margin-left: 5%;
             float: left;
         }
