@@ -30,18 +30,18 @@
                 </td>
                 <th>第几位值班:</th>
                 <td>
-                    <input type="text" class="layui-input" name="orderId">
+                    <input type="text" class="layui-input" name="orderId" autocomplete="off" lay-verify="required">
                 </td>
             </tr>
 
             <tr>
                 <th>排班名称:</th>
                 <td>
-                    <input type="text" class="layui-input" name="weekArrangeName">
+                    <input type="text" class="layui-input" name="weekArrangeName" autocomplete="off" lay-verify="required">
                 </td>
                 <th>值班要求:</th>
                 <td>
-                    <input type="text" class="layui-input" name="ranges">
+                    <input type="text" class="layui-input" name="ranges" autocomplete="off" lay-verify="required">
                 </td>
             </tr>
 
@@ -70,24 +70,24 @@
             <tr>
                 <th>开始时间:</th>
                 <td>
-                    <input type="text" id="startTime" class="layui-input" name="startTime" autocomplete="off">
+                    <input type="text" id="startTime" class="layui-input" name="startTime" autocomplete="off" lay-verify="required">
                 </td>
 
                 <th>结束时间:</th>
                 <td>
-                    <input type="text" id="endTime" class="layui-input" name="endTime" autocomplete="off">
+                    <input type="text" id="endTime" class="layui-input" name="endTime" autocomplete="off" lay-verify="required">
                 </td>
             </tr>
 
             <tr>
                 <th>说明:</th>
                 <td colspan="4">
-                    <textarea rows="5" cols="60" name="remark"/></textarea>
+                    <textarea rows="5" cols="60" name="remark" lay-verify="required"/></textarea>
                 </td>
             </tr>
             <tr align="center">
                 <td colspan="4" >
-                    <button style="text-align: center" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>添加</button>
+                    <button style="text-align: center" class="layui-btn layui-btn-warm" type="submit" lay-submit><i class="layui-icon layui-icon-ok" ></i>添加</button>
                 </td>
             </tr>
         </table>

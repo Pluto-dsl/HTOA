@@ -30,7 +30,7 @@ public class Wtt_EmpServiceImpl extends BaseDao implements Wtt_EmpService {
         if(!("".equals(endtitme) || endtitme == null)){
             sql+=" and '"+endtitme+" 23:59:59'";
         }
-         //System.out.println("sql:"+sql);
+        /*System.out.println("sql:"+sql);*/
         return pageBySQL(sql,currpage,pagesize);
     }
 
@@ -44,7 +44,7 @@ public class Wtt_EmpServiceImpl extends BaseDao implements Wtt_EmpService {
         WeeklogVo weeklogVo = (WeeklogVo) getObject(WeeklogVo.class,id);
         EmpVo empVo = (EmpVo) getObject(EmpVo.class,weeklogVo.getEmpid());
         DepVo dep = (DepVo) getObject(DepVo.class,empVo.getDepId());
-         //System.out.println("部门名称："+dep.getDepName());
+        /*System.out.println("部门名称："+dep.getDepName());*/
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
         JSONObject jsonObject = new JSONObject();
@@ -58,10 +58,10 @@ public class Wtt_EmpServiceImpl extends BaseDao implements Wtt_EmpService {
         return jsonObject;
     }
 
-    @Override
+    /*@Override
     public EmpVo emp(int id) {
         return (EmpVo) getObject(new EmpVo().getClass(),id);
-    }
+    }*/
 
     @Override
     public void update(WeeklogVo weeklogVo) {

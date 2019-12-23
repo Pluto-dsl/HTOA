@@ -2,6 +2,7 @@ package com.jerry_zhq.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jerry_zhq.service.Zhq_StuFloorService;
+import com.publics.vo.studentModel.StudentDormitoryVo;
 import com.publics.vo.studentModel.StudntBuildingVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,8 +48,14 @@ public class Zhq_StuFloorController {
          //System.out.println("获取到的id是"+floorId);
         StudntBuildingVo sb = new StudntBuildingVo();
         sb.setFloorId(floorId);
-        zhq_stuFloorService.deleteStuBiu(sb);
-        return "success";
+        List<StudentDormitoryVo> list = zhq_stuFloorService.list(floorId);
+        /*System.out.println("宿舍："+list);*/
+        if(list.size()<1){
+            zhq_stuFloorService.deleteStuBiu(sb);
+            return "1";
+        }else {
+            return "0";
+        }
     }
     //添加
     @RequestMapping("/addStuFloor")

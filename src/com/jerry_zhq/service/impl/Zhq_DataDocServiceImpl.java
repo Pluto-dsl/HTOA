@@ -41,7 +41,6 @@ public class Zhq_DataDocServiceImpl extends BaseDao implements Zhq_DataDocServic
         String oldName = file.getOriginalFilename();
          //System.out.println("获取到的文件名是"+oldName);
 
-
         // 截取文件的扩展名
         String extName = oldName.substring(oldName.indexOf("."));  //截取后缀
 

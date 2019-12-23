@@ -26,6 +26,12 @@ import java.util.List;
 public class Wtt_EmpsController {
     @Resource
     Wtt_EmpService empService;
+    //无权时跳转页面
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
+
     //去到我的周报查询主页面
     @RequestMapping(value = "/toEmpPaper")
     public String toEmpPaper(){
@@ -41,7 +47,7 @@ public class Wtt_EmpsController {
         List<WeeklogVo> list = empService.weekpaper(empid,request,page,limit);
         //获取总行数
         int rows =empService.pagecount(empid,request);
-         //System.out.println("总行数:"+rows);
+        /*System.out.println("总行数:"+rows);*/
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","提示");
         jsonObject.put("code",0);
@@ -88,7 +94,7 @@ public class Wtt_EmpsController {
     //删除
     @RequestMapping(value = "/deleteEmpPaper")
     public String deleteEmpPaperPage(HttpServletResponse response,int id){
-         //System.out.println("id为："+id);
+        /*System.out.println("id为："+id);*/
         empService.delete(id);
         try {
             PrintWriter printWriter = response.getWriter();
@@ -108,18 +114,13 @@ public class Wtt_EmpsController {
         return "emp_wtt/mynewpaper";
     }
 
-    //点击主页面最上面的用户查询出当前用户信息
-    /*@RequestMapping(value = "usermessage")
-    public String usermessage(){
-        return "emp_wtt/userMessage";
-    }*/
     //查询当前用户信息
     @RequestMapping(value = "selectusermessage")
     public String selectusermessage(ModelMap modelMap, HttpSession session){
         //获取当前登录用户
         EmpVo empVo = (EmpVo) session.getAttribute("admin");
         int id = empVo.getEmpId();
-         //System.out.println("员工Id:"+id);
+        /*System.out.println("员工Id:"+id);*/
         String name = empService.name(id);
 
         List edlist = empService.edmap(id);

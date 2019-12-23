@@ -1,6 +1,7 @@
 package com.jerry_zhq.service;
 
 import com.publics.vo.studentModel.StudentDormitoryVo;
+import com.publics.vo.studentModel.StudentVo;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
@@ -39,4 +40,6 @@ public interface Zhq_StuDormService  {
     //根据Id查询房号
     Object selIdHourName(Class vo,int id);
 
+    //根据宿舍id查找学生
+    int size(int hourid);
 }

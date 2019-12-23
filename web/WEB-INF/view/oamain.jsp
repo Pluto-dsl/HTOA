@@ -240,7 +240,7 @@
                         <cite>文件管理</cite></a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/toPage/DataDoc"
+                               data-url="${pageContext.request.contextPath}/zhq/DataDoc"
                                data-id="资料文档" data-title="资料文档" >资料文档</a></dd>
                     </dl>
                 </li>

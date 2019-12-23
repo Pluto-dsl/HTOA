@@ -69,22 +69,22 @@
                            style="width:290px;">
                 </td>
             </tr>
-            <tr style="height: 40px">
-                <td>
-                    <label class="label-top">担&nbsp;&nbsp;&nbsp;&nbsp;保&nbsp;&nbsp;&nbsp;人:</label>
-                </td>
-                <td>
-                    <input  name="guarantee" id="guarantee" value="" class="layui-input"
-                            style="width:290px;">
-                </td>
-                <td>
-                    <label class="label-top">毕业学校:</label>
-                </td>
-                <td>
-                    <input  name="middleschool" value="" id="middleschool" class="layui-input"
-                            style="width:290px;">
-                </td>
-            </tr>
+<%--            <tr style="height: 40px">--%>
+<%--                <td>--%>
+<%--                    <label class="label-top">担&nbsp;&nbsp;&nbsp;&nbsp;保&nbsp;&nbsp;&nbsp;人:</label>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <input  name="guarantee" id="guarantee" value="" class="layui-input"--%>
+<%--                            style="width:290px;">--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <label class="label-top">毕业学校:</label>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <input  name="middleschool" value="" id="middleschool" class="layui-input"--%>
+<%--                            style="width:290px;">--%>
+<%--                </td>--%>
+<%--            </tr>--%>
             <tr style="height: 40px">
                 <td>
                     <label class="label-top">&nbsp;性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别&nbsp;&nbsp;&nbsp;:</label>
@@ -136,14 +136,14 @@
                            editable="false"  style="width:290px;">
                 </td>
             </tr>
-            <tr style="height: 40px">
-                <td>
-                    <label class="label-top">介&nbsp;绍&nbsp;老&nbsp;师:</label>
-                </td>
-                <td>
-                    <input  name="introduretech" id="introduretech" value="" class="layui-input"
-                            style="width:290px;">
-                </td>
+<%--            <tr style="height: 40px">--%>
+<%--                <td>--%>
+<%--                    <label class="label-top">介&nbsp;绍&nbsp;老&nbsp;师:</label>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <input  name="introduretech" id="introduretech" value="" class="layui-input"--%>
+<%--                            style="width:290px;">--%>
+<%--                </td>--%>
                 <td>
                     <label class="label-top">户口性质:</label>
                 </td>
@@ -172,25 +172,26 @@
                 </td>
             </tr>
             <tr style="height: 40px">
-                <td>
-                    <label class="label-top">专&nbsp;业&nbsp;类&nbsp;别:</label>
-                </td>
-                <td>
-                    <select class="layui-form-label" name="prolevel" id="prolevel" editable="false" value="1" ditable="false" style="width:290px;">
-                        <c:forEach items="${zyList}" var="z">
-                            <option value="${z.majorid}">${z.majorName}</option>
-                        </c:forEach>
-                    </select>
-                </td>
-                <td>
-                    <label class="label-top">学习类别:</label>
-                </td>
-                <td>
-                    <select class="layui-form-label" name="studytype" id="studytype" editable="false" value="1" ditable="false"
-                            style="width:290px;">
-                        <option value="1" selected="selected">全日制</option>
-                    </select>
-                </td>
+<%--                <td>--%>
+<%--                    <label class="label-top">专&nbsp;业&nbsp;类&nbsp;别:</label>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <select class="layui-form-label" name="prolevel" id="prolevel" editable="false" value="1" ditable="false" style="width:290px;">--%>
+<%--                        <c:forEach items="${zyList}" var="z">--%>
+<%--                            <option value="${z.majorid}">${z.majorName}</option>--%>
+<%--                        </c:forEach>--%>
+<%--                    </select>--%>
+<%--                </td>--%>
+    <input type="hidden" value="1" name="studytype">
+<%--                <td>--%>
+<%--                    <label class="label-top">学习类别:</label>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <select class="layui-form-label" name="studytype" id="studytype" editable="false" value="1" ditable="false"--%>
+<%--                            style="width:290px;">--%>
+<%--                        <option value="1" selected="selected">全日制</option>--%>
+<%--                    </select>--%>
+<%--                </td>--%>
             </tr >
             <tr style="height: 40px">
                 <td>
@@ -216,32 +217,32 @@
                     <input  name="intrphone" lay-verify="phone" id="intrphone" value="" class="layui-input"
                             style="width:290px;">
                 </td>
-                <td>
-                    <label class="label-top">&nbsp;面&nbsp;试&nbsp;人&nbsp;:</label>
-                </td>
-                <td>
-                    <input  name="audition"  id="audition" value="" class="layui-input"
-                            style="width:290px;">
-                </td>
+<%--                <td>--%>
+<%--                    <label class="label-top">&nbsp;面&nbsp;试&nbsp;人&nbsp;:</label>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <input  name="audition"  id="audition" value="" class="layui-input"--%>
+<%--                            style="width:290px;">--%>
+<%--                </td>--%>
             </tr>
             <tr style="height: 40px">
-                <td>
-                    <label class="label-top">是&nbsp;否&nbsp;中&nbsp;专:</label>
-                </td>
-                <td>
-                    <select class="layui-form-label" name="isvocational" id="isvocational" editable="false" value="1" ditable="false"
-                            style="width:290px;">
-                        <option value="1" selected="selected">是</option>
-                        <option value="2">否</option>
-                    </select>
-                </td>
-                <td>
-                    <label class="label-top">中专学校:</label>
-                </td>
-                <td>
-                    <input  name="vocationalsch" autocomplete="off" id="vocationalsch" class="layui-input" value=""
-                            style="width:290px;">
-                </td>
+<%--                <td>--%>
+<%--                    <label class="label-top">是&nbsp;否&nbsp;中&nbsp;专:</label>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <select class="layui-form-label" name="isvocational" id="isvocational" editable="false" value="1" ditable="false"--%>
+<%--                            style="width:290px;">--%>
+<%--                        <option value="1" selected="selected">是</option>--%>
+<%--                        <option value="2">否</option>--%>
+<%--                    </select>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <label class="label-top">中专学校:</label>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <input  name="vocationalsch" autocomplete="off" id="vocationalsch" class="layui-input" value=""--%>
+<%--                            style="width:290px;">--%>
+<%--                </td>--%>
             </tr>
 
             <ul>
@@ -249,35 +250,37 @@
             </ul>
 
             <tr style="height: 40px">
-                <td>
-                    <label class="label-top">中&nbsp;专&nbsp;学&nbsp;籍:</label>
-                </td>
-                <td>
-                    <select class="layui-form-label" name="vocationalflag" id="vocationalflag" editable="false" value="" ditable="false"
-                            style="width:290px;">
-                        <option value="1" selected="selected">已退</option>
-                        <option value="2">保留</option>
-                    </select>
-                </td>
-                <td>
-                    <label class="label-top">省录取号:</label>
-                </td>
-                <td>
-                    <input  name="enrollno" id="enrollno" autocomplete="off" class="layui-input" value=""
-                            style="width:290px;">
-                </td>
+                <input type="hidden" name="vocationalflag" value="1">
+<%--                <td>--%>
+<%--                    <label class="label-top">中&nbsp;专&nbsp;学&nbsp;籍:</label>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <select class="layui-form-label" name="vocationalflag" id="vocationalflag" editable="false" value="" ditable="false"--%>
+<%--                            style="width:290px;">--%>
+<%--                        <option value="1" selected="selected">已退</option>--%>
+<%--                        <option value="2">保留</option>--%>
+<%--                    </select>--%>
+<%--                </td>--%>
+                <input type="hidden" name="enrollno" value="0">
+<%--                <td>--%>
+<%--                    <label class="label-top">省录取号:</label>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <input  name="enrollno" id="enrollno" autocomplete="off" class="layui-input" value=""--%>
+<%--                            style="width:290px;">--%>
+<%--                </td>--%>
             </tr>
             <tr style="height: 40px">
-                <td>
-                    <label class="label-top">面试人意见:</label>
-                </td>
-                <td>
-                    <select class="layui-input" name="auditionoption" id="auditionoption" editable="false" value="" ditable="false"
-                            style="width:290px;">
-                        <option value="同意" >同意</option>
-                        <option value="拒绝" selected="selected">拒绝</option>
-                    </select>
-                </td>
+<%--                <td>--%>
+<%--                    <label class="label-top">面试人意见:</label>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <select class="layui-input" name="auditionoption" id="auditionoption" editable="false" value="" ditable="false"--%>
+<%--                            style="width:290px;">--%>
+<%--                        <option value="同意" >同意</option>--%>
+<%--                        <option value="拒绝" selected="selected">拒绝</option>--%>
+<%--                    </select>--%>
+<%--                </td>--%>
                 <td>
                     <label class="label-top">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</label>
                 </td>
