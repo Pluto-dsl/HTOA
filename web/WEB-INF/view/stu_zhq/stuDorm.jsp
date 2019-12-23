@@ -98,14 +98,14 @@
             cols: [[ //标题栏
                 {type: 'checkbox', fixed: 'left'}
                 ,{field: 'hourid', title: '编号', width: 150, sort: true}
-                ,{field: 'huoeIddsc', title: '序号', width: 150}
+                ,{field: 'huoeIddsc', title: '序号', width: 120}
                 ,{field: 'huorName', title: '宿舍房号', width: 150}
                 ,{field: 'floorId', title: '楼栋', width: 150,hide:'true'}
                 ,{field: 'floorName', title: '楼栋名称', width: 150}
                 ,{field: 'numberBeds', title: '床位数', width: 150}
                 ,{field: 'count', title: '宿舍人数', width: 150}
                 ,{field: 'addr', title: '宿舍地址', width: 150}
-                ,{fixed: 'right',  title:'操作', toolbar: '#barDemo',width:270}
+                ,{fixed: 'right',  title:'操作', toolbar: '#barDemo',width:240}
             ]]
            ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });

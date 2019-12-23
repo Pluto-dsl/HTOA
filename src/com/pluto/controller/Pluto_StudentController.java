@@ -209,15 +209,18 @@ public class Pluto_StudentController {
 
     @RequestMapping("/addStu")
     @ResponseBody
-    public String addStudent(StudentVo studentVo, HttpServletRequest request){
-        String bir = request.getParameter("bir");
-        String ent = request.getParameter("ent");
+    public String addStudent(StudentVo studentVo,String birt,String ents, HttpServletRequest request){
+        System.out.println(studentVo.toString());
+
+
+        System.out.println(birt+"+++++++++"+ents);
+
         Date bd=null;
         Date ed=null;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            bd = sdf.parse(bir);
-            ed = sdf.parse(ent);
+            bd = sdf.parse(birt);
+            ed = sdf.parse(ents);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -232,6 +235,8 @@ public class Pluto_StudentController {
     public String toAddStudentPage(Model model){
         List clist = service.getClassList("from StudentClassVo");
         List mList = service.getMajor("from MajorVo");
+        List hList = service.getHourList("from StudentDormitoryVo");
+        model.addAttribute("hList",hList);
         model.addAttribute("zyList",mList);
         model.addAttribute("classList",clist);
         return "student_pluto/addStudent";
