@@ -333,6 +333,8 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
     public int selClockCount(String empid) {
         return selTotalRow("select count(*) from attendance att inner join emp e on att.empid = e.empid where att.auditor = '"+empid+"'and att.status = 2");
     }
+
+
     @Override
     public List selNoticeList(int id) {
         return listBySQL("select  n.noticeId,n.title,n.content,n.empid,n.noticeTime,re.isRead from notice n \n" +
