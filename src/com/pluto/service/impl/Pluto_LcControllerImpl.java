@@ -46,9 +46,9 @@ public class Pluto_LcControllerImpl extends BaseDao implements Pluto_LcControlle
 
     @Override
     public List getControllerList2() {
-        List list = super.listBySQL("select controller from module where moduleId not in (select m.moduleId from uac u \n" +
-                "\t\tINNER JOIN\tcharModule c on u.characterId = c.characterId\n" +
-                "\t\tINNER JOIN  module m on m.moduleId = c.moduleId");
+        List list = super.listBySQL("select controller from module where moduleId in (select m.moduleId from uac u " +
+                " INNER JOIN  charModule c on u.characterId = c.characterId" +
+                " INNER JOIN  module m on m.moduleId = c.moduleId)");
         return list;
     }
 

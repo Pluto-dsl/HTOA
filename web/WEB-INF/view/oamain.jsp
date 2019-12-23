@@ -99,7 +99,9 @@
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button type="submit" class="layui-btn" lay-submit lay-filter="pwdAction" >保存</button>
+                    <center>
+                        <button type="submit" class="layui-btn" lay-submit lay-filter="pwdAction" >保存</button>
+                    </center>
                 </div>
             </div>
         </form>
@@ -238,7 +240,7 @@
                         <cite>文件管理</cite></a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/toPage/DataDoc"
+                               data-url="${pageContext.request.contextPath}/zhq/DataDoc"
                                data-id="资料文档" data-title="资料文档" >资料文档</a></dd>
                     </dl>
                 </li>
@@ -520,7 +522,7 @@
                         layer.msg('修改成功!即将跳转到登录页面!')
                         setTimeout(function () {
                             window.location.href="<%=request.getContextPath()%>/logout";
-                        },10500)
+                        },1500)
                     }
                 }
             })
