@@ -77,9 +77,7 @@
                                 <h3 style="border-bottom: solid 1px #82828245;height: 25px;">
                                     <span class="title" style="margin-left: 10px;">${list.title}</span>
                                     <c:if test="${list.isRead == 2}">
-                                        <script>
-                                            $(".readWin").css("cursor","pointer");
-                                        </script>
+                                        
                                         <i class="layui-icon layui-icon-notice" id="myTitle" style="margin-left:10px;"></i>
                                     </c:if>
                                     <span style="float: right;font-size: 10px;margin-left: 10px;margin-right:10px;">${list.noticeTime}</span>
@@ -108,6 +106,15 @@
             var upload = layui.upload;
             //查询公告条数
             count();
+
+            $(".readWin").hover(function (){
+                $(".readWin").show();
+            },function (){
+                if($(this).children(".isRead").val() === "2"){
+                    $(this).css("cursor","pointer");
+                }
+            });
+
 
             function count(){
                 $.post('${pageContext.request.contextPath}/jack/MyAnnoEmp',{},function (data) {

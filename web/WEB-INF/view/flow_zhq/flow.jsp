@@ -17,6 +17,7 @@
 <button type="button" class="layui-btn" id="addFlow" style="margin-top: 10px;margin-left: 25px;" >
     <i class="layui-icon"></i> 上传流程图
 </button>
+<h2 style="margin-left: 20px;">上传流程可能使得系统流程需要更改,请谨慎使用</h2>
 
 <table id="demo"  lay-filter="test"></table>
 

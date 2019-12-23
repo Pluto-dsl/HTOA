@@ -89,9 +89,9 @@
                     tree.render({
                         elem: '#tt', //绑定元素
                         showLine: false,//是否为连线性
-                        accordion:true,
                         data:[{
                             title:'宏图软件'
+                            ,spread: true
                             ,children:d
                         }],
                         edit:['del'],

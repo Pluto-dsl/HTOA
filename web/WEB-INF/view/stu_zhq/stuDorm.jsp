@@ -19,6 +19,12 @@
         <i class="layui-icon"></i> 添加
     </button>
     <table id="demo"  lay-filter="test"></table>
+
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="getCheckData">批量删除</button>
+        </div>
+    </script>
     <!--修改-->
     <div  id="windows"  style="margin-left: 5%;display: none;">
         <form method="post" class="layui-form" lay-filter="aaa" action="${pageContext.request.contextPath}/zhq/updateDorm">
@@ -87,19 +93,67 @@
             elem: '#demo', //指定原始表格元素选择器（推荐id选择器）
             height: 'auto', //容器高度
             title:'宿舍管理',
+            toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板
             url:"${pageContext.request.contextPath}/zhq/selDorm",
             cols: [[ //标题栏
-                {field: 'hourid', title: '编号', width: 150, sort: true}
-                ,{field: 'huoeIddsc', title: '序号', width: 150}
+                {type: 'checkbox', fixed: 'left'}
+                ,{field: 'hourid', title: '编号', width: 150, sort: true}
+                ,{field: 'huoeIddsc', title: '序号', width: 120}
                 ,{field: 'huorName', title: '宿舍房号', width: 150}
                 ,{field: 'floorId', title: '楼栋', width: 150,hide:'true'}
                 ,{field: 'floorName', title: '楼栋名称', width: 150}
                 ,{field: 'numberBeds', title: '床位数', width: 150}
                 ,{field: 'count', title: '宿舍人数', width: 150}
                 ,{field: 'addr', title: '宿舍地址', width: 150}
-                ,{fixed: 'right',  title:'操作', toolbar: '#barDemo',width:270}
+                ,{fixed: 'right',  title:'操作', toolbar: '#barDemo',width:240}
             ]]
            ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
+        });
+
+        //头工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            var data =checkStatus.data;
+            switch(obj.event){
+                case 'getCheckData':
+                    if(data.length==0){
+                        layer.msg('请先选择要删除的数据行！');
+                        return ;
+                    }
+                    var ids = "确定要删除id为:";
+                    if(data.length>0){
+                        for(var i = 0;i<data.length;i++){
+                            ids+=data[i].hourid+",";
+                        }
+                    }
+                    ids=ids.substr(0,ids.length-1);
+                    ids+="的用户吗?三思";
+                    layer.confirm(ids,function(index){
+                        //JQuery的循环
+                        $(data).each(function (index,element) {
+                            $.ajax({
+                                url:"${pageContext.request.contextPath}/zhq/deleteStuDorm",
+                                type:"post",
+                                data:{
+                                    hourid:element.hourid
+                                },
+                                dataType:"json",
+                                success: function (data) {
+                                    if(data==1){
+                                        layer.close(index);
+                                        layer.msg('删除成功');
+                                        table.reload("demo");
+                                    }
+                                    if(data==0){
+                                        layer.close(index);
+                                        layer.msg('删除失败，该宿舍还有学生');
+                                        table.reload("demo");
+                                    }
+                                }
+                            })
+                        })
+                    });
+            };
         });
 
         table.on('tool(test)',function (obj) {
@@ -113,7 +167,7 @@
                 numberBeds:data.numberBeds,
                 addr:data.addr
             });
-            if(obj.event ==='del'){
+           if(obj.event ==='del'){
                 layer.confirm('真的删除行么', function(index){
                     $.ajax({
                         url:"${pageContext.request.contextPath}/zhq/deleteStuDorm",

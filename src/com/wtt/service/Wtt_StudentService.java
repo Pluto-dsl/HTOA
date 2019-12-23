@@ -47,5 +47,4 @@ public interface Wtt_StudentService {
     void updatecate(ClassCategoryVo classCategoryVo);
     //总页数
     int pagecount(String sql);
-
 }
