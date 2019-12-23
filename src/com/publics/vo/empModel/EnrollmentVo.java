@@ -1,12 +1,13 @@
 package com.publics.vo.empModel;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "enrollment")
 public class EnrollmentVo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int enrollmentid;
     private String studName;
     private String card;
