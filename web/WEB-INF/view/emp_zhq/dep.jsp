@@ -35,16 +35,21 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">上级部门</label>
                 <div class="layui-input-block">
-                    <input id="parentIdName" name="parentIdName" type="text" required lay-verify="required" class="layui-input" readonly="readonly">
+                    <select name="parentIdName" lay-filter="parentIdName">
+                        <option value="0"  selected>宏图软件</option>
+                        <c:forEach items="${depList}" var="dep">
+                            <option value="${dep.depid}">${dep.depName}</option>
+                        </c:forEach>
+                    </select>
                 </div>
 
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">部门负责人</label>
                 <div class="layui-input-block">
-                    <select name="empId" id="empName">
+                    <select name="chairman" id="empName">
                         <c:forEach items="${empList}" var="emp">
-                            <option value="${emp.empId}">${emp.empName}</option>
+                            <option value="${emp.empName}">${emp.empName}</option>
                         </c:forEach>
                     </select>
                 </div>
@@ -85,7 +90,10 @@
                         elem: '#tt', //绑定元素
                         showLine: false,//是否为连线性
                         accordion:true,
-                        data:d,
+                        data:[{
+                            title:'宏图软件'
+                            ,children:d
+                        }],
                         edit:['del'],
                         operate:function(obj){
                             var type = obj.type; //得到操作类型：add、edit、del
@@ -116,24 +124,24 @@
                             };
                         },
 
-                        click:function(obj){
+                        click:function(obj){//修改
                             var data = obj.data;
                             console.log(data);
                             $.ajax({
-                                url:"${pageContext.request.contextPath}/zhq/selDepAll?type=treeOpen",
+                                url:"${pageContext.request.contextPath}/zhq/selDepAll",
                                 type:"post",
                                 data:{
-                                    name:obj.data.title
+                                    id:obj.data.id
                                 },
                                 dataType:"json",
                                 success: function (data) {
+                                    console.log(data);
                                     form.val("example",{//赋值
-                                        depid:data.depid,
-                                        depName:data.depName,
-                                        parentIdName:data.parentIdName,
-                                        parentId:data.parentId,
-                                        empId:data.empId,
-                                        remark:data.remark,
+                                        depid:data.list.depid,
+                                        depName:data.list.depName,
+                                        parentIdName:data.list.parentId,
+                                        chairman:data.list.chairman,
+                                        remark:data.list.remark,
                                     });
                                     layer.open({
                                         type: 1,

@@ -7,11 +7,14 @@ import java.util.List;
 public interface Zhq_DepService {
     //查询部门
     List selDep();
-    //根据部门名查询所有部门
-    List selDepAll(String d);
+    //根据id查询所有部门
+    Object selDepAll(Class clazz,int id);
 
     //查询员工
     List selEmp();
+
+    //查询父级id为0的
+    List selParentId();
 
     //添加部门
     void addDep(DepVo depVo);

@@ -44,6 +44,7 @@ public class Zhq_DataDocController {
     @Resource
     Zhq_DataDocService zhq_dataDocService;
 
+
     @RequestMapping("/DataDoc")
     public String toPageDataDoc(){
         return "/doc_zhq/DataDoc";
