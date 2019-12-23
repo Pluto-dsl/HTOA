@@ -23,16 +23,15 @@
         }
         #login{
             opacity: 0;
-            left: 150px;
-            top: -120px;
-            width: 580px;
-            height: 540px;
+            left: 50%;
+            top: 10%;
+            width: 675px;
+            height: 625px;
             background-color: white;
-            margin: 10% 40%;
             position: absolute;
             transition: all 0.5s;
             transition-timing-function:ease;
-            box-shadow: 6px 6px 11px 0px #000000;
+            box-shadow: 5px 7px 18px 5px #1f1f1f;
             border-radius: 3px;
             z-index: 100;
         }
@@ -46,18 +45,18 @@
         }
         .title{
             margin-top: 12%;
-            margin-left: -28%;
+            margin-left: -29%;
             padding-bottom: 3%;
             width: 100%;
-            font-size: 30px;
-            color: #5f5f5f;
+            font-size: 37.5px;
+            color: #424242;
             font-family: "微软雅黑 Light";
             font-weight: 600;
             float: left;
         }
         .hr{
-            background-color: #9F9F9F;
-            width: 118%;
+            background-color: #656565;
+            width: 116.8%;;
             height: 2px;
             float: left;
         }
@@ -68,7 +67,7 @@
         }
         .login-icon{
             margin-top: 6px;
-            font-size: 25px;
+            font-size: 35px;
             color: #333;
             float: left;
         }
@@ -76,14 +75,14 @@
             pointer-events: none;
             color: #a29e9e;
             width: 100%;
-            height: 40px;
+            height: 47.5px;
             margin-top: 3%;
-            font-size: 20px;
+            font-size: 25px;
             float: left;
         }
         .drag{
-            width: 250px;
-            height: 40px;
+            width: 319px;
+            height: 47.5px;
             line-height: 40px;
             background-color: #e8e8e8;
             position: relative;
@@ -92,21 +91,24 @@
             float: left;
         }
         .bg{
-            width:40px;
+            width:45px;
             height: 100%;
             position: absolute;
             background-color: #75CDF9;
         }
         .text{
             position: absolute;
+            margin-top: 3px;
+            font-size: 17.5px;
+            color: #333;
             width: 100%;
             height: 100%;
             text-align: center;
             user-select: none;
         }
         .btn{
-            width:40px;
-            height: 38px;
+            width:45px;
+            height: 45.5px;
             position: absolute;
             border:1px solid #ccc;
             cursor: move;
@@ -134,20 +136,20 @@
 
 </div>
 <div id="top">
-    <span style="font-size: 29px;color: #ffffff;">︱宏图软件教育-办公管理系统</span>
+    <span style="font-size: 35px;color: #ffffff;">︱宏图软件教育-办公管理系统</span>
 </div>
 <div id="login" align="center">
     <%--        <form class="layui-form" action="${pageContext.request.contextPath}/jack/login" method="post">--%>
-    <form style="width: 280px;">
+    <form style="width: 75%;height: 100%;">
         <span class="title">用户登录</span>
         <div class="hr"></div>
         <div class="login-row">
             <i class="login-icon layui-icon layui-icon-username"></i>
-            <input type="text" name="phone" placeholder="输入手机号" style="width: 90%;" autocomplete="off" class="layui-input" value="">
+            <input type="text" name="phone" placeholder="输入手机号" style="width: 90%;height: 47.5px;font-size: 17.5px;" autocomplete="off" class="layui-input" value="">
         </div>
         <div class="login-row">
             <i class="login-icon layui-icon layui-icon-password"></i>
-            <input type="password" name="pwd" placeholder="输入密码" style="width: 90%;" autocomplete="off" class="layui-input" value=""/>
+            <input type="password" name="pwd" placeholder="输入密码" style="width: 90%;height: 47.5px;font-size: 17.5px;" autocomplete="off" class="layui-input" value=""/>
         </div>
         <div id="varcode" class="login-row">
             <i class="login-icon layui-icon layui-icon-vercode"></i>
@@ -200,11 +202,11 @@
         },"json");
     });
     $(document).ready(function(){
-        $("#login").css("width",'380px');
-        $("#login").css("height",'340px');
+        $("#login").css("width",'475px');
+        $("#login").css("height",'425px');
         $("#login").css("opacity",'1');
-        $("#login").css("left",'250px');
-        $("#login").css("top",'-20px');
+        $("#login").css("left",'55%');
+        $("#login").css("top",'20%');
     });
     layui.use([ 'element', 'table', 'layer', 'form' ,'laydate'],function() {
         var element = layui.element;
