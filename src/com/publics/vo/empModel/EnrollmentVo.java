@@ -8,64 +8,33 @@ import java.util.Date;
 public class EnrollmentVo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int enrollmentid;
-    private String studName;
-    private String card;
-    private String sex;
-    private String tell;
-    private String qq;
-    private String school;
-    private String classes;
-    private float amount;
-    private String computer;
-    private Date testTime;
-    private Date startTime;
-    private Date signdate;
-    private int empid;
-    private int status;
-    private String remark;
-    private int studType;
-    private Date paymentTime;
-    private float score;
-    private float enrollMoney;
-    private Date enrollMoneyTime;
-    private int reviewStatus;
-    private String negativeName;
-    private String reviewer;
-    private Date reviewerTime;
-    private int majorId;
+    private int enrollmentid;       //主键，标识列，自动生成
+    private String studName;        //姓名
+    private String card;        //身份证
+    private String sex;     //性别
+    private String tell;        //手机号
+    private String qq;      //QQ号码
+    private String school;      //学校
+    private String classes;     //班级
+    private float amount;       //预定报名费
+    private String computer;        //是否送电脑(是/否)
+    private Date testTime;      //试学时间
+    private Date startTime;     //入学时间
+    private Date signdate;      //录入时间
+    private int empid;      //员工id关联员工表
+    private int status;     //关联学生状态表
+    private String remark;      //备注
+    private int studType;       //班级类别,关联班级类别表
+    private Date paymentTime;       //缴预定报名费时间
+    private float score;        //入学成绩
+    private float enrollMoney;      //发放金额
+    private Date enrollMoneyTime;       //发放时间
+    private int reviewStatus;       //预定报名费审核
+    private String negativeName;        //该字段用于招生老师没有账号时使用字段
+    private String reviewer;        //审核人
+    private Date reviewerTime;      //审核时间
+    private int majorId;        //关联专业id
 
-    @Override
-    public String toString() {
-        return "EnrollmentVo{" +
-                "enrollmentid=" + enrollmentid +
-                ", studName='" + studName + '\'' +
-                ", card='" + card + '\'' +
-                ", sex='" + sex + '\'' +
-                ", tell='" + tell + '\'' +
-                ", qq='" + qq + '\'' +
-                ", school='" + school + '\'' +
-                ", classes='" + classes + '\'' +
-                ", amount=" + amount +
-                ", computer='" + computer + '\'' +
-                ", testTime=" + testTime +
-                ", startTime=" + startTime +
-                ", signdate=" + signdate +
-                ", empid=" + empid +
-                ", status=" + status +
-                ", remark='" + remark + '\'' +
-                ", studType=" + studType +
-                ", paymentTime=" + paymentTime +
-                ", score=" + score +
-                ", enrollMoney=" + enrollMoney +
-                ", enrollMoneyTime=" + enrollMoneyTime +
-                ", reviewStatus=" + reviewStatus +
-                ", negativeName='" + negativeName + '\'' +
-                ", reviewer='" + reviewer + '\'' +
-                ", reviewerTime=" + reviewerTime +
-                ", majorId=" + majorId +
-                '}';
-    }
 
     public int getEnrollmentid() {
         return enrollmentid;

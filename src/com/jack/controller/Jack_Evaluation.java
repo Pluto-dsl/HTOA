@@ -39,6 +39,9 @@ public class Jack_Evaluation {
     @Resource
     EmpActivitiService zero_service;
 
+    @Resource
+    Wtt_StudentService studentService;
+
     @RequestMapping(value = "toEvaluationContext")
     public String toEvaluationContext(){
         return "emp_xzq/evaluation";
@@ -302,7 +305,24 @@ public class Jack_Evaluation {
                 m.put("taskid",task.getId());
                 //流程实例id
                 m.put("processInstanceId",task.getProcessInstanceId());
-                holidays.add(map);
+                holidays.add(m);
+            }
+        }
+        //学生请假----------------
+        //学生请假数量
+        List<Task> tasks =taskService.createTaskQuery().taskAssignee(emp.getEmpId()+"").list();
+        //单据
+        List studentleave = new ArrayList();
+        for(Task task:tasks){
+            Object sid = taskService.getVariable(task.getId(),"holidayid");
+            //如果有任务进入判断里面
+            if(studentService.studentleave(Integer.parseInt((sid+""))).size()>0){
+                Map maps = (Map) studentService.studentleave(Integer.parseInt((sid+""))).get(0);
+                //任务Id
+                maps.put("taskid",task.getId());
+                //流程实例id
+                maps.put("processInstanceId",task.getProcessInstanceId());
+                studentleave.add(maps);
             }
         }
         Map studentMap = new HashMap();

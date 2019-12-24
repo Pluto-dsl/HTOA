@@ -41,18 +41,18 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
-<!--    <mvc:interceptors>-->
-<!--        一个拦截器-->
-<!--        <mvc:interceptor>-->
-<!--             拦截URL,拦截请求的url 黑名单 -->
-<!--            <mvc:mapping path="/**"/>-->
-<!--             白名单 -->
-<!--            <mvc:exclude-mapping path="/toPage/oamain"/>-->
-<!--             拦截请求交给，哪个拦截器 -->
-<!--            <bean class="com.pluto.Interceptor.ControllerInterceptor"/>-->
-<!--        </mvc:interceptor>-->
-<!--         ... -->
-<!--    </mvc:interceptors>-->
+   <!-- <mvc:interceptors>
+        &lt;!&ndash;一个拦截器&ndash;&gt;
+        <mvc:interceptor>
+            &lt;!&ndash; 拦截URL,拦截请求的url 黑名单 &ndash;&gt;
+            <mvc:mapping path="/**"/>
+            &lt;!&ndash; 白名单 &ndash;&gt;
+&lt;!&ndash;            <mvc:exclude-mapping path="/toPage/oamain"/>&ndash;&gt;
+            &lt;!&ndash; 拦截请求交给，哪个拦截器 &ndash;&gt;
+            <bean class="com.pluto.Interceptor.ControllerInterceptor"/>
+        </mvc:interceptor>
+        &lt;!&ndash; ... &ndash;&gt;
+    </mvc:interceptors>-->
 
     <!-- FastJson注入 -->
     <mvc:annotation-driven>
@@ -87,6 +87,23 @@
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
+
+    <!--配置国际化资源文件-->
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="classpath:resource/language/i18n"/>
+        <property name="useCodeAsDefaultMessage" value="true"/>
+    </bean>
+
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+
+    </bean>
+
+    <!--配置国际化拦截器-->
+    <mvc:interceptors>
+        <bean id="localeChangeinterceptors" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <property name="paramName" value="lang"/>
+        </bean>
+    </mvc:interceptors>
 
 
 </beans>
