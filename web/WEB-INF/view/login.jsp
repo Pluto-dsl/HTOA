@@ -40,10 +40,11 @@
             z-index: 50;
             position: absolute;
             width: 85%;
-            height: 50px;
+            height: <spring:message code="top-height"/>;
             padding-left: 15%;
             padding-top: 10px;
             top: 0px;
+            background-color: #00000075;
         }
         .title{
             margin-top: 12%;
@@ -155,7 +156,6 @@
             background-size: cover;
         }
         .element {
-            background-color: #000;
             width: 100%;
             height: <spring:message code="element-height"/>;
             overflow: hidden;
@@ -182,11 +182,11 @@
 </div>
 <div id="top">
     <span style="<spring:message code="span-font-size"/>;color: #ffffff;">︱宏图软件教育-办公管理系统</span><br>
-    <a href="<spring:message code="link-href"/>" style="margin-left: 12px;color: #e4e4e4;text-decoration: underline;"><spring:message code="link-text"/></a>
 </div>
 <div id="login" align="center">
     <form style="<spring:message code="form-style"/>">
         <span class="title">用户登录</span>
+        <a href="?lang=<spring:message code="link-href"/>" style="top: <spring:message code="a-top"/>;left:<spring:message code="a-left"/>;position: absolute;"><i style="font-size: <spring:message code="i-font-size"/>;" class="login-icon layui-icon <spring:message code="icon-class"/>"></i></a>
         <div class="hr"></div>
         <div class="login-row">
             <i class="login-icon layui-icon layui-icon-username"></i>
@@ -261,9 +261,10 @@
         var laydate = layui.laydate;
     });
     function delVarCode() {
-        $(".drag").html("<div class=\"bg\"></div>\n" +
-            "                <div class=\"text\" onselectstart=\"return false;\">请拖动滑块解锁</div>\n" +
-            "                <div class=\"btn\">&gt;&gt;</div>");
+        $(".drag").html("" +
+            "<div class=\"bg\"></div>\n" +
+            "<div class=\"text\" onselectstart=\"return false;\">请拖动滑块解锁</div>\n" +
+            "<div class=\"btn\">&gt;&gt;</div>");
         $("#submitDiv").css("cursor","not-allowed");
         $("#submit").css("pointer-events","none");
         $("#submit").css("color","#a29e9e");
@@ -273,6 +274,8 @@
 <script>
     window.onload = function (ev) {
         huakuai();
+        $.removeCookie('loginSize');
+        $.cookie("loginSize","<spring:message code='link-myHref'/>");
     };
     function huakuai(){//滑块验证
         //一、定义一个获取DOM元素的方法

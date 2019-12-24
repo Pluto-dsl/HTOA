@@ -58,7 +58,7 @@
 <%--公告部分--%>
 <div class="layui-row layui-col-space15" style="width:85%;margin: 10px 10px;">
     <div class="layui-col-md12">
-        <div class="layui-card layadmin-serach-main">
+        <div class="layui-card layadmin-serach-main" style="box-shadow: 4px 5px 12px 0px rgba(0, 0, 0, 0.21)">
             <div class="layui-card-header">
                 <p style="font-size: 22px;color: #333;text-indent: 0em;">
                     公告

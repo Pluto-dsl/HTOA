@@ -179,7 +179,7 @@
         $.post("${pageContext.request.contextPath}/sysSet/delTerm",data,function (data) {
             console.log(data);
             if("isUsed" === data){
-                layer.msg('删除失败，该学期正在被使用');
+                layer.msg('删除失败，该专业正在被使用');
             }else {
                 obj.del();
                 layer.msg("删除成功")
