@@ -35,7 +35,7 @@ public class Zhq_DepController {
     @RequestMapping("/dep")
     public String dep(HttpServletRequest request){
         //部门
-        List<DepVo> depList = zhqDepService.selDep();
+        List<DepVo> depList = zhqDepService.selParentId();
         //员工
         List<EmpVo> empList = zhqDepService.selEmp();
 
@@ -55,35 +55,43 @@ public class Zhq_DepController {
         //部门
         List<DepVo> depList = zhqDepService.selDep();
 
+        Map ht = new HashMap();
+        ht.put("title","宏图软件");
+        ht.put("id","10007");
+        ht.put("spread","true");
 
-        for (DepVo depVo1:depList) {//最高部门
-            if(depVo1.getParentId() == 0){
-                depVoList.add(depVo1);
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < depList.size(); i++) {
+            DepVo depVo = depList.get(i);
+            if(depVo.getDepid()==10007){
+                continue;
+            }else if(depVo.getParentId() != 10007){
+                continue;
             }
-        }
-
-        for (DepVo depVo:depVoList) {//最高部门
-            Map map = new HashMap();
-            map.put("title",depVo.getDepName());
-            map.put("id",depVo.getDepid());
-
-            JSONArray jsonArray = new JSONArray();
-
-            for (DepVo depVo1:depList){
-                if(depVo1.getParentId() == depVo.getDepid()){//第二阶
-                    Map chilDep = new HashMap();
-                    chilDep.put("title",depVo1.getDepName());
-                    chilDep.put("id",depVo1.getDepid());
-                    chilDep.put("parentId",depVo1.getParentId());
-                    chilDep.put("remark",depVo1.getRemark());
-                    jsonArray.add(chilDep);
+            Map m = new HashMap();
+            m.put("title",depVo.getDepName());
+            m.put("id",depVo.getDepid());
+            m.put("spread","true");
+            JSONArray js = new JSONArray();
+            for (int i1 = 0; i1 < depList.size(); i1++) {
+                DepVo d = depList.get(i1);
+                if(d.getParentId()==depVo.getDepid()){
+                    Map m2 = new HashMap();
+                    m2.put("title",d.getDepName());
+                    m2.put("id",d.getDepid());
+                    m2.put("parentId",d.getParentId());
+                    m2.put("remark",d.getRemark());
+                    m2.put("spread","true");
+                    js.add(m2);
                 }
             }
-            map.put("children",jsonArray);
-            depJsonArray.add(map);
+            m.put("children",js);
+            jsonArray.add(m);
         }
-        out.print(depJsonArray.toJSONString());
-
+        ht.put("children",jsonArray);
+        JSONArray rt = new JSONArray();
+        rt.add(ht);
+        out.print(rt.toJSONString());
     }
 
     @RequestMapping("/selDepAll")

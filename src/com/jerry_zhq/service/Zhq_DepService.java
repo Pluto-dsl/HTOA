@@ -13,7 +13,7 @@ public interface Zhq_DepService {
     //查询员工
     List selEmp();
 
-    //查询父级id为0的
+    //查询父级id为10007的
     List selParentId();
 
     //添加部门

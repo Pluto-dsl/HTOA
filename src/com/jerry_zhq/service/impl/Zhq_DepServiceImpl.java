@@ -29,7 +29,7 @@ public class Zhq_DepServiceImpl extends BaseDao implements Zhq_DepService {
     //查询父级id为0的
     @Override
     public List selParentId() {
-        return listByHql("FROM DepVo where parentId=0");
+        return listByHql("FROM DepVo where parentId=10007");
     }
 
     //添加部门

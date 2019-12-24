@@ -30,7 +30,7 @@
             <label class="layui-form-label">上级部门：</label>
             <div class="layui-input-block">
                 <select name="parentId" lay-filter="parentId">
-                    <option value="0"  selected>宏图软件</option>
+                    <option value="10007"  selected>宏图软件</option>
                     <c:forEach items="${depList}" var="dep">
                         <option value="${dep.depid}">${dep.depName}</option>
                     </c:forEach>
