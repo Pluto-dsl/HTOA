@@ -2,6 +2,7 @@ package com.jack.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jack.service.Jack_Service;
+import com.publics.service.LoggingService;
 import com.publics.vo.empModel.EnrollmentVo;
 import com.publics.vo.empModel.emp.EmpVo;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,8 @@ public class Jack_Enrollment {
 
     @Resource
     private Jack_Service service;
+    @Resource
+    private LoggingService log;
 
     @RequestMapping(value = "/toEnrollment")
 
@@ -85,13 +88,19 @@ public class Jack_Enrollment {
         enroll.setSigndate(new Date());
         System.out.println(enroll);
         service.addEnrollment(enroll);
+
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"新增了招生信息");
+
         return "emp_xzq/EnrollmentPage";
     }
 
     @RequestMapping(value = "/delEnrollment")
     @ResponseBody
-    public void delEnrollment(String id){
+    public void delEnrollment(String id,HttpSession session){
         service.delEnrollment(Integer.parseInt(id));
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"删除了招生信息");
     }
 
     @RequestMapping(value = "/toEditEnrollment")
@@ -100,8 +109,10 @@ public class Jack_Enrollment {
     }
 
     @RequestMapping(value = "/EditEnrollment")
-    public String EditEnrollment(EnrollmentVo enroll){
+    public String EditEnrollment(EnrollmentVo enroll,HttpSession session){
         service.editEnrollment(enroll);
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了招生信息");
         return "emp_xzq/editEnrollmentPage";
     }
 }
