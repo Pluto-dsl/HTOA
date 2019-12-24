@@ -24,7 +24,7 @@ public class EnrollmentVo {
     private int empid;      //员工id关联员工表
     private int status;     //关联学生状态表
     private String remark;      //备注
-    private String studType;       //班级类别,关联班级类别表
+    private int studType;       //班级类别,关联班级类别表
     private Date paymentTime;       //缴预定报名费时间
     private float score;        //入学成绩
     private float enrollMoney;      //发放金额
@@ -33,39 +33,8 @@ public class EnrollmentVo {
     private String negativeName;        //该字段用于招生老师没有账号时使用字段
     private String reviewer;        //审核人
     private Date reviewerTime;      //审核时间
-    private String majorId;        //关联专业id
+    private int majorId;        //关联专业id
 
-    @Override
-    public String toString() {
-        return "EnrollmentVo{" +
-                "enrollmentid=" + enrollmentid +
-                ", studName='" + studName + '\'' +
-                ", card='" + card + '\'' +
-                ", sex='" + sex + '\'' +
-                ", tell='" + tell + '\'' +
-                ", qq='" + qq + '\'' +
-                ", school='" + school + '\'' +
-                ", classes='" + classes + '\'' +
-                ", amount=" + amount +
-                ", computer='" + computer + '\'' +
-                ", testTime=" + testTime +
-                ", startTime=" + startTime +
-                ", signdate=" + signdate +
-                ", empid=" + empid +
-                ", status=" + status +
-                ", remark='" + remark + '\'' +
-                ", studType='" + studType + '\'' +
-                ", paymentTime=" + paymentTime +
-                ", score=" + score +
-                ", enrollMoney=" + enrollMoney +
-                ", enrollMoneyTime=" + enrollMoneyTime +
-                ", reviewStatus=" + reviewStatus +
-                ", negativeName='" + negativeName + '\'' +
-                ", reviewer='" + reviewer + '\'' +
-                ", reviewerTime=" + reviewerTime +
-                ", majorId='" + majorId + '\'' +
-                '}';
-    }
 
     public int getEnrollmentid() {
         return enrollmentid;
@@ -195,11 +164,11 @@ public class EnrollmentVo {
         this.remark = remark;
     }
 
-    public String getStudType() {
+    public int getStudType() {
         return studType;
     }
 
-    public void setStudType(String studType) {
+    public void setStudType(int studType) {
         this.studType = studType;
     }
 
@@ -267,11 +236,11 @@ public class EnrollmentVo {
         this.reviewerTime = reviewerTime;
     }
 
-    public String getMajorId() {
+    public int getMajorId() {
         return majorId;
     }
 
-    public void setMajorId(String majorId) {
+    public void setMajorId(int majorId) {
         this.majorId = majorId;
     }
 }

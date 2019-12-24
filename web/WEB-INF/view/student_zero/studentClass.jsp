@@ -33,7 +33,7 @@
 <body>
     <script type="text/html" id="top" lay-filter="top">
         <a id="add"  class="layui-btn layui-btn-primary layui-btn-xs" lay-event="add"><i class="layui-icon">&#xe654;</i>新增班级</a>
-        <a id="add"  class="layui-btn layui-btn-primary layui-btn-xs" lay-event="allot"><i class="layui-icon">&#xe770;</i>班级分配</a>
+        <a id="allot"  class="layui-btn layui-btn-primary layui-btn-xs" lay-event="allot"><i class="layui-icon">&#xe770;</i>班级分配</a>
             <label  class="layui-form-item">
                 <label class="layui-form-label" style="width: 90px">级别:</label>
                 <div class="layui-input-inline">
@@ -97,7 +97,7 @@
                         班级编号:
                     </td>
                     <td>
-                        <input class="layui-input" id="classno" type="text" name="classno" required lay-verify="required"/>
+                        <input class="layui-input" id="classno" type="text" name="classno" required lay-verify="required"  onkeyup="value=value.replace(/\D/g,'')" onafterpaste="value=value.replace(/\D/g,'')"/>
                     </td>
                     <td>班级名称:</td>
                     <td>
@@ -285,11 +285,11 @@
                 });
             }
         });
-
+        //头部工具栏监听
         table.on('toolbar(test)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id);
             var data = checkStatus.data;
-            if(obj.event=='add'){//添加学生
+            if(obj.event=='add'){//添加班级
                 layer.open({
                     type: 1,
                     title: '新增班级',
@@ -301,6 +301,23 @@
                     shadeClose: true, //开启遮罩关闭
                     content: $('#addclasswindows')
                 });
+            }else if (obj.event=='allot') {
+                if(data.length === 0){
+                    layer.msg('请选择一个班级来分配学生');
+                    return;
+                }
+                 var index = layer.open({
+                    type: 2,
+                    title: data[0].className+'分配学生',
+                    skin: 'layui-layer-demo', //样式类名
+                    closeBtn: 1, //不显示关闭按钮
+                    area: ['1200px', '550px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    shadeClose: true, //开启遮罩关闭
+                    content: '<%=request.getContextPath()%>/zeroStudent/toallot?cid='+data[0].classId
+                })
+                layer.full(index);
             }
         })
     });

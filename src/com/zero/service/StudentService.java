@@ -1,5 +1,6 @@
 package com.zero.service;
 
+import com.publics.vo.empModel.EnrollmentVo;
 import com.publics.vo.studentModel.ClassCategoryVo;
 import com.publics.vo.studentModel.MajorVo;
 import com.publics.vo.studentModel.StudentClassVo;
@@ -21,4 +22,8 @@ public interface StudentService {
     void addClass(StudentClassVo classVo);//新增or修改班级
     void addFall(StudentFallVo fallVo);//新增or修改届别
     List<Map> classStudent(int classId);//查询选中班级所有学生
+    List<Map> enroStu();//所有招生的学生
+    List<Map> seekStu(String stuname,String Phone,int ctype);//搜索所有招生的学生
+    EnrollmentVo enStu(int sid);//查询学生
+    MajorVo marjov(int marjorid);//专业
 }
