@@ -2,6 +2,7 @@ package com.wtt.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.publics.vo.feedback.FeedbackVo;
+import com.publics.vo.studentModel.StudentClassVo;
 import com.publics.vo.studentModel.StudentLeaveVo;
 import com.publics.vo.studentModel.StudentVo;
 import com.wtt.service.Wtt_StuDuanService;
@@ -140,10 +141,8 @@ public class Wtt_StuDuanController {
 
     //查询学生请假
     @RequestMapping(value = "studentselectleave")
-    public void studentselectleave(int page,int limit,HttpServletResponse response,HttpSession session){
+    public void studentselectleave(int page,int limit,HttpServletResponse response){
         //获取存在session中的用户(电话号码)
-        /*StudentVo studentVo = (StudentVo) session.getAttribute("user");
-        String name = studentVo.getStuname();*/
 
         response.setContentType("text/html;charset=utf-8");
         List<StudentLeaveVo> list = wtt_stuDuanService.studentleave(page,limit);
@@ -179,14 +178,13 @@ public class Wtt_StuDuanController {
         map.put("holidayid",studentLeaveVo.getHolidayid());
         map.put("StudentId",studentLeaveVo.getStudentId());
         map.put("day",studentLeaveVo.getHolidayDay());
-       /*  //System.out.println("map:"+map);*/
         //根据用户设置下一个办理人
         int studentid = studentVo.getStudid();
         Map map1 = wtt_stuDuanService.selectteacher(studentid);
-        /* //System.out.println(map1);*/
-        String names = (String) map1.get("teacher");
-        /* //System.out.println(names);*/
-        map.put("assignee",names);
+        /*System.out.println(map1);*/
+        int teacherid = (int) map1.get("teacher");
+        System.out.println("授课老师Id:"+teacherid);
+        map.put("assignee",teacherid);
         //启动实例(通过流程定义的Key来启动一个实例)
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(studentLeaveVo.getTitle(),map);
         /* //System.out.println(studentLeaveVo.getTitle());*/
@@ -208,5 +206,37 @@ public class Wtt_StuDuanController {
         List<Comment> comments =taskService.getProcessInstanceComments(historicVariableInstance.getProcessInstanceId());
         model.addAttribute("commentlist",comments);
         return "student_wtt/mypizhu";
+    }
+
+    //主页面点击用户，查看用户信息
+    @RequestMapping(value = "/usermessage")
+    public String usermessage(HttpSession session,ModelMap modelMap){
+        //获取当前登录用户
+        StudentVo studentVo = (StudentVo) session.getAttribute("user");
+        int id = studentVo.getStudid();
+        String classname = wtt_stuDuanService.classname(id);
+        String hourname = wtt_stuDuanService.hourname(id);
+        modelMap.addAttribute("studentlist",studentVo);
+        modelMap.addAttribute("classname",classname);
+        modelMap.addAttribute("hourname",hourname);
+        return "student_wtt/usermssage";
+    }
+
+    //修改密码
+    @RequestMapping(value = "/updatepwd")
+    public void updatepwd(String pwd,String pwd1,HttpSession session,HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter writer = response.getWriter();
+        StudentVo studentVo = (StudentVo) session.getAttribute("user");
+        if(!pwd.equals(studentVo.getPassword())){//原密码错误
+            writer.print("error");
+            writer.flush();
+            writer.close();
+        }else {//密码正确
+            wtt_stuDuanService.updatePwd(studentVo.getStudid(),pwd1);
+        }
+        writer.print("ok");
+        writer.flush();
+        writer.close();
     }
 }
