@@ -36,6 +36,9 @@ public class Jack_Evaluation {
     @Resource
     EmpActivitiService zero_service;
 
+    @Resource
+    Wtt_StudentService studentService;
+
 
     @RequestMapping(value = "toEvaluationContext")
     public String toEvaluationContext(){

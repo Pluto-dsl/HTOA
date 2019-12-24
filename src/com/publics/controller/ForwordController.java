@@ -29,8 +29,7 @@ public class ForwordController {
     public String tomain(@PathVariable("path") String path, HttpServletRequest request, HttpServletResponse response) throws IOException {
         if ("login".equals(path) && request.getParameter("lang") == null){
             Cookie[] cookies = request.getCookies();
-            for (Cookie coo:
-                 cookies) {
+            for (Cookie coo:cookies) {
                 if ("loginSize".equals(coo.getName())){
                     String uri = request.getRequestURI();
                     uri = uri+"?lang="+coo.getValue();
@@ -41,7 +40,4 @@ public class ForwordController {
         return path;
     }
 
-    public static void addLog(SystemLogVo logVo){
-        service.addLog(logVo);
-    }
 }
