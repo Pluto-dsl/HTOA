@@ -2,8 +2,10 @@ package com.zero.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.pluto.service.Pluto_StudentMsg;
+import com.publics.service.LoggingService;
 import com.publics.utills.StringUtill;
 import com.publics.vo.empModel.EnrollmentVo;
+import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.studentModel.MajorVo;
 import com.publics.vo.studentModel.StudentClassVo;
 import com.publics.vo.studentModel.StudentFallVo;
@@ -14,9 +16,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -33,6 +37,8 @@ public class Zero_StudentClass {
     EmpsService empsService;
     @Resource
     Pluto_StudentMsg pluto;
+    @Resource
+    LoggingService log;
     @RequestMapping(value = "/toClass")
     public String toClass(Model model){//去班级管理页面
         //所有届别
@@ -79,10 +85,16 @@ public class Zero_StudentClass {
     }
     //新增或修改届别
     @RequestMapping(value = "/addFall")
-    public void addFall(StudentFallVo fallVo, HttpServletResponse response) throws IOException {
+    public void addFall(StudentFallVo fallVo, HttpServletResponse response,HttpSession session) throws IOException {
         service.addFall(fallVo);
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter writer = response.getWriter();
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        if (fallVo.getFallid()==0){
+            log.addLog(emp.getEmpId(),emp.getEmpName()+"新增了届别,操作:"+fallVo.getLevel());
+        }else {
+            log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了届别,操作:"+fallVo.getFallid());
+        }
         writer.print("ok");
         writer.flush();
         writer.close();
@@ -101,8 +113,10 @@ public class Zero_StudentClass {
 
     @RequestMapping(value = "/deleteClass")
     @ResponseBody
-    public void deleteClass(int classId,HttpServletResponse response) throws IOException {//删除班级
+    public void deleteClass(int classId,HttpServletResponse response,HttpSession session) throws IOException {//删除班级
         service.deleteClass(classId);
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"删除班级,操作id:"+classId);
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter writer = response.getWriter();
         writer.flush();
@@ -123,7 +137,13 @@ public class Zero_StudentClass {
     }
 
     @RequestMapping(value = "addClass")
-    public String addClass(StudentClassVo classVo){//新增or修改班级
+    public String addClass(StudentClassVo classVo,HttpSession session){//新增or修改班级
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        if (classVo.getClassId()==0){
+            log.addLog(emp.getEmpId(),emp.getEmpName()+"新增班级,操作:"+classVo.getClassName());
+        }else {
+            log.addLog(emp.getEmpId(),emp.getEmpName()+"修改班级,操作:"+classVo.getClassId());
+        }
         service.addClass(classVo);
         return "redirect:toClass";
     }
@@ -168,7 +188,7 @@ public class Zero_StudentClass {
 
     @RequestMapping("/entrance")//学生入学
     @ResponseBody
-    public String entrance(int cid,int sid,int dorm){
+    public String entrance(int cid,int sid,int dorm,HttpSession session){
         //查询试学学生
         EnrollmentVo en =  service.enStu(sid);
         StudentVo stu = new StudentVo();
@@ -205,6 +225,8 @@ public class Zero_StudentClass {
         stu.setHuor(dorm);//宿舍
         System.out.println("分配的学生"+stu);
         pluto.addStudent(stu);//新增学生
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"分配了学生到"+cid+"班级id,招生id"+sid);
         return "ok";
     }
 }
