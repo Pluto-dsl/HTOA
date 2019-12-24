@@ -15,6 +15,8 @@ public class SystemLogVo {
     String tables;      //操作的数据表
     String msg;     //操作内容
 
+
+
     @Override
     public String toString() {
         return "SystemLogVo{" +
