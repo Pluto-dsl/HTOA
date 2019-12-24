@@ -298,6 +298,10 @@
             elem: '#endDay' //指定元素
             ,format:'yyyy/MM/dd'
         });
+        laydate.render({
+            elem: '#chatDate' //指定元素
+            ,format:'yyyy/MM/dd'
+        });
     });
 </script>
 <script>

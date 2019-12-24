@@ -60,6 +60,7 @@ public class Pluto_Controller {
         outsideJson.put("title",m.getModuleName());
         outsideJson.put("id",m.getModuleId());
         outsideJson.put("spread","true");
+
         for (int i = 0; i < list.size(); i++) {
             ModuleVo moduleVo = (ModuleVo) list.get(i);
             JSONObject ecjson = new JSONObject();

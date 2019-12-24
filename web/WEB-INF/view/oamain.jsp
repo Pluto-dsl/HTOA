@@ -153,9 +153,9 @@
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/zeroStudent/toClass"
                                data-id="班级管理" data-title="班级管理">班级管理</a></dd>
-                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
-                               data-url="<%--${pageContext.request.contextPath}/zeroStudent/toClass--%>"
-                               data-id="班级管理" data-title="班级分配">班级分配</a></dd>
+<%--                        <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"--%>
+<%--                               data-url="&lt;%&ndash;${pageContext.request.contextPath}/zeroStudent/toClass&ndash;%&gt;"--%>
+<%--                               data-id="班级分配" data-title="班级分配">班级分配</a></dd>--%>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/zhq/stuFloor"
                                data-id="楼栋管理" data-title="楼栋管理">楼栋管理</a></dd>
@@ -244,16 +244,16 @@
                                data-id="资料文档" data-title="资料文档" >资料文档</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;" class="tt" lay-tips="文件管理" lay-direction="2">
-                        <i class="layui-icon layui-icon-tabs"></i>
-                        <cite>招生管理</cite></a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" class="site-demo-active" data-type="tabAdd"
-                               data-url="${pageContext.request.contextPath}/jack/toEnrollment"
-                               data-id="招生信息" data-title="招生信息" >招生信息</a></dd>
-                    </dl>
-                </li>
+<%--                <li class="layui-nav-item">--%>
+<%--                    <a href="javascript:;" class="tt" lay-tips="文件管理" lay-direction="2">--%>
+<%--                        <i class="layui-icon layui-icon-tabs"></i>--%>
+<%--                        <cite>招生管理</cite></a>--%>
+<%--                    <dl class="layui-nav-child">--%>
+<%--                        <dd><a href="javascript:;" class="site-demo-active" data-type="tabAdd"--%>
+<%--                               data-url="${pageContext.request.contextPath}/jack/toEnrollment"--%>
+<%--                               data-id="招生信息" data-title="招生信息" >招生信息</a></dd>--%>
+<%--                    </dl>--%>
+<%--                </li>--%>
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="tt" lay-tips="系统报表" lay-direction="2"><i class="layui-icon layui-icon-layouts"></i>
                         <cite>系统报表</cite></a>
