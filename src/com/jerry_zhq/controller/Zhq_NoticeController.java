@@ -3,6 +3,7 @@ package com.jerry_zhq.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jerry_zhq.service.Zhq_NoticeService;
+import com.publics.service.LoggingService;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.notice.NoticeVo;
 import com.publics.vo.notice.RecipientVo;
@@ -27,6 +28,9 @@ public class Zhq_NoticeController {
 
     @Resource
     Zhq_NoticeService zhq_noticeService;
+
+    @Resource
+    private LoggingService log;
 
     @RequestMapping("/Notice")
     public String toNotice(){
@@ -135,8 +139,8 @@ public class Zhq_NoticeController {
                 recipientVo.setNoticeId(noticeVo.getNoticeId());
                 zhq_noticeService.addRecipient(recipientVo);//添加
             }
-
         }
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"添加了公告");
         return "redirect:/zhq/Notice";
     }
 
@@ -161,6 +165,7 @@ public class Zhq_NoticeController {
         NoticeVo noticeVo = new NoticeVo();
         NoticeVo noticeVo1 = (NoticeVo) zhq_noticeService.selNoticeId(noticeVo.getClass(),noticeId);
         request.setAttribute("notice",noticeVo1);
+
         return "/notice_zhq/updateNotice";
     }
 
@@ -168,11 +173,14 @@ public class Zhq_NoticeController {
     //确定修改
     @RequestMapping("/toUpdateNotice")
     @ResponseBody
-    public String toUpdateNotice(NoticeVo noticeVo,String time) throws ParseException {
+    public String toUpdateNotice(NoticeVo noticeVo,String time,HttpSession session) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date noticeTime = simpleDateFormat.parse(time);
         noticeVo.setNoticeTime(noticeTime);
         zhq_noticeService.updateNotice(noticeVo);
+
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"修改了公告");
         return "success";
     }
 
@@ -180,11 +188,13 @@ public class Zhq_NoticeController {
     //删除
     @RequestMapping("/deleteNotice")
     @ResponseBody
-    public String delDept(int noticeId){
+    public String delDept(int noticeId,HttpSession session){
         NoticeVo noticeVo = new NoticeVo();
         noticeVo.setNoticeId(noticeId);
         zhq_noticeService.deleteNotice(noticeVo);
         zhq_noticeService.deleteRecipient(noticeId);
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"删除了公告");
         return "success";
     }
 

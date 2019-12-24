@@ -49,16 +49,6 @@ public class Wtt_StuDuanServiceImpl extends BaseDao implements Wtt_StuDuanServic
         return null;
     }
 
-    /*@Override
-    public Map studentid(String name) {
-        return null;
-    }*/
-
-   /* @Override
-    public Map studentid(String name) {
-        return null;
-    }*/
-
     @Override
     public List<StudentLeaveVo> studentleave(int currpage, int pagesize) {
        String sql="select * from holidayStudent h left join student s on h.StudentId = s.Studid";
@@ -77,16 +67,45 @@ public class Wtt_StuDuanServiceImpl extends BaseDao implements Wtt_StuDuanServic
 
     @Override
     public Map selectteacher(int id) {
-        String sql = "select e.empName teacher,e2.empName classTeacher from student s\n" +
+        String sql = "select e.empId teacher,e2.empId classTeacher from student s\n" +
                 "left join studentClass cla on s.clazz = cla.classId\n" +
                 "left join emp e on cla.teacher = e.empId\n" +
                 "left join emp e2 on cla.classTeacher = e2.empId\n" +
                 "where s.Studid= '"+id+"'";
-        /*System.out.println(sql);*/
         List<Map> list = listBySQL(sql);
         for (Map map:list) {
             return map;
         }
         return null;
+    }
+
+    @Override
+    public String classname(int studentid) {
+        String sql = "select s.className from studentClass s\n" +
+                "left join student stu on s.classId = stu.clazz \n" +
+                "where stu.Studid= '"+studentid+"'";
+        List<Map> list = listBySQL(sql);
+        for(Map map:list){
+            return map.get("className").toString();
+        }
+        return null;
+    }
+
+    @Override
+    public String hourname(int studentid) {
+        String sql = "select s.addr from studentHuor s\n" +
+                "left join student stu on s.Hourid = stu.huor\n" +
+                "where stu.Studid= '"+studentid+"'";
+        List<Map> list = listBySQL(sql);
+        for(Map map:list){
+            return map.get("addr").toString();
+        }
+        return null;
+    }
+
+    @Override
+    public void updatePwd(int studentid, String pwd) {
+        String sql="UPDATE student set `password` = '"+pwd+"' where Studid = "+studentid;
+        executeSQL(sql);
     }
 }

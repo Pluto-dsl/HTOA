@@ -28,9 +28,6 @@ import java.util.*;
 public class Jack_Evaluation {
 
     @Resource
-    Wtt_StudentService studentService;
-
-    @Resource
     private Jack_Service service;
 
     @Resource
@@ -38,6 +35,10 @@ public class Jack_Evaluation {
 
     @Resource
     EmpActivitiService zero_service;
+
+    @Resource
+    Wtt_StudentService studentService;
+
 
     @RequestMapping(value = "toEvaluationContext")
     public String toEvaluationContext(){
@@ -284,6 +285,7 @@ public class Jack_Evaluation {
     public Map MyMission(HttpSession session){
         EmpVo emp = (EmpVo) session.getAttribute("admin");
         Map map = new HashMap();
+        Map studentMap = new HashMap();
         int talk = service.selChatRecordCount(emp.getEmpId());
         int clock = service.selClockCount(emp.getEmpName());
         int Notice = service.selUnreadCountemp(emp.getEmpId());
@@ -305,7 +307,6 @@ public class Jack_Evaluation {
                 holidays.add(m);
             }
         }
-        //学生请假----------------
         //学生请假数量
         List<Task> tasks =taskService.createTaskQuery().taskAssignee(emp.getEmpId()+"").list();
         //单据

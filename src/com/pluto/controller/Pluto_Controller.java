@@ -3,6 +3,8 @@ package com.pluto.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.pluto.service.Pluto_LcController;
+import com.publics.controller.ForwordController;
+import com.publics.service.LoggingService;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.sys.*;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,10 @@ public class Pluto_Controller {
 
     @Resource
     private Pluto_LcController service;
+
+    @Resource
+    private LoggingService log;
+
     @RequestMapping("/toUserList")
     public String toUserList(){
         return "controller_pluto/user";
@@ -36,15 +42,19 @@ public class Pluto_Controller {
 
     @RequestMapping("/delUser")
     @ResponseBody
-    public String deleteUser(int id){
+    public String deleteUser(int id,HttpServletRequest request){
         service.delUser(id);
+        EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"删除了权限角色");
         return "1";
     }
 
     @RequestMapping("/addUser")
     @ResponseBody
-    public String addUser(CharactersVo charactersVo) {
+    public String addUser(CharactersVo charactersVo,HttpServletRequest request) {
         service.addUser(charactersVo);
+        EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"新增了用户角色");
         return "1";
     }
 
@@ -124,7 +134,7 @@ public class Pluto_Controller {
 
     @RequestMapping("/updC")
     @ResponseBody
-    public int updC(int mid, @RequestParam("checkIds[]")int[] cheks) throws IOException {
+    public int updC(int mid, @RequestParam("checkIds[]")int[] cheks,HttpServletRequest request) throws IOException {
 
         boolean flag = service.judge(mid);
         if(flag){//true代表有数据
@@ -136,12 +146,13 @@ public class Pluto_Controller {
             c.setCharacterId(mid);
             service.addcharModule(c);
         }
+        EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了角色权限。");
         return 0;
     }
 
     @RequestMapping("/toAccUser")
     public String toAddUser(int id,Model model){
-
 
         List deptList = service.getListByHql("from DepVo");
         List empList = service.getListByHql("from EmpVo");
@@ -180,7 +191,7 @@ public class Pluto_Controller {
 
     @RequestMapping("/addUserCs")
     @ResponseBody
-    public String addUserCs(int mid, @RequestParam("checkIds[]")int[] cheks){
+    public String addUserCs(int mid, @RequestParam("checkIds[]")int[] cheks,HttpServletRequest request){
         boolean flag = service.judgeUser(mid);
         if(flag){//true代表有数据
             service.deleteUAC(mid);
@@ -192,6 +203,9 @@ public class Pluto_Controller {
             uac.setCharacterId(mid);
             service.addObject(uac);
         }
+        EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"给用户添加了角色");
+
         return "1";
     }
 

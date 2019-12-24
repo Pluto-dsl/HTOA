@@ -86,7 +86,9 @@
 </body>
 <script>
     var table;
-    layui.use('table', function(){
+    var layer;
+    layui.use(['table', 'layer'], function(){
+        layer = layui.layer;
         table = layui.table;
         //第一个实例
         table.render({
@@ -139,10 +141,20 @@
                 });
             } else if(layEvent === 'del'){ //删除
                 layer.confirm('真的删除此条数据吗?', function(index){
-                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
                     layer.close(index);//关闭提示
                     //向服务端发送删除指令
-                    $.post("<%=request.getContextPath()%>/zeroEmp/deleteEmp",{empId:data.empId},function (d) {
+                    $.post("<%=request.getContextPath()%>/zeroEmp/deleteEmp",{empId:data.empId,empName:data.empName,depName:data.depName},function (d) {
+                        if(d==1){
+                            obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                            layer.close(index);
+                            layer.msg('删除成功');
+                            table.reload("demo");
+                        }
+                        if(d==0){
+                            layer.close(index);
+                            layer.msg('删除失败，该员工还有职务，请删除或修改职务后再删除');
+                            table.reload("demo");
+                        }
                     },"text")
                 });
             } else if(layEvent === 'edit'){ //修改

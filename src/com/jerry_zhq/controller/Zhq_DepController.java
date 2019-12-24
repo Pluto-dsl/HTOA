@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.jerry_zhq.service.Zhq_DepService;
+import com.publics.service.LoggingService;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.sys.DepVo;
 import javafx.print.Printer;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -32,10 +34,13 @@ public class Zhq_DepController {
     @Resource
     Zhq_DepService zhqDepService;
 
+    @Resource
+    private LoggingService log;
+
     @RequestMapping("/dep")
     public String dep(HttpServletRequest request){
         //部门
-        List<DepVo> depList = zhqDepService.selDep();
+        List<DepVo> depList = zhqDepService.selParentId();
         //员工
         List<EmpVo> empList = zhqDepService.selEmp();
 
@@ -55,35 +60,43 @@ public class Zhq_DepController {
         //部门
         List<DepVo> depList = zhqDepService.selDep();
 
+        Map ht = new HashMap();
+        ht.put("title","宏图软件");
+        ht.put("id","10007");
+        ht.put("spread","true");
 
-        for (DepVo depVo1:depList) {//最高部门
-            if(depVo1.getParentId() == 0){
-                depVoList.add(depVo1);
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < depList.size(); i++) {
+            DepVo depVo = depList.get(i);
+            if(depVo.getDepid()==10007){
+                continue;
+            }else if(depVo.getParentId() != 10007){
+                continue;
             }
-        }
-
-        for (DepVo depVo:depVoList) {//最高部门
-            Map map = new HashMap();
-            map.put("title",depVo.getDepName());
-            map.put("id",depVo.getDepid());
-
-            JSONArray jsonArray = new JSONArray();
-
-            for (DepVo depVo1:depList){
-                if(depVo1.getParentId() == depVo.getDepid()){//第二阶
-                    Map chilDep = new HashMap();
-                    chilDep.put("title",depVo1.getDepName());
-                    chilDep.put("id",depVo1.getDepid());
-                    chilDep.put("parentId",depVo1.getParentId());
-                    chilDep.put("remark",depVo1.getRemark());
-                    jsonArray.add(chilDep);
+            Map m = new HashMap();
+            m.put("title",depVo.getDepName());
+            m.put("id",depVo.getDepid());
+            m.put("spread","true");
+            JSONArray js = new JSONArray();
+            for (int i1 = 0; i1 < depList.size(); i1++) {
+                DepVo d = depList.get(i1);
+                if(d.getParentId()==depVo.getDepid()){
+                    Map m2 = new HashMap();
+                    m2.put("title",d.getDepName());
+                    m2.put("id",d.getDepid());
+                    m2.put("parentId",d.getParentId());
+                    m2.put("remark",d.getRemark());
+                    m2.put("spread","true");
+                    js.add(m2);
                 }
             }
-            map.put("children",jsonArray);
-            depJsonArray.add(map);
+            m.put("children",js);
+            jsonArray.add(m);
         }
-        out.print(depJsonArray.toJSONString());
-
+        ht.put("children",jsonArray);
+        JSONArray rt = new JSONArray();
+        rt.add(ht);
+        out.print(rt.toJSONString());
     }
 
     @RequestMapping("/selDepAll")
@@ -113,14 +126,16 @@ public class Zhq_DepController {
     //确定添加
     @RequestMapping("/addDep")
     @ResponseBody
-    public String addDep(DepVo depVo){
+    public String addDep(DepVo depVo, HttpSession session){
         zhqDepService.addDep(depVo);
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"添加了部门");
         return "success";
     }
 
     //修改
     @RequestMapping("/delUpdate")
-    public String delUpdate(HttpServletResponse response,HttpServletRequest request){
+    public String delUpdate(HttpServletResponse response,HttpServletRequest request,HttpSession session){
         response.setContentType("text/html;charset=utf-8");
         String chairman = request.getParameter("chairman");
         System.out.println("获取到的"+chairman);
@@ -142,17 +157,23 @@ public class Zhq_DepController {
 
 
         zhqDepService.updateDep(depVo);
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"修改了部门");
         return "redirect:/zhq/dep";
     }
 
     //删除
     @RequestMapping("/delDept")
     @ResponseBody
-    public String delDept(HttpServletRequest request){
+    public String delDept(HttpServletRequest request,HttpSession session){
         int depId = Integer.valueOf(request.getParameter("depId"));
         DepVo depVo1 = new DepVo();
         depVo1.setDepid(depId);
         zhqDepService.deleteDep(depVo1);
+
+
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"删除了部门");
         return "success";
     }
 

@@ -31,4 +31,9 @@ public interface Wtt_StuDuanService {
     void leaveadd(StudentLeaveVo studentLeaveVo);
     //根据学生id去查找任课老师和班主任
     Map selectteacher(int id);
+    //根据学生id查找班级
+    String classname(int studentid);
+    //根据学生id查找宿舍
+    String hourname(int studentid);
+    void updatePwd(int studentid,String pwd);//修改密码
 }

@@ -36,7 +36,7 @@
                 <label class="layui-form-label">上级部门</label>
                 <div class="layui-input-block">
                     <select name="parentIdName" lay-filter="parentIdName">
-                        <option value="0"  selected>宏图软件</option>
+                        <option value="10007"  selected>宏图软件</option>
                         <c:forEach items="${depList}" var="dep">
                             <option value="${dep.depid}">${dep.depName}</option>
                         </c:forEach>
@@ -89,11 +89,7 @@
                     tree.render({
                         elem: '#tt', //绑定元素
                         showLine: false,//是否为连线性
-                        data:[{
-                            title:'宏图软件'
-                            ,spread: true
-                            ,children:d
-                        }],
+                        data:d,
                         edit:['del'],
                         operate:function(obj){
                             var type = obj.type; //得到操作类型：add、edit、del
