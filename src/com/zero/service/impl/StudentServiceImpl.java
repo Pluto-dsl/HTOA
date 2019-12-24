@@ -58,7 +58,7 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
 
     @Override
     public List<Map> teacher() {
-        return super.listBySQL("select empId,empName from emp");
+        return super.listBySQL("select empId,empName from emp where status = 1");
     }
 
     @Override
