@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.jerry_zhq.service.Zhq_DepService;
+import com.publics.service.LoggingService;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.sys.DepVo;
 import javafx.print.Printer;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -31,6 +33,9 @@ public class Zhq_DepController {
 
     @Resource
     Zhq_DepService zhqDepService;
+
+    @Resource
+    private LoggingService log;
 
     @RequestMapping("/dep")
     public String dep(HttpServletRequest request){
@@ -121,14 +126,16 @@ public class Zhq_DepController {
     //确定添加
     @RequestMapping("/addDep")
     @ResponseBody
-    public String addDep(DepVo depVo){
+    public String addDep(DepVo depVo, HttpSession session){
         zhqDepService.addDep(depVo);
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"添加了部门");
         return "success";
     }
 
     //修改
     @RequestMapping("/delUpdate")
-    public String delUpdate(HttpServletResponse response,HttpServletRequest request){
+    public String delUpdate(HttpServletResponse response,HttpServletRequest request,HttpSession session){
         response.setContentType("text/html;charset=utf-8");
         String chairman = request.getParameter("chairman");
         System.out.println("获取到的"+chairman);
@@ -150,17 +157,23 @@ public class Zhq_DepController {
 
 
         zhqDepService.updateDep(depVo);
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"修改了部门");
         return "redirect:/zhq/dep";
     }
 
     //删除
     @RequestMapping("/delDept")
     @ResponseBody
-    public String delDept(HttpServletRequest request){
+    public String delDept(HttpServletRequest request,HttpSession session){
         int depId = Integer.valueOf(request.getParameter("depId"));
         DepVo depVo1 = new DepVo();
         depVo1.setDepid(depId);
         zhqDepService.deleteDep(depVo1);
+
+
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"删除了部门");
         return "success";
     }
 

@@ -3,6 +3,8 @@ package com.jerry_zhq.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jerry_zhq.service.Zhq_StuDormService;
+import com.publics.service.LoggingService;
+import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.studentModel.StudentClassVo;
 import com.publics.vo.studentModel.StudentDormitoryVo;
 import com.publics.vo.studentModel.StudentVo;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +28,10 @@ import java.util.Map;
 public class Zhq_StuDormController {
     @Resource
     Zhq_StuDormService zhq_stuDormService;
+
+
+    @Resource
+    private LoggingService log;
 
     @RequestMapping("/stuDorm")
     public String dorm(HttpServletRequest request){
@@ -72,11 +79,13 @@ public class Zhq_StuDormController {
     //删除
     @RequestMapping("/deleteStuDorm")
     @ResponseBody
-    public String delDept(int hourid){
+    public String delDept(int hourid, HttpSession session){
         StudentDormitoryVo sd = new StudentDormitoryVo();
         sd.setHourid(hourid);
         int studentsize = zhq_stuDormService.size(hourid);
         if(studentsize<1){
+            EmpVo empVo = (EmpVo) session.getAttribute("admin");
+            log.addLog(empVo.getEmpId(),empVo.getEmpName()+"删除了宿舍");
             zhq_stuDormService.delStuDorm(sd);
             return "1";
         }else {
@@ -96,7 +105,7 @@ public class Zhq_StuDormController {
     //确定添加
     @RequestMapping("/addDorm")
     @ResponseBody
-    public String addDorm(StudentDormitoryVo studentDormitoryVo){
+    public String addDorm(StudentDormitoryVo studentDormitoryVo,HttpSession session){
         List<Map> l = zhq_stuDormService.selDormFloor(studentDormitoryVo.getFloorId());
         String fname = l.get(0).get("floorName").toString();
         String sname = studentDormitoryVo.getHuorName();
@@ -104,12 +113,14 @@ public class Zhq_StuDormController {
         studentDormitoryVo.setHuorName(sname);
         zhq_stuDormService.addDorm(studentDormitoryVo);
 
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"添加了宿舍");
         return "success";
     }
 
     //点击了修改
     @RequestMapping("/updateDorm")
-    public String updateStuDormit(StudentDormitoryVo studentDormitoryVo,HttpServletResponse response){
+    public String updateStuDormit(StudentDormitoryVo studentDormitoryVo,HttpServletResponse response,HttpSession session){
         response.setContentType("text/html;charset=utf-8");
         List<Map> l = zhq_stuDormService.selDormFloor(studentDormitoryVo.getFloorId());
         String fname = l.get(0).get("floorName").toString();
@@ -118,6 +129,9 @@ public class Zhq_StuDormController {
         studentDormitoryVo.setHuorName(name);
 
         zhq_stuDormService.update(studentDormitoryVo);
+
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"修改了宿舍");
         return "redirect:/zhq/stuDorm";
     }
 
