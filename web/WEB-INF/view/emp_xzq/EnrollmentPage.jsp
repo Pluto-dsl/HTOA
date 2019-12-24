@@ -109,7 +109,6 @@
             var data = obj.data;
             dataE = obj.data;
             if(obj.event === 'edit'){
-                console.log(data);
                 layer.open({
                     type: 2,
                     title:'修改招生信息',

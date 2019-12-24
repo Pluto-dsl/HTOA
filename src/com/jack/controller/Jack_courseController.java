@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jack.service.Jack_Service;
+import com.publics.service.LoggingService;
 import com.publics.vo.educ.CourseTypeVo;
 import com.publics.vo.educ.CourseVo;
+import com.publics.vo.empModel.emp.EmpVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.swing.plaf.SpinnerUI;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,6 +33,8 @@ public class Jack_courseController {
 
     @Resource
     private Jack_Service service;
+    @Resource
+    private LoggingService log;
 
 
     /**
@@ -43,29 +48,34 @@ public class Jack_courseController {
     /** 新增课程类型 */
     @RequestMapping(value = "/addCourse")
     @ResponseBody
-    public int addCourse(CourseTypeVo course, HttpServletRequest request, HttpServletResponse response){
+    public int addCourse(CourseTypeVo course, HttpServletRequest request, HttpServletResponse response, HttpSession session){
          //System.out.println(course+"-------------------");
         int a = service.AddCurse(course);
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"新增了课程类型");
         return a;
     }
 
     /** 修改课程类型 */
     @RequestMapping(value = "/editCourse")
     @ResponseBody
-    public int editCourse(CourseTypeVo course,HttpServletRequest request, HttpServletResponse response){
+    public int editCourse(CourseTypeVo course,HttpSession session,HttpServletRequest request, HttpServletResponse response){
          //System.out.println(course);
         int b = service.UpdateCourse(course);
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了课程类型");
         return b;
     }
 
     /** 删除课程类型 */
     @RequestMapping(value = "/delCourse")
     @ResponseBody
-    public int delCourse(HttpServletRequest request, HttpServletResponse response){
+    public int delCourse(HttpSession session,HttpServletRequest request, HttpServletResponse response){
         int cid = Integer.parseInt(request.getParameter("cid"));
          //System.out.println(cid+"=======");
         int c = service.delCourse(cid);
-
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"删除了课程类型");
         return c;
     }
 
@@ -109,15 +119,17 @@ public class Jack_courseController {
     /**  添加课程 */
     @RequestMapping(value = "/addCourseMgt")
     @ResponseBody
-    public String addCourseMgt(CourseVo courseVo){
+    public String addCourseMgt(CourseVo courseVo,HttpSession session){
          //System.out.println("进来了-------------");
          //System.out.println(courseVo);
         service.addCourseMgt(courseVo);
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"添加了课程");
         return "";
     }
     /**  编辑课程 */
     @RequestMapping(value = "/editCourseMgt")
-    public String editCourseMgt(String courseId,String courseName,String isobligatory,String courseTypeId,String remark){
+    public String editCourseMgt(HttpSession session,String courseId,String courseName,String isobligatory,String courseTypeId,String remark){
         CourseVo courseVo = new CourseVo();
         courseVo.setCourseId(Integer.parseInt(courseId));
         courseVo.setCourseName(courseName);
@@ -125,13 +137,18 @@ public class Jack_courseController {
         courseVo.setCourseTypeId(Integer.parseInt(courseTypeId));
         courseVo.setRemark(remark);
         service.updateCourseMgt(courseVo);
+
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了课程");
         return "emp_xzq/course";
     }
     /** 删除课程 */
     @RequestMapping(value = "/delCourseMgt")
     @ResponseBody
-    public int delCourseMgt(int cid){
+    public int delCourseMgt(int cid,HttpSession session){
         int d = service.delCourseMgt(cid);
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"删除了课程");
         return d;
     }
 
