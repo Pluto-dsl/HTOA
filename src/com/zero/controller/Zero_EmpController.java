@@ -74,7 +74,7 @@ public class Zero_EmpController {
         empService.update(empVo);
         //保存日志
         EmpVo emp = (EmpVo) session.getAttribute("admin");
-        log.addLog(emp.getEmpId(),emp.getEmpName()+"新增修改员工资料:"+empVo.getEmpName());
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"修改员工资料:"+empVo.getEmpName());
         return "redirect:toemp";
     }
     @RequestMapping(value = "/deleteEmp")//删除员工
