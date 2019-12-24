@@ -2,8 +2,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
     <import resource="spring-activiti.xml"/>
     <!--1、开启注解模式-->
     <!--自动注册HandlerMapping HandlerAdapter-->
@@ -30,7 +31,13 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/HTOA/imgs/**"/>
+            <mvc:exclude-mapping path="/HTOA/dist/**"/>
+            <mvc:exclude-mapping path="/HTOA/js/**"/>
+            <mvc:exclude-mapping path="/HTOA/layui/**"/>
+            <mvc:exclude-mapping path="/HTOA/layuiadmin/**"/>
             <bean class="com.pluto.Interceptor.ControllerInterceptor"/>
+
         </mvc:interceptor>
     </mvc:interceptors>
 
@@ -80,5 +87,23 @@
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
+
+    <!--配置国际化资源文件-->
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="classpath:resource/language/i18n"/>
+        <property name="useCodeAsDefaultMessage" value="true"/>
+    </bean>
+
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+
+    </bean>
+
+    <!--配置国际化拦截器-->
+    <mvc:interceptors>
+        <bean id="localeChangeinterceptors" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <property name="paramName" value="lang"/>
+        </bean>
+    </mvc:interceptors>
+
 
 </beans>

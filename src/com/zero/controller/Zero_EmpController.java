@@ -42,10 +42,11 @@ public class Zero_EmpController {
     @ResponseBody
     public void allemp(HttpServletResponse response) throws IOException {
         Map map = new TreeMap();
+        List elist = empService.selectEmp();
         map.put("code",0);
         map.put("msg","");
-        map.put("count",1);
-        map.put("data",empService.selectEmp());
+        map.put("count",elist.size());
+        map.put("data",elist);
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter writer = response.getWriter();
         writer.print(JSONArray.toJSONString(map));
@@ -131,11 +132,12 @@ public class Zero_EmpController {
         if(status!=100){
             tiaojian += " and e.status = "+status;
         }
+        List tlist =  empService.seekEmp(tiaojian);
         Map map = new TreeMap();
         map.put("code",0);
         map.put("msg","");
-        map.put("count",1);
-        map.put("data",empService.seekEmp(tiaojian));
+        map.put("count",tlist.size());
+        map.put("data",tlist);
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter writer = response.getWriter();
         writer.print(JSONArray.toJSONString(map));

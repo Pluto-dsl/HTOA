@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="HTOA:war">
+    <output-path>$USER_HOME$/Desktop</output-path>
+    <root id="archive" name="HTOA_war.war">
+      <element id="artifact" artifact-name="HTOA:war exploded" />
+    </root>
+  </artifact>
+</component>

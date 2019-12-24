@@ -43,7 +43,7 @@
             </tr>
             <tr>
                 <td colspan="2" align="center">
-                   <button class="layui-btn" id="add" lay-submit lay-filter="sub">
+                   <button class="layui-btn" id="add" lay-submit>
                         <i class="layui-icon">&#xe608;</i>添加
                    </button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>

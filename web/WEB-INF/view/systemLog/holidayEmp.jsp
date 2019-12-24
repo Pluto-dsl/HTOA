@@ -17,19 +17,19 @@
     <jsp:include page="../include.jsp"/>
     <style>
         .empBar{
-            width: 1316px;
+            width: 1700px;
             height: 280px;
             margin-bottom: 15px;
             float: left;
         }
         .empLine{
-            width: 724px;
-            height: 248px;
+            width: 935px;
+            height: 400px;
             float: left;
         }
         .titleBing{
-            width: 400px;
-            height: 250px;
+            width: 500px;
+            height: 400px;
             margin-left: 5%;
             float: left;
         }
@@ -67,8 +67,8 @@
             <table id="holidayInfo" lay-filter="holidayInfo"></table>
         </div>
         <div class="layui-tab-item">
-            <div id="empBar" class="empBar"></div>
-            <div id="empLine" class="empLine"></div>
+            <div id="empBar" class="empBar" style="border-bottom: 1px solid #bfbfbf;"></div>
+            <div id="empLine" class="empLine" style="border-right: 1px solid #bfbfbf;"></div>
             <div id="titleBing" class="titleBing"></div>
         </div>
     </div>

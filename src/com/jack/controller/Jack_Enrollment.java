@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/jack")
@@ -23,14 +25,14 @@ public class Jack_Enrollment {
     @Resource
     private Jack_Service service;
 
-    @RequestMapping(value = "toEnrollment")
+    @RequestMapping(value = "/toEnrollment")
 
     public String toEnrollment(){
         EnrollmentVo enrollmentVo = new EnrollmentVo();
         return "emp_xzq/EnrollmentPage";
     }
 
-    @RequestMapping(value = "Enrollment")
+    @RequestMapping(value = "/Enrollment")
     @ResponseBody
     public void Enrollment(HttpSession session, HttpServletResponse response, HttpServletRequest request) throws IOException {
         int currPage = Integer.parseInt(request.getParameter("page"));
@@ -48,6 +50,29 @@ public class Jack_Enrollment {
         System.out.println(json.toJSONString());
         out.print(json);
         out.close();
+    }
+
+    @RequestMapping(value = "/toAddEnrollmentPage")
+    public String toAddEnrollmentPage(){
+        return "emp_xzq/addEnrollmentPage";
+    }
+
+    @RequestMapping(value = "/toClassTypeList")
+    @ResponseBody
+    public Map toClassTypeList(){
+        Map map = new HashMap<>();
+        List list = service.selClassTypeList();
+        map.put("names",list);
+        return map;
+    }
+
+    @RequestMapping(value = "/toMajorList")
+    @ResponseBody
+    public Map toMajorList(){
+        Map map = new HashMap<>();
+        List list = service.selMajorList();
+        map.put("names",list);
+        return map;
     }
 
 

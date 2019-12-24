@@ -51,17 +51,14 @@ public class Zero_EmpOtherInfo {
     //工作经历
     @RequestMapping(value = "/job")//所有员工资料页
     @ResponseBody
-    public void job(HttpServletResponse response,int empId) throws IOException {
+    public Map job(HttpServletResponse response,int empId) throws IOException {
         Map map = new TreeMap();
+        List jlist = service.jobs(empId);
         map.put("code",0);
         map.put("msg","");
         map.put("count",1);
-        map.put("data",service.jobs(empId));
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter writer = response.getWriter();
-        writer.print(JSONArray.toJSONString(map));
-        writer.flush();
-        writer.close();
+        map.put("data",jlist);
+        return map;
     }
 
     @RequestMapping(value = "/addjob")//添加或修改工作经历
@@ -97,17 +94,14 @@ public class Zero_EmpOtherInfo {
 
     //教育背景
     @RequestMapping(value = "/education")//所有员工资料页
-    public void education(HttpServletResponse response,int empId) throws IOException {
+    @ResponseBody
+    public Map education(int empId){
         Map map = new TreeMap();
         map.put("code",0);
         map.put("msg","");
         map.put("count",1);
         map.put("data",service.education(empId));
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter writer = response.getWriter();
-        writer.print(JSONArray.toJSONString(map));
-        writer.flush();
-        writer.close();
+        return map;
     }
     @RequestMapping(value = "/addeducation")//添加或修改教育背景
     @ResponseBody
@@ -142,17 +136,14 @@ public class Zero_EmpOtherInfo {
 
     //家庭联系人
     @RequestMapping(value = "/familyInfo")//所有家庭联系人
-    public void familyInfo(HttpServletResponse response,int empId) throws IOException {
+    @ResponseBody
+    public Map familyInfo(int empId){
         Map map = new TreeMap();
         map.put("code",0);
         map.put("msg","");
         map.put("count",1);
         map.put("data",service.familyInfo(empId));
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter writer = response.getWriter();
-        writer.print(JSONArray.toJSONString(map));
-        writer.flush();
-        writer.close();
+        return map;
     }
 
     @RequestMapping(value = "/addfamilyInfo")//添加或修改家庭联系人

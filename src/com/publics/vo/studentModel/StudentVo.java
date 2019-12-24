@@ -45,24 +45,24 @@ public class StudentVo {
     private String audition ;//面试人
     private String auditionoption;//面试人意见
     private int isvocational;//是否中专
-    private String vocationalsch;//中专学校
+    private String vocationalsch;//中专学校 1
     private int vocationalflag;//中专学籍
-    private int enrollno;//省录取号
-    private Float qkMoney;//欠款金额
-    private Float score;//录取成绩
-    private String dibao;//是否低保
-    private String sourceType;//生源类型
-    private String guarantee;//担保人
-    private String soldier;//是否当兵
-    private String registration;//报名号
-    private String zhuxiao;//是否住校
-    private String remark;//备注
-    private String tuixue;//退学
-    private String xiuxue;//休学
-    private String stuno;//学号
-    private String computer ;//是否送电脑
-    private String collar;//是否领用
-    private String grants;//助学金
+    private int enrollno;//省录取号 1
+    private Float qkMoney;//欠款金额    1
+    private Float score;//录取成绩 1
+    private String dibao;//是否低保 1
+    private String sourceType;//生源类型 1
+    private String guarantee;//担保人 1
+    private String soldier;//是否当兵 1
+    private String registration;//报名号 1
+    private String zhuxiao;//是否住校 1
+    private String remark;//备注 1
+    private String tuixue;//退学 1
+    private String xiuxue;//休学 1
+    private String stuno;//学号 1
+    private String computer ;//是否送电脑 1
+    private String collar;//是否领用  1
+    private String grants;//助学金 1
 
     public StudentVo(int studid, String password, String stuname, String middleschool, String sex, String age, Date birthday, String phone, String addr, int clazz, int huor, Date entertime, String introduretech, int stat, String nation, String natives, int residence, String cardid, String professional, int prolevel, int studytype, String parents, String parentsphone, String intrphone, String audition, String auditionoption, int isvocational, String vocationalsch, int vocationalflag, int enrollno, Float qkMoney, Float score, String dibao, String sourceType, String guarantee, String soldier, String registration, String zhuxiao, String remark, String tuixue, String xiuxue, String stuno, String computer, String collar, String grants) {
         Studid = studid;
