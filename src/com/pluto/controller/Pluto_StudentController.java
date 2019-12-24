@@ -213,10 +213,6 @@ public class Pluto_StudentController {
     @RequestMapping("/addStu")
     @ResponseBody
     public String addStudent(StudentVo studentVo,String birt,String ents, HttpServletRequest request){
-        System.out.println(studentVo.toString());
-
-
-        System.out.println(birt+"+++++++++"+ents);
 
         Date bd=null;
         Date ed=null;
@@ -231,6 +227,9 @@ public class Pluto_StudentController {
         studentVo.setEntertime(ed);
          //System.out.println(studentVo.toString());
         service.addStudent(studentVo);
+        StudentDormitoryVo studentDormitoryVo = service.getHourById(studentVo.getHuor());
+        studentDormitoryVo.setCount(studentDormitoryVo.getCount()+1);
+        service.updateHour(studentDormitoryVo);
         return "1";
     }
 
