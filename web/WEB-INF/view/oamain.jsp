@@ -47,9 +47,11 @@
             height: 40%;
 
         }
-        .layui-col-xs3{
+        .layui-col-xs3 {
             float: none;
             width: 100%;
+            height: 16%;
+            line-height: 2;
         }
         .layui-col-xs3:hover{
             background-color: #dddbe0;
@@ -337,12 +339,6 @@
                                                    data-id="考勤管理" data-title="考勤管理" >
                                                     <i class="layui-icon layui-icon-form"></i>
                                                     <cite>未打卡待审批(<span id="clock">0</span>)</cite>
-                                                </a>
-                                            </li>
-                                             <li class="layui-col-xs3">
-                                                <a lay-href="">
-                                                    <i class="layui-icon layui-icon-face-surprised"></i>
-                                                    <cite>未读通知公告(<span id="Notice">0</span>)</cite>
                                                 </a>
                                             </li>
                                             <li class="layui-col-xs3">

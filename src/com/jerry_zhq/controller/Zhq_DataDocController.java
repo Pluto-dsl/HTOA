@@ -5,6 +5,7 @@ import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jerry_zhq.service.Zhq_DataDocService;
+import com.publics.service.LoggingService;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.file.DataDocVo;
 import com.publics.vo.studentModel.StudentDormitoryVo;
@@ -43,7 +44,8 @@ public class Zhq_DataDocController {
 
     @Resource
     Zhq_DataDocService zhq_dataDocService;
-
+    @Resource
+    private LoggingService log;
 
     @RequestMapping("/DataDoc")
     public String toPageDataDoc(){
@@ -95,21 +97,24 @@ public class Zhq_DataDocController {
         dataDocVo.setEmpId(empVo.getEmpId());
         zhq_dataDocService.addDoc(dataDocVo,file,request);
 
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"上传了文件");
         return "redirect:/zhq/DataDoc";
     }
 
     //删除
     @RequestMapping("/deleteDoc")
     @ResponseBody
-    public String deleteDoc(int docId){
+    public String deleteDoc(int docId,HttpSession session){
         DataDocVo docVo = new DataDocVo();
         docVo.setDocId(docId);
         zhq_dataDocService.delDoc(docVo);
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"删除了文件");
         return "success";
     }
 
     @RequestMapping("/download.do")
-    public void download(Integer docId,DataDocVo dataDocVo,HttpServletResponse response) throws Exception{
+    public void download(Integer docId,DataDocVo dataDocVo,HttpServletResponse response,HttpSession session) throws Exception{
          //System.out.println("获取到的id是"+docId);
         DataDocVo dataDocVO1 = (DataDocVo) zhq_dataDocService.selDocId(dataDocVo.getClass(),docId);
 
@@ -136,6 +141,9 @@ public class Zhq_DataDocController {
         // 这里主要关闭。
         os.close();
         inputStream.close();
+
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"下载了文件");
 
     }
 

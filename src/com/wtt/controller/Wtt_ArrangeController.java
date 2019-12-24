@@ -2,6 +2,7 @@ package com.wtt.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.norman.service.LoginService;
 import com.publics.vo.educ.WeekArrangeVo;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.wtt.service.Wtt_ArrangeService;
@@ -20,7 +21,8 @@ import java.util.List;
 public class Wtt_ArrangeController {
     @Resource
     Wtt_ArrangeService wtt_arrangeService;
-
+    @Resource
+    private LoginService log;
     //无权限时跳转页面
     @RequestMapping("/toNo")
     public String toNo(){
@@ -81,6 +83,7 @@ public class Wtt_ArrangeController {
     @RequestMapping(value = "/addarrange")
     public String addarrange(WeekArrangeVo weekArrangeVo){
         wtt_arrangeService.add(weekArrangeVo);
+        
         return "redirect:/arrange/arrangePage";
     }
 
