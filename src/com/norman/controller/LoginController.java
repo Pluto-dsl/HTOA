@@ -63,6 +63,7 @@ public class LoginController {
     @RequestMapping(value = "/logout")
     public void logout(HttpServletRequest request,HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
+        session.setAttribute("admin",null);
         session.invalidate();
         response.sendRedirect(request.getContextPath()+"/toPage/login");
     }

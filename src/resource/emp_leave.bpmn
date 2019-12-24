@@ -10,7 +10,7 @@
     <sequenceFlow id="flow4" sourceRef="startevent1" targetRef="usertask1"></sequenceFlow>
     <sequenceFlow id="flow8" sourceRef="usertask3" targetRef="endevent1"></sequenceFlow>
     <sequenceFlow id="flow9" sourceRef="usertask2" targetRef="usertask3">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${assignee!='0'}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${assignee!=0}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="flow10" sourceRef="usertask2" targetRef="endevent1">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${assignee==0}]]></conditionExpression>

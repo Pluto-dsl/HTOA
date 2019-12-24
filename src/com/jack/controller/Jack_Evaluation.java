@@ -6,6 +6,7 @@ import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.empModel.evaluationVo;
 import com.publics.vo.empModel.teacherTotalVo;
 import com.publics.vo.studentModel.StudentVo;
+import com.wtt.service.Wtt_StudentService;
 import com.zero.service.EmpActivitiService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
@@ -27,6 +28,9 @@ import java.util.*;
 public class Jack_Evaluation {
 
     @Resource
+    Wtt_StudentService studentService;
+
+    @Resource
     private Jack_Service service;
 
     @Resource
@@ -34,6 +38,9 @@ public class Jack_Evaluation {
 
     @Resource
     EmpActivitiService zero_service;
+
+    @Resource
+    Wtt_StudentService studentService;
 
     @RequestMapping(value = "toEvaluationContext")
     public String toEvaluationContext(){
@@ -298,12 +305,47 @@ public class Jack_Evaluation {
                 m.put("taskid",task.getId());
                 //流程实例id
                 m.put("processInstanceId",task.getProcessInstanceId());
-                holidays.add(map);
+                holidays.add(m);
             }
         }
+        //学生请假----------------
+        //学生请假数量
+        List<Task> tasks =taskService.createTaskQuery().taskAssignee(emp.getEmpId()+"").list();
+        //单据
+        List studentleave = new ArrayList();
+        for(Task task:tasks){
+            Object sid = taskService.getVariable(task.getId(),"holidayid");
+            //如果有任务进入判断里面
+            if(studentService.studentleave(Integer.parseInt((sid+""))).size()>0){
+                Map maps = (Map) studentService.studentleave(Integer.parseInt((sid+""))).get(0);
+                //任务Id
+                maps.put("taskid",task.getId());
+                //流程实例id
+                maps.put("processInstanceId",task.getProcessInstanceId());
+                studentleave.add(maps);
+            }
+        }
+        Map studentMap = new HashMap();
+        //学生请假数量
+        List<Task> tasks =taskService.createTaskQuery().taskAssignee(emp.getEmpName()+"").list();
+        //单据
+        List studentleave = new ArrayList();
+        for(Task task:tasks){
+            Object sid = taskService.getVariable(task.getId(),"holidayid");
+            //如果有任务进入判断里面
+            if(studentService.studentleave(Integer.parseInt((sid+""))).size()>0){
+                Map maps = (Map) studentService.studentleave(Integer.parseInt((sid+""))).get(0);
+                //任务Id
+                maps.put("taskid",task.getId());
+                //流程实例id
+                maps.put("processInstanceId",task.getProcessInstanceId());
+                studentleave.add(studentMap);
+            }
+        }
+
         //-------------------------------------------------------------------------------------------------
         map.put("emp",holidays.size());
-        map.put("stu",0);
+        map.put("stu",studentleave.size());
         map.put("clock",clock);
         map.put("Notice",Notice);
         map.put("weekly","未完成");
