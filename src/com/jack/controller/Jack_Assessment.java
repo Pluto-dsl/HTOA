@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -29,12 +28,17 @@ public class Jack_Assessment {
     @Resource
     private Jack_Service service;
 
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
 
     /** 考核指标 */
     @RequestMapping(value = "/toAssessmentPage")
     public String toAssessmentPage(){
         return "emp_xzq/AssessmentPage";
     }
+
     @RequestMapping(value = "addAss")
     @ResponseBody
     public String addAss(AduitModelVo aduitModelVo){

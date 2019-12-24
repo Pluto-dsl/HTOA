@@ -1,9 +1,14 @@
 package com.zero.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.pluto.service.Pluto_StudentMsg;
 import com.publics.utills.StringUtill;
+import com.publics.vo.empModel.EnrollmentVo;
+import com.publics.vo.studentModel.MajorVo;
 import com.publics.vo.studentModel.StudentClassVo;
 import com.publics.vo.studentModel.StudentFallVo;
+import com.publics.vo.studentModel.StudentVo;
+import com.zero.service.EmpsService;
 import com.zero.service.StudentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +29,10 @@ import java.util.TreeMap;
 public class Zero_StudentClass {
     @Resource
     StudentService service;
-
+    @Resource
+    EmpsService empsService;
+    @Resource
+    Pluto_StudentMsg pluto;
     @RequestMapping(value = "/toClass")
     public String toClass(Model model){//去班级管理页面
         //所有届别
@@ -50,10 +58,11 @@ public class Zero_StudentClass {
     @ResponseBody//届别表格数据
     public Map StudentFall(){
         Map map = new HashMap();
+        List list = service.allLevel();
         map.put("code",0);
         map.put("msg","");
-        map.put("count",1);
-        map.put("data",service.allLevel());
+        map.put("count",list.size());
+        map.put("data",list);
         return map;
     }
 
@@ -61,10 +70,11 @@ public class Zero_StudentClass {
     @ResponseBody
     public Map allClass(){//查询所有班级
         Map map = new TreeMap();
+        List clist = service.allClas();
         map.put("code",0);
         map.put("msg","");
-        map.put("count",1);
-        map.put("data",service.allClas());
+        map.put("count",clist.size());
+        map.put("data",clist);
         return map;
     }
     //新增或修改届别
@@ -79,12 +89,13 @@ public class Zero_StudentClass {
     }
     @RequestMapping(value = "/seek")
     @ResponseBody
-    public Map seek(int level){//筛选届别
+    public Map seek(int level,String grade,int ctype){//筛选届别
         Map map = new TreeMap();
+        List clist = service.seek(level,grade,ctype);
         map.put("code",0);
         map.put("msg","");
-        map.put("count",1);
-        map.put("data",service.seek(level));
+        map.put("count",clist.size());
+        map.put("data",clist);
         return map;
     }
 
@@ -103,10 +114,11 @@ public class Zero_StudentClass {
     @ResponseBody
     public Map classStudent(int classId){//查看当前班级的学生
         Map map = new TreeMap();
+        List slist = service.classStudent(classId);
         map.put("code",0);
         map.put("msg","");
-        map.put("count",1);
-        map.put("data",service.classStudent(classId));
+        map.put("count",slist.size());
+        map.put("data",slist);
         return map;
     }
 
@@ -119,5 +131,80 @@ public class Zero_StudentClass {
     @RequestMapping("/toNo")
     public String toNo(){
         return "controller_pluto/NO";
+    }
+
+    @RequestMapping("/toallot")//去班级分配页面
+    public String toallot(Model model,int cid){
+        //班级类别
+        model.addAttribute("classtype",service.classtype());
+        model.addAttribute("cid",cid);//分配的班级id
+        model.addAttribute("dorm",pluto.getHourList("from StudentDormitoryVo"));//宿舍
+        return "student_zero/classAllot";
+    }
+
+    @RequestMapping("/allotStu")//分配的学生
+    @ResponseBody
+    public Map allotStu(){
+        Map map = new TreeMap();
+        List elist = service.enroStu();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",elist.size());
+        map.put("data",elist);
+        return map;
+    }
+
+    @RequestMapping("/seekStu")//搜索学生
+    @ResponseBody
+    public Map seekStu(String stuname,String Phone,int ctype){
+        Map map = new TreeMap();
+        List stulist = service.seekStu(stuname,Phone,ctype);
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",stulist.size());
+        map.put("data",stulist);
+        return map;
+    }
+
+    @RequestMapping("/entrance")//学生入学
+    @ResponseBody
+    public String entrance(int cid,int sid,int dorm){
+        //查询试学学生
+        EnrollmentVo en =  service.enStu(sid);
+        StudentVo stu = new StudentVo();
+        stu.setStudid(0);
+        stu.setStuname(en.getStudName());
+        stu.setPassword("123456");
+        stu.setMiddleschool(en.getSchool());
+        stu.setSex(en.getSex());
+        stu.setPhone(en.getTell());
+        stu.setClazz(cid);
+        stu.setEntertime(en.getStartTime());
+        if(en.getEmpid()!=0){//介绍人
+            Map map = empsService.toemp(en.getEmpid());
+            stu.setIntroduretech(map.get("empName").toString());
+        }else {
+            stu.setIntroduretech(en.getNegativeName());
+        }
+        stu.setStat(en.getStatus());
+        stu.setCardid(en.getCard());
+        if(en.getMajorId()!=0){//就读专业////////////////
+            MajorVo majorVo = service.marjov(en.getMajorId());
+            stu.setProfessional(majorVo.getMajorName());//专业名称
+        }
+        stu.setProlevel(en.getStudType());//专业类别:1.中技  2.高技  3.3+2 4.成人教育
+        stu.setStudytype(1);//是否全日制
+        stu.setTuixue("否");//默认没退学
+        stu.setXiuxue("否");//是否休学
+        stu.setZhuxiao("是");//默认住校
+        stu.setSoldier("否");//是否当兵
+        stu.setCollar("否");//是否领用
+        stu.setDibao("否");//低保
+        stu.setComputer("是");//领电脑
+        stu.setGrants("否");//助学金
+        stu.setHuor(dorm);//宿舍
+        System.out.println("分配的学生"+stu);
+        pluto.addStudent(stu);//新增学生
+        return "ok";
     }
 }

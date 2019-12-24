@@ -25,7 +25,7 @@
             margin-left: 20px;
         }
         .layui-text h3 {
-            font-size: 18px;
+            font-size: 20px;
             color: #222;
         }
         #myTitle{
@@ -58,12 +58,15 @@
 <%--公告部分--%>
 <div class="layui-row layui-col-space15" style="width:85%;margin: 10px 10px;">
     <div class="layui-col-md12">
-        <div class="layui-card layadmin-serach-main">
+        <div class="layui-card layadmin-serach-main" style="box-shadow: 4px 5px 12px 0px rgba(0, 0, 0, 0.21)">
             <div class="layui-card-header">
                 <p style="font-size: 22px;color: #333;text-indent: 0em;">
+                    <span style="color: red;">
+                    <i style="font-size: 26px;" class="layui-icon layui-icon-speaker"></i>
                     公告
-                    <span style="font-size: 11px;float: right;margin-left: 10px;">共<span id="count">122</span>条公告</span>
-                    <span style="font-size: 11px;float: right;">未读取<span id="UnreadCount">14</span>条公告</span>
+                    </span>
+                    <span style="font-size: 12px;float: right;margin-left: 10px;">共<span id="count">122</span>条公告</span>
+                    <span style="font-size: 12px;float: right;">未读取<span id="UnreadCount">14</span>条公告</span>
                 </p>
 
             </div>
@@ -80,8 +83,8 @@
                                         
                                         <i class="layui-icon layui-icon-notice" id="myTitle" style="margin-left:10px;"></i>
                                     </c:if>
-                                    <span style="float: right;font-size: 10px;margin-left: 10px;margin-right:10px;">${list.noticeTime}</span>
-                                    <span style="float: right;font-size: 11px;">${list.empid}</span>
+                                    <span style="float: right;font-size: 12px;margin-left: 10px;margin-right:10px;">${list.noticeTime}</span>
+                                    <span style="float: right;font-size: 12px;">${list.empid}</span>
                                 </h3>
                                 <div class="content">
                                         ${list.content}

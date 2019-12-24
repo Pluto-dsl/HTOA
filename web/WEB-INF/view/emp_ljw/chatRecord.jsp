@@ -17,49 +17,53 @@
     <title>谈心记录</title>
     <jsp:include page="../include.jsp"/>
     <style>
-        .menu{
-            margin-top: 8px;
-            margin-left: 15px;
-            float: left;
-        }
-        .layui-table-view{
-            float: left;
+        .layui-anim-upbit{
+            height: 240px;
         }
     </style>
 </head>
 <body>
-<div class="menu">
-    员工姓名:
-    <div class="layui-inline" style="padding-right: 15px">
-        <input class="layui-input" name="empName" id="empName" autocomplete="off">
-    </div>
-</div>
-<form class="layui-form menu">
-    部门名称:
-    <div class="layui-inline" style="padding-right: 15px">
-        <select name="depId" lay-verify="required">
-            <option value="0" selected>所有部门</option>
-            <c:forEach items="${requestScope.depList}" var="dep">
-                <option value="${dep.depid}">${dep.depName}</option>
-            </c:forEach>
-        </select>
-    </div>
-</form>
-<div class="menu">
-    开始日期:
-    <div class="layui-inline" style="padding-right: 15px">
-        <input type="text" id="startDay" name="startDay" autocomplete="off" class="layui-input">
-    </div>
-</div>
-<div class="menu">
-    结束日期:
-    <div class="layui-inline" style="padding-right: 15px">
-        <input type="text" id="endDay" name="endDay" autocomplete="off" class="layui-input">
-    </div>
-</div>
-<button class="layui-btn menu" id="btn">搜索</button>
+<table style="margin-top: 10px;margin-left: 20px;">
+    <tr>
+        <td>
+            员工姓名:
+            <div class="layui-inline" style="padding-right: 15px">
+                <input class="layui-input" name="empName" id="empName" autocomplete="off">
+            </div>
+        </td>
+        <td>
+            <form class="layui-form">
+                部门名称:
+                <div class="layui-inline" style="padding-right: 15px">
+                    <select name="depId" lay-verify="required">
+                        <option value="0" selected>所有部门</option>
+                        <c:forEach items="${requestScope.depList}" var="dep">
+                            <option value="${dep.depid}">${dep.depName}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </form>
+        </td>
+        <td>
+            开始日期:
+            <div class="layui-inline" style="padding-right: 15px">
+                <input type="text" id="startDay" name="startDay" autocomplete="off" class="layui-input">
+            </div>
+        </td>
+        <td>
+            结束日期:
+            <div class="layui-inline" style="padding-right: 15px">
+                <input type="text" id="endDay" name="endDay" autocomplete="off" class="layui-input">
+            </div>
+        </td>
+        <td>
+            <button class="layui-btn menu" id="btn">搜索</button>
+        </td>
+    </tr>
+</table>
+
 <div id="windows" style="margin-left: 5%;display: none;">
-    <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/ljw/newChatRecord" method="post">
+    <form id="MyForm" style="width: 94%" class="layui-form" action="${pageContext.request.contextPath}/ljw/newChatRecord" method="post">
         <br><br>
         <input id="chatId" type="hidden" name="chatIds">
         <div class="layui-form-item">
@@ -77,25 +81,16 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">选择学生</label>
-                <div class="layui-input-inline">
-                    <select id="sayface" name="sayface" class="layui-select">
-                        <c:forEach items="${requestScope.stuList}" var="stu">
-                            <option value="${stu.studid}">${stu.stuname}</option>
-                        </c:forEach>
-                    </select>
-                </div>
+            <label class="layui-form-label">选择学生</label>
+            <div style="width: 480px;float: left;">
+                <select id="sayface" name="sayface" class="layui-select">
+                    <c:forEach items="${requestScope.stuList}" var="stu">
+                        <option value="${stu.studid}">${stu.stuname}</option>
+                    </c:forEach>
+                </select>
             </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">选择员工</label>
-                <div class="layui-input-inline">
-                    <select id="teacher" name="teacher" class="layui-select">
-                        <c:forEach items="${requestScope.empList}" var="emp">
-                            <option value="${emp.empId}">${emp.empName}</option>
-                        </c:forEach>
-                    </select>
-                </div>
+            <div style="margin: 5px;float: left;">
+                <i class="layui-icon layui-icon-help" style="font-size: 24px;color: #666;cursor: pointer;" onclick="layer.msg('如果没有学生数据，那是没有带班哦');"></i>
             </div>
         </div>
         <div class="layui-form-item">
@@ -117,8 +112,8 @@
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="delChatRecordList">删除所选数据</button>
         <button class="layui-btn layui-btn-sm" lay-event="newChatRecord">新增谈心记录</button>
+        <button class="layui-btn layui-btn-sm" lay-event="delChatRecordList">删除所选数据</button>
     </div>
 </script>
 <script type="text/html" id="barDemo">
@@ -127,7 +122,26 @@
 </script>
 </body>
 <script>
-    layui.use('table', function(){
+    layui.use(['table','form','laydate'], function(){
+        var laydate = layui.laydate;
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#startDay' //指定元素
+            ,format:'yyyy/MM/dd'
+            ,max:0
+        });
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#endDay' //指定元素
+            ,format:'yyyy/MM/dd'
+            ,max:0
+        });
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#chatDate' //指定元素
+            ,format:'yyyy/MM/dd'
+            ,max:0
+        });
         var table = layui.table;
         var tableIns = table.render({
             elem: '#chatRecordList'
@@ -283,20 +297,6 @@
                     }
                 });
             }
-        });
-    });
-    //初始化时间选择框
-    layui.use('laydate', function(){
-        var laydate = layui.laydate;
-        //执行一个laydate实例
-        laydate.render({
-            elem: '#startDay' //指定元素
-            ,format:'yyyy/MM/dd'
-        });
-        //执行一个laydate实例
-        laydate.render({
-            elem: '#endDay' //指定元素
-            ,format:'yyyy/MM/dd'
         });
     });
 </script>

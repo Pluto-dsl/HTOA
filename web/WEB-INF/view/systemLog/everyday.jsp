@@ -17,15 +17,9 @@
     <title>Document</title>
     <jsp:include page="../include.jsp"/>
     <style>
-        .top{
-            width: 100%;
-            height: 60%;
-        }
         .menu{
             margin-top: 8px;
             margin-left: 15px;
-        }
-        .layui-table-view{
         }
     </style>
 </head>

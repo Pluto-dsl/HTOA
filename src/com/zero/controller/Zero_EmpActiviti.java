@@ -109,12 +109,12 @@ public class Zero_EmpActiviti {
 
         if(depperson.equals("yes")){//是部门负责人
             String id = service.assignDep(emp.getDepId());
-            // //System.out.println("是部门负责人"+id);
+            //System.out.println("是部门负责人"+id);
             variables.put("assignee",id);
         }else {//不是部门负责人
             //动态办理人 根据用户设置第一个办理人
             String id = service.assignName(emp.getEmpId());
-            // //System.out.println("不是部门负责人"+id);
+            //System.out.println("不是部门负责人"+id);
             variables.put("assignee",id);
         }
         //启动实例（通过流程定义的key来启动一个实例）
@@ -145,7 +145,7 @@ public class Zero_EmpActiviti {
             Object sid = taskService.getVariable(task.getId(),"holiday");
              //System.out.println("sid"+sid);
             //如果有任务进入判断里面
-            if(service.mytask(Integer.parseInt((sid+""))).size()>0){
+            if(service.mytask(Integer.parseInt(sid.toString())).size()>0){
                 Map map = (Map) service.mytask(Integer.parseInt((sid+""))).get(0);
                 //任务Id
                 map.put("taskid",task.getId());

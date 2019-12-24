@@ -4,4 +4,5 @@
 <script src="${pageContext.request.contextPath}/layui/layui.js" ></script>
 <script src="${pageContext.request.contextPath}/js/echarts/echarts.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery/jquery.cookie.js"></script>
 <link href="${pageContext.request.contextPath}/imgs/icon/favicon.ico" rel="icon" type="image/x-ico">

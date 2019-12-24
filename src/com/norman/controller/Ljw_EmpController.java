@@ -35,9 +35,7 @@ public class Ljw_EmpController {
 
     @RequestMapping(value = "/toChatRecordPage")
     public String toChatRecordPage(HttpServletRequest request){
-        List<EmpVo> empList = empService.getEmpList();
-        List<StudentVo> stuList = empService.getStudentList();
-        request.setAttribute("empList",empList);
+        List<StudentVo> stuList = empService.getStudentList(request);
         request.setAttribute("stuList",stuList);
         request.setAttribute("depList",empService.getDepList());
         return "emp_ljw/chatRecord";
@@ -119,8 +117,10 @@ public class Ljw_EmpController {
         String chatIds = request.getParameter("chatIds");
          //System.out.println(chatIds);
         if ("0".equals(chatIds)||"".equals(chatIds) || null == chatIds){
+            vo.setTeacher(((EmpVo)request.getSession().getAttribute("admin")).getEmpId());
             empService.addChatRecord(vo);
         }else {
+            vo.setTeacher(((EmpVo)request.getSession().getAttribute("admin")).getEmpId());
             vo.setChatid(Integer.parseInt(chatIds));
             empService.setChatRecord(vo);
         }

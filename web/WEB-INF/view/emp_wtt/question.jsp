@@ -41,8 +41,8 @@
             <div style="height:411.2px;width:100%;overflow-y:auto" id="contents">
 
             </div>
-            <div style="background-color: #389cb7;height: 15%;width: 100%;">
-                <textarea rows="10" cols="60" style="width: 80%;height:55%;margin-left: 15px;margin-top: 8px;font-size: 20px;padding: 10px 10px;" id="txt" name="content" ></textarea>
+            <div style="background-color: #f1f1f1;height:80.5px;width: 100%;">
+                <textarea rows="10" cols="60" style="width: 80%;height:55%;margin-left: 10px;margin-top: 8px;font-size: 20px;padding: 10px 10px;" id="txt" name="content" ></textarea>
                 <button class="layui-btn layui-btn layui-btn-warm" type="submit" onclick="showInput()" style="float: right;margin-right: 20px;margin-top: 20px;background-color: red;">发送</button>
             </div>
         </div>

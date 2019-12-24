@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!doctype html>
 <html>
 <head>
     <title>Title</title>
@@ -21,8 +22,28 @@
     </div>
 </script>
 <script type="text/html" id="toolDemo">
-
     <button lay-event="edit" class="layui-btn layui-btn-sm layui-btn-danger" ><i class="layui-icon layui-icon-edit"></i>编辑</button>
+</script>
+<script type="text/javascript">
+    function createTime(v){
+        console.log(v);
+        if(v == undefined || v ==''){
+            return "";
+        }else {
+            var date = new Date(v);
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            m = m < 10 ? '0' + m : m;
+            var d = date.getDate();
+            d = d < 10 ? ("0" + d) : d;
+            var h = date.getHours();
+            h = h < 10 ? ("0" + h) : h;
+            var M = date.getMinutes();
+            M = M < 10 ? ("0" + M) : M;
+            var str = y + "-" + m + "-" + d + " " + h + ":" + M;
+            return str;
+        }
+    }
 </script>
 <script>
     layui.use([ 'element', 'table', 'layer', 'form' ,'laydate','upload'],function() {
@@ -46,33 +67,29 @@
             ,defaultToolbar:{}//自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
             ,title: '用户数据表'
             ,cols: [[
-                {type: 'checkbox', fixed: 'left'}
-                ,{field:'enrollmentid', title:'编号', width:80, fixed: 'left', unresize:true,sort: true}
-                ,{field:'studName', title:'员工姓名', width:120}
-                ,{field:'card', title:'员工姓名', width:120}
-                ,{field:'sex', title:'员工姓名', width:120}
-                ,{field:'tell', title:'员工姓名', width:120}
-                ,{field:'qq', title:'员工姓名', width:120}
-                ,{field:'school', title:'员工姓名', width:120}
-                ,{field:'classes', title:'员工姓名', width:120}
-                ,{field:'amount', title:'员工姓名', width:120}
-                ,{field:'computer', title:'员工姓名', width:120}
+                {type: 'checkbox',fixed: 'left',unresize:true,sort: true}
+                ,{field:'studName', title:'学生姓名', width:120}
+                ,{field:'card', title:'身份证号', width:120}
+                ,{field:'sex', title:'性别', width:120}
+                ,{field:'tell', title:'手机号', width:120}
+                ,{field:'school', title:'学校', width:120}
+                ,{field:'classes', title:'班级', width:120}
+                ,{field:'amount', title:'预定报名费', width:120}
                 ,{field:'testTime', title:'员工姓名', width:120}
-                ,{field:'startTime', title:'员工姓名', width:120}
-                ,{field:'signdate', title:'员工姓名', width:120}
-                ,{field:'empid', title:'员工姓名', width:120}
-                ,{field:'status', title:'员工姓名', width:120}
+                ,{field:'startTime',templet:function (d){return createTime(d.startTime);}, title:'试学时间', width:120}
+                ,{field:'signdate',templet:function (d){return createTime(d.signdate);}, title:'录入时间', width:120}
+                ,{field:'empid', title:'录入人', width:120}
+                ,{field:'status', title:'学生状态', width:120}
                 ,{field:'remark', title:'员工姓名', width:120}
-                ,{field:'studType', title:'员工姓名', width:120}
+                ,{field:'studType', title:'班级类别', width:120}
                 ,{field:'paymentTime', title:'员工姓名', width:120}
-                ,{field:'score', title:'员工姓名', width:120}
-                ,{field:'enrollMoney', title:'员工姓名', width:120}
-                ,{field:'enrollMoneyTime', title:'员工姓名', width:120}
-                ,{field:'reviewStatus', title:'员工姓名', width:120}
-                ,{field:'negativeName', title:'员工姓名', width:120}
-                ,{field:'reviewer', title:'员工姓名', width:120}
-                ,{field:'reviewerTime', title:'员工姓名', width:120}
-                ,{field:'majorId', title:'员工姓名', width:120}
+                ,{field:'score', title:'学习成绩', width:120}
+                ,{field:'enrollMoneyTime',templet:function (d){return createTime(d.enrollMoneyTime);}, title:'发放时间', width:120}
+                ,{field:'reviewStatus', title:'报名费状态', width:120}
+                ,{field:'negativeName', title:'招生老师', width:120}
+                ,{field:'reviewer', title:'审核人', width:120}
+                ,{field:'reviewerTime',templet:function (d){return createTime(d.reviewerTime);}, title:'审核时间', width:120}
+                ,{field:'majorId', title:'学生专业', width:120}
                 ,{toolbar:'#toolDemo',fixed: 'right', title:'操作', width:100}
             ]]
             ,page: true
@@ -112,21 +129,18 @@
         //未打卡说明、我的审核   监听表格头的按钮'toolbar(test)'
         table.on('toolbar(test)', function(obj){
             var data = obj.data;
-            if(obj.event == 'punching'){
+            if(obj.event == 'addEnr'){
                 layer.open({
-                    type: 1,
-                    title:'未打卡说明',
+                    type: 2,
+                    title:'招生新增',
                     skin: 'layui-layer-demo', //样式类名
                     closeBtn: 1, //不显示关闭按钮
-                    area: ['700px', '450px'],
+                    area: ['750px', '600px'],
                     fixed: false, //不固定
                     maxmin: true,
                     shadeClose: false, //开启遮罩关闭
-                    //content: ['${pageContext.request.contextPath}/jack/test','no']
-                    content: $('#windows1'),
+                    content: ['${pageContext.request.contextPath}/jack/toAddEnrollmentPage','no'],
                     cancel: function(index, layero){
-                        $("#Wfrom")[0].reset();
-                        layui.form.render();
                         layer.close(index);
                         table.reload('test');
                         return false;

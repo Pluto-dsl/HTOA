@@ -1,3 +1,4 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: HP
@@ -25,8 +26,8 @@
             opacity: 0;
             left: 50%;
             top: 10%;
-            width: 675px;
-            height: 625px;
+            width: <spring:message code="login-width-before"/>;
+            height: <spring:message code="login-height-before"/>;
             background-color: white;
             position: absolute;
             transition: all 0.5s;
@@ -39,24 +40,26 @@
             z-index: 50;
             position: absolute;
             width: 85%;
-            height: 50px;
+            height: <spring:message code="top-height"/>;
             padding-left: 15%;
             padding-top: 10px;
+            top: 0px;
+            background-color: #00000075;
         }
         .title{
             margin-top: 12%;
-            margin-left: -29%;
+            margin-left: <spring:message code="title-margin-left"/>;
             padding-bottom: 3%;
             width: 100%;
-            font-size: 37.5px;
+            font-size: <spring:message code="title-font-size"/>;
             color: #424242;
             font-family: "微软雅黑 Light";
             font-weight: 600;
             float: left;
         }
         .hr{
-            background-color: #656565;
-            width: 116.8%;;
+            background-color: #9F9F9F;
+            width: <spring:message code="hr-width"/>;
             height: 2px;
             float: left;
         }
@@ -67,7 +70,7 @@
         }
         .login-icon{
             margin-top: 6px;
-            font-size: 35px;
+            font-size: <spring:message code="login-icon-font-size"/>;
             color: #333;
             float: left;
         }
@@ -75,14 +78,14 @@
             pointer-events: none;
             color: #a29e9e;
             width: 100%;
-            height: 47.5px;
+            height: <spring:message code="login-submit-height"/>;
             margin-top: 3%;
-            font-size: 25px;
+            font-size: <spring:message code="login-submit-font-size"/>;
             float: left;
         }
         .drag{
-            width: 319px;
-            height: 47.5px;
+            width: <spring:message code="drag-width"/>;
+            height: <spring:message code="drag-height"/>;
             line-height: 40px;
             background-color: #e8e8e8;
             position: relative;
@@ -91,15 +94,15 @@
             float: left;
         }
         .bg{
-            width:45px;
+            width:<spring:message code="bg-width"/>;
             height: 100%;
             position: absolute;
             background-color: #75CDF9;
         }
         .text{
             position: absolute;
-            margin-top: 3px;
-            font-size: 17.5px;
+            margin-top: <spring:message code="text-margin-top"/>;
+            font-size: <spring:message code="text-font-size"/>;
             color: #333;
             width: 100%;
             height: 100%;
@@ -107,8 +110,8 @@
             user-select: none;
         }
         .btn{
-            width:45px;
-            height: 45.5px;
+            width:<spring:message code="btn-height"/>;
+            height: <spring:message code="btn-height"/>;
             position: absolute;
             border:1px solid #ccc;
             cursor: move;
@@ -129,27 +132,69 @@
             height: 10%;
             background-color: #070707ed;
         }
+        .wrapper {
+            width: 100%;
+            height: 100%;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            -webkit-flex-direction: row;
+            -ms-flex-direction: row;
+            flex-direction: row;
+            -webkit-box-pack: center;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            background: url("${pageContext.request.contextPath}/imgs/login/backgroundImg.jpg") no-repeat center center fixed;
+            background-size: cover;
+        }
+        .element {
+            width: 100%;
+            height: <spring:message code="element-height"/>;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+        }
+        .log {
+            width: 100%;
+            height: 200%;
+            background: url("${pageContext.request.contextPath}/imgs/login/backgroundImg.jpg") no-repeat center center fixed;
+            background-size: cover;
+            position: absolute;
+            right: 0px;
+            filter: blur(8px);
+            top: -20px;
+        }
     </style>
 </head>
 <body>
-<div id="Bcontext">
-
+<div class="wrapper">
+    <div class="element">
+        <div class="log"></div>
+    </div>
 </div>
 <div id="top">
-    <span style="font-size: 35px;color: #ffffff;">︱宏图软件教育-办公管理系统</span>
+    <span style="<spring:message code="span-font-size"/>;color: #ffffff;">︱宏图软件教育-办公管理系统</span><br>
 </div>
 <div id="login" align="center">
-    <%--        <form class="layui-form" action="${pageContext.request.contextPath}/jack/login" method="post">--%>
-    <form style="width: 75%;height: 100%;">
+    <form style="<spring:message code="form-style"/>">
         <span class="title">用户登录</span>
+        <a href="?lang=<spring:message code="link-href"/>" style="top: <spring:message code="a-top"/>;left:<spring:message code="a-left"/>;position: absolute;"><i style="font-size: <spring:message code="i-font-size"/>;" class="login-icon layui-icon <spring:message code="icon-class"/>"></i></a>
         <div class="hr"></div>
         <div class="login-row">
             <i class="login-icon layui-icon layui-icon-username"></i>
-            <input type="text" name="phone" placeholder="输入手机号" style="width: 90%;height: 47.5px;font-size: 17.5px;" autocomplete="off" class="layui-input" value="">
+            <input type="text" name="phone" placeholder="输入手机号" style="<spring:message code="input-style"/>" autocomplete="off" class="layui-input" value="">
         </div>
         <div class="login-row">
             <i class="login-icon layui-icon layui-icon-password"></i>
-            <input type="password" name="pwd" placeholder="输入密码" style="width: 90%;height: 47.5px;font-size: 17.5px;" autocomplete="off" class="layui-input" value=""/>
+            <input type="password" name="pwd" placeholder="输入密码" style="<spring:message code="input-style"/>" autocomplete="off" class="layui-input" value=""/>
         </div>
         <div id="varcode" class="login-row">
             <i class="login-icon layui-icon layui-icon-vercode"></i>
@@ -202,8 +247,8 @@
         },"json");
     });
     $(document).ready(function(){
-        $("#login").css("width",'475px');
-        $("#login").css("height",'425px');
+        $("#login").css("width",'<spring:message code="login-width-after"/>');
+        $("#login").css("height",'<spring:message code="login-height-after"/>');
         $("#login").css("opacity",'1');
         $("#login").css("left",'55%');
         $("#login").css("top",'20%');
@@ -216,9 +261,10 @@
         var laydate = layui.laydate;
     });
     function delVarCode() {
-        $(".drag").html("<div class=\"bg\"></div>\n" +
-            "                <div class=\"text\" onselectstart=\"return false;\">请拖动滑块解锁</div>\n" +
-            "                <div class=\"btn\">&gt;&gt;</div>");
+        $(".drag").html("" +
+            "<div class=\"bg\"></div>\n" +
+            "<div class=\"text\" onselectstart=\"return false;\">请拖动滑块解锁</div>\n" +
+            "<div class=\"btn\">&gt;&gt;</div>");
         $("#submitDiv").css("cursor","not-allowed");
         $("#submit").css("pointer-events","none");
         $("#submit").css("color","#a29e9e");
@@ -228,6 +274,8 @@
 <script>
     window.onload = function (ev) {
         huakuai();
+        $.removeCookie('loginSize');
+        $.cookie("loginSize","<spring:message code='link-myHref'/>");
     };
     function huakuai(){//滑块验证
         //一、定义一个获取DOM元素的方法

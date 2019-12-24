@@ -250,7 +250,8 @@ public class Wtt_StudentController {
         EmpVo empVo = (EmpVo) session.getAttribute("admin");
         String username = empVo.getEmpName();
         collect_opinionsVo.setEmpname(username);
-        collect_opinionsVo.setContent(StringUtill.tostring(collect_opinionsVo.getContent()));
+        System.out.println(collect_opinionsVo.getContent());
+        collect_opinionsVo.setContent(collect_opinionsVo.getContent());
         //根据问题反馈Id去查找数据
         FeedbackVo feedbackVo = studentService.feedbackvo(id);
         //重新设置状态
