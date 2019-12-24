@@ -5,6 +5,7 @@ import com.publics.vo.assess.AduitModelVo;
 import com.publics.vo.educ.CourseTypeVo;
 import com.publics.vo.educ.CourseVo;
 import com.publics.vo.empModel.AttendanceVo;
+import com.publics.vo.empModel.EnrollmentVo;
 import com.publics.vo.empModel.evaluationVo;
 import com.publics.vo.empModel.teacherTotalVo;
 import com.publics.vo.notice.RecipientVo;
@@ -85,11 +86,11 @@ public interface Jack_Service {
     /** 公告 */
     int selChatRecordCount(int empid); //谈心查询
     int selClockCount(String empid); //未打卡查询
-    /*//根据员工id查找部门
-    Map deplist(int empid);
-    int selectleave(int teacherid,int classteacherid,int depid);*/
+    //根据员工id查找部门
+    /*Map deplist(int empid);
+    int selectleave(int teacherid,int classteacherid,int depid);
 
-   /* StudentClassVo studentclass();*/
+    StudentClassVo studentclass();*/
     /** 学生公告 */
     List selNoticeList(int id);
     int selNoticeCount(int id);
@@ -106,6 +107,9 @@ public interface Jack_Service {
     int selEnrollmentCount();
     List selClassTypeList();
     List selMajorList();
+    void addEnrollment(EnrollmentVo enroll);
+    void delEnrollment(int id);
+    void editEnrollment(EnrollmentVo enroll);
 
 
     //根据公告id查询已读的人数

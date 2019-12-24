@@ -7,6 +7,7 @@ import com.publics.vo.assess.AduitModelVo;
 import com.publics.vo.educ.CourseTypeVo;
 import com.publics.vo.educ.CourseVo;
 import com.publics.vo.empModel.AttendanceVo;
+import com.publics.vo.empModel.EnrollmentVo;
 import com.publics.vo.empModel.evaluationVo;
 import com.publics.vo.empModel.teacherTotalVo;
 import com.publics.vo.notice.RecipientVo;
@@ -255,7 +256,6 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
         s = s + "ORDER BY te.teacherTotalid desc ";
         return pageBySQL(s,currPage,pageSize);
     }
-
     @Override
     public List selScoreDetails(String teacher, String classid) {
         return listBySQL("select te.TeachertotalId,ev.evaluationName,te.evaluationType,e.empName,sc.className,te.teacherScore,te.Optime from \n" +
@@ -263,7 +263,6 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
                 "INNER JOIN emp e on e.empId = te.classTeacher) INNER JOIN studentClass sc \n" +
                 "on te.classid = sc.classId where e.empId="+teacher+" and sc.classId = "+classid+"");
     }
-
     @Override
     public List selReportForm() {
         return listBySQL("select te.teacherTotalid,(case when te.evaluationType = 1 then '授课老师' when te.evaluationType = 2 then '班主任' end )evaluation,te.sugges,e.empName,AVG(te.teacherScore) as avg from \n" +
@@ -394,6 +393,21 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
     @Override
     public List selMajorList() {
         return listBySQL("select majorid,majorName from major");
+    }
+
+    @Override
+    public void addEnrollment(EnrollmentVo enroll) {
+        addObject(enroll);
+    }
+
+    @Override
+    public void delEnrollment(int id) {
+        executeSQL("DELETE FROM enrollment where enrollmentid = "+id+"");
+    }
+
+    @Override
+    public void editEnrollment(EnrollmentVo enroll) {
+        updObject(enroll);
     }
 
 

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,5 +76,32 @@ public class Jack_Enrollment {
         return map;
     }
 
+    @RequestMapping(value = "/addEnrollment")
+    public String addEnrollment(EnrollmentVo enroll,HttpSession session){
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        enroll.setAmount(0);
+        enroll.setStatus(1);
+        enroll.setEmpid(empVo.getEmpId());
+        enroll.setSigndate(new Date());
+        System.out.println(enroll);
+        service.addEnrollment(enroll);
+        return "emp_xzq/EnrollmentPage";
+    }
 
+    @RequestMapping(value = "/delEnrollment")
+    @ResponseBody
+    public void delEnrollment(String id){
+        service.delEnrollment(Integer.parseInt(id));
+    }
+
+    @RequestMapping(value = "/toEditEnrollment")
+    public String toeditEnrollment(){
+        return "emp_xzq/editEnrollmentPage";
+    }
+
+    @RequestMapping(value = "/EditEnrollment")
+    public String EditEnrollment(EnrollmentVo enroll){
+        service.editEnrollment(enroll);
+        return "emp_xzq/editEnrollmentPage";
+    }
 }
