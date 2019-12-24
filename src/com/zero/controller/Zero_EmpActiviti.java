@@ -1,6 +1,7 @@
 package com.zero.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.publics.service.LoggingService;
 import com.publics.vo.empModel.HolidayVo;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.zero.service.EmpActivitiService;
@@ -50,6 +51,9 @@ public class Zero_EmpActiviti {
     @Resource
     EmpActivitiService service;
 
+    @Resource
+    LoggingService log;
+
     @RequestMapping("/toleave")
     public String toLeave(){
         return "emp/leave/leave";
@@ -73,8 +77,6 @@ public class Zero_EmpActiviti {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date startDate = new Date();
         Date endDate = new Date();
-        // //System.out.println("startTime"+startTime);
-        // //System.out.println("endTime"+endTime);
         try {
             startDate = sdf.parse(startTime);
             endDate = sdf.parse(endTime);
@@ -84,7 +86,6 @@ public class Zero_EmpActiviti {
         int startday = startDate.getDate();
         int endday = endDate.getDate();
         EmpVo emp = (EmpVo)session.getAttribute("admin");
-        // //System.out.println("员工id"+emp.getEmpId());
         String day = request.getParameter("holidayDay");
         String hour = request.getParameter("hour");
         String Remark = request.getParameter("Remark");
@@ -127,6 +128,9 @@ public class Zero_EmpActiviti {
 
         //完成任务(通过任务ID完成该任务)
         taskService.complete(task.getId(),variables);
+
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"提交了请假申请,"+holidayVo.getHour()+"小时,假期开始时间"+holidayVo.getStartTime()+"");
+
         PrintWriter out = response.getWriter();
         out.print("yes");
         out.flush();
@@ -341,8 +345,10 @@ public class Zero_EmpActiviti {
             if(flow.equals("拒绝")){
                 //修改
                 holidayVo.setStatus(3);
+                log.addLog(emp.getEmpId(),emp.getEmpName()+"审批了任务:"+holidayVo.getHolidayid()+",拒绝了!");
             }else {
                 holidayVo.setStatus(2);
+                log.addLog(emp.getEmpId(),emp.getEmpName()+"审批了任务:"+holidayVo.getHolidayid()+",同意了!");
             }
             service.updateholiday(holidayVo);
         }
