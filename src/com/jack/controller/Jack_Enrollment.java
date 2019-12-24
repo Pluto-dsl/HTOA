@@ -2,7 +2,7 @@ package com.jack.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jack.service.Jack_Service;
-import com.publics.vo.empModel.EnrollmentVo;
+/*import com.publics.vo.empModel.EnrollmentVo;*/
 import com.publics.vo.empModel.emp.EmpVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,12 +23,12 @@ public class Jack_Enrollment {
     @Resource
     private Jack_Service service;
 
-    @RequestMapping(value = "toEnrollment")
+    /*@RequestMapping(value = "toEnrollment")
 
     public String toEnrollment(){
         EnrollmentVo enrollmentVo = new EnrollmentVo();
         return "emp_xzq/EnrollmentPage";
-    }
+    }*/
 
     @RequestMapping(value = "Enrollment")
     @ResponseBody

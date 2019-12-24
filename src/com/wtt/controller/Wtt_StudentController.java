@@ -65,13 +65,11 @@ public class Wtt_StudentController {
         response.setContentType("text/html;charset=utf-8");
         //获取当前登录用户,根据用户名去查询任务列表
         EmpVo empVo = (EmpVo) session.getAttribute("admin");
-        String name = empVo.getEmpName();
-        int empid = empVo.getEmpId();
-        List<Task> tasks =taskService.createTaskQuery().taskAssignee(name).list();
+        String empid = String.valueOf(empVo.getEmpId());
+        List<Task> tasks =taskService.createTaskQuery().taskAssignee(empid).list();
         //单据
         List studentleave = new ArrayList();
         for(Task task:tasks){
-            /*System.out.println(task.getId());*/
             //根据任务id取得单据id
             Object sid = taskService.getVariable(task.getId(),"holidayid");
             //如果有任务进入判断里面

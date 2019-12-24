@@ -266,7 +266,7 @@ public class Zero_EmpActiviti {
             for (HistoricActivityInstance activityInstance : historicActivityInstanceList) {
                 //getActivityId方法获取已经激活的节点id
                 ActivityImpl activityImpl = processDefinition.findActivity(activityInstance.getActivityId());
-                //获取当前节点在图片中的坐标位置，左上角坐标及长宽
+                //获取当前节点在图List<Task> mytask = taskService.createTaskQuery().taskAssignee(emp.getEmpId()+"").list();片中的坐标位置，左上角坐标及长宽
                 int x = activityImpl.getX();
                 int y = activityImpl.getY();
                 int height = activityImpl.getHeight();
