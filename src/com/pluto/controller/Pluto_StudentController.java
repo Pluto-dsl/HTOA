@@ -2,8 +2,13 @@ package com.pluto.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.pluto.service.Pluto_StudentMsg;
+import com.publics.service.LoggingService;
 import com.publics.utills.StringUtill;
+import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.studentModel.*;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,13 +30,16 @@ import java.util.Map;
 @RequestMapping("/student")
 public class Pluto_StudentController {
 
+    @Resource
+    private LoggingService log;
+
+    @Resource
+    private Pluto_StudentMsg service;
+
     @RequestMapping("/toNo")
     public String toNo(){
         return "controller_pluto/NO";
     }
-
-    @Resource
-    private Pluto_StudentMsg service;
 
     @RequestMapping("/stuList")
     public String getStudentList(HttpServletRequest request){
@@ -99,6 +107,8 @@ public class Pluto_StudentController {
             service.updateHour(s2);
         }
         service.updateStudent(studentVo);
+        EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了学生资料。");
         return "1";
     }
 

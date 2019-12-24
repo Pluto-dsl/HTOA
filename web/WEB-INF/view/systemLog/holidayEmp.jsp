@@ -67,8 +67,8 @@
             <table id="holidayInfo" lay-filter="holidayInfo"></table>
         </div>
         <div class="layui-tab-item">
-            <div id="empBar" class="empBar"></div>
-            <div id="empLine" class="empLine"></div>
+            <div id="empBar" class="empBar" style="border-bottom: 1px solid #bfbfbf;"></div>
+            <div id="empLine" class="empLine" style="border-right: 1px solid #bfbfbf;"></div>
             <div id="titleBing" class="titleBing"></div>
         </div>
     </div>

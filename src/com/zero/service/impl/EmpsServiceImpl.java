@@ -1,6 +1,8 @@
 package com.zero.service.impl;
 
 import com.publics.dao.BaseDao;
+import com.publics.vo.educ.WeekArrangeVo;
+import com.publics.vo.empModel.WeeklogVo;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.zero.service.EmpsService;
 import org.springframework.stereotype.Service;
@@ -64,5 +66,36 @@ public class EmpsServiceImpl extends BaseDao implements EmpsService {
     public void updatePwd(int empId, String pwd1) {
         super.executeSQL("UPDATE emp set `password` = '"+pwd1+"' where empId = "+empId);
     }
+
+    @Override
+    public int selDep(String name, String depName) {
+        return selTotalRow("select count(*) jl from dep where chairman = '"+name+"' and depName ='"+depName+"'");
+    }
+
+    @Override
+    public int selStudentClass(int empId) {
+        return selTotalRow("select count(*) jl from studentClass where classTeacher ="+empId+" or teacher ="+empId+"");
+    }
+
+    @Override
+    public void deleteWeekLog(int empId) {
+        super.executeSQL("delete from weeklog where Empid ="+empId+"");
+    }
+
+    @Override
+    public void deleteWeekArrange(int empId) {
+        super.executeSQL("delete from weekArrange where empId ="+empId+"");
+    }
+
+    @Override
+    public void deleteChatRecord(int empId) {
+        super.executeSQL("delete from chatRecord where teacher ="+empId+"");
+    }
+
+   @Override
+    public void deleteAssTotal(int empId) {
+        super.executeSQL("delete from aduitLog where Empid ="+empId+"");
+    }
+
 
 }

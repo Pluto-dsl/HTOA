@@ -20,12 +20,12 @@
                 <tr>
                     <td>班级类别名称:</td>
                     <td colspan="2">
-                        <input type="text" name="classTypeName"/>
+                        <input type="text" name="classTypeName" lay-verify="required" autocomplete="off"/>
                     </td>
                 </tr>
                 <tr align="center">
                    <td colspan="2">
-                       <button style="text-align: center;" class="layui-btn layui-btn-xs" type="submit" ><i class="layui-icon layui-icon-ok" ></i>添加</button>
+                       <button style="text-align: center;" class="layui-btn layui-btn-xs" type="submit" lay-submit  ><i class="layui-icon layui-icon-ok" ></i>添加</button>
                    </td>
                 </tr>
             </table>

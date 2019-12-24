@@ -12,6 +12,7 @@ import com.publics.vo.sys.DepVo;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
@@ -44,6 +45,15 @@ public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
     @Override
     public List<EmpVo> getEmpList() {
         return listByHql("FROM EmpVo");
+    }
+
+    @Override
+    public List<StudentVo> getStudentList(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        return listBySQL("SELECT stu.Studid studid,stu.stuname stuname  from student stu\n" +
+                "LEFT JOIN studentClass sc ON stu.clazz = sc.classId\n" +
+                "WHERE teacher = "+emp.getEmpId()+" OR classTeacher = "+emp.getEmpId());
     }
 
     @Override
