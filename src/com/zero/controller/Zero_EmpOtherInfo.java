@@ -1,6 +1,7 @@
 package com.zero.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.publics.service.LoggingService;
 import com.publics.vo.assess.AduitLogVo;
 import com.publics.vo.empModel.emp.EducationVo;
 import com.publics.vo.empModel.emp.EmpVo;
@@ -39,6 +40,8 @@ import java.util.UUID;
 public class Zero_EmpOtherInfo {
     @Resource
     EmpInfo service;
+    @Resource
+    LoggingService log;
     @RequestMapping(value = "/topage")//所有员工资料页
     public String toemp(Model model, int empId) {//去员工资料页
         model.addAttribute("empId",empId);
@@ -63,7 +66,7 @@ public class Zero_EmpOtherInfo {
 
     @RequestMapping(value = "/addjob")//添加或修改工作经历
     @ResponseBody
-    public void addjob(int Empid,int Jobid,String companyName,String degree,String startDate,String endDate,String reason,String Remark,HttpServletResponse response) throws IOException, ParseException {
+    public void addjob(int Empid,int Jobid,String companyName,String degree,String startDate,String endDate,String reason,String Remark,HttpServletResponse response,HttpSession session) throws IOException, ParseException {
         JobVo jobVo = new JobVo();//重新拼装job对象
         jobVo.setEmpid(Empid);
         jobVo.setJobid(Jobid);
@@ -75,6 +78,15 @@ public class Zero_EmpOtherInfo {
         jobVo.setReason(reason);
         jobVo.setRemark(Remark);
         service.addjob(jobVo);
+        if(Jobid==0){
+            //保存日志
+            EmpVo emp = (EmpVo) session.getAttribute("admin");
+            log.addLog(emp.getEmpId(),emp.getEmpName()+"新增了一条工作经历,id:"+companyName);
+        }else {
+            //保存日志
+            EmpVo emp = (EmpVo) session.getAttribute("admin");
+            log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了一条工作经历,id:"+companyName);
+        }
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter writer = response.getWriter();
         writer.print("yes");
@@ -83,8 +95,11 @@ public class Zero_EmpOtherInfo {
     }
     @RequestMapping(value = "/delJob")//删除工作经历
     @ResponseBody
-    public void deljob(String allid,HttpServletResponse response) throws IOException, ParseException {
+    public void deljob(HttpSession session,String allid,HttpServletResponse response) throws IOException, ParseException {
         service.deljob(allid);
+        //保存日志
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"删除了工作经历,操作id:"+allid);
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter writer = response.getWriter();
         writer.print("yes");
@@ -105,7 +120,7 @@ public class Zero_EmpOtherInfo {
     }
     @RequestMapping(value = "/addeducation")//添加或修改教育背景
     @ResponseBody
-    public void addeducation(int Empid,int collegeid,String collegeName,String degree,String startDate,String endDate,String Remark,HttpServletResponse response) throws IOException, ParseException {
+    public void addeducation(HttpSession session,int Empid,int collegeid,String collegeName,String degree,String startDate,String endDate,String Remark,HttpServletResponse response) throws IOException, ParseException {
         EducationVo educationVo = new EducationVo();//重新拼装job对象
         educationVo.setEmpid(Empid);
         educationVo.setCollegeid(collegeid);
@@ -117,6 +132,13 @@ public class Zero_EmpOtherInfo {
         educationVo.setEndDate(fmt.parse(endDate));
         educationVo.setRemark(Remark);
         service.addeducation(educationVo);
+        //保存日志
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        if(collegeid==0){
+            log.addLog(emp.getEmpId(),emp.getEmpName()+"添加了一条教育背景,被操作人id:"+Empid);
+        }else {
+            log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了一条教育背景,被操作人id:"+Empid+"修改的id"+collegeid);
+        }
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter writer = response.getWriter();
         writer.print("yes");
@@ -125,8 +147,11 @@ public class Zero_EmpOtherInfo {
     }
     @RequestMapping(value = "/deleducation")//删除工作经历
     @ResponseBody
-    public void deleducation(String allid,HttpServletResponse response) throws IOException, ParseException {
+    public void deleducation(HttpSession session,String allid,HttpServletResponse response) throws IOException, ParseException {
         service.deleducation(allid);
+        //保存日志
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"删除了教育背景,操作id:"+allid);
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter writer = response.getWriter();
         writer.print("yes");
@@ -148,8 +173,15 @@ public class Zero_EmpOtherInfo {
 
     @RequestMapping(value = "/addfamilyInfo")//添加或修改家庭联系人
     @ResponseBody
-    public void addfamilyInfo(FamilyInfoVo familyInfoVo,HttpServletResponse response) throws IOException, ParseException {
+    public void addfamilyInfo(HttpSession session,FamilyInfoVo familyInfoVo,HttpServletResponse response) throws IOException, ParseException {
         service.addfamilyInfo(familyInfoVo);
+        //保存日志
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        if(familyInfoVo.getFamilyid()==0){
+            log.addLog(emp.getEmpId(),emp.getEmpName()+"添加了一条家庭联系人,被操作人id:"+familyInfoVo.getEmpid());
+        }else {
+            log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了一条家庭联系人,被操作人id:"+familyInfoVo.getEmpid());
+        }
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter writer = response.getWriter();
         writer.print("yes");
@@ -158,8 +190,10 @@ public class Zero_EmpOtherInfo {
     }
     @RequestMapping(value = "/delfamilyInfo")//删除家庭联系人
     @ResponseBody
-    public void delfamilyInfo(String allid,HttpServletResponse response) throws IOException, ParseException {
+    public void delfamilyInfo(HttpSession session,String allid,HttpServletResponse response) throws IOException, ParseException {
         service.delfamilyInfo(allid);
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"删除了家庭联系人,被操作人id:"+allid);
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter writer = response.getWriter();
         writer.print("yes");
@@ -182,9 +216,15 @@ public class Zero_EmpOtherInfo {
     @RequestMapping(value = "/addaduit")//新增或修改选中用户考核
     @ResponseBody
     public String  addaduit(AduitLogVo aduitLogVo, HttpSession session){
-        aduitLogVo.setAuditPerson(((EmpVo) session.getAttribute("admin")).getEmpName());//从session中获取
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        aduitLogVo.setAuditPerson(emp.getEmpName());//从session中获取
         aduitLogVo.setAuditDate(new java.util.Date());
         service.addaduit(aduitLogVo);
+        if (aduitLogVo.getAduitLogid()==0){
+            log.addLog(emp.getEmpId(),emp.getEmpName()+"新增了用户考核,被操作人id:"+aduitLogVo.getEmpid());
+        }else {
+            log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了用户考核,被操作人id:"+aduitLogVo.getEmpid());
+        }
         return "ok";
     }
 
@@ -197,8 +237,10 @@ public class Zero_EmpOtherInfo {
 
     @RequestMapping(value = "/deladuit")//删除所选用户考核
     @ResponseBody
-    public String deladuit(String allid) {
+    public String deladuit(String allid,HttpSession session) {
         service.deladuit(allid);
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"删除了用户考核,被操作id:"+allid);
         return "yes";
     }
 
@@ -246,14 +288,20 @@ public class Zero_EmpOtherInfo {
         annexVo.setSeName(1);
         annexVo.setSeId(empId);
         annexVo.setAnnexDate(new Date(new java.util.Date().getTime()));
-        annexVo.setSessionName(((EmpVo) session.getAttribute("admin")).getEmpName());//操作人 在有登录后在session中获取
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        annexVo.setSessionName(emp.getEmpName());//操作人 在有登录后在session中获取
+        //添加日志
         service.addAnnex(annexVo);
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"添加了证件,被操作id:"+empId+","+annexName);
         return "redirect:topage?empId="+empId;
     }
     @RequestMapping(value = "/delannex")//删除证件
     @ResponseBody
-    public String delannex(String allid) throws IOException, ParseException {
+    public String delannex(String allid,HttpSession session) throws IOException, ParseException {
         service.delAnnex(allid);
+        //添加日志
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"删除了证件,被操作id:"+allid);
         return "yes";
     }
 

@@ -2,6 +2,8 @@ package com.jerry_zhq.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jerry_zhq.service.Zhq_StuFloorService;
+import com.publics.service.LoggingService;
+import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.studentModel.StudentDormitoryVo;
 import com.publics.vo.studentModel.StudntBuildingVo;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -18,6 +21,10 @@ import java.util.List;
 public class Zhq_StuFloorController {
     @Resource
     Zhq_StuFloorService zhq_stuFloorService;
+
+    @Resource
+    private LoggingService log;
+
 
     @RequestMapping("/stuFloor")
     public String stuFloor(){
@@ -44,13 +51,15 @@ public class Zhq_StuFloorController {
     //删除
     @RequestMapping("/deleteStu")
     @ResponseBody
-    public String delDept(int floorId){
+    public String delDept(int floorId, HttpSession session){
          //System.out.println("获取到的id是"+floorId);
         StudntBuildingVo sb = new StudntBuildingVo();
         sb.setFloorId(floorId);
         List<StudentDormitoryVo> list = zhq_stuFloorService.list(floorId);
         /*System.out.println("宿舍："+list);*/
         if(list.size()<1){
+            EmpVo empVo = (EmpVo) session.getAttribute("admin");
+            log.addLog(empVo.getEmpId(),empVo.getEmpName()+"删除了楼栋");
             zhq_stuFloorService.deleteStuBiu(sb);
             return "1";
         }else {
@@ -59,9 +68,12 @@ public class Zhq_StuFloorController {
     }
     //添加
     @RequestMapping("/addStuFloor")
-    public String addStuFloor(StudntBuildingVo studntBuildingVo,HttpServletResponse response){
+    public String addStuFloor(StudntBuildingVo studntBuildingVo,HttpServletResponse response,HttpSession session){
         response.setContentType("text/html;charset=utf-8");
         zhq_stuFloorService.addStuBiu(studntBuildingVo);
+
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"添加了楼栋");
         return "redirect:/zhq/stuFloor";
     }
 }

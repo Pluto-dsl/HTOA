@@ -3,6 +3,7 @@ package com.jerry_zhq.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jerry_zhq.service.Zhq_FlowService;
+import com.publics.service.LoggingService;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.file.DataDocVo;
 import org.activiti.engine.*;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +41,8 @@ public class Zhq_FlowController {
     @Resource
     private Zhq_FlowService zhq_flowService;
 
+    @Resource
+    private LoggingService log;
 
     @RequestMapping("/flow")
     public String flow(){
@@ -64,7 +68,7 @@ public class Zhq_FlowController {
     }
     //上传
     @RequestMapping("/addFlow")
-    public String addFlow(MultipartFile file){
+    public String addFlow(MultipartFile file, HttpSession session){
          //System.out.println("获取到的文件名是"+file.getOriginalFilename());
         try {
             //创建临时file对象
@@ -77,13 +81,16 @@ public class Zhq_FlowController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"上传了文件");
         return "redirect:/zhq/flow";
     }
     /**
      * 下载流程图
      */
     @RequestMapping("/toExport")
-    public String toExport(String id,HttpServletResponse resp){
+    public String toExport(String id,HttpServletResponse resp,HttpSession session){
         try {
 
             //设置response对象的头参数，attachment就是附件，filename=文件名称
@@ -144,12 +151,15 @@ public class Zhq_FlowController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"下载了流程图");
         return null;
     }
 
     //查询流程定义列表
     @RequestMapping("/viewProcessImage")
-    public String viewProcessImage(String did, String imageName, HttpServletResponse resp){
+    public String viewProcessImage(String did, String imageName, HttpServletResponse resp,HttpSession session){
         InputStream in = repositoryService.getResourceAsStream(did,imageName);
         try {
             OutputStream out = resp.getOutputStream();
@@ -164,6 +174,9 @@ public class Zhq_FlowController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"查看了流程图");
         return null;
     }
 

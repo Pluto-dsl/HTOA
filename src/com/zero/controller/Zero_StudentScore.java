@@ -2,6 +2,7 @@ package com.zero.controller;
 
 
 import com.alibaba.fastjson.JSONArray;
+import com.publics.service.LoggingService;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.studentModel.ReplyScoreVo;
 import com.publics.vo.studentModel.StudentScoreVo;
@@ -32,6 +33,8 @@ public class Zero_StudentScore {
     StudentScoreService service;
     @Resource
     StudentService studentService;
+    @Resource
+    LoggingService log;
     @RequestMapping(value = "/toreply")
     public String toreply(Model model){//去答辩成绩页
         //所有项目名称
@@ -156,7 +159,7 @@ public class Zero_StudentScore {
             writer.write("no");
         }
     }
-    @RequestMapping(value = "/toaddscore")//去新增学生成绩页
+    @RequestMapping(value = "/toaddscore")//去新增学生成绩
     public String toaddscore(int classid, int courseid, int scoreType, int termid, String scoreTime, Model model) throws ParseException {//去新增成绩页
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = sdf.parse(scoreTime);
@@ -186,10 +189,11 @@ public class Zero_StudentScore {
     }
 
     @RequestMapping(value = "/addscore")
-    @ResponseBody//去新增成绩页
+    @ResponseBody//新增成绩学生成绩
     public void toaddscore(float score, String Rescore,String remark,int courseId,String testType, int termid, String scoreTime,int Studid, HttpServletResponse response, HttpSession session) throws ParseException, IOException {
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
         String sql = "(0,";
-        sql+=((EmpVo) session.getAttribute("admin")).getEmpId(); //session获取录入人员
+        sql+=(emp.getEmpId()); //session获取录入人员
         sql+=(1+",");
         if (Rescore!=""){
             sql+=(Rescore+",");
@@ -204,16 +208,19 @@ public class Zero_StudentScore {
         sql+=(termid+",");
         sql+=(testType+")");
         service.addscore(sql);
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"新增学生成绩,操作学生id:"+Studid+"分数"+score+","+Rescore+"科目"+courseId);
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter writer = response.getWriter();
         writer.write("ok");
     }
 
     @RequestMapping(value = "/addReplyScore")
-    @ResponseBody//去新增成绩页
-    public void toaddscore(ReplyScoreVo scoreVo, HttpServletResponse response) throws ParseException, IOException {
+    @ResponseBody//新增答辩成绩
+    public void toaddscore(HttpSession session,ReplyScoreVo scoreVo, HttpServletResponse response) throws ParseException, IOException {
         scoreVo.setScore7(scoreVo.getScore1()+scoreVo.getScore2()+scoreVo.getScore3()+scoreVo.getScore4()+scoreVo.getScore5()+scoreVo.getScore6());
         service.addReplyscore(scoreVo);
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"新增学生答辩成绩,操作学生id:"+scoreVo.getStudentId()+"科目"+scoreVo.getProjectId()+",总分数"+scoreVo.getScore7());
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter writer = response.getWriter();
         writer.write("ok");
@@ -232,14 +239,15 @@ public class Zero_StudentScore {
     }
 
     @RequestMapping(value = "/editscore")
-    @ResponseBody//修改学生答辩成绩
-    public void editscore(String res,StudentScoreVo studentScoreVo, HttpServletResponse response, HttpSession session) throws ParseException, IOException {//去新增成绩页
-        //studentScoreVo.setEmpid(1);//从session里获取
-        studentScoreVo.setEmpid(((EmpVo) session.getAttribute("admin")).getEmpId());//从session里获取
+    @ResponseBody//修改学生成绩
+    public void editscore(String res,StudentScoreVo studentScoreVo, HttpServletResponse response, HttpSession session) throws ParseException, IOException {
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        studentScoreVo.setEmpid(emp.getEmpId());//从session里获取
         if("".equals(res)){
             res="null";
         }
         service.editscore(res,studentScoreVo);
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"修改学生成绩,操作学生id:"+studentScoreVo.getStuid()+",科目"+studentScoreVo.getCourseId()+",分数"+studentScoreVo.getScore()+","+res);
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter writer = response.getWriter();
         writer.write("ok");
@@ -247,9 +255,11 @@ public class Zero_StudentScore {
 
     @RequestMapping(value = "/editReplyscore")
     @ResponseBody
-    public void editReply(ReplyScoreVo scoreVo,HttpServletResponse response) throws ParseException, IOException {//修改答辩成绩页
+    public void editReply(HttpSession session,ReplyScoreVo scoreVo,HttpServletResponse response) throws ParseException, IOException {//修改答辩成绩页
         scoreVo.setScore7(scoreVo.getScore1()+scoreVo.getScore2()+scoreVo.getScore3()+scoreVo.getScore4()+scoreVo.getScore5()+scoreVo.getScore6());
         service.editReply(scoreVo);
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"修改答辩成绩,操作学生id:"+scoreVo.getStudentId()+",科目"+scoreVo.getProjectId()+",总分数"+scoreVo.getScore7());
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter writer = response.getWriter();
         writer.write("ok");
