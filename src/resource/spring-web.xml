@@ -2,8 +2,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
     <import resource="spring-activiti.xml"/>
     <!--1、开启注解模式-->
     <!--自动注册HandlerMapping HandlerAdapter-->
@@ -30,9 +31,28 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/HTOA/imgs/**"/>
+            <mvc:exclude-mapping path="/HTOA/dist/**"/>
+            <mvc:exclude-mapping path="/HTOA/js/**"/>
+            <mvc:exclude-mapping path="/HTOA/layui/**"/>
+            <mvc:exclude-mapping path="/HTOA/layuiadmin/**"/>
             <bean class="com.pluto.Interceptor.ControllerInterceptor"/>
+
         </mvc:interceptor>
     </mvc:interceptors>
+
+   <!-- <mvc:interceptors>
+        &lt;!&ndash;一个拦截器&ndash;&gt;
+        <mvc:interceptor>
+            &lt;!&ndash; 拦截URL,拦截请求的url 黑名单 &ndash;&gt;
+            <mvc:mapping path="/**"/>
+            &lt;!&ndash; 白名单 &ndash;&gt;
+&lt;!&ndash;            <mvc:exclude-mapping path="/toPage/oamain"/>&ndash;&gt;
+            &lt;!&ndash; 拦截请求交给，哪个拦截器 &ndash;&gt;
+            <bean class="com.pluto.Interceptor.ControllerInterceptor"/>
+        </mvc:interceptor>
+        &lt;!&ndash; ... &ndash;&gt;
+    </mvc:interceptors>-->
 
     <!-- FastJson注入 -->
     <mvc:annotation-driven>
@@ -84,5 +104,6 @@
             <property name="paramName" value="lang"/>
         </bean>
     </mvc:interceptors>
+
 
 </beans>

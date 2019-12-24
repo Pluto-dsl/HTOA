@@ -69,7 +69,7 @@
             ,title: '我的报修列表'
             ,cols: [[
                 {field:'equipmentId', title:'ID', width:60, fixed: 'left', unresize: true, sort: true}
-                ,{field:'equipmentType', title:'保修设备名称',width: 140,fixed: 'left'}
+                ,{field:'equipmentType', title:'报修设备名称',width: 140,fixed: 'left'}
                 ,{field:'depName', title:'部门名称', width:90 }
                 ,{field:'empName', title:'员工姓名', width:90 }
                 ,{field:'startTime', title:'申请时间', width:160, unresize: true, sort: true}
@@ -96,7 +96,7 @@
             ,title: '我的报修列表'
             ,cols: [[
                 {field:'equipmentId', title:'ID', width:60, fixed: 'left', unresize: true, sort: true}
-                ,{field:'equipmentType', title:'保修设备名称',width: 140,fixed: 'left'}
+                ,{field:'equipmentType', title:'报修设备名称',width: 140,fixed: 'left'}
                 ,{field:'depName', title:'班级名称', width:150 }
                 ,{field:'empName', title:'学生姓名', width:90 }
                 ,{field:'startTime', title:'申请时间', width:160, unresize: true, sort: true}

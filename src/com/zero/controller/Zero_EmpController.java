@@ -1,6 +1,7 @@
 package com.zero.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.publics.vo.empModel.WeeklogVo;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.utills.StringUtill;
 import com.zero.service.EmpsService;
@@ -41,10 +42,11 @@ public class Zero_EmpController {
     @ResponseBody
     public void allemp(HttpServletResponse response) throws IOException {
         Map map = new TreeMap();
+        List elist = empService.selectEmp();
         map.put("code",0);
         map.put("msg","");
-        map.put("count",1);
-        map.put("data",empService.selectEmp());
+        map.put("count",elist.size());
+        map.put("data",elist);
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter writer = response.getWriter();
         writer.print(JSONArray.toJSONString(map));
@@ -67,13 +69,34 @@ public class Zero_EmpController {
         empService.update(empVo);
         return "redirect:toemp";
     }
-    @RequestMapping(value = "/deleteEmp")//添加员工
+    @RequestMapping(value = "/deleteEmp")//删除员工
     @ResponseBody
-    public String delete(int empId){
-        EmpVo empVo = new EmpVo();
+    public String delete(int empId,String depName,String empName){
+        EmpVo empVo = new EmpVo();//员工
         empVo.setEmpId(empId);
-        empService.deleteEmp(empVo);
-        return "true";
+        int flag=0;
+        int depI = empService.selDep(empName,depName);//查部门
+
+        int stuClassI = empService.selStudentClass(empId);//查询班级中的职务
+        System.out.println("部门"+depI);
+        System.out.println("班级"+stuClassI);
+        if(depI>0){
+            flag+=1;
+        }
+        if(stuClassI >0){
+            flag+=1;
+        }
+        System.out.println(flag);
+        if(flag>0){
+            return "0";
+        }else{
+            empService.deleteWeekLog(empId);//删除周报
+            empService.deleteWeekArrange(empId);//删除值班管理
+            empService.deleteChatRecord(empId);//删除谈心记录
+            empService.deleteAssTotal(empId);//删除考核
+            empService.deleteEmp(empVo);//删除员工表中的数据
+            return "1";
+        }
     }
 
     @RequestMapping(value = "/toupdate/{empId}")//去修改员页
@@ -109,11 +132,12 @@ public class Zero_EmpController {
         if(status!=100){
             tiaojian += " and e.status = "+status;
         }
+        List tlist =  empService.seekEmp(tiaojian);
         Map map = new TreeMap();
         map.put("code",0);
         map.put("msg","");
-        map.put("count",1);
-        map.put("data",empService.seekEmp(tiaojian));
+        map.put("count",tlist.size());
+        map.put("data",tlist);
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter writer = response.getWriter();
         writer.print(JSONArray.toJSONString(map));

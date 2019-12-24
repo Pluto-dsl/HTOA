@@ -48,7 +48,7 @@ public class Ljw_StuRepairController {
         repair.setUserType(1);
         repair.setStartTime(new Date());
         logsService.newRepair(repair);
-        return "redirect:/myRepair/toMyRepair";
+        return "redirect:/myRepair/toStuRepair";
     }
 
     @ResponseBody

@@ -3,6 +3,7 @@ package com.pluto.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.pluto.service.Pluto_LcController;
+import com.publics.controller.ForwordController;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.sys.*;
 import org.springframework.stereotype.Controller;
@@ -60,6 +61,7 @@ public class Pluto_Controller {
         outsideJson.put("title",m.getModuleName());
         outsideJson.put("id",m.getModuleId());
         outsideJson.put("spread","true");
+
         for (int i = 0; i < list.size(); i++) {
             ModuleVo moduleVo = (ModuleVo) list.get(i);
             JSONObject ecjson = new JSONObject();

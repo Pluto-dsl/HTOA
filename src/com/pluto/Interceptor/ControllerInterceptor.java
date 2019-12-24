@@ -20,9 +20,11 @@ public class ControllerInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        boolean flag = false;
+
         String uri = httpServletRequest.getRequestURI();
+//        System.out.println(uri);
         uri = uri.substring(5,uri.length());
+
 //        System.out.println(uri);
         int temp = 0;
         for (int i = 1; i < uri.length(); i++) {

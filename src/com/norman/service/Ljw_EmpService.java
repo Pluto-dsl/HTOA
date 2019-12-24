@@ -20,6 +20,7 @@ public interface Ljw_EmpService {
     void setChatRecord(ChatRecordVo vo);//更新谈心记录
 
     List<EmpVo> getEmpList();//获取员工列表
+    List<StudentVo> getStudentList(HttpServletRequest request);//获取通过员工学生列表
     List<StudentVo> getStudentList();//获取学生列表
     JSONArray getWeekLogData(HttpServletRequest request,int page, int limit);//获取周报列表
     int getWeekLogSize(HttpServletRequest request);//获取周报记录数
