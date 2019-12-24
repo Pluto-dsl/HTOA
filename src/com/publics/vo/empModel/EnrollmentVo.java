@@ -35,6 +35,37 @@ public class EnrollmentVo {
     private Date reviewerTime;      //审核时间
     private int majorId;        //关联专业id
 
+    @Override
+    public String toString() {
+        return "EnrollmentVo{" +
+                "enrollmentid=" + enrollmentid +
+                ", studName='" + studName + '\'' +
+                ", card='" + card + '\'' +
+                ", sex='" + sex + '\'' +
+                ", tell='" + tell + '\'' +
+                ", qq='" + qq + '\'' +
+                ", school='" + school + '\'' +
+                ", classes='" + classes + '\'' +
+                ", amount=" + amount +
+                ", computer='" + computer + '\'' +
+                ", testTime=" + testTime +
+                ", startTime=" + startTime +
+                ", signdate=" + signdate +
+                ", empid=" + empid +
+                ", status=" + status +
+                ", remark='" + remark + '\'' +
+                ", studType=" + studType +
+                ", paymentTime=" + paymentTime +
+                ", score=" + score +
+                ", enrollMoney=" + enrollMoney +
+                ", enrollMoneyTime=" + enrollMoneyTime +
+                ", reviewStatus=" + reviewStatus +
+                ", negativeName='" + negativeName + '\'' +
+                ", reviewer='" + reviewer + '\'' +
+                ", reviewerTime=" + reviewerTime +
+                ", majorId=" + majorId +
+                '}';
+    }
 
     public int getEnrollmentid() {
         return enrollmentid;

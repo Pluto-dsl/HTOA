@@ -6,40 +6,42 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!doctype html>
 <html>
 <head>
     <title>Title</title>
     <jsp:include page="../include.jsp" />
 </head>
 <body>
-<form id="addfrom" action="${pageContext.request.contextPath}/jack/addEnrollment" class="layui-form" method="post" >
+<form id="addfrom" lay-filter="addfrom" action="${pageContext.request.contextPath}/jack/EditEnrollment" class="layui-form" method="post" >
     <table align="center" style="border-collapse: separate;border-spacing: 10px 30px;">
             <tr align="center">
+                <input name="enrollmentid" type="hidden"/>
                 <td>新生姓名:</td>
-                <td><input type="text" name="studName" required lay-verify="required" placeholder="请输入新生姓名" autocomplete="off" class="layui-input"/></td>
+                <td><input type="text" name="studName" id="studName" required lay-verify="required" placeholder="请输入新生姓名" autocomplete="off" class="layui-input"/></td>
                 <td>身份证:</td>
-                <td><input type="text" name="card" required lay-verify="required" placeholder="请输入身份证" autocomplete="off" class="layui-input"/></td>
+                <td><input type="text" name="card" id="card" required lay-verify="required" placeholder="请输入身份证" autocomplete="off" class="layui-input"/></td>
             </tr>
             <tr align="center">
                 <td>性别:</td>
                 <td>
-                    <input type="radio" name="sex" value="男" title="男" checked="" />
-                    <input type="radio" name="sex" value="女" title="女" />
+                    <input type="radio" name="sex" class="sex" value="男" title="男" checked="" />
+                    <input type="radio" name="sex" class="sex" value="女" title="女" />
                 </td>
                 <td>手机号:</td>
-                <td><input type="text" name="tell" required lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input" /></td>
+                <td><input type="text" name="tell"  required lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input" /></td>
             </tr>
             <tr align="center">
                 <td>QQ账号:</td>
-                <td><input type="text" name="qq" id="qq" placeholder="请输入QQ账号" autocomplete="off" class="layui-input" /></td>
+                <td><input type="text" name="qq" placeholder="请输入QQ账号" autocomplete="off" class="layui-input" /></td>
                 <td>就读学校:</td>
                 <td><input type="text" name="school" required lay-verify="required" placeholder="请输入身份证" autocomplete="off" class="layui-input" /></td>
             </tr>
             <tr align="center">
                 <td>所在班级:</td>
-                <td><input type="text" name="classes" required lay-verify="required" placeholder="请输入所在班级" autocomplete="off" class="layui-input" /></td>
+                <td><input type="text" name="classes" id="classes"  required lay-verify="required" placeholder="请输入所在班级" autocomplete="off" class="layui-input" /></td>
                 <td>录取成绩:</td>
-                <td><input type="text" name="score" required lay-verify="number" placeholder="请输入录取成绩" autocomplete="off" class="layui-input" /></td>
+                <td><input type="text" name="score" id="score"  required lay-verify="number" placeholder="请输入录取成绩" autocomplete="off" class="layui-input" /></td>
             </tr>
             <tr align="center">
                 <td>学生备注:</td>
@@ -59,7 +61,7 @@
                     </select>
                 </td>
                 <td>招生老师:</td>
-                <td><input type="text" name="negativeName" required lay-verify="required" placeholder="请输入招生老师" autocomplete="off" class="layui-input"></td>
+                <td><input type="text" name="negativeName" id="negativeName"  required lay-verify="required" placeholder="请输入招生老师" autocomplete="off" class="layui-input"></td>
             </tr>
             <tr align="center">
                 <td>是否送电脑:</td>
@@ -78,6 +80,7 @@
     </form>
 </body>
 <script>
+    var index;
     layui.use([ 'element', 'table', 'layer', 'form' ,'laydate','upload'],function() {
         var element = layui.element;
         var layer = layui.layer;
@@ -85,6 +88,26 @@
         var form = layui.form;
         var laydate = layui.laydate;
         var upload = layui.upload;
+
+        index = layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+
+        $.ajaxSettings.async = false;
+        //班级类别
+        $.post('${pageContext.request.contextPath}/jack/toClassTypeList',{},function (data) {
+
+            for (var i = 0; i < data.names.length; i++) {
+                $("#studType").append("<option value='"+data.names[i].classTypeId+"'>"+data.names[i].classTypeName+"</option>");
+            }
+            form.render("select");
+        },"json");
+        //学生专业
+        $.post('${pageContext.request.contextPath}/jack/toMajorList',{},function (data) {
+            for (var i = 0; i < data.names.length; i++) {
+                $("#majorId").append("<option value='"+data.names[i].majorid+"'>"+data.names[i].majorName+"</option>");
+            }
+            layer.close(index);
+            form.render("select");
+        },"json");
 
         $("#qq").on('click',function () {
             layer.tips('可不填', '.qq');
@@ -99,24 +122,26 @@
         parent.layer.close(index);
         });
 
-        //班级类别
-        $.get('${pageContext.request.contextPath}/jack/toClassTypeList',{},function (data) {
-            for (var i = 0; i < data.names.length; i++) {
-                $("#studType").append("<option value='"+data.names[i].classTypeId+"'>"+data.names[i].classTypeName+"</option>");
-            }
-            form.render("select");
-        },"json");
-
-        //学生专业
-        $.get('${pageContext.request.contextPath}/jack/toMajorList',{},function (data) {
-            for (var i = 0; i < data.names.length; i++) {
-                $("#majorId").append("<option value='"+data.names[i].majorid+"'>"+data.names[i].majorName+"</option>");
-            }
-            form.render("select");
-        },"json");
-
-
-
+        LoadData();
+        function LoadData() {
+            var aa = parent.xxx();
+            form.val("addfrom", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
+                "studName": aa.studName // "name": "value"
+                , "card": aa.card
+                , "enrollmentid": aa.enrollmentid
+                , "sex": aa.sex
+                , "tell": aa.tell
+                , "qq": aa.qq
+                , "classes": aa.classes
+                , "school": aa.school
+                , "score": aa.score
+                , "remark": aa.remark
+                , "studType": aa.studType
+                , "majorId": aa.majorId
+                , "negativeName": aa.negativeName
+                , "computer": aa.computer
+            });
+        }
     });
 </script>
 </html>

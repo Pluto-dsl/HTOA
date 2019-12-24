@@ -21,9 +21,7 @@ import java.net.UnknownHostException;
 
 @Controller
 public class ForwordController {
-/*
-    @Resource
-    private static LoggingService service;*/
+
 
     @RequestMapping("/toPage/{path}")
     public String tomain(@PathVariable("path") String path, HttpServletRequest request, HttpServletResponse response) throws IOException {

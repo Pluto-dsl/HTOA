@@ -22,7 +22,7 @@ public class ControllerInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
 
         String uri = httpServletRequest.getRequestURI();
-        System.out.println(uri);
+//        System.out.println(uri);
         uri = uri.substring(5,uri.length());
 
 //        System.out.println(uri);
