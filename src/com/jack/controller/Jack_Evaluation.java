@@ -286,7 +286,7 @@ public class Jack_Evaluation {
     }
     @RequestMapping(value = "/MyMission")
     @ResponseBody
-    public Map MyMission(HttpSession session){
+    public Map MyMission(HttpSession session) {
         EmpVo emp = (EmpVo) session.getAttribute("admin");
         Map map = new HashMap();
         Map studentMap = new HashMap();
@@ -300,9 +300,12 @@ public class Jack_Evaluation {
         for(Task task: mytask){
             //根据任务id取得单据id
             Object sid = taskService.getVariable(task.getId(),"holiday");
+            if(sid==null){
+                sid ="0";
+            }
             //如果有任务进入判断里面
-            if(zero_service.mytask(Integer.parseInt((sid+""))).size()>0){
-                Map m = (Map) zero_service.mytask(Integer.parseInt((sid+""))).get(0);
+            if(zero_service.mytask(Integer.parseInt((sid.toString()))).size()>0){
+                Map m = (Map) zero_service.mytask(Integer.parseInt((sid.toString()))).get(0);
                 //任务Id
                 m.put("taskid",task.getId());
                 //流程实例id
@@ -316,9 +319,12 @@ public class Jack_Evaluation {
         List studentleave = new ArrayList();
         for(Task task:tasks){
             Object sid = taskService.getVariable(task.getId(),"holidayid");
+            if(sid==null){
+                sid ="0";
+            }
             //如果有任务进入判断里面
             if(studentService.studentleave(Integer.parseInt((sid+""))).size()>0){
-                Map maps = (Map) studentService.studentleave(Integer.parseInt((sid+""))).get(0);
+                Map maps = (Map) studentService.studentleave(Integer.parseInt((sid.toString()))).get(0);
                 //任务Id
                 maps.put("taskid",task.getId());
                 //流程实例id
@@ -327,7 +333,7 @@ public class Jack_Evaluation {
             }
         }
         //-------------------------------------------------------------------------------------------------
-        map.put("emp",holidays.size());
+        map.put("emp",0);
         map.put("stu",studentleave.size());
         map.put("clock",clock);
         map.put("Notice",Notice);
