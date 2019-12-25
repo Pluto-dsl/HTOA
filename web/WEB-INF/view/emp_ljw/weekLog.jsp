@@ -57,7 +57,7 @@
         <input type="text" id="endDay" name="endDay" autocomplete="off" class="layui-input">
     </div>
 </div>
-<button class="layui-btn menu" id="btn">搜索</button>
+<button class="layui-btn menu" id="btn"><i class="layui-icon layui-icon-search"></i>搜索</button>
 <table id="weekLog" lay-filter="test" style="float: left"></table>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="info" style="float: left">查看详情</a>
