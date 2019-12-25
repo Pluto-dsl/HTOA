@@ -149,8 +149,11 @@ public class Zero_EmpActiviti {
             Object sid = taskService.getVariable(task.getId(),"holiday");
              //System.out.println("sid"+sid);
             //如果有任务进入判断里面
+            if(sid==null){
+                sid ="0";
+            }
             if(service.mytask(Integer.parseInt(sid.toString())).size()>0){
-                Map map = (Map) service.mytask(Integer.parseInt((sid+""))).get(0);
+                Map map = (Map) service.mytask(Integer.parseInt((sid.toString()))).get(0);
                 //任务Id
                 map.put("taskid",task.getId());
                 //流程实例id

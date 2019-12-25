@@ -307,6 +307,11 @@
                                data-url="${pageContext.request.contextPath}/controller/toUserList"
                                data-id="权限管理" data-title="权限管理">权限管理</a></dd>
                     </dl>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;"class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/log/toLogList"
+                               data-id="系统日志" data-title="系统日志">系统日志</a></dd>
+                    </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="tt" lay-tips="系统设置" lay-direction="2"><i class="layui-icon layui-icon-util"></i><cite>系统设置</cite></a>
