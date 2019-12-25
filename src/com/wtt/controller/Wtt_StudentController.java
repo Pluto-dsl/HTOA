@@ -3,6 +3,7 @@ package com.wtt.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.norman.service.LoginService;
+import com.publics.service.LoggingService;
 import com.publics.utills.StringUtill;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.feedback.Collect_OpinionsVo;
@@ -58,7 +59,8 @@ public class Wtt_StudentController {
     private RepositoryService repositoryService;
     @Resource
     private Wtt_StuDuanService wtt_stuDuanService;
-
+    @Resource
+    private LoggingService log;
     //学生请假查询
     @RequestMapping(value = "selectleave")
     public String toEmpPaper(HttpServletResponse response,Map map2, HttpSession session, ModelMap modelMap){
@@ -196,6 +198,8 @@ public class Wtt_StudentController {
             }
             studentService.updateleave(studentLeaveVo);
         }
+//        log.addLog(empid,empVo.getEmpName()+"审批了学生:"+studentLeaveVo.getStudentId()+"的请假");
+        log.addLog(empid,empVo.getEmpName()+"审批了学生的请假");
         return "redirect:/student/selectleave";
     }
 
@@ -233,9 +237,7 @@ public class Wtt_StudentController {
     public void selectcollect(HttpServletRequest request,HttpServletResponse response) throws IOException {
         response.setContentType("text/html;charset=utf-8");
         int ids = Integer.parseInt(request.getParameter("wid"));
-        /*System.out.println("id为："+ids);*/
         List<Collect_OpinionsVo> list = studentService.selectyijian(ids);
-        /*System.out.println("查询意见:"+list);*/
         PrintWriter pw = response.getWriter();
         pw.print(JSONArray.toJSONString(list));
         pw.close();
@@ -260,7 +262,7 @@ public class Wtt_StudentController {
         studentService.update(feedbackVo);
         //新增意见
         studentService.add(collect_opinionsVo);
-        /*request.setAttribute("ids",id);*/
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"新增了id为"+id+"的意见，意见是:"+collect_opinionsVo.getContent());
         return "redirect:/student/questionPage";
     }
 
@@ -294,15 +296,19 @@ public class Wtt_StudentController {
 
     //新增班级类别
     @RequestMapping(value = "/addcate")
-    public String addcate(ClassCategoryVo classCategoryVo){
+    public String addcate(ClassCategoryVo classCategoryVo,HttpSession session){
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
         studentService.addcategory(classCategoryVo);
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"新增了班级类别,班级类别是:"+classCategoryVo.getClassTypeName());
         return "redirect:/student/classCategory";
     }
 
     //编辑班级类别
     @RequestMapping(value = "/updatecate")
-    public String updatecate(ClassCategoryVo classCategoryVo){
+    public String updatecate(ClassCategoryVo classCategoryVo,HttpSession session){
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
         studentService.updatecate(classCategoryVo);
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"修改了班级类别,修改为:"+classCategoryVo.getClassTypeName());
         return "redirect:/student/classCategory";
     }
 }

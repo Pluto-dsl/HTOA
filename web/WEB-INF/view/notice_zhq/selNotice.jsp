@@ -69,8 +69,8 @@
         var form = layui.form;
         var laydate = layui.laydate;
         var layedit =layui.layedit;
-        layedit.build('TT'); //建立编辑器
-        layedit.build('TT2'); //建立编辑器
+
+
         //执行渲染
         table.render({
             elem: '#demo', //指定原始表格元素选择器（推荐id选择器）
@@ -144,6 +144,7 @@
                     shadeClose: true, //开启遮罩关闭
                     content: ['${pageContext.request.contextPath}/zhq/updateeNotice?noticeId='+data.noticeId]
                 });
+                layedit.build('TT2'); //建立编辑器
             }else if(obj.event==='detail'){//查看公告
                 $.ajax({
                     url: '${pageContext.request.contextPath}/zhq/updateType',
@@ -217,6 +218,7 @@
                 shadeClose: true, //开启遮罩关闭
                 content: $('#windows')
             });
+            layedit.build('TT'); //建立编辑器
         })
 
     })
