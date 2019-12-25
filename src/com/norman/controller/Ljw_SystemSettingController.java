@@ -2,6 +2,8 @@ package com.norman.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.norman.service.Ljw_sysSetService;
+import com.publics.service.LoggingService;
+import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.studentModel.MajorVo;
 import com.publics.vo.studentModel.TermVo;
 import com.publics.vo.sys.DeptVo;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -20,6 +24,9 @@ import java.io.PrintWriter;
 public class Ljw_SystemSettingController {
     @Resource
     private Ljw_sysSetService service;
+
+    @Resource
+    private LoggingService loggingService;
 
     @RequestMapping("/toNo")
     public String toNo(){
@@ -47,12 +54,16 @@ public class Ljw_SystemSettingController {
     * */
 
     @RequestMapping(value = "/newDept")
-    public String newDept(Integer deptIds,DeptVo vo){
+    public String newDept(HttpServletRequest request,Integer deptIds, DeptVo vo){
+        HttpSession session = request.getSession();
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
         if (deptIds != null && deptIds != 0){
             vo.setDeptid(deptIds);
             service.updDept(vo);
+            loggingService.addLog(empVo.getEmpId(),"更新了一条院系数据");
         }else {
             service.insDept(vo);
+            loggingService.addLog(empVo.getEmpId(),"添加了一条院系数据");
         }
         return "redirect:/sysSet/toDeptList";
     }
@@ -75,9 +86,13 @@ public class Ljw_SystemSettingController {
 
     @ResponseBody
     @RequestMapping(value = "/delDept")
-    public void delDept(HttpServletResponse response,int id) throws IOException {
-         //System.out.println("delDept");
+    public void delDept(HttpServletRequest request,HttpServletResponse response,int id) throws IOException {
+        HttpSession session = request.getSession();
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
         String result = service.delDept(id);
+        if (!"isUsed".equals(result)){
+            loggingService.addLog(empVo.getEmpId(),"刪除了一条院系数据");
+        }
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();
         out.print(result);
@@ -106,20 +121,29 @@ public class Ljw_SystemSettingController {
     }
 
     @RequestMapping(value = "/newMajor")
-    public String newMajor(Integer majorids, MajorVo vo){
+    public String newMajor(HttpServletRequest request,Integer majorids, MajorVo vo){
+        HttpSession session = request.getSession();
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
         if (majorids != null && majorids != 0){
             vo.setMajorid(majorids);
             service.updMajor(vo);
+            loggingService.addLog(empVo.getEmpId(),"修改了一条专业数据");
         }else {
             service.insMajor(vo);
+            loggingService.addLog(empVo.getEmpId(),"添加了一条专业数据");
         }
         return "redirect:/sysSet/toMajorPage";
     }
 
     @ResponseBody
     @RequestMapping(value = "/delMajor")
-    public void delMajor(HttpServletResponse response,int id) throws IOException {
+    public void delMajor(HttpServletRequest request,HttpServletResponse response,int id) throws IOException {
+        HttpSession session = request.getSession();
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
         String result = service.delMajor(id);
+        if (!"isUsed".equals(result)){
+            loggingService.addLog(empVo.getEmpId(),"删除了一条专业数据");
+        }
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();
         out.print(result);
@@ -131,12 +155,16 @@ public class Ljw_SystemSettingController {
     * 学期设置
     * */
     @RequestMapping(value = "/newTerm")
-    public String newTerm(Integer termIds, TermVo vo){
+    public String newTerm(HttpServletRequest request,Integer termIds, TermVo vo){
+        HttpSession session = request.getSession();
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
         if (termIds != null && termIds != 0){
             vo.setTermid(termIds);
             service.updTerm(vo);
+            loggingService.addLog(empVo.getEmpId(),"修改了一条学期数据");
         }else {
             service.insTerm(vo);
+            loggingService.addLog(empVo.getEmpId(),"添加了一条学期数据");
         }
         return "redirect:/sysSet/toTermPage";
     }
@@ -158,8 +186,13 @@ public class Ljw_SystemSettingController {
 
     @ResponseBody
     @RequestMapping(value = "/delTerm")
-    public void delTerm(HttpServletResponse response,int id) throws IOException {
+    public void delTerm(HttpServletRequest request,HttpServletResponse response,int id) throws IOException {
+        HttpSession session = request.getSession();
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
         String result = service.delTerm(id);
+        if (!"isUsed".equals(result)){
+            loggingService.addLog(empVo.getEmpId(),"删除了一条学期数据");
+        }
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();
         out.print(result);

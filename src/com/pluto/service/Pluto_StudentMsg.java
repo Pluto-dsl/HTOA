@@ -42,6 +42,9 @@ public interface Pluto_StudentMsg {
     Object getObjById(Class cla,int id);//根据id获取对象
     String seekStuList(HttpServletRequest request);//根据查询学生列表
 
+
+    void deleteScore(int stuid); //根据id删除学生成绩
+    void deleteReplyScore(int stuid); //根据id删除学生答辩成绩
     //查询员工，暂时
     EmpVo getemp(int id);
 }

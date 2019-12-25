@@ -34,6 +34,7 @@ public class EnrollmentVo {
     private String reviewer;        //审核人
     private Date reviewerTime;      //审核时间
     private int majorId;        //关联专业id
+    private String isClass; //分班
 
     @Override
     public String toString() {
@@ -64,6 +65,7 @@ public class EnrollmentVo {
                 ", reviewer='" + reviewer + '\'' +
                 ", reviewerTime=" + reviewerTime +
                 ", majorId=" + majorId +
+                ", isClass='" + isClass + '\'' +
                 '}';
     }
 
@@ -273,5 +275,13 @@ public class EnrollmentVo {
 
     public void setMajorId(int majorId) {
         this.majorId = majorId;
+    }
+
+    public String getIsClass() {
+        return isClass;
+    }
+
+    public void setIsClass(String isClass) {
+        this.isClass = isClass;
     }
 }

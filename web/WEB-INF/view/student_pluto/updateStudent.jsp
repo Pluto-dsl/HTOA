@@ -478,12 +478,13 @@
                     data:data.field,
                     success: function(data){
                         document.getElementById("form1").reset();
+
                     }
                 });
                 window.parent.location.reload();
                 var index = parent.layer.getFrameIndex(window.name);
                 parent.layer.close(index);//关闭当前页
-                return false;
+                // return false;
             })
         })
     </script>

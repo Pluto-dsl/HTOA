@@ -64,7 +64,7 @@
             </tr>
             <tr>
                 <td align="center" colspan="4">
-                    <button lay-submit lay-filter="Asubmit" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
+                    <button lay-submit lay-filter="Esubmit" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
                 </td>
             </tr>
         </table>
@@ -119,7 +119,7 @@
             var data = obj.data;
             var checkStatus = table.checkStatus('AssList');
 
-            $("#editfrom")[0].reset();
+            $("#addfrom")[0].reset();
             layui.form.render();
             if(obj.event === 'addBtn'){
                 //动态生成下拉框
@@ -133,7 +133,7 @@
                 layui.form.render();
                 layer.open({
                     type: 1,
-                    title:'新增课程',
+                    title:'新增指标',
                     skin: 'layui-layer-demo', //样式类名
                     closeBtn: 1, //不显示关闭按钮
                     area: ['700px', '450px'],
@@ -217,7 +217,7 @@
                     shadeClose: false, //开启遮罩关闭
                     content: $('#editWin'),
                     cancel: function(index, layero) {
-                        $("#addfrom")[0].reset();
+                        $("#editfrom")[0].reset();
                         layui.form.render();
                         layer.close(index);
                         table.reload('AssList');
@@ -238,7 +238,7 @@
             }
         });
         //编辑
-        form.on('submit(editfrom)',function (data) {
+        form.on('submit(Esubmit)',function (data) {
             $.post('${pageContext.request.contextPath}/jack/editAss',data.field,function (d) {
             },"json");
             table.reload('AssList');

@@ -295,18 +295,17 @@ public class Jack_Evaluation {
         int Notice = service.selUnreadCountemp(emp.getEmpId());
         //员工数量--------------------------------------------------------------------------------------
         //通过办理人查询任务集合
-
         List<Task> mytask = taskService.createTaskQuery().taskAssignee(emp.getEmpId()+"").list();
         List<Map> holidays = new ArrayList<>();
         for(Task task: mytask){
             //根据任务id取得单据id
             Object sid = taskService.getVariable(task.getId(),"holiday");
             if(sid==null){
-                sid="0";
+                sid ="0";
             }
             //如果有任务进入判断里面
             if(zero_service.mytask(Integer.parseInt((sid.toString()))).size()>0){
-                Map m = (Map) zero_service.mytask(Integer.parseInt((sid+""))).get(0);
+                Map m = (Map) zero_service.mytask(Integer.parseInt((sid.toString()))).get(0);
                 //任务Id
                 m.put("taskid",task.getId());
                 //流程实例id
@@ -324,8 +323,8 @@ public class Jack_Evaluation {
                 sid="0";
             }
             //如果有任务进入判断里面
-            if(studentService.studentleave(Integer.parseInt((sid.toString()))).size()>0){
-                Map maps = (Map) studentService.studentleave(Integer.parseInt((sid+""))).get(0);
+            if(studentService.studentleave(Integer.parseInt((sid+""))).size()>0){
+                Map maps = (Map) studentService.studentleave(Integer.parseInt((sid.toString()))).get(0);
                 //任务Id
                 maps.put("taskid",task.getId());
                 //流程实例id

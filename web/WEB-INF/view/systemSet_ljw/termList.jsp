@@ -18,13 +18,13 @@
 </head>
 <body>
 <div id="windows" style="margin-left: 1%;display: none;">
-    <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/sysSet/newTerm" method="post" onclick="selMyForm()">
+    <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/sysSet/newTerm" method="post"  onsubmit="layer.load(0, {shade: false})">
         <br><br>
         <input type="hidden" name="termIds">
         <div class="layui-form-item">
             <label class="layui-form-label">学期名称</label>
             <div class="layui-input-block" style="width: 515px">
-                <input type="text" name="termName" lay-verify="title" autocomplete="off" placeholder="请输入学期名称" class="layui-input">
+                <input type="text" name="termName" lay-verify="required" autocomplete="off" placeholder="请输入学期名称" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -46,7 +46,7 @@
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="newTerm">新增学期</button>
+        <button class="layui-btn layui-btn-sm" lay-event="newTerm"><i class="layui-icon layui-icon-add-1"></i>新增学期</button>
     </div>
 </script>
 <script type="text/html" id="barDemo">
@@ -55,8 +55,9 @@
 </script>
 </body>
 <script>
-    layui.use('table', function(){
+    layui.use(['table','form'], function(){
         var table = layui.table;
+        var form = layui.form;
         table.render({
             elem: '#termList'
             ,url:'${pageContext.request.contextPath}/sysSet/getTermData'
@@ -142,9 +143,12 @@
 <script>
     //删除学期的方法
     function delTerm(obj,id) {
+        console.log(id);
+        var index = layer.load(0, {shade: false});
         var data = {id:id};
-        $.post("${pageContext.request.contextPath}/sysSet/delMajor",data,function (data) {
+        $.post("${pageContext.request.contextPath}/sysSet/delTerm",data,function (data) {
             console.log(data);
+            layer.close(index);
             if("isUsed" === data){
                 layer.msg('删除失败，该专业正在被使用');
             }else {
