@@ -85,11 +85,14 @@ public class Zero_EmpController {
         int flag=0;
         int depI = empService.selDep(empName,depName);//查部门
         int stuClassI = empService.selStudentClass(empId);//查询班级中的职务
-
+        int stuRepLyI = empService.selStuRepScore(empId);//查询答辩成绩
         if(depI>0){
             flag+=1;
         }
         if(stuClassI >0){
+            flag+=1;
+        }
+        if(stuRepLyI>0){
             flag+=1;
         }
         if(flag>0){

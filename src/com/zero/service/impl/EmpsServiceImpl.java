@@ -78,6 +78,11 @@ public class EmpsServiceImpl extends BaseDao implements EmpsService {
     }
 
     @Override
+    public int selStuRepScore(int empId) {
+       return selTotalRow("select count(*) jl from studentReplyScore where empId= "+empId);
+    }
+
+    @Override
     public void deleteWeekLog(int empId) {
         super.executeSQL("delete from weeklog where Empid ="+empId+"");
     }
