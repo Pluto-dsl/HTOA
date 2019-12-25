@@ -22,7 +22,7 @@ public class EmpActivitiImpl extends BaseDao implements EmpActivitiService {
         JSONObject json = new JSONObject();
         json.put("code",0);
         json.put("msg","员工请假表");
-        json.put("count",1);
+        json.put("count",list.size());
         json.put("data",list);
         return json.toJSONString();
     }

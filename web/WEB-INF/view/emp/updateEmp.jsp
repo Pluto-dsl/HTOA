@@ -26,48 +26,53 @@
                 <input name="empId" type="hidden" value="${emp.empId}"/>
                 <input name="status" type="hidden" value="${emp.status}"/>
                 <td align="right">员工姓名:</td>
-                <td align="left"><input class="layui-input" lay-verify="required"  id="empName" name="empName" placeholder="请输入员工姓名"
-                                        value="${emp.empName}" style="width:200px;"></td>
+                <td align="left"><input maxlength="10" class="layui-input" lay-verify="required"  id="empName" name="empName" placeholder="请输入员工姓名"
+                                        value="${emp.empName}" style="width:200px;float: left" οnkeyup="value=value.replace(/[\W]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"><font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font></td>
                 <td align="right">部门名称:</td>
                 <td align="left">
-                    <select id="depId" name="depId" lay-verify="required" style="width:205px;">
+                    <select id="depId" name="depId" lay-verify="required" style="float: left;width:50px;">
                         <c:forEach var="d" items="${dep}">
                             <option <c:if test="${emp.depName == d.depName}">selected="selected"</c:if> value="${d.depid}">${d.depName}</option>
                         </c:forEach>
                     </select>
+                    <font style="color: red;margin-left: 15.3%;margin-top: -30px;position: absolute;">&nbsp;*必填</font>
                 </td>
             </tr>
             <tr  style="height: 40px">
                 <td align="right">职务名称:</td>
                 <td align="left">
-                    <input  type="text" class="layui-input" lay-verify="required" name="postName" id="postName" value="${emp.postName}" placeholder="请输入职务名称" style="width:200px;">
+                    <input maxlength="20" type="text" class="layui-input" lay-verify="required" name="postName" id="postName" value="${emp.postName}" placeholder="请输入职务名称" style="float: left;width:200px;">
+                    <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
                 </td>
                 <td align="right">家庭地址:</td>
                 <td align="left">
-                    <input type="text"  class="layui-input" lay-verify="required" name="address" id="address" value="${emp.Address}" placeholder="请输入家庭地址"  style="width:200px;">
+                    <input type="text" maxlength="30" class="layui-input" lay-verify="required" name="address" id="address" value="${emp.Address}" placeholder="请输入家庭地址"  style="float: left;width:200px;">
+                    <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
                 </td>
             </tr>
             <tr style="height: 40px">
                 <td align="right">性别:</td>
                 <td align="left">
                     <input type="radio" name="sex" value="男" title="男" <c:if test="${emp.Sex=='男'}">checked</c:if> />
-                        <input type="radio" name="sex" value="女" title="女" <c:if test="${emp.Sex=='女'}">checked</c:if>/>
+                    <input type="radio" name="sex" value="女" title="女" <c:if test="${emp.Sex=='女'}">checked</c:if>/>
                 </td>
                 <td align="right">身份证号:</td>
                 <td align="left">
-                    <input lay-verify="required|identity" type="text" class="layui-input" id="Cardno"  name="Cardno" value="${emp.Cardno}" placeholder="请输入身份证号" style="width:200px;">
+                    <input lay-verify="required|identity" type="text" class="layui-input" id="Cardno"  name="Cardno" value="${emp.Cardno}" placeholder="请输入身份证号" style="float: left;width:200px;">
+                    <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
                 </td>
             </tr>
 
             <tr style="height: 40px">
                 <td align="right">出生日期:</td>
                 <td align="left">
-                    <input autocomplete="off" type="text" required class="layui-input" id="birthday" name="birthday" value="${emp.Birthday}"  style="width:200px;">
+                    <input autocomplete="off" type="text" required class="layui-input" id="birthday" name="birthday" value="${emp.Birthday}"  style="float: left;width:200px;">
                     <%--<input class="layui-input" type="button"  onclick="hqbirthday();" value="获取日期" style="height: 33px;width: 60px;">--%>
+                    <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
                 </td>
                 <td align="right">籍贯:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="nation" name="nation" value="${emp.nation}"   style="width:200px;">
+                    <input maxlength="20" class="layui-input" type="text" id="nation" name="nation" value="${emp.nation}"   style="width:200px;">
                     <%--<input class="layui-input" type="button"  onclick="addcity();" value="选择籍贯" style="height: 33px;width: 60px;">--%>
                 </td>
             </tr>
@@ -75,18 +80,19 @@
             <tr style="height: 40px">
                 <td align="right">手机号码:</td>
                 <td align="left">
-                    <input lay-verify="required" class="layui-input" type="text" id="phone" name="phone" value="${emp.Phone}" placeholder="请输入手机号"  style="width:200px;">
+                    <input lay-verify="required" class="layui-input" type="text" id="phone" name="phone" value="${emp.Phone}" placeholder="请输入手机号"  style="float: left;width:200px;">
+                    <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
                 </td>
                 <td align="right">QQ号码:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="QQcode"  name="QQcode" value="${emp.QQcode}" placeholder="请输入QQ号码" style="width:200px;">
+                    <input class="layui-input" maxlength="12" onkeyup="value=value.replace(/\D/g,'')" onafterpaste="value=value.replace(/\D/g,'')" type="text" id="QQcode"  name="QQcode" value="${emp.QQcode}" placeholder="请输入QQ号码" style="width:200px;">
                 </td>
             </tr>
 
             <tr style="height: 40px">
                 <td align="right">微信号码:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="weixin" name="weixin" value="${emp.Weixin}" placeholder="请输入微信号码"  style="width:200px;">
+                    <input class="layui-input" maxlength="20" type="text" id="weixin" name="weixin" value="${emp.Weixin}" placeholder="请输入微信号码"  style="width:200px;">
                 </td>
                 <td align="right">邮箱地址:</td>
                 <td align="left">
@@ -107,14 +113,15 @@
                 </td>
                 <td align="right">毕业学校:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="university"  name="university" value="${emp.University}" placeholder="请输入毕业学校" style="width:200px;">
+                    <input class="layui-input" maxlength="20" type="text" id="university"  name="university" value="${emp.University}" placeholder="请输入毕业学校" style="width:200px;">
                 </td>
             </tr>
 
             <tr style="height: 40px">
                 <td align="right">入职日期:</td>
                 <td align="left">
-                    <input autocomplete="off" type="text" required class="layui-input" value="${emp.fireDay}" name="fireDay" id="joindate" style="width:200px;"/>
+                    <input placeholder="请选择入职日期" autocomplete="off" type="text"  lay-verify="required|date" class="layui-input" value="${emp.fireDay}" name="fireDay" id="joindate" style="float: left;width:200px;"/>
+                    <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
                 </td>
                 <td align="right">学历:</td>
                 <td align="left">
@@ -132,18 +139,18 @@
             <tr style="height: 40px">
                 <td align="right">开户银行:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="bank"  name="bank" value="${emp.Bank}" placeholder="请输入开户银行" style="width:200px;">
+                    <input maxlength="10" class="layui-input" type="text" id="bank"  name="bank" value="${emp.Bank}" placeholder="请输入开户银行" style="width:200px;">
                 </td>
                 <td align="right">账户名称:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="accountName"  name="accountName" value="${emp.accountName}" placeholder="请输入账户名称" style="width:200px;">
+                    <input class="layui-input" maxlength="10" type="text" id="accountName"  name="accountName" value="${emp.accountName}" placeholder="请输入账户名称" style="width:200px;">
                 </td>
             </tr>
 
             <tr style="height: 40px">
                 <td align="right">银行账号:</td>
                 <td align="left">
-                    <input class="layui-input"  type="text" id="bankNumber"  name="bankNumber" value="${emp.bankNumber}" placeholder="请输入银行账号" style="width:200px;">
+                    <input class="layui-input" maxlength="19"   onkeyup="value=value.replace(/\D/g,'')" onafterpaste="value=value.replace(/\D/g,'')"  type="text" id="bankNumber"  name="bankNumber" value="${emp.bankNumber}" placeholder="请输入银行账号" style="width:200px;">
                 </td>
                 <td align="right">支付宝号:</td>
                 <td align="left">
@@ -166,7 +173,7 @@
             <tr style="height: 40px">
                 <td align="right">说明:</td>
                 <td align="left" colspan="3">
-                    <textarea name="remark"  placeholder="请输入说明" class="layui-textarea"style="width:500px; height: 60px;" >${emp.Remark}</textarea>
+                    <textarea maxlength="20" name="remark"  placeholder="请输入说明" class="layui-textarea"style="width:500px; height: 60px;" >${emp.Remark}</textarea>
                 </td>
             </tr>
             <tr style="height:90px">
@@ -187,7 +194,6 @@
         </table>
     </form>
 </center>
-
 </body>
 <script>
     //加载表单控件

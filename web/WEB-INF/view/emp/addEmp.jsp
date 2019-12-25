@@ -24,25 +24,30 @@
         <table style="height: 370px;width: 800px;margin-top: 10px;border-collapse:separate; border-spacing:10px;" border="0" >
             <tr style="height: 40px">
                 <td align="right">员工姓名:</td>
-                <td align="left"><input class="layui-input" lay-verify="required"  id="empName" name="empName" placeholder="请输入员工姓名"
-                                        value="" style="width:200px;"></td>
+                <td align="left"><input maxlength="10" autocomplete="off" class="layui-input" lay-verify="required"  id="empName" name="empName" placeholder="请输入员工姓名"
+                                        value="" styl0e="float: left;width:200px;"  οnkeyup="value=value.replace(/[\W]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+                    <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
+                </td>
                 <td align="right">部门名称:</td>
                 <td align="left">
-                    <select id="depId" name="depId" lay-verify="required" style="width:50px;">
+                    <select id="depId" name="depId" lay-verify="required" style="float: left;width:50px;">
                         <c:forEach var="d" items="${dep}">
                             <option value="${d.depid}">${d.depName}</option>
                         </c:forEach>
                     </select>
+                    <font style="color: red;margin-left: 15.3%;margin-top: -30px;position: absolute;">&nbsp;*必填</font>
                 </td>
             </tr>
             <tr  style="height: 40px">
                 <td align="right">职务名称:</td>
                 <td align="left">
-                    <input  type="text" class="layui-input" lay-verify="required" name="postName" id="postName" value="" placeholder="请输入职务名称" style="width:200px;">
+                    <input maxlength="20" type="text" autocomplete="off" class="layui-input" lay-verify="required" name="postName" id="postName" value="" placeholder="请输入职务名称" style="float: left;width:200px;">
+                    <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
                 </td>
                 <td align="right">家庭地址:</td>
                 <td align="left">
-                    <input type="text"  class="layui-input" lay-verify="required" name="address" id="address" value="" placeholder="请输入家庭地址"  style="width:200px;">
+                    <input type="text" maxlength="20"  class="layui-input" lay-verify="required" name="address" id="address" value="" placeholder="请输入家庭地址"  style="float: left;width:200px;">
+                    <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
                 </td>
             </tr>
             <tr style="height: 40px">
@@ -53,41 +58,44 @@
                 </td>
                 <td align="right">身份证号:</td>
                 <td align="left">
-                    <input lay-verify="required|identity" type="text" class="layui-input" id="cardNo"  name="cardNo" value=""placeholder="请输入身份证号" style="width:200px;">
+                    <input lay-verify="required|identity" type="text" class="layui-input" id="cardNo"  name="cardNo" value=""placeholder="请输入身份证号" style="float: left;width:200px;">
+                    <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
                 </td>
             </tr>
 
             <tr style="height: 40px">
                 <td align="right">出生日期:</td>
                 <td align="left">
-                    <input autocomplete="off" lay-verify="required|date" class="layui-input" type="text" id="birthday" name="birthday" value=""   style="width:200px;">
+                    <input autocomplete="off" lay-verify="required|date" class="layui-input" type="text" id="birthday" name="birthday" value="" placeholder="请选择出生日期"  style="float: left;width:200px;">
                     <%--<input class="layui-input" type="button"  onclick="hqbirthday();" value="获取日期" style="height: 33px;width: 60px;">--%>
+                    <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
                 </td>
                 <td align="right">籍贯:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="nation" name="nation" value=""   style="width:200px;">
+                    <input maxlength="20" class="layui-input" type="text" id="nation" name="nation" value=""   style="width:200px;">
                 </td>
             </tr>
 
             <tr style="height: 40px">
                 <td align="right">手机号码:</td>
                 <td align="left">
-                    <input lay-verify="required|phone" class="layui-input" type="text" id="phone" name="phone" value="" placeholder="请输入手机号"  style="width:200px;">
+                    <input lay-verify="required|phone" class="layui-input" type="text" id="phone" name="phone" value="" placeholder="请输入手机号"  style="float: left;width:200px;">
+                    <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
                 </td>
                 <td align="right">QQ号码:</td>
                 <td align="left">
-                    <input class="layui-input" lay-verify="number" type="text" id="qqCode"  name="qqCode" value=""placeholder="请输入QQ号码" style="width:200px;">
+                    <input class="layui-input" maxlength="13" onkeyup="value=value.replace(/\D/g,'')" onafterpaste="value=value.replace(/\D/g,'')" type="text" id="qqCode"  name="qqCode" value=""placeholder="请输入QQ号码" style="width:200px;">
                 </td>
             </tr>
 
             <tr style="height: 40px">
                 <td align="right">微信号码:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="weixin" name="weixin" value="" placeholder="请输入微信号码"  style="width:200px;">
+                    <input class="layui-input" maxlength="20" type="text" id="weixin" name="weixin" value="" placeholder="请输入微信号码"  style="width:200px;">
                 </td>
                 <td align="right">邮箱地址:</td>
                 <td align="left">
-                    <input class="layui-input" lay-verify="email" type="text" id="email"  name="email" value="" placeholder="请输入邮箱地址" style="width:200px;">
+                    <input maxlength="20" class="layui-input" lay-verify="email" type="text" id="email"  name="email" value="" placeholder="请输入邮箱地址" style="width:200px;">
                 </td>
             </tr>
 
@@ -104,14 +112,15 @@
                 </td>
                 <td align="right">毕业学校:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="university"  name="university" value=""placeholder="请输入毕业学校" style="width:200px;">
+                    <input maxlength="20" class="layui-input" type="text" id="university"  name="university" value=""placeholder="请输入毕业学校" style="width:200px;">
                 </td>
             </tr>
 
             <tr style="height: 40px">
                 <td align="right">入职日期:</td>
                 <td align="left">
-                    <input autocomplete="off" type="text"  required class="layui-input" id="joindate" style="width: 200px">
+                    <input placeholder="请输选择入职日期" autocomplete="off" type="text"  lay-verify="required" class="layui-input" id="joindate" style="float: left;width: 200px">
+                    <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
                 </td>
                 <td align="right">学历:</td>
                 <td align="left">
@@ -129,29 +138,29 @@
             <tr style="height: 40px">
                 <td align="right">开户银行:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="bank"  name="bank" value="" placeholder="请输入开户银行" style="width:200px;">
+                    <input maxlength="20" class="layui-input" type="text" id="bank"  name="bank" value="" placeholder="请输入开户银行" style="width:200px;">
                 </td>
                 <td align="right">账户名称:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="accountName"  name="accountName" value="" placeholder="请输入账户名称" style="width:200px;">
+                    <input maxlength="20" class="layui-input" type="text" id="accountName"  name="accountName" value="" placeholder="请输入账户名称" style="width:200px;">
                 </td>
             </tr>
 
             <tr style="height: 40px">
                 <td align="right">银行账号:</td>
                 <td align="left">
-                    <input class="layui-input"  type="text" id="bankNumber"  name="bankNumber" value="" placeholder="请输入银行账号" style="width:200px;">
+                    <input maxlength="20" class="layui-input"  onkeyup="value=value.replace(/\D/g,'')" onafterpaste="value=value.replace(/\D/g,'')" type="text" id="bankNumber"  name="bankNumber" value="" placeholder="请输入银行账号" style="width:200px;">
                 </td>
                 <td align="right">支付宝号:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="alipay"  name="alipay" value="" placeholder="请输入支付宝账号" style="width:200px;">
+                    <input maxlength="20" class="layui-input" type="text" id="alipay"  name="alipay" value="" placeholder="请输入支付宝账号" style="width:200px;">
                 </td>
             </tr>
 
             <tr style="height: 40px">
                 <td align="right">专业:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="major"  name="major" value=""placeholder="请输入专业" style="width:200px;">
+                    <input maxlength="20" class="layui-input" type="text" id="major"  name="major" value=""placeholder="请输入专业" style="width:200px;">
                 </td>
                 <td align="right">登录密码:</td>
                 <td align="left">
@@ -162,7 +171,7 @@
             <tr style="height: 40px">
                 <td align="right">说明:</td>
                 <td align="left" colspan="3">
-                    <textarea name="remark"  placeholder="请输入说明" class="layui-textarea"style="width:500px; height: 60px;"></textarea>
+                    <textarea maxlength="100" name="remark"  placeholder="请输入说明" class="layui-textarea"style="width:500px; height: 60px;"></textarea>
                 </td>
             </tr>
             <tr style="height:90px">
