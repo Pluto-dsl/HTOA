@@ -97,11 +97,11 @@
                         班级编号:
                     </td>
                     <td>
-                        <input class="layui-input" id="classno" type="text" name="classno" required lay-verify="required"  onkeyup="value=value.replace(/\D/g,'')" onafterpaste="value=value.replace(/\D/g,'')"/>
+                        <input placeholder="请输入班级编号" maxlength="10" class="layui-input" id="classno" type="text" name="classno"  lay-verify="required"  onkeyup="value=value.replace(/\D/g,'')" onafterpaste="value=value.replace(/\D/g,'')"/>
                     </td>
                     <td>班级名称:</td>
                     <td>
-                        <input class="layui-input" id="className" type="text" name="className" required lay-verify="required"/>
+                        <input placeholder="请输入班级名称" maxlength="20" autocomplete="off" class="layui-input" id="className" type="text" name="className"  lay-verify="required" οnkeyup="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5]/g,'')" οnpaste="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5]/g,'')" oncontextmenu = "value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5]/g,'')"/>
                     </td>
                 </tr>
                 <tr>

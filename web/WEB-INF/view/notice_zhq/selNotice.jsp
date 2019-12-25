@@ -24,7 +24,7 @@
             <div class="layui-form-item" style="width: 500px;">
                 <label class="layui-form-label">标题</label>
                 <div class="layui-input-block">
-                    <input type="text" name="title" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+                    <input type="text" name="title" lay-verify="required" placeholder="请输入" maxlength="25" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -43,7 +43,6 @@
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button type="submit" class="layui-btn" lay-submit="" lay-filter="sub">发布</button>
-                    <button type="" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
         </form>
@@ -101,10 +100,6 @@
             ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
 
-        $("").on('click',function () {
-            alert("dfdf");
-        })
-
         table.on('tool(test)',function (obj) {
             var data = obj.data;
             console.log(data);
@@ -141,7 +136,7 @@
                     area: ['700px', '550px'],
                     fixed: false, //不固定
                     maxmin: true,
-                    shadeClose: true, //开启遮罩关闭
+                    shadeClose: false, //开启遮罩关闭
                     content: ['${pageContext.request.contextPath}/zhq/updateeNotice?noticeId='+data.noticeId]
                 });
                 layedit.build('TT2'); //建立编辑器
@@ -162,7 +157,7 @@
                     area: ['700px', '550px'],
                     fixed: false, //不固定
                     maxmin: true,
-                    shadeClose: true, //开启遮罩关闭
+                    shadeClose: false, //开启遮罩关闭
                     content: ['${pageContext.request.contextPath}/zhq/LookNotice?noticeId='+data.noticeId],
                     cancel: function(index, layero){
                         layer.close(index);
@@ -199,7 +194,7 @@
                     area: ['800','400'],
                     fixed: false, //不固定
                     maxmin: true,
-                    shadeClose: true, //开启遮罩关闭
+                    shadeClose: false, //开启遮罩关闭
                     content: $('#windows2')
                 })
             }
@@ -215,7 +210,7 @@
                 area: ['700px', '550px'],
                 fixed: false, //不固定
                 maxmin: true,
-                shadeClose: true, //开启遮罩关闭
+                shadeClose: false, //开启遮罩关闭
                 content: $('#windows')
             });
             layedit.build('TT'); //建立编辑器

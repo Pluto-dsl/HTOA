@@ -85,9 +85,8 @@ public class Zhq_NoticeController {
 
         int empCount = zhq_noticeService.selEmpCount();//查询员工总条数
         int stuCount = zhq_noticeService.selStuCount();//查询学生总条数
-
         if(noticeVo.getNoticeType() ==3){//所有人
-           int all = empCount+stuCount;
+           int all = (empCount-1)+stuCount;
            noticeVo.setFalseContent(all-1);//未读
            zhq_noticeService.addNotice(noticeVo);
 
@@ -128,7 +127,7 @@ public class Zhq_NoticeController {
             }
 
         }else if(noticeVo.getNoticeType() ==2){//学生
-            noticeVo.setFalseContent(stuCount-1);//未读
+            noticeVo.setFalseContent(stuCount);//未读
             zhq_noticeService.addNotice(noticeVo);
 
             for (StudentVo s:studentVoList){

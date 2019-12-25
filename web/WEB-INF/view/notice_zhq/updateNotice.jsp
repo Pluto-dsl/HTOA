@@ -34,12 +34,19 @@
         <div class="layui-form-item">
             <div class="layui-input-block">
                 <button type="submit" class="layui-btn" lay-submit lay-filter="sub">确定</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                <button type="button" class="layui-btn layui-btn-primary" onclick="qx()">取消</button>
             </div>
         </div>
     </form>
 </body>
 <script>
+    function qx() {
+        var index = parent.layer.getFrameIndex(window.name);
+        //关闭当前frame
+        parent.layer.close(index);
+        window.parent.location.reload(); //修改成功后刷新父界面
+    }
+
     layui.use([ 'element', 'table', 'layer', 'form' ,'laydate','layedit'],function() {
         var element = layui.element;
         var layer = layui.layer;
@@ -49,6 +56,7 @@
         var layedit =layui.layedit;
 
         var cor = layedit.build('demo'); //建立编辑器
+
 
 
         form.on('submit(sub)',function(data){

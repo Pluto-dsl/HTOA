@@ -19,14 +19,14 @@
 </head>
 <body>
 <div id="windows" style="margin-left: 1%;display: none;">
-    <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/sysSet/newMajor" method="post" lay-filter="MyForm">
+    <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/sysSet/newMajor" method="post" lay-filter="MyForm" onsubmit="layer.load(0, {shade: false})">
         <br><br>
         <input type="hidden" name="majorids">
         <div class="layui-form-item">
             <div class="layui-inline">
                 <label class="layui-form-label">专业名称</label>
                 <div class="layui-input-block">
-                    <input type="text" name="majorName" placeholder="请输入专业名称" autocomplete="off" class="layui-input">
+                    <input type="text" name="majorName" placeholder="请输入专业名称" autocomplete="off" class="layui-input" lay-verify="required">
                 </div>
             </div>
             <div class="layui-inline" style="margin-left: 15px;">
@@ -59,7 +59,7 @@
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="newMajor">新增专业</button>
+        <button class="layui-btn layui-btn-sm" lay-event="newMajor"><i class="layui-icon layui-icon-add-1"></i>新增专业</button>
     </div>
 </script>
 <script type="text/html" id="barDemo">
@@ -175,9 +175,11 @@
 <script>
     //删除专业的方法
     function delMajor(obj,id) {
+        var index = layer.load(0, {shade: false});
         var data = {id:id};
-        $.post("${pageContext.request.contextPath}/sysSet/delTerm",data,function (data) {
+        $.post("${pageContext.request.contextPath}/sysSet/delMajor",data,function (data) {
             console.log(data);
+            layer.close(index);
             if("isUsed" === data){
                 layer.msg('删除失败，该专业正在被使用');
             }else {

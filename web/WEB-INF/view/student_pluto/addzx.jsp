@@ -46,7 +46,7 @@
                     <label class="label-top">情况记录:</label>
                 </td>
                 <td colspan="3">
-                    <textarea placeholder="请输入内容" name="content" class="layui-textarea"></textarea>
+                    <textarea placeholder="请输入内容" name="content" class="layui-textarea" lay-verify="required"></textarea>
                 </td>
             </tr>
             <tr style="height: 40px">

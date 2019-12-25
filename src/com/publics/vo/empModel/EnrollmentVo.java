@@ -34,40 +34,8 @@ public class EnrollmentVo {
     private String reviewer;        //审核人
     private Date reviewerTime;      //审核时间
     private int majorId;        //关联专业id
-    private String isClass; //分班
+    private String isClass;//是否分班
 
-    @Override
-    public String toString() {
-        return "EnrollmentVo{" +
-                "enrollmentid=" + enrollmentid +
-                ", studName='" + studName + '\'' +
-                ", card='" + card + '\'' +
-                ", sex='" + sex + '\'' +
-                ", tell='" + tell + '\'' +
-                ", qq='" + qq + '\'' +
-                ", school='" + school + '\'' +
-                ", classes='" + classes + '\'' +
-                ", amount=" + amount +
-                ", computer='" + computer + '\'' +
-                ", testTime=" + testTime +
-                ", startTime=" + startTime +
-                ", signdate=" + signdate +
-                ", empid=" + empid +
-                ", status=" + status +
-                ", remark='" + remark + '\'' +
-                ", studType=" + studType +
-                ", paymentTime=" + paymentTime +
-                ", score=" + score +
-                ", enrollMoney=" + enrollMoney +
-                ", enrollMoneyTime=" + enrollMoneyTime +
-                ", reviewStatus=" + reviewStatus +
-                ", negativeName='" + negativeName + '\'' +
-                ", reviewer='" + reviewer + '\'' +
-                ", reviewerTime=" + reviewerTime +
-                ", majorId=" + majorId +
-                ", isClass='" + isClass + '\'' +
-                '}';
-    }
 
     public int getEnrollmentid() {
         return enrollmentid;
@@ -283,5 +251,38 @@ public class EnrollmentVo {
 
     public void setIsClass(String isClass) {
         this.isClass = isClass;
+    }
+
+    @Override
+    public String toString() {
+        return "EnrollmentVo{" +
+                "enrollmentid=" + enrollmentid +
+                ", studName='" + studName + '\'' +
+                ", card='" + card + '\'' +
+                ", sex='" + sex + '\'' +
+                ", tell='" + tell + '\'' +
+                ", qq='" + qq + '\'' +
+                ", school='" + school + '\'' +
+                ", classes='" + classes + '\'' +
+                ", amount=" + amount +
+                ", computer='" + computer + '\'' +
+                ", testTime=" + testTime +
+                ", startTime=" + startTime +
+                ", signdate=" + signdate +
+                ", empid=" + empid +
+                ", status=" + status +
+                ", remark='" + remark + '\'' +
+                ", studType=" + studType +
+                ", paymentTime=" + paymentTime +
+                ", score=" + score +
+                ", enrollMoney=" + enrollMoney +
+                ", enrollMoneyTime=" + enrollMoneyTime +
+                ", reviewStatus=" + reviewStatus +
+                ", negativeName='" + negativeName + '\'' +
+                ", reviewer='" + reviewer + '\'' +
+                ", reviewerTime=" + reviewerTime +
+                ", majorId=" + majorId +
+                ", isClass='" + isClass + '\'' +
+                '}';
     }
 }

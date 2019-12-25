@@ -45,7 +45,7 @@
             </td>
             <td colspan="3">
                 <input  name="familyname" value="" lay-verify="required" id="familyname" class="layui-input"
-                        style="width:290px;">
+                        style="width:290px;" lay-verify="required">
             </td>
         </tr>
         <tr style="height: 40px">
@@ -66,11 +66,10 @@
         <tr style="height: 40px">
             <td>
                 <label class="label-top">亲属号码:</label>
-
             </td>
             <td>
                 <input  name="familyhone" value="" id="familyhone" class="layui-input"
-                        style="width:290px;">
+                        style="width:290px;" lay-verify="required|phone">
             </td>
         </tr>
     <tr style="height: 40px">
@@ -84,8 +83,6 @@
     <script>
         layui.use(['laydate','form'], function() {
             var form = layui.form;
-
-
             form.on('submit(sub)', function(data){
                 var data = data.field;
 
@@ -103,6 +100,7 @@
                 window.parent.location.reload();
                 var index = parent.layer.getFrameIndex(window.name);
                 parent.layer.close(index);//关闭当前页
+
             })
         })
     </script>

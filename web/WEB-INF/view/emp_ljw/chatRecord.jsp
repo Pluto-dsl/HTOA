@@ -57,13 +57,13 @@
             </div>
         </td>
         <td>
-            <button class="layui-btn menu" id="btn">搜索</button>
+            <button class="layui-btn menu" id="btn"><i class="layui-icon layui-icon-search"></i>搜索</button>
         </td>
     </tr>
 </table>
 
 <div id="windows" style="margin-left: 5%;display: none;">
-    <form id="MyForm" style="width: 94%" class="layui-form" action="${pageContext.request.contextPath}/ljw/newChatRecord" method="post">
+    <form id="MyForm" style="width: 94%" class="layui-form" action="${pageContext.request.contextPath}/ljw/newChatRecord" method="post" onsubmit=" layer.load(0, {shade: false});">
         <br><br>
         <input id="chatId" type="hidden" name="chatIds">
         <div class="layui-form-item">
@@ -76,7 +76,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">输入地址</label>
                 <div class="layui-input-block">
-                    <input id="addr" type="text" name="addr" placeholder="请输入" autocomplete="off" class="layui-input">
+                    <input id="addr" type="text" name="addr" placeholder="请输入" autocomplete="off" class="layui-input" lay-verify="required">
                 </div>
             </div>
         </div>
@@ -90,13 +90,13 @@
                 </select>
             </div>
             <div style="margin: 5px;float: left;">
-                <i class="layui-icon layui-icon-help" style="font-size: 24px;color: #666;cursor: pointer;" onclick="layer.msg('如果没有学生数据，那是没有带班哦');"></i>
+                <i class="layui-icon layui-icon-help" style="font-size: 24px;color: #666;cursor: pointer;" onclick="layer.msg('如果这里没有学生数据，请检查是否带班');"></i>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">谈心内容</label>
             <div class="layui-input-block" style="width: 515px">
-                <textarea id="sayscon" name="sayscon" placeholder="在此输入谈心的内容" class="layui-textarea"></textarea>
+                <textarea id="sayscon" name="sayscon" placeholder="在此输入谈心的内容" class="layui-textarea" lay-verify="required"></textarea>
             </div>
         </div>
         <br>
@@ -112,8 +112,8 @@
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="newChatRecord">新增谈心记录</button>
-        <button class="layui-btn layui-btn-sm" lay-event="delChatRecordList">删除所选数据</button>
+        <button class="layui-btn layui-btn-sm" lay-event="newChatRecord"><i class="layui-icon layui-icon-add-1"></i>新增谈心记录</button>
+        <button class="layui-btn layui-btn-sm" lay-event="delChatRecordList"><i class="layui-icon layui-icon-delete"></i>删除所选数据</button>
     </div>
 </script>
 <script type="text/html" id="barDemo">
@@ -243,7 +243,7 @@
                 layer.confirm('是要删除这条记录吗', function(index){
                     obj.del();
                     layer.close(index);
-                    delChatRecord(obj.data.chatid)
+                    delChatRecord(obj.data.chatId)
                 });
             } else if(obj.event === 'edit'){
                 console.log(data);
@@ -303,9 +303,11 @@
 <script>
     //删除谈心记录的方法
     function delChatRecord(id) {
+        var index = layer.load(0, {shade: false});
         var data = {id:id};
         $.post("${pageContext.request.contextPath}/ljw/delChatRecord",data,function (data) {
-            console.log(data)
+            layer.close(index);
+            console.log(data);
         },"json");
     }
 </script>
