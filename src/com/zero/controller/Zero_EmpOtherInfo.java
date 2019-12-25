@@ -46,8 +46,10 @@ public class Zero_EmpOtherInfo {
     public String toemp(Model model, int empId) {//去员工资料页
         model.addAttribute("empId",empId);
         List<Map> empaduit =service.empaduit(empId);// 查询当前用户所有考核
-        int scores = (int)(empaduit.get(0)).get("Scores");//
-        model.addAttribute("scores",scores);
+        if(empaduit.size()>0){
+            int scores = (int)(empaduit.get(0)).get("Scores");
+            model.addAttribute("scores",scores);
+        }
         model.addAttribute("empaduit",empaduit);
         return "emp/empOtherInfo";
     }
