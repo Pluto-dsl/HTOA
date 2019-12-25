@@ -19,7 +19,6 @@
 </head>
 <body>
 <form class="layui-form" action="${pageContext.request.contextPath}/student/updateStu" id="form1" method="post">
-
         <table id="td" border="0" style="border-collapse:separate; border-spacing:20px;" align="center">
             <input type="hidden" name="Studid" id="stuId" value="${s.studid}"/>
             <input type="hidden" name="password" value="${s.password}"/>
@@ -159,7 +158,7 @@
                     <label class="label-top">修&nbsp;改&nbsp;宿&nbsp;舍:</label>
                 </td>
                 <td>
-                    <select class="layui-form-label" name="huor" id="hour" editable="false" value="1" ditable="false" style="width:290px;">
+                    <select class="layui-form-label" name="huor" id="huor" editable="false" value="1" ditable="false" style="width:290px;">
                         <c:forEach items="${ssList}" var="ss" >
                             <option value="${ss.hourid}" <c:if test="${s.huor == ss.hourid}">selected="selected"</c:if>>${ss.huorName}</option>
                         </c:forEach>
@@ -479,12 +478,13 @@
                     data:data.field,
                     success: function(data){
                         document.getElementById("form1").reset();
+
                     }
                 });
                 window.parent.location.reload();
                 var index = parent.layer.getFrameIndex(window.name);
                 parent.layer.close(index);//关闭当前页
-                return false;
+                // return false;
             })
         })
     </script>

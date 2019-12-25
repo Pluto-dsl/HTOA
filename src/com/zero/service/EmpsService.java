@@ -24,8 +24,11 @@ public interface EmpsService {
 
     int selDep(String name,String depName);//根据姓名和部门查询部门是否有职务
     int selStudentClass(int empId);//根据id查询班级表中的职务
+    int selStuRepScore(int empId);//根据id查询答辩成绩是否有职务
     void deleteWeekLog(int empId);//删除周报
     void deleteWeekArrange(int empId);//删除值班管理
     void deleteChatRecord(int empId);//删除谈心记录
     void deleteAssTotal(int empId);//删除考核
+
+
 }
