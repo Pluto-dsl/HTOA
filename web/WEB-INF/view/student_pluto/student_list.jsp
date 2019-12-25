@@ -393,7 +393,6 @@
                                     table.reload('test');
                                     layer.msg('设置成功！')
                                 },'text')
-
                                 layer.close(index);
                             });
                         }
