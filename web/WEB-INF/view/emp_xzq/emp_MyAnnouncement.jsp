@@ -19,9 +19,9 @@
             color: #949494;
             margin-top: 5px;
             width:60%;
-            word-wrap: break-word;
-            word-break: break-all;
-            overflow: hidden;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
             margin-left: 20px;
         }
         .layui-text h3 {
@@ -55,25 +55,13 @@
     </style>
 </head>
 <body>
-<div class="layui-card" style="display: none" >
-    <div class="layui-card-header">八卦新闻</div>
-
-    <div class="layui-card-body">
-        <div class="layui-carousel layadmin-carousel layadmin-dataview" data-anim="fade" lay-filter="LAY-index-pageone" lay-anim="fade" style="width: 100%; height: 280px;">
-            <div carousel-item="" id="LAY-index-pageone">
-                多福多寿犯得上
-            </div>
-        </div>
-
-    </div>
-</div>
 <%--公告部分--%>
 <div class="layui-row layui-col-space15" style="width:85%;margin: 10px 10px;">
     <div class="layui-col-md12">
         <div class="layui-card layadmin-serach-main" style="box-shadow: 4px 5px 12px 0px rgba(0, 0, 0, 0.21)">
             <div class="layui-card-header">
                 <p style="font-size: 22px;color: #333;text-indent: 0em;">
-                    <span style="color: red;">
+                    <span style="color:#2c0b44;">
                     <i style="font-size: 26px;" class="layui-icon layui-icon-speaker"></i>
                     公告
                     </span>
@@ -86,21 +74,21 @@
                 <ul class="layadmin-serach-list layui-text">
                     <c:forEach items="${list}" var="list">
                         <li class="readWin">
-                            <input type="hidden" class="noticeId" value="${list.noticeId}">
-                            <input type="hidden" class="isRead" value="${list.isRead}">
                             <div class="layui-serachlist-text">
-                                <h3 style="border-bottom: solid 1px #82828245;height: 25px;">
+                                <h3 class="top" style="border-bottom: solid 1px #82828245;height: 25px;">
                                     <span class="title" style="margin-left: 10px;">${list.title}</span>
                                     <c:if test="${list.isRead == 2}">
-                                        
                                         <i class="layui-icon layui-icon-notice" id="myTitle" style="margin-left:10px;"></i>
                                     </c:if>
-                                    <span style="float: right;font-size: 12px;margin-left: 10px;margin-right:10px;">${list.noticeTime}</span>
-                                    <span style="float: right;font-size: 12px;">${list.empid}</span>
+                                    <span class="noticeTime" style="float: right;font-size: 12px;margin-left: 10px;margin-right:10px;">${list.noticeTime}</span>
+                                    <span class="empName" style="float: right;font-size: 12px;">${list.empid}</span>
                                 </h3>
                                 <div class="content">
                                         ${list.content}
                                 </div>
+                                <input type="hidden" class="noticeId" value="${list.noticeId}">
+                                <input type="hidden" class="isRead" value="${list.isRead}">
+                                <button type="button" style="float: right;margin-top: -40px;background-color: #553bbc;" class="layui-btn layui-btn-sm layui-btn-warm See">详情</button>
                             </div>
                         </li>
                     </c:forEach>
@@ -125,11 +113,47 @@
             $(".readWin").hover(function (){
                 $(".readWin").show();
             },function (){
-                if($(this).children(".isRead").val() === "2"){
+                if($(this).find(".isRead").val() === "2"){
                     $(this).css("cursor","pointer");
                 }
             });
 
+
+            $(".See").on('click',function () {
+                var content = $(this).siblings(".content").text();
+                var title = $(this).siblings(".top").children(".title").text();
+                var noticeTime = $(this).siblings(".top").children(".noticeTime").text();
+                var empName = $(this).siblings(".top").children(".empName").text();
+                var noticeId = $(this).siblings(".noticeId").val();
+                $.get('${pageContext.request.contextPath}/jack/MyAddReadEmp',{noticeId:noticeId},function (da) {
+                        window.location.reload();
+                },"text");
+
+                window.parent.layer.open({
+                    type: 1,
+                    title:'公告详情',
+                    skin: 'layui-layer-demo', //样式类名
+                    closeBtn: 1, //不显示关闭按钮
+                    area: ['700px', '500px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    shadeClose: true, //开启遮罩关闭
+                    content: '<div class="layui-card" id="SeeWin" >\n' +
+                        '    <div class="layui-card-header">' +
+                        '       <span style="float:right;margin-left: 5px"><i class="layui-icon layui-icon-username"></i><span>'+empName+'</span></span>' +
+                        '       <span style="float:right"><i class="layui-icon layui-icon-log"></i><span>'+noticeTime+'</span></span>' +
+                        '<span style="font-size: 25px;float: left">'+title+'</span>' +
+                        '</div>\n' +
+                        '\n' +
+                        '    <div class="layui-card-body" id="seeboay" >\n' +
+                        '        <div class="layui-carousel layadmin-carousel layadmin-dataview" data-anim="fade" id="Seebbb" lay-filter="LAY-index-pageone" lay-anim="fade">\n' +
+                        ''+content+'' +
+                        '        </div>\n' +
+                        '\n' +
+                        '    </div>\n' +
+                        '</div>'
+                });
+            });
 
             function count(){
                 $.post('${pageContext.request.contextPath}/jack/MyAnnoEmp',{},function (data) {
@@ -139,10 +163,8 @@
             }
 
             $(".readWin").on('click',function () {
-                var noticeId = $(this).children(".noticeId").val();
-                var isRead = $(this).children(".isRead").val();
-                console.log(isRead);
-                console.log($(this).find("#myTitle"));
+                var noticeId = $(this).find(".noticeId").val();
+                var isRead = $(this).find(".isRead").val();
                 if(isRead === '2'){
                     $.get('${pageContext.request.contextPath}/jack/MyAddReadEmp',{noticeId:noticeId},function (da) {
                         layer.msg("已读取");

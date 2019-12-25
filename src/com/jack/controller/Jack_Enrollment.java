@@ -63,14 +63,14 @@ public class Jack_Enrollment {
 
     @RequestMapping(value = "/toClassTypeList")
     @ResponseBody
-    public Map toClassTypeList(){
+    public Map toClassTypeList(){ //班级类别列表查询
         Map map = new HashMap<>();
         List list = service.selClassTypeList();
         map.put("names",list);
         return map;
     }
 
-    @RequestMapping(value = "/toMajorList")
+    @RequestMapping(value = "/toMajorList")  //专业列表查询
     @ResponseBody
     public Map toMajorList(){
         Map map = new HashMap<>();
@@ -83,8 +83,8 @@ public class Jack_Enrollment {
     public String addEnrollment(EnrollmentVo enroll,HttpSession session){
         EmpVo empVo = (EmpVo) session.getAttribute("admin");
         enroll.setAmount(0);
-        enroll.setStatus(1);
         enroll.setEmpid(empVo.getEmpId());
+        enroll.setIsClass("否");
         enroll.setSigndate(new Date());
         System.out.println(enroll);
         service.addEnrollment(enroll);
