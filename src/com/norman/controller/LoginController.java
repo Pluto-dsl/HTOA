@@ -1,6 +1,7 @@
 package com.norman.controller;
 
 import com.norman.service.LoginService;
+import com.publics.service.LoggingService;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.studentModel.StudentVo;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,10 @@ public class LoginController {
     @Resource
     private LoginService loginService;
 
+
+    @Resource
+    private LoggingService loggingService;
+
     @RequestMapping("/asd/toNo")
     public String toNo(){
         return "controller_pluto/NO";
@@ -29,8 +34,6 @@ public class LoginController {
 
         EmpVo emp = loginService.empByAcc(phone);
         StudentVo stu = loginService.stuByAcc(phone);
-         //System.out.println(emp);
-        // //System.out.println(stu);
 
         PrintWriter out = response.getWriter();
         String result = "";
@@ -39,6 +42,8 @@ public class LoginController {
                 if (emp.getStatus()==0){
                     result = "{\"code\":\"ban\"}";
                 }else if (emp.getStatus() == 1){
+                    EmpVo empVo = (EmpVo) session.getAttribute("admin");
+                    loggingService.addLog(emp.getEmpId(),"登录了");
                     session.setAttribute("admin",emp);
                     result = "{\"code\":\"admin\"}";
                 }

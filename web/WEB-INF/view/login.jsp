@@ -218,7 +218,7 @@
 <div id="down">
     感谢<a target="_blank" href="https://www.layui.com/">LayUI</a>提供前端支持<br>
     感谢<a target="_blank" href="https://www.microsoft.com/zh-cn/">microsoft</a>提供封面<br>
-    感谢我们可爱的组长<a href="tencent://message/?uin=314114835&Site=http://vps.shuidazhe.com&Menu=yes">丁胜禄</a>先生<br>
+    感谢我们可爱的组长<a href="tencent://message/?uin=输入QQ号&Site=http://vps.shuidazhe.com&Menu=yes">丁胜禄</a>先生<br>
     在这里先随便写一点什么，日后有时间在来改吧
 </div>
 <script>
@@ -262,6 +262,15 @@
                 window.location.href = "${pageContext.request.contextPath}/toPage/oamain"
             } else if (data.code === "user") {
                 layer.msg("登录成功<br>正在跳转页面");
+                if (flag){
+                    $.cookie("phone",phone);
+                    $.cookie("pwd",pwd);
+                    $.cookie("savePwd",flag);
+                }else {
+                    $.removeCookie("phone");
+                    $.removeCookie("pwd");
+                    $.removeCookie("savePwd");
+                }
                 window.location.href = "${pageContext.request.contextPath}/toPage/studentSide"
             } else if (data.code === "ban") {
                 layer.msg("您已被禁用");

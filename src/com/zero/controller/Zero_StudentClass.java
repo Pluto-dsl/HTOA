@@ -162,7 +162,7 @@ public class Zero_StudentClass {
         return "student_zero/classAllot";
     }
 
-    @RequestMapping("/allotStu")//分配的学生
+    @RequestMapping("/allotStu")//所有要分配的学生
     @ResponseBody
     public Map allotStu(){
         Map map = new TreeMap();
@@ -208,7 +208,7 @@ public class Zero_StudentClass {
         }
         stu.setStat(en.getStatus());
         stu.setCardid(en.getCard());
-        if(en.getMajorId()!=0){//就读专业////////////////
+        if(en.getMajorId()!=0){//就读专业
             MajorVo majorVo = service.marjov(en.getMajorId());
             stu.setProfessional(majorVo.getMajorName());//专业名称
         }
@@ -223,7 +223,6 @@ public class Zero_StudentClass {
         stu.setComputer("是");//领电脑
         stu.setGrants("否");//助学金
         stu.setHuor(dorm);//宿舍
-        System.out.println("分配的学生"+stu);
         pluto.addStudent(stu);//新增学生
         EmpVo emp = (EmpVo) session.getAttribute("admin");
         log.addLog(emp.getEmpId(),emp.getEmpName()+"分配了学生到"+cid+"班级id,招生id"+sid);

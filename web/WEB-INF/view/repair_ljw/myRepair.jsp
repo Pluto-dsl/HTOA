@@ -18,24 +18,24 @@
 </head>
 <body>
 <div id="windows" style="padding-right: 5%;display: none;">
-    <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/logs/addRepair" method="post">
+    <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/logs/addRepair" method="post" onsubmit="layer.load(0, {shade: false})">
         <br><br>
         <div class="layui-form-item">
             <label class="layui-form-label">设备名称</label>
             <div class="layui-input-block">
-                <input type="text" name="equipmentType" lay-verify="title" autocomplete="off" placeholder="请输入报修设备名称" class="layui-input">
+                <input type="text" name="equipmentType" autocomplete="off" placeholder="请输入报修设备名称" class="layui-input" lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">描述</label>
             <div class="layui-input-block">
-                <input type="text" name="remark" lay-verify="title" autocomplete="off" placeholder="请输入对维修设备的详情" class="layui-input">
+                <input type="text" name="remark" autocomplete="off" placeholder="请输入对维修设备的详情" class="layui-input" lay-verify="required">
             </div>
         </div>
         <br>
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button type="submit" class="layui-btn">立即提交</button>
+                <button type="submit" class="layui-btn" lay-submit="">立即提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
@@ -45,14 +45,16 @@
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="newRepair">填写保修申请单</button>
+        <button class="layui-btn layui-btn-sm" lay-event="newRepair"><i class="layui-icon layui-icon-add-1"></i>填写保修申请单</button>
+        <button class="layui-btn layui-btn-sm" lay-event="reloadData"><i class="layui-icon layui-icon-refresh-3"></i>刷新数据</button>
     </div>
 </script>
 </body>
 <script>
-    layui.use('table', function(){
+    layui.use(['table','form'], function(){
         var table = layui.table;
-        table.render({
+        var form = layui.form;
+        var tableIns = table.render({
             elem: '#RepairList'
             ,url:'${pageContext.request.contextPath}/logs/getMyRepairData'
             ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
@@ -70,11 +72,10 @@
                 ,{field:'result', title:'处理详情',width: 145}
                 ,{field:'status', title:'状态',width: 80, minWidth: 200}
                 ,{fixed:'right', title:'操作',templet:function(d){
-                    console.log(d);
                     if (d.status==='待处理'){
                         return '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
                     }else {
-                        return ''
+                        return '<button type="button" class="layui-btn layui-btn layui-btn-xs layui-btn-disabled" title="已处理的报修单不可删除">删除</button>'
                     }
                     }, width:80}
             ]]
@@ -102,6 +103,8 @@
                         return false;
                     }
                 });
+            }else if (obj.event === "reloadData"){
+                tableIns.reload();
             }
         });
         table.on('tool(test)',function (obj) {
@@ -118,8 +121,10 @@
 </script>
 <script>
     function delRepair(id) {
+        var index = layer.load(0, {shade: false});
         var data = {delRepairId:id};
         $.post("${pageContext.request.contextPath}/logs/delRepair",data,function (data) {
+            layer.close(index);
             console.log(data)
         },"json");
     }

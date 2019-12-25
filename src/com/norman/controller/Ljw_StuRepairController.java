@@ -2,6 +2,7 @@ package com.norman.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.norman.service.Ljw_LogsService;
+import com.publics.service.LoggingService;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.logistics.EquipmentRepairVo;
 import com.publics.vo.studentModel.StudentVo;
@@ -23,6 +24,9 @@ public class Ljw_StuRepairController {
     @Resource
     private Ljw_LogsService logsService;
 
+    @Resource
+    private LoggingService loggingService;
+
     @RequestMapping("/toNo")
     public String toNo(){
         return "controller_pluto/NO";
@@ -30,7 +34,6 @@ public class Ljw_StuRepairController {
 
     @RequestMapping(value = "/toStuRepair")
     public String toMyRepair(){
-         //System.out.println("学生");
         return "repair_ljw/stuRepair";
     }
 

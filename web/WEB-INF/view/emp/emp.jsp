@@ -111,7 +111,8 @@
                 ,{field: 'reset', title: '初始密码',toolbar:'#pwd',width: 100}
                 ,{field: 'caozuo', title: '操作',toolbar:'#barDemo', width: 200}
             ]]
-            ,page: {limit:10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
+            ,page: {limit:20,limits:[10,20,30,50,100]
+            ,layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
             ,done: function(res, page, count){
                 //如果是异步请求数据方式，res即为你接口返回的信息。
                 //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度

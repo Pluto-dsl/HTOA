@@ -35,7 +35,7 @@ public class Ljw_LogsServiceImpl extends BaseDao implements Ljw_LogsService {
     @Override
     public JSONArray getMyEmpRepairData(HttpServletRequest request, int userId, int page, int limit) {
         JSONArray resultData = new JSONArray();
-        List<EquipmentRepairVo> data = super.listByHql("from EquipmentRepairVo where Student="+userId);
+        List<EquipmentRepairVo> data = super.pageByHql("from EquipmentRepairVo where Student="+userId,page,limit);
         //遍历结果集
         for (EquipmentRepairVo vo:
                 data) {
@@ -95,7 +95,7 @@ public class Ljw_LogsServiceImpl extends BaseDao implements Ljw_LogsService {
     @Override
     public JSONArray getMyStuRepairData(HttpServletRequest request, int userId, int page, int limit) {
         JSONArray resultData = new JSONArray();
-        List<EquipmentRepairVo> data = super.listByHql("from EquipmentRepairVo where Student="+userId);
+        List<EquipmentRepairVo> data = super.pageByHql("from EquipmentRepairVo where Student="+userId,page,limit);
         //遍历结果集
         for (EquipmentRepairVo vo:
                 data) {
@@ -156,7 +156,7 @@ public class Ljw_LogsServiceImpl extends BaseDao implements Ljw_LogsService {
     @Override
     public JSONArray getRepairData(HttpServletRequest request, int userType, int page, int limit) {
         JSONArray resultdata = new JSONArray();
-        List<EquipmentRepairVo> data = listByHql("from EquipmentRepairVo where userType="+userType+" and status = 0");
+        List<EquipmentRepairVo> data = pageByHql("from EquipmentRepairVo where userType="+userType+" and status = 0",page,limit);
         //遍历结果集
         for (EquipmentRepairVo vo:
                 data) {
