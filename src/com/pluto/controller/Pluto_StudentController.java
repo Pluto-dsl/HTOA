@@ -119,6 +119,10 @@ public class Pluto_StudentController {
         StudentVo s = service.getStudentById(id);
         int ssid = s.getHuor();
         service.deleteStudent(s);
+
+
+        service.deleteScore(id);//student_score删除学生成绩
+        service.deleteReplyScore(id);//studentReplyScore删除答辩学生成绩
         StudentDormitoryVo studentDormitoryVo = service.getHourById(ssid);
         studentDormitoryVo.setCount(studentDormitoryVo.getCount()-1);
         service.updateHour(studentDormitoryVo);
