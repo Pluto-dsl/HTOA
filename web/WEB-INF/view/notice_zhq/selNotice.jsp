@@ -24,7 +24,7 @@
             <div class="layui-form-item" style="width: 500px;">
                 <label class="layui-form-label">标题</label>
                 <div class="layui-input-block">
-                    <input type="text" name="title" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+                    <input type="text" name="title" lay-verify="required" placeholder="请输入" maxlength="25" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -43,7 +43,6 @@
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button type="submit" class="layui-btn" lay-submit="" lay-filter="sub">发布</button>
-                    <button type="" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
         </form>
@@ -100,10 +99,6 @@
             ]]
             ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
-
-        $("").on('click',function () {
-            alert("dfdf");
-        })
 
         table.on('tool(test)',function (obj) {
             var data = obj.data;

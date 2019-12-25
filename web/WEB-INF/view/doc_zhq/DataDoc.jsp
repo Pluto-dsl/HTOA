@@ -21,26 +21,23 @@
     <table id="demo"  lay-filter="test"></table>
 
     <div  id="windows"  style="display: none;">
-        <form method="post" class="layui-form" lay-filter="aaa" enctype="multipart/form-data" action="${pageContext.request.contextPath}/zhq/addDoc">
-
             <div class="layui-upload uploadbuchong" style="margin-top: 20px;margin-left: 60px;">
-                <button type="button" class="layui-btn layui-btn-normal" id="test8" name="file">选择文件</button>
+                <button type="button"  class="layui-btn layui-btn-normal" id="test8" name="file">选择文件</button>
             </div>
 
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label" style="    margin-left: -50px;">备注</label>
                 <div class="layui-input-block">
-                    <textarea name="remark" placeholder="请输入内容" class="layui-textarea" style=" margin-left: -50px;"></textarea>
+                    <textarea id="remark" name="remark" placeholder="请输入内容" class="layui-textarea" style=" margin-left: -50px;"></textarea>
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button type="submit" id="test9" class="layui-btn" lay-submit="" lay-filter="sub">确定</button>
-                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    <button type="submit" class="layui-btn" id="sub">确定添加</button>
+                    <button type="button" class="layui-btn layui-btn-primary" onclick="qx()">取消</button>
                 </div>
             </div>
-        </form>
     </div>
 </body>
 <script type="text/html" id="barDemo">
@@ -48,6 +45,11 @@
     <a  class="layui-btn  layui-btn-xs" lay-event="download">下载文件</a>
 </script>
 <script>
+    function qx() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);//关闭当前页
+        window.location.reload();
+    }
     layui.use([ 'element', 'table', 'layer', 'form' ,'laydate','upload'],function() {
         var $ = layui.jquery
             ,upload = layui.upload;
@@ -56,6 +58,55 @@
         var table = layui.table;
         var form = layui.form;
         var laydate = layui.laydate;
+
+        <!--文件上传-->
+        //选完文件后不自动上传
+        upload.render({
+            elem: '#test8'
+            ,size:1024*50//限制文件大小，单位 KB
+            ,auto: false//非自动上传
+            ,accept:'file'
+            ,multiple: true
+
+        });
+
+        $('#sub').click(function () {
+            var file = $('.layui-upload-file')[0].files[0];
+            var remark = $('#remark').val().trim();
+            alert(file);
+            if (file == null) {
+                layer.msg('请选择文件');
+                return;
+            }
+            var lod = layer.load();
+            var formData = new FormData();
+            formData.append('file',file);
+            formData.append('remark',remark);
+            $.ajax({
+                type:'post',
+                url:'${pageContext.request.contextPath}/zhq/addDoc',
+                processData: false,//jquery 是否对数据进行 预处理
+                contentType: false,//不要自己修改请求内容类型
+                async:true,
+                dataType:'json',
+                data:formData,
+                success:function (data) {
+                    layer.close(lod);
+                    layer.msg('上传成功',{
+                        time:2000
+                    },function(){
+                        location.reload();
+                    });
+                },
+                error:function () {
+                    layer.close(lod);
+                    layer.msg('服务器错误，请稍后再试！');
+                }
+            });
+
+        });
+
+
 
         //执行渲染
         table.render({
@@ -90,15 +141,8 @@
                 content: $('#windows')
             })
         });
-        <!--文件上传-->
-        //选完文件后不自动上传
-        upload.render({
-            elem: '#test8'
-            ,size:1024*50//限制文件大小，单位 KB
-            ,auto: false//非自动上传
-            ,accept:'file'
-            ,multiple: true
-        });
+
+
 
         table.on('tool(test)',function (obj) {
             var data = obj.data;
