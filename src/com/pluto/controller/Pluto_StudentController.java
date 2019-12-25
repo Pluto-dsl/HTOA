@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -108,13 +109,13 @@ public class Pluto_StudentController {
         }
         service.updateStudent(studentVo);
         EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
-        log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了学生资料。");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了学生"+studentVo.getStuname()+"资料。");
         return "1";
     }
 
     @RequestMapping("/delStu")
-    @ResponseBody//删除
-    public String deleteStudent(int id){
+    @ResponseBody
+    public String deleteStudent(int id,HttpServletRequest request){
         StudentVo s = service.getStudentById(id);
         int ssid = s.getHuor();
         service.deleteStudent(s);
@@ -125,12 +126,14 @@ public class Pluto_StudentController {
         StudentDormitoryVo studentDormitoryVo = service.getHourById(ssid);
         studentDormitoryVo.setCount(studentDormitoryVo.getCount()-1);
         service.updateHour(studentDormitoryVo);
+        EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"删除了学生"+s.getStuname()+"资料。");
         return "1";
     }
 
     @RequestMapping("/tuixue")
     @ResponseBody
-    public String tuixue(int id){
+    public String tuixue(int id,HttpServletRequest request){
         StudentVo studentVo = service.getStudentById(id);
         studentVo.setTuixue("是");
         studentVo.setStat(6);
@@ -139,21 +142,25 @@ public class Pluto_StudentController {
         StudentDormitoryVo studentDormitoryVo = service.getHourById(ssid);
         studentDormitoryVo.setCount(studentDormitoryVo.getCount()-1);
         service.updateHour(studentDormitoryVo);
+        EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了学生："+studentVo.getStuname()+"的状态为退学");
         return "1";
     }
 
     @RequestMapping("/chongzhi")
     @ResponseBody
-    public String chongzhi(int id){
+    public String chongzhi(int id,HttpServletRequest request){
         StudentVo studentVo = service.getStudentById(id);
         studentVo.setPassword("123456");
         service.updateStudent(studentVo);
+        EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"重置了学生"+studentVo.getStuname()+"的密码。");
         return "1";
     }
 
     @RequestMapping("/updateHour")
     @ResponseBody
-    public String updateHour(int Studid,int hour){
+    public String updateHour(int Studid,int hour,HttpServletRequest request){
         StudentVo studentVo = service.getStudentById(Studid);
         studentVo.setHuor(hour);
         service.updateStudent(studentVo);
@@ -167,22 +174,25 @@ public class Pluto_StudentController {
 
         service.updateHour(olds);
         service.updateHour(s);
-
+        EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了学生"+studentVo.getStuname()+"的宿舍");
         return "1";
     }
 
     @RequestMapping("/updateClass")
     @ResponseBody
-    public String updateClass(int Studid,int classId){
+    public String updateClass(int Studid, int classId, HttpSession session){
         StudentVo studentVo = service.getStudentById(Studid);
         studentVo.setClazz(classId);
         service.updateStudent(studentVo);
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了学生："+studentVo.getStuname()+"的班级。");
         return "1";
     }
 
     @RequestMapping("/biye")
     @ResponseBody
-    public String setBiye(int Studid){
+    public String setBiye(int Studid,HttpServletRequest request){
          //System.out.println("shezhibiye");
         StudentVo studentVo = service.getStudentById(Studid);
         studentVo.setStat(5);
@@ -190,6 +200,8 @@ public class Pluto_StudentController {
         StudentDormitoryVo huor = service.getHourById(studentVo.getHuor());
         huor.setCount(huor.getCount()-1);
         service.updateHour(huor);
+        EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了学生"+studentVo.getStuname()+"的状态为毕业。");
         return "1";
     }
 
@@ -238,9 +250,8 @@ public class Pluto_StudentController {
         studentVo.setEntertime(ed);
          //System.out.println(studentVo.toString());
         service.addStudent(studentVo);
-        StudentDormitoryVo studentDormitoryVo = service.getHourById(studentVo.getHuor());
-        studentDormitoryVo.setCount(studentDormitoryVo.getCount()+1);
-        service.updateHour(studentDormitoryVo);
+        EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"新增了一个学生，学生名："+studentVo.getStuname());
         return "1";
     }
 
@@ -289,6 +300,8 @@ public class Pluto_StudentController {
     @ResponseBody
     public void addZx(int stuid,String content,HttpServletRequest request){
         service.addZx(stuid,content,request);
+        EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"新增了学生的在校情况");
     }
 
     @RequestMapping("/updatezx")
@@ -299,8 +312,10 @@ public class Pluto_StudentController {
 
     @RequestMapping("/delzx")
     @ResponseBody
-    public String updatezx(int happenid){
+    public String updatezx(int happenid,HttpServletRequest request){
         service.deletezx(happenid);
+        EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"删除了学生的在校情况");
         return "1";
     }
 
@@ -330,10 +345,11 @@ public class Pluto_StudentController {
 
     @RequestMapping("/deljt")
     @ResponseBody
-    public String deljt(int familyid) throws IOException {
+    public String deljt(int familyid,HttpServletRequest request) throws IOException {
         StudentFamilyVo s = service.getFamilyById(familyid);
         service.delFamily(s);
-
+        EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"删除了学生的家庭情况");
         return "1";
     }
 
@@ -346,9 +362,11 @@ public class Pluto_StudentController {
 
     @RequestMapping("/addJt")
     @ResponseBody
-    public String AddJt(StudentFamilyVo familyVo){
+    public String AddJt(StudentFamilyVo familyVo,HttpServletRequest request){
 
         service.addStudentFamily(familyVo);
+        EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"新增了学生的家庭情况");
         return "1";
     }
 
@@ -363,7 +381,7 @@ public class Pluto_StudentController {
 
     @RequestMapping("/updJt")
     @ResponseBody
-    public String updJt(String familyname,int familyid,int stuid,String relation,String familyhone){
+    public String updJt(String familyname,int familyid,int stuid,String relation,String familyhone,HttpServletRequest request){
         StudentFamilyVo familyVo = new StudentFamilyVo();
         familyVo.setFamilyid(familyid);
         familyVo.setFamilyhone(familyhone);
@@ -372,6 +390,8 @@ public class Pluto_StudentController {
         familyVo.setFamilyname(familyname);
 
         service.updFamily(familyVo);
+        EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了学生的家庭情况");
         return "1";
     }
 

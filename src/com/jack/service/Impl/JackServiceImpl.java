@@ -144,8 +144,8 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
         return listBySQL("select aduitModelid,aduitName from aduitModel");
     }
     @Override
-    public List selEmp(int id) {
-        return listBySQL("select empId,empName from emp where `status` = 1 and empId = "+id+"");
+    public List selEmp() {
+        return listBySQL("select empId,empName from emp where `status` = 1");
     }
     @Override
     public void addAduit(AduitLogVo aduitLogVo) {

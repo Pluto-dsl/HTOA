@@ -101,6 +101,9 @@
             ,page: {limit: 5,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
 
+        $("").on('click',function () {
+            alert("dfdf");
+        })
 
         table.on('tool(test)',function (obj) {
             var data = obj.data;
@@ -141,7 +144,7 @@
                     shadeClose: true, //开启遮罩关闭
                     content: ['${pageContext.request.contextPath}/zhq/updateeNotice?noticeId='+data.noticeId]
                 });
-                layedit.build('TT2'); //建立编辑器-
+                layedit.build('TT2'); //建立编辑器
             }else if(obj.event==='detail'){//查看公告
                 $.ajax({
                     url: '${pageContext.request.contextPath}/zhq/updateType',
@@ -199,7 +202,6 @@
                     shadeClose: true, //开启遮罩关闭
                     content: $('#windows2')
                 })
-
             }
         });
 

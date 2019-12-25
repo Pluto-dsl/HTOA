@@ -55,6 +55,18 @@
     </style>
 </head>
 <body>
+<div class="layui-card" style="display: none" >
+    <div class="layui-card-header">八卦新闻</div>
+
+    <div class="layui-card-body">
+        <div class="layui-carousel layadmin-carousel layadmin-dataview" data-anim="fade" lay-filter="LAY-index-pageone" lay-anim="fade" style="width: 100%; height: 280px;">
+            <div carousel-item="" id="LAY-index-pageone">
+                多福多寿犯得上
+            </div>
+        </div>
+
+    </div>
+</div>
 <%--公告部分--%>
 <div class="layui-row layui-col-space15" style="width:85%;margin: 10px 10px;">
     <div class="layui-col-md12">

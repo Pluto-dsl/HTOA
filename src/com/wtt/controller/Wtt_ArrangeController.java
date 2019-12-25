@@ -3,6 +3,7 @@ package com.wtt.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.norman.service.LoginService;
+import com.publics.service.LoggingService;
 import com.publics.vo.educ.WeekArrangeVo;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.wtt.service.Wtt_ArrangeService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -22,7 +24,7 @@ public class Wtt_ArrangeController {
     @Resource
     Wtt_ArrangeService wtt_arrangeService;
     @Resource
-    private LoginService log;
+    private LoggingService log;
     //无权限时跳转页面
     @RequestMapping("/toNo")
     public String toNo(){
@@ -62,7 +64,6 @@ public class Wtt_ArrangeController {
         }
         //获取总行数
         int rows =wtt_arrangeService.pagecount();
-        /*System.out.println("总行数:"+rows);*/
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","提示");
         jsonObject.put("code",0);
@@ -81,16 +82,19 @@ public class Wtt_ArrangeController {
 
     //新增
     @RequestMapping(value = "/addarrange")
-    public String addarrange(WeekArrangeVo weekArrangeVo){
+    public String addarrange(WeekArrangeVo weekArrangeVo, HttpSession session){
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
         wtt_arrangeService.add(weekArrangeVo);
-        
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"新增了值班管理");
         return "redirect:/arrange/arrangePage";
     }
 
     //删除
     @RequestMapping(value = "/deletearrange")
-    public String deletearrange(int id){
+    public String deletearrange(int id, HttpSession session){
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
         wtt_arrangeService.delete(id);
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"删除了值班管理");
         return "redirect:/arrange/arrangePage";
     }
 }

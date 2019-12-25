@@ -2,6 +2,7 @@ package com.jack.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jack.service.Jack_Service;
+import com.publics.service.LoggingService;
 import com.publics.vo.empModel.AttendanceVo;
 import com.publics.vo.empModel.emp.EmpVo;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,8 @@ public class Jack_AttController {
 
     @Resource
     private Jack_Service service;
+    @Resource
+    private LoggingService log;
 
 
 
@@ -45,7 +48,7 @@ public class Jack_AttController {
      * 修改审批
      * */
     @RequestMapping("/AttUpdata")
-    public String AttUpdata(String eid,String state,String specification){
+    public String AttUpdata(String eid,String state,String specification,HttpSession session){
         System.out.println(state);
         System.out.println(eid);
         System.out.println(specification);
@@ -55,6 +58,9 @@ public class Jack_AttController {
         avo.setStatus(Integer.parseInt(state));
         avo.setExamineExplain(specification);
         service.updataAtt(avo);
+
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了审批");
 
         return "emp_xzq/xxx";
     }
@@ -107,16 +113,21 @@ public class Jack_AttController {
 
         service.insertAtt(attVo); //添加未打卡说明
 
-        System.out.println(attVo.toString());
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"添加了未打卡说明");
 
         return "emp_xzq/AttendancePage";
     }
 
     @RequestMapping(value = "delAtt")
     @ResponseBody
-    public int delAtt(HttpServletRequest request){
+    public int delAtt(HttpServletRequest request,HttpSession session){
         int w = Integer.parseInt(request.getParameter("cid"));
         service.delAtt(w);
+
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"删除了未打卡说明");
+
         return 0;
     }
 
