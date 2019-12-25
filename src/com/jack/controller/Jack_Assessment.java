@@ -2,6 +2,7 @@ package com.jack.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jack.service.Jack_Service;
+import com.publics.service.LoggingService;
 import com.publics.vo.assess.AduitLogVo;
 import com.publics.vo.assess.AduitModelVo;
 import com.publics.vo.empModel.emp.EmpVo;
@@ -27,6 +28,8 @@ public class Jack_Assessment {
 
     @Resource
     private Jack_Service service;
+    @Resource
+    private LoggingService log;
 
     @RequestMapping("/toNo")
     public String toNo(){
@@ -41,8 +44,10 @@ public class Jack_Assessment {
 
     @RequestMapping(value = "addAss")
     @ResponseBody
-    public String addAss(AduitModelVo aduitModelVo){
+    public String addAss(AduitModelVo aduitModelVo,HttpSession session){
         service.addAssessment(aduitModelVo);
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"新增了考勤");
         return "成功";
     }
     @RequestMapping(value = "/select")
@@ -56,14 +61,16 @@ public class Jack_Assessment {
     }
     @RequestMapping(value = "/editAss")
     @ResponseBody
-    public String editAss(AduitModelVo aduitModelVo){
+    public String editAss(AduitModelVo aduitModelVo,HttpSession session){
          //System.out.println(aduitModelVo+"-----------------");
         service.editAssessment(aduitModelVo);
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了考勤");
         return "成功";
     }
     @RequestMapping(value = "/delAss")
     @ResponseBody
-    public String delAss(HttpServletRequest request){
+    public String delAss(HttpServletRequest request,HttpSession session){
         String type = request.getParameter("type");
 
         if("duo".equals(type)){
@@ -73,6 +80,9 @@ public class Jack_Assessment {
             service.delAssessment(Integer.parseInt(request.getParameter("Aid")));
             return "成功";
         }
+
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了考勤");
         return "";
     }
     @RequestMapping(value = "/AssessmentPage")
@@ -111,10 +121,9 @@ public class Jack_Assessment {
     /** 查询员工列表 */
     @RequestMapping(value = "/emp")
     @ResponseBody
-    public Map emp(HttpSession session){
+    public Map emp(){
         Map emap = new HashMap();
-        EmpVo emp = (EmpVo) session.getAttribute("admin");
-        List list = service.selEmp(emp.getEmpId());
+        List list = service.selEmp();
         emap.put("names",list);
         return emap;
     }
@@ -170,7 +179,7 @@ public class Jack_Assessment {
                               @RequestParam("auditDate") String auditDate,
                               @RequestParam("Remark") String Remark,
                               @RequestParam("auditPerson") String auditPerson,
-                              @RequestParam("Image") String Image) throws ParseException {
+                              @RequestParam("Image") String Image,HttpSession session) throws ParseException {
         AduitLogVo aduitLogVo = new AduitLogVo();
         aduitLogVo.setAduitModelid(Integer.parseInt(aduitModelid));
         aduitLogVo.setEmpid(Integer.parseInt(Empid));
@@ -184,6 +193,9 @@ public class Jack_Assessment {
         aduitLogVo.setImage(Image);
          //System.out.println(aduitLogVo);
         service.addAduit(aduitLogVo);
+
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"添加了考核录入");
 
         return 0;
     }
@@ -240,7 +252,7 @@ public class Jack_Assessment {
     /**  员工考核删除、批量删除     */
     @RequestMapping(value = "/delAduitLog")
     @ResponseBody
-    public int delAduitLog(HttpServletRequest request){
+    public int delAduitLog(HttpServletRequest request,HttpSession session){
         int a = Integer.parseInt(request.getParameter("cid"));
         String type1 = request.getParameter("type");
 
@@ -249,6 +261,8 @@ public class Jack_Assessment {
         }else {
             service.delAduitLog(a);
         }
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"删除了员工考核");
         return 0;
     }
 

@@ -298,6 +298,16 @@ public class Pluto_StudentMsgImpl extends BaseDao implements Pluto_StudentMsg {
     }
 
     @Override
+    public void deleteScore(int stuid) {
+        super.executeSQL("delete from studentScore where stuid="+stuid);
+    }
+
+    @Override
+    public void deleteReplyScore(int stuid) {
+        super.executeSQL("delete from studentReplyScore where StudentId="+stuid);
+    }
+
+    @Override
     public Map getStudentScoreVoById(int id) {
         //return (StudentScoreVo) super.getObject(new StudentScoreVo().getClass(),id);
         return (Map) super.listBySQL("select * from studentScore where scoreId="+id).get(0);

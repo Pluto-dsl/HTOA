@@ -80,7 +80,7 @@
                 ,{field:'enrollMoneyTime',templet:function (d){return createTime(d.startTime);}, title:'发放时间', width:120}
                 ,{field:'signdate',templet:function (d){return createTime(d.signdate);}, title:'录入时间', width:120}
                 ,{field:'empid', title:'录入人', width:120}
-                ,{field:'status', title:'学生状态', width:120}
+                ,{field:'statusName', title:'学生状态', width:120}
                 ,{field:'remark', title:'员工姓名', width:120}
                 ,{field:'studType', title:'班级类别', width:120}
                 ,{field:'score', title:'学习成绩', width:120}
@@ -89,7 +89,7 @@
                 ,{field:'negativeName', title:'招生老师', width:120}
                 ,{field:'reviewer', title:'审核人', width:120}
                 ,{field:'reviewerTime',templet:function (d){return createTime(d.reviewerTime);}, title:'审核时间', width:120}
-                ,{field:'majorId', title:'学生专业', width:120}
+                ,{field:'majorName', title:'学生专业', width:120}
                 ,{toolbar:'#toolDemo',fixed:'right',unresize:true,sort: true, title:'操作', width:100}
             ]]
             ,page: true
@@ -109,7 +109,10 @@
             var data = obj.data;
             dataE = obj.data;
             if(obj.event === 'edit'){
-                console.log(data);
+                if(data.status === 4){
+                    layer.msg("该学生已经是在读学生不可编辑")
+                    return false
+                }
                 layer.open({
                     type: 2,
                     title:'修改招生信息',

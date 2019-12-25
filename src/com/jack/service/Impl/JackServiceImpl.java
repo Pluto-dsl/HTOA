@@ -144,8 +144,8 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
         return listBySQL("select aduitModelid,aduitName from aduitModel");
     }
     @Override
-    public List selEmp(int id) {
-        return listBySQL("select empId,empName from emp where `status` = 1 and empId = "+id+"");
+    public List selEmp() {
+        return listBySQL("select empId,empName from emp where `status` = 1");
     }
     @Override
     public void addAduit(AduitLogVo aduitLogVo) {
@@ -377,7 +377,10 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
 
     @Override
     public List selEnrollmentList(int currPage,int pageSize) {
-        return pageByHql("from EnrollmentVo",currPage,pageSize);
+        return pageBySQL("select en.*,stu.statusName,ct.classTypeName,ma.majorName  from \n" +
+                "((enrollment en INNER JOIN studentSet stu on en.`status` = stu.statusid)\n" +
+                "INNER JOIN classType ct on en.studType = ct.classTypeId)\n" +
+                "INNER JOIN major ma on ma.majorId = en.majorId",currPage,pageSize);
     }
 
     @Override

@@ -64,13 +64,22 @@
                 <td><input type="text" name="negativeName" id="negativeName"  required lay-verify="required" placeholder="请输入招生老师" autocomplete="off" class="layui-input"></td>
             </tr>
             <tr align="center">
+                <td>学生入学状态:</td>
+                <td>
+                    <select id="status" name="status" lay-verify="required">
+                        <option value="">选择学生状态</option>
+                        <option value="1">意向学生</option>
+                        <option value="2">预定报名学生</option>
+                        <option value="3">试学学生</option>
+                        <option value="4">在读学生</option>
+                        <option value="6">退学</option>
+                    </select>
+                </td>
                 <td>是否送电脑:</td>
                 <td>
                     <input type="radio" name="computer" value="是" title="是" checked="">
                     <input type="radio" name="computer" value="否" title="否">
                 </td>
-                <td></td>
-                <td></td>
             </tr>
             <tr align="center">
                 <td colspan="4"> <button lay-submit lay-filter="Asubmit" id="Asubmit" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button></td>
@@ -138,6 +147,7 @@
                 , "remark": aa.remark
                 , "studType": aa.studType
                 , "majorId": aa.majorId
+                , "status": aa.status
                 , "negativeName": aa.negativeName
                 , "computer": aa.computer
             });

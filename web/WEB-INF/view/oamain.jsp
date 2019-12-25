@@ -59,6 +59,24 @@
         .layui-col-md6 {
             width: 30%;
         }
+        #seeboay{
+            position: relative;
+            padding: 10px 15px;
+            line-height: 24px;
+            overflow: unset;
+            height: 40%;
+        }
+        #SeeWin{
+            margin-top: 10px;
+        }
+        #Seebbb{
+            width: 99%;
+            height: 335px;
+            font-size: 18px;
+            text-indent: 2em;
+            padding-top: 10px;
+            padding-left: 10px;
+        }
     </style>
 </head>
 <body class="layui-layout-body">
@@ -289,6 +307,11 @@
                                data-url="${pageContext.request.contextPath}/controller/toUserList"
                                data-id="权限管理" data-title="权限管理">权限管理</a></dd>
                     </dl>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;"class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/log/toLogList"
+                               data-id="系统日志" data-title="系统日志">系统日志</a></dd>
+                    </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="tt" lay-tips="系统设置" lay-direction="2"><i class="layui-icon layui-icon-util"></i><cite>系统设置</cite></a>
@@ -371,19 +394,25 @@
             </div>
         </div>
     </div>
-
 <%--    <iframe align="right" style="height: 100%;width: 1193px;" name="iframe1" class="layui-layer-iframe">--%>
 <%--        --%>
 <%--    </iframe>--%>
 
 </div>
+
 <script>
     //JavaScript代码区域
-    layui.use('element', function(){
+    layui.use([ 'element', 'table', 'layer', 'form' ,'laydate','upload'],function() {
         var element = layui.element;
+        var layer = layui.layer;
+        var table = layui.table;
+        var form = layui.form;
+        var laydate = layui.laydate;
+        var upload = layui.upload;
         var $ = layui.jquery;
-        yb();
 
+
+        yb();
         $("#flush").on('click',function () {
             yb();
         });
@@ -399,6 +428,7 @@
                 $("#weekly").text(data.weekly);
             });
         }
+
 
         //触发事件
         var active = {
