@@ -73,7 +73,6 @@
         $('#sub').click(function () {
             var file = $('.layui-upload-file')[0].files[0];
             var remark = $('#remark').val().trim();
-            alert(file);
             if (file == null) {
                 layer.msg('请选择文件');
                 return;
@@ -137,7 +136,7 @@
                 area: ['400px', '300px'],
                 fixed: false, //不固定
                 maxmin: true,
-                shadeClose: true, //开启遮罩关闭
+                shadeClose: false, //开启遮罩关闭
                 content: $('#windows')
             })
         });

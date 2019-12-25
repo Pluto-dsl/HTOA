@@ -136,7 +136,7 @@
                     area: ['700px', '550px'],
                     fixed: false, //不固定
                     maxmin: true,
-                    shadeClose: true, //开启遮罩关闭
+                    shadeClose: false, //开启遮罩关闭
                     content: ['${pageContext.request.contextPath}/zhq/updateeNotice?noticeId='+data.noticeId]
                 });
                 layedit.build('TT2'); //建立编辑器
@@ -157,7 +157,7 @@
                     area: ['700px', '550px'],
                     fixed: false, //不固定
                     maxmin: true,
-                    shadeClose: true, //开启遮罩关闭
+                    shadeClose: false, //开启遮罩关闭
                     content: ['${pageContext.request.contextPath}/zhq/LookNotice?noticeId='+data.noticeId],
                     cancel: function(index, layero){
                         layer.close(index);
@@ -194,7 +194,7 @@
                     area: ['800','400'],
                     fixed: false, //不固定
                     maxmin: true,
-                    shadeClose: true, //开启遮罩关闭
+                    shadeClose: false, //开启遮罩关闭
                     content: $('#windows2')
                 })
             }
@@ -210,7 +210,7 @@
                 area: ['700px', '550px'],
                 fixed: false, //不固定
                 maxmin: true,
-                shadeClose: true, //开启遮罩关闭
+                shadeClose: false, //开启遮罩关闭
                 content: $('#windows')
             });
             layedit.build('TT'); //建立编辑器
