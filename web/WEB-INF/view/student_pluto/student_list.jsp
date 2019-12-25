@@ -285,7 +285,7 @@
                     ,{field:'stuname', title:'学生姓名', width:120}
                     ,{field:'sex', title:'性别', width:80}
                     // ,{field:'middleschool', title:'毕业学校', width:150}
-                    ,{field:'entertime', title:'入学时间',width:160,templet : "<div>{{layui.util.toDateString(d.startDate, 'yyyy年MM月dd日')}}</div>"}
+                    ,{field:'entertime', title:'入学时间',width:160,templet : "<div>{{layui.util.toDateString(d.entertime, 'yyyy年MM月dd日')}}</div>"}
                     ,{field:'phone', title:'学生电话', width:150}
                     ,{field:'addr', title:'家庭住址', width:260}
                     ,{field:'className', title:'所在班级', width:250}
@@ -478,7 +478,7 @@
                         // , {field: 'happenid', title: 'ID', width: 80, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'}
                         , {field: 'stuname', title: '学生姓名'}
                         , {field: 'happening', title: '记录情况'}
-                        , {field: 'optime', title: '记录时间',templet : "<div>{{layui.util.toDateString(d.startDate, 'yyyy年MM月dd日')}}</div>"}
+                        , {field: 'optime', title: '记录时间',templet : "<div>{{layui.util.toDateString(d.optime, 'yyyy年MM月dd日')}}</div>"}
                         , {field: 'empName', title: '记录人'}
                         , {fixed: 'right', title: '操作', toolbar: '#hrzxbar'}
                     ]]
@@ -531,7 +531,7 @@
                         , {field: 'testType', title: '考试类型'}
                         , {field: 'score', title: '分数'}
                         , {field: 'Rescore', title: '补考分数'}
-                        , {field: 'scoreTime', title: '考试时间',templet : "<div>{{layui.util.toDateString(d.startDate, 'yyyy年MM月dd日')}}</div>"}
+                        , {field: 'scoreTime', title: '考试时间',templet : "<div>{{layui.util.toDateString(d.scoreTime, 'yyyy年MM月dd日')}}</div>"}
                         , {field: 'remark', title: '备注'}
                         , {fixed: 'right', title: '操作', toolbar: '#hrksbar'}
                     ]]
