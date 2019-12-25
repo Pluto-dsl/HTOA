@@ -24,8 +24,9 @@
         <table style="height: 370px;width: 800px;margin-top: 10px;border-collapse:separate; border-spacing:10px;" border="0" >
             <tr style="height: 40px">
                 <td align="right">员工姓名:</td>
-                <td align="left"><input maxlength="10" autocomplete="off" class="layui-input" lay-verify="required"  id="empName" name="empName" placeholder="请输入员工姓名"
-                                        value="" styl0e="float: left;width:200px;"  οnkeyup="value=value.replace(/[\W]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+                <td align="left">
+                    <input maxlength="10" class="layui-input" lay-verify="required"  id="empName" name="empName" placeholder="请输入员工姓名"
+                           value="" style="width:200px;float: left">
                     <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
                 </td>
                 <td align="right">部门名称:</td>
@@ -72,7 +73,7 @@
                 </td>
                 <td align="right">籍贯:</td>
                 <td align="left">
-                    <input maxlength="20" class="layui-input" type="text" id="nation" name="nation" value=""   style="width:200px;">
+                    <input placeholder="请输入籍贯" maxlength="20" class="layui-input" type="text" id="nation" name="nation" value=""   style="width:200px;">
                 </td>
             </tr>
 
