@@ -168,10 +168,10 @@
                     for(var a= 0;a<ids.length;a++){
                         $.get("${pageContext.request.contextPath}/jack/delEnrollment?id="+ids[a],function (d) {
                             layer.msg('删除成功');
-                            table.reload('test');
+                            window.location.reload();
                         });
                     }
-                    table.reload('test');
+                    window.location.reload();
                     layer.close(index);
                 });
 

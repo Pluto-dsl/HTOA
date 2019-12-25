@@ -175,10 +175,10 @@
                     for(var a= 0;a<ids.length;a++){
                         $.get("${pageContext.request.contextPath}/jack/delAduitLog?type=duo&cid="+ids[a],function (d) {
                             layer.msg('删除成功');
-                            table.reload('AduitLoglist');
+                            window.location.reload();
                         });
                     }
-                    table.reload('AduitLoglist');
+                    window.location.reload();
                     layer.close(index);
                 });
             }
@@ -192,13 +192,13 @@
                     $.get("${pageContext.request.contextPath}/jack/delAduitLog?cid="+cid,function (d) {
                         if(d > 0){
                             layer.msg('删除成功');
-                            table.reload('AduitLoglist');
+                            window.location.reload();
                         }else if (d === null){
                             layer.msg('删除失败');
-                            table.reload('AduitLoglist');
+                            window.location.reload();
                         }
                     });
-                    table.reload('AduitLoglist');
+                    window.location.reload();
                     layer.close(index);
                 });
             }else if(obj.event === 'sel'){
