@@ -1,6 +1,7 @@
 package com.wtt.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.publics.service.LoggingService;
 import com.publics.vo.empModel.WeeklogVo;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.wtt.service.Wtt_EmpService;
@@ -26,6 +27,8 @@ import java.util.List;
 public class Wtt_EmpsController {
     @Resource
     Wtt_EmpService empService;
+    @Resource
+    private LoggingService log;
     //无权时跳转页面
     @RequestMapping("/toNo")
     public String toNo(){
@@ -76,25 +79,28 @@ public class Wtt_EmpsController {
         weeklogVo.setWorkday(new Date());
         weeklogVo.setEmpid(id);
         empService.add(weeklogVo);
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"新增了我的周报");
         return "redirect:/emp/toEmpPaper";
     }
 
-    //修改操作
+    //修改我的周报操作
     @RequestMapping(value = "/update")
-    public String update(WeeklogVo weeklogVo) throws ParseException {
+    public String update(WeeklogVo weeklogVo,HttpSession session) throws ParseException {
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
         int id = weeklogVo.getWeeklogid();
 
         WeeklogVo weeklogVo1 = empService.weeklogvo(id);
         weeklogVo.setEmpid(weeklogVo1.getEmpid());
         weeklogVo.setWorkday(weeklogVo1.getWorkday());
         empService.update(weeklogVo);
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"修改了我的周报");
         return "redirect:/emp/toEmpPaper";
     }
 
     //删除
     @RequestMapping(value = "/deleteEmpPaper")
-    public String deleteEmpPaperPage(HttpServletResponse response,int id){
-        /*System.out.println("id为："+id);*/
+    public String deleteEmpPaperPage(HttpServletResponse response,int id,HttpSession session){
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
         empService.delete(id);
         try {
             PrintWriter printWriter = response.getWriter();
@@ -104,6 +110,7 @@ public class Wtt_EmpsController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"删除了我的周报");
         return "redirect:/emp/selectEmpPaper";
     }
 

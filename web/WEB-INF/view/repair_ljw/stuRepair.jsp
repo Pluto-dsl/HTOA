@@ -18,24 +18,24 @@
 </head>
 <body>
 <div id="windows" style="padding-right: 5%;display: none;">
-    <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/myRepair/addRepair" method="post">
+    <form id="MyForm" class="layui-form" action="${pageContext.request.contextPath}/myRepair/addRepair" method="post" onsubmit="layer.load(0, {shade: false})">
         <br><br>
         <div class="layui-form-item">
             <label class="layui-form-label">设备名称</label>
             <div class="layui-input-block">
-                <input type="text" name="equipmentType" lay-verify="title" autocomplete="off" placeholder="请输入报修设备名称" class="layui-input">
+                <input type="text" name="equipmentType" lay-verify="title" autocomplete="off" placeholder="请输入报修设备名称" class="layui-input" lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">描述</label>
             <div class="layui-input-block">
-                <input type="text" name="remark" lay-verify="title" autocomplete="off" placeholder="请输入对维修设备的详情" class="layui-input">
+                <input type="text" name="remark" lay-verify="title" autocomplete="off" placeholder="请输入对维修设备的详情" class="layui-input" lay-verify="required">
             </div>
         </div>
         <br>
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button type="submit" class="layui-btn">立即提交</button>
+                <button type="submit" class="layui-btn" lay-submit="">立即提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
@@ -45,13 +45,14 @@
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="newRepair">填写保修申请单</button>
+        <button class="layui-btn layui-btn-sm" lay-event="newRepair"><i class="layui-icon layui-icon-add-1"></i>填写保修申请单</button>
     </div>
 </script>
 </body>
 <script>
-    layui.use('table', function(){
+    layui.use(['table','form'], function(){
         var table = layui.table;
+        var form = layui.form;
         table.render({
             elem: '#RepairList'
             ,url:'${pageContext.request.contextPath}/myRepair/getMyRepairData'
@@ -62,7 +63,7 @@
                 {field:'equipmentId', title:'报修编号', fixed: 'left', unresize: true, sort: true}
                 ,{field:'equipmentType', title:'保修设备名称',fixed: 'left'}
                 ,{field:'className', title:'班级名称'}
-                ,{field:'stuName', title:'员工姓名'}
+                ,{field:'stuName', title:'学生姓名'}
                 ,{field:'startTime', title:'申请时间', width:160, unresize: true, sort: true}
                 ,{field:'remark', title:'备注'}
                 ,{field:'empId', title:'处理人'}
@@ -118,8 +119,10 @@
 </script>
 <script>
     function delRepair(id) {
+        var index = layer.load(0, {shade: false});
         var data = {delRepairId:id};
         $.post("${pageContext.request.contextPath}/logs/delRepair",data,function (data) {
+            layer.close(index);
             console.log(data)
         },"json");
     }

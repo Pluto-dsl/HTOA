@@ -46,7 +46,7 @@
             </form>
         </td>
         <td>
-            <button class="layui-btn menu" id="btn">搜索</button>
+            <button class="layui-btn menu" id="btn"><i class="layui-icon layui-icon-search"></i>搜索</button>
         </td>
     </tr>
 </table>

@@ -3,6 +3,7 @@ package com.norman.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.norman.service.Ljw_EmpService;
+import com.publics.service.LoggingService;
 import com.publics.vo.empModel.ChatRecordVo;
 import com.publics.vo.empModel.WeeklogVo;
 import com.publics.vo.empModel.emp.EmpVo;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -27,6 +29,9 @@ import java.util.*;
 public class Ljw_EmpController {
     @Resource
     private Ljw_EmpService empService;
+
+    @Resource
+    private LoggingService loggingService;
 
     @RequestMapping("/toNo")
     public String toNo(){
@@ -115,21 +120,28 @@ public class Ljw_EmpController {
     @RequestMapping(value = "/newChatRecord")
     public String newChatRecord(ChatRecordVo vo,HttpServletRequest request){
         String chatIds = request.getParameter("chatIds");
+        HttpSession session = request.getSession();
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
          //System.out.println(chatIds);
         if ("0".equals(chatIds)||"".equals(chatIds) || null == chatIds){
             vo.setTeacher(((EmpVo)request.getSession().getAttribute("admin")).getEmpId());
             empService.addChatRecord(vo);
+            loggingService.addLog(empVo.getEmpId(),"新增了一条谈心记录");
         }else {
             vo.setTeacher(((EmpVo)request.getSession().getAttribute("admin")).getEmpId());
             vo.setChatid(Integer.parseInt(chatIds));
             empService.setChatRecord(vo);
+            loggingService.addLog(empVo.getEmpId(),"修改了一条谈心记录");
         }
         return "redirect:/ljw/toChatRecordPage";
     }
 
     @RequestMapping(value = "/delChatRecord")
-    public void delChatRecord(HttpServletResponse response,int id) throws IOException {
+    public void delChatRecord(HttpServletRequest request,HttpServletResponse response,Integer id) throws IOException {
+        HttpSession session = request.getSession();
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
         empService.delChatRecord(id);
+        loggingService.addLog(empVo.getEmpId(),"删除了一条谈心记录");
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();
         out.print("1");

@@ -2,6 +2,7 @@ package com.wtt.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.publics.service.LoggingService;
 import com.publics.vo.educ.CourseVo;
 import com.publics.vo.educ.TrialVo;
 import com.publics.vo.empModel.emp.EmpVo;
@@ -22,6 +23,8 @@ import java.util.List;
 public class Wtt_TrialController {
     @Resource
     Wtt_TrialService wtt_trialService;
+    @Resource
+    private LoggingService log;
     //无权时跳转页面
     @RequestMapping("/toNo")
     public String toNo(){
@@ -82,14 +85,18 @@ public class Wtt_TrialController {
     //新增试讲培训
     @RequestMapping(value = "/addtrial")
     public String addtrial(TrialVo trialVo, HttpSession session){
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
         wtt_trialService.add(trialVo);
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"新增了试讲培训");
         return "redirect:/training/rehearsal_trainingPage";
     }
 
     //删除试讲培训
     @RequestMapping(value = "/deletetrial")
-    public String deleteEmpPaperPage(HttpServletResponse response,int id){
+    public String deleteEmpPaperPage(HttpServletResponse response,int id, HttpSession session){
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
         wtt_trialService.delete(id);
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"删除了试讲培训");
         return "redirect:/emp/selectEmpPaper";
     }
 }

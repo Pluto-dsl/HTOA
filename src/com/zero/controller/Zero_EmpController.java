@@ -74,7 +74,7 @@ public class Zero_EmpController {
         empService.update(empVo);
         //保存日志
         EmpVo emp = (EmpVo) session.getAttribute("admin");
-        log.addLog(emp.getEmpId(),emp.getEmpName()+"新增修改员工资料:"+empVo.getEmpName());
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"修改员工资料:"+empVo.getEmpName());
         return "redirect:toemp";
     }
     @RequestMapping(value = "/deleteEmp")//删除员工
@@ -85,13 +85,14 @@ public class Zero_EmpController {
         int flag=0;
         int depI = empService.selDep(empName,depName);//查部门
         int stuClassI = empService.selStudentClass(empId);//查询班级中的职务
-        //保存日志
-        EmpVo emp = (EmpVo) session.getAttribute("admin");
-        log.addLog(emp.getEmpId(),emp.getEmpName()+"删除了一条员工资料id为:"+empId);
+        int stuRepLyI = empService.selStuRepScore(empId);//查询答辩成绩
         if(depI>0){
             flag+=1;
         }
         if(stuClassI >0){
+            flag+=1;
+        }
+        if(stuRepLyI>0){
             flag+=1;
         }
         if(flag>0){
@@ -102,6 +103,10 @@ public class Zero_EmpController {
             empService.deleteChatRecord(empId);//删除谈心记录
             empService.deleteAssTotal(empId);//删除考核
             empService.deleteEmp(empVo);//删除员工表中的数据
+
+            //保存日志
+            EmpVo emp = (EmpVo) session.getAttribute("admin");
+            log.addLog(emp.getEmpId(),emp.getEmpName()+"删除了一条员工资料id为:"+empId);
             return "1";
         }
     }

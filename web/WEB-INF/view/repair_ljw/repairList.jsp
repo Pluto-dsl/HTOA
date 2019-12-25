@@ -26,20 +26,22 @@
 <body>
 <div id="window" style="padding-right:5%;display: none">
     <br><br>
-    <div class="layui-form-item">
-        <label class="layui-form-label">处理结果：</label>
-        <div class="layui-input-block">
-            <input type="hidden" name="repairId">
-            <input type="text" name="result" autocomplete="off" placeholder="请输入处理结果" class="layui-input">
+    <form class="layui-form" method="post" action="${pageContext.request.contextPath}/logs/manageRepair"  onsubmit="layer.load(0, {shade: false});">
+        <div class="layui-form-item">
+            <label class="layui-form-label">处理结果：</label>
+            <div class="layui-input-block">
+                <input type="hidden" name="repairId">
+                <input type="text" name="result" autocomplete="off" placeholder="请输入处理结果" class="layui-input" lay-verify="required">
+            </div>
         </div>
-    </div>
-    <br>
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            <button name="submit" class="layui-btn">提交</button>
-            <button name="close" class="layui-btn layui-btn-primary">取消</button>
+        <br>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit="">立即提交</button>
+                <button name="close" class="layui-btn layui-btn-primary">取消</button>
+            </div>
         </div>
-    </div>
+    </form>
 </div>
 <div class="layui-tab">
     <ul class="layui-tab-title">
@@ -55,18 +57,30 @@
         </div>
     </div>
 </div>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="reloadData"><i class="layui-icon layui-icon-refresh-3"></i>刷新表格</button>
+    </div>
+</script>
 
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="manage">处理</a>
+    <a class="layui-btn layui-btn-xs" lay-event="manage" >处理</a>
 </script>
 </body>
 <script>
-    layui.use('table', function(){
+    layui.use(['table','form'], function(){
         var table = layui.table;
+        var form = layui.form;
         var tableIns = table.render({
             elem: '#empRepairList'
             ,url:'${pageContext.request.contextPath}/logs/getEmpRepairData'
-            ,title: '我的报修列表'
+            ,title: '员工'
+            ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                title: '提示'
+                ,layEvent: 'LAYTABLE_TIPS'
+                ,icon: 'layui-icon-tips'
+            }]
             ,cols: [[
                 {field:'equipmentId', title:'ID', width:60, fixed: 'left', unresize: true, sort: true}
                 ,{field:'equipmentType', title:'报修设备名称',width: 140,fixed: 'left'}
@@ -90,10 +104,16 @@
                 }
             }
         });
-        table.render({
+        var stuTableIns = table.render({
             elem: '#stuRepairList'
             ,url:'${pageContext.request.contextPath}/logs/getStuRepairData'
-            ,title: '我的报修列表'
+            ,title: '学生报修'
+            ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                title: '提示'
+                ,layEvent: 'LAYTABLE_TIPS'
+                ,icon: 'layui-icon-tips'
+            }]
             ,cols: [[
                 {field:'equipmentId', title:'ID', width:60, fixed: 'left', unresize: true, sort: true}
                 ,{field:'equipmentType', title:'报修设备名称',width: 140,fixed: 'left'}
@@ -115,6 +135,21 @@
                 }else {
                     $("#stuListTitle").text("学生维修列表");
                 }
+            }
+        });
+
+        //头工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'reloadData':
+                    tableIns.reload({
+                        method:'post'
+                    });
+                    stuTableIns.reload({
+                        method:'post'
+                    });
+
             }
         });
 
@@ -141,22 +176,24 @@
                 });
             }
         });
-        //点击提交按钮触发的方法
+        /*//点击提交按钮触发的方法
         $('button[name="submit"]').click(function (obj) {
+            var index = layer.load(0, {shade: false});
             var repairId = $('input[name="repairId"]').val();
             var result = $('input[name="result"]').val();
             var data = {
                 repairId:repairId,
                 result:result
             };
-            $.post("${requestScope.context.contextPath}/logs/manageRepair",data,function (data) {
+            $.post("${pageContext.request.contextPath}/logs/manageRepair",data,function (data) {
+                layer.close(index);
                 console.log(data);
                 layer.closeAll();
                 tableIns.reload({
                     method:'post'
                 });
             },"json")
-        });
+        });*/
         //点击取消按钮触发的方法
         $('button[name="close"]').click(function (obj) {
             layer.closeAll();
@@ -166,8 +203,5 @@
         var $ = layui.jquery;
         var element = layui.element;
     })
-</script>
-<script>
-
 </script>
 </html>

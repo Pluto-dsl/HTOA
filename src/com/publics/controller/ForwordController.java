@@ -22,8 +22,8 @@ import java.net.UnknownHostException;
 @Controller
 public class ForwordController {
 
-/*    @Resource
-    private static LoggingService service;*/
+    @Resource
+    private LoggingService log;
 
     @RequestMapping("/toPage/{path}")
     public String tomain(@PathVariable("path") String path, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -40,7 +40,4 @@ public class ForwordController {
         return path;
     }
 
-/*    public static void addLog(SystemLogVo logVo){
-        service.addLog(logVo);
-    }*/
 }

@@ -3,6 +3,7 @@ package com.norman.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.norman.service.Ljw_LogsService;
+import com.publics.service.LoggingService;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.logistics.EquipmentRepairVo;
 import org.hibernate.Session;
@@ -27,6 +28,9 @@ import java.util.List;
 public class Ljw_LogisticsController {
     @Resource
     private Ljw_LogsService logsService;
+
+    @Resource
+    private LoggingService loggingService;
 
     @RequestMapping("/toNo")
     public String toNo(){
@@ -55,6 +59,7 @@ public class Ljw_LogisticsController {
         repair.setUserType(2);
         repair.setStartTime(new Date());
         logsService.newRepair(repair);
+        loggingService.addLog(user,"添加了一条报修申请");
         return "redirect:/logs/toMyRepair";
     }
 
@@ -100,6 +105,7 @@ public class Ljw_LogisticsController {
     @ResponseBody
     @RequestMapping(value = "/getMyRepairData")
     public void getMyRepairData(HttpServletResponse response,HttpServletRequest request,int page,int limit) throws IOException {
+        System.out.println(page);
         HttpSession session = request.getSession();
         EmpVo vo = (EmpVo) session.getAttribute("admin");
         int user = vo.getEmpId();
@@ -114,28 +120,32 @@ public class Ljw_LogisticsController {
         out.flush();
         out.close();
     }
-    @ResponseBody
     @RequestMapping(value = "/manageRepair")
-    public void updRepair(int repairId,String result){
-         //System.out.println(repairId);
-         //System.out.println(result);
+    public String updRepair(int repairId,String result,HttpServletRequest request,HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession();
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
         EquipmentRepairVo vo = logsService.getRepair(repairId);
-         //System.out.println(vo);
         vo.setStatus(1);
         vo.setEndTime(new Date());
         vo.setResult(result);
-        vo.setEmpId(1);
-         //System.out.println(vo);
+        vo.setEmpId(empVo.getEmpId());
         logsService.updRepair(vo);
+        loggingService.addLog(empVo.getEmpId(),"完成了一条报修申请");
+        return "redirect:/logs/toRepairPage";
     }
 
+    @ResponseBody
     @RequestMapping(value = "/delRepair")
-    public void delRepair(int delRepairId){
+    public String delRepair(int delRepairId,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
         logsService.delRepair(delRepairId);
+        loggingService.addLog(empVo.getEmpId(),"删除了一条报修管理");
+        return "200";
     }
 
     /**
-     * 保修管理相关方法
+     * 报修管理相关方法
      * */
     @RequestMapping(value = "/toRepairPage")
     public String toRepairPage(){
