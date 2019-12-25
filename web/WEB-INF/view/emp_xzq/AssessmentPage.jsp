@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!doctype html>
 <html>
 <head>
     <title> </title>
@@ -16,6 +17,7 @@
 <div id="addWin" style="display:none;">
     <form id="addfrom" class="layui-form" method="post" >
         <table align="center" style="margin-top: 5%;border-collapse: separate;border-spacing: 10px 30px;">
+            <input type="hidden" name="" value="">
             <tr>
                 <td>考核内容:</td>
                 <td><input type="text" id="aduitName" name="aduitName" required lay-verify="required" placeholder="请输入课程类型" autocomplete="off" class="layui-input"></td>

@@ -1,6 +1,7 @@
 package com.zero.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.publics.service.LoggingService;
 import com.publics.vo.empModel.WeeklogVo;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.utills.StringUtill;
@@ -23,7 +24,8 @@ import java.util.*;
 public class Zero_EmpController {
     @Resource
     EmpsService empService;
-
+    @Resource
+    LoggingService log;
     @RequestMapping(value = "/toemp")//所有员工资料页
     public String toemp(Model model) {//去员工资料页
         //查询所有部门
@@ -55,38 +57,43 @@ public class Zero_EmpController {
     }
 
     @RequestMapping(value = "/addemp")//添加员工
-    public String addemp(EmpVo empVo){
+    public String addemp(EmpVo empVo,HttpSession session){
         empVo.setEmpId(0);
         empVo.setStatus(1);//设置启用状态
         empVo.setPassword("123456");
         empVo.setPostId(101);
         empService.addEmp(empVo);
+        //保存日志
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"新增了一个员工:"+empVo.getEmpName());
         return "redirect:toemp";
     }
 
     @RequestMapping(value = "/updateEmp")//修改员工
-    public String updateEmp(EmpVo empVo){
+    public String updateEmp(EmpVo empVo,HttpSession session){
         empService.update(empVo);
+        //保存日志
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"修改员工资料:"+empVo.getEmpName());
         return "redirect:toemp";
     }
     @RequestMapping(value = "/deleteEmp")//删除员工
     @ResponseBody
-    public String delete(int empId,String depName,String empName){
+    public String delete(int empId,String depName,String empName,HttpSession session){
         EmpVo empVo = new EmpVo();//员工
         empVo.setEmpId(empId);
         int flag=0;
         int depI = empService.selDep(empName,depName);//查部门
-
         int stuClassI = empService.selStudentClass(empId);//查询班级中的职务
-        System.out.println("部门"+depI);
-        System.out.println("班级"+stuClassI);
+        //保存日志
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"删除了一条员工资料id为:"+empId);
         if(depI>0){
             flag+=1;
         }
         if(stuClassI >0){
             flag+=1;
         }
-        System.out.println(flag);
         if(flag>0){
             return "0";
         }else{
@@ -110,8 +117,11 @@ public class Zero_EmpController {
 
     @RequestMapping(value = "/resetPwd/{empId}")//重置密码
     @ResponseBody
-    public String resetPwd(@PathVariable("empId") int empId, Model model){
+    public String resetPwd(@PathVariable("empId") int empId,HttpSession session){
         empService.resetPwd(empId);
+        //保存日志
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"重置员工的密码,id:"+empId);
         return "true";
     }
     @RequestMapping(value = "/seek")
@@ -146,24 +156,29 @@ public class Zero_EmpController {
     }
     @RequestMapping(value = "/status")
     @ResponseBody
-    public void status(int empId){//修改员工状态
+    public void status(int empId,HttpSession session){//修改员工状态
         //先查询当前用户的状态
         int state = empService.statue(empId) == 1?0:1;
+        //保存日志
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了员工状态,id为:"+empId);
         //修改状态
         empService.status(state,empId);
     }
 
     @RequestMapping(value = "/editpwd")
-    public void editpsd(String pwd,String pwd1,HttpSession session,HttpServletResponse response) throws IOException {//修改员工状态
+    public void editpsd(String pwd,String pwd1,HttpSession session,HttpServletResponse response) throws IOException {//修改员工密码
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter writer = response.getWriter();
         //输入的原密码是否正确
         EmpVo emp =(EmpVo)session.getAttribute("admin");
         if(!pwd.equals(emp.getPassword())){//原密码错误
+            log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了一次密码,失败了!");
             writer.print("error");
             writer.flush();
             writer.close();
         }else {//密码正确
+            log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了一次密码,成功了!");
             empService.updatePwd(emp.getEmpId(),pwd1);
         }
         writer.print("ok");

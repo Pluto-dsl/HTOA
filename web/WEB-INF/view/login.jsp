@@ -184,7 +184,7 @@
     <span style="<spring:message code="span-font-size"/>;color: #ffffff;">︱宏图软件教育-办公管理系统</span><br>
 </div>
 <div id="login" align="center">
-    <form style="<spring:message code="form-style"/>">
+    <div style="<spring:message code="form-style"/>">
         <span class="title">用户登录</span>
         <a href="?lang=<spring:message code="link-href"/>" style="top: <spring:message code="a-top"/>;left:<spring:message code="a-left"/>;position: absolute;"><i style="font-size: <spring:message code="i-font-size"/>;" class="login-icon layui-icon <spring:message code="icon-class"/>"></i></a>
         <div class="hr"></div>
@@ -204,20 +204,35 @@
                 <div class="btn">&gt;&gt;</div>
             </div>
         </div>
-        <div class="login-row" id="submitDiv" style="cursor: not-allowed;">
+        <div class="layui-form" style="<spring:message code="check-margin-left"/>;height: 20px;float: left;">
+            <div class="layui-form-item" style="margin-left: 0px;width: 100px;">
+                <input type="checkbox" name="savePwd" lay-skin="primary"  title="记住密码"/>
+            </div>
+        </div>
+        <div class="login-row" id="submitDiv" style="cursor: not-allowed;margin-top: 10px;">
             <input id="submit" type="button" class="layui-btn layui-btn-primary login-submit" value="登录" />
         </div>
-    </form>
+    </div>
     <%--    </form>--%>
 </div>
 <div id="down">
     感谢<a target="_blank" href="https://www.layui.com/">LayUI</a>提供前端支持<br>
     感谢<a target="_blank" href="https://www.microsoft.com/zh-cn/">microsoft</a>提供封面<br>
-    感谢我们可爱的组长丁胜禄先生<br>
+    感谢我们可爱的组长<a href="tencent://message/?uin=314114835&Site=http://vps.shuidazhe.com&Menu=yes">丁胜禄</a>先生<br>
     在这里先随便写一点什么，日后有时间在来改吧
 </div>
 <script>
+    $(document).ready(function () {
+        var flag = $.cookie("savePwd");
+        if (flag){
+            $("input[name='phone']").val($.cookie("phone"));
+            $("input[name='pwd']").val($.cookie("pwd"));
+            $("input[name='savePwd']").attr("checked","");
+        }
+    });
     $("#submit").click(function () {
+        var flag = $(".layui-form-checkbox").hasClass("layui-form-checked");
+        console.log(flag);
         var phone = $("input[name='phone']").val();
         var pwd = $("input[name='pwd']").val();
         var data = {
@@ -235,6 +250,15 @@
                 $('input[name="pwd"]').focus();
             } else if (data.code === "admin") {
                 layer.msg("登录成功<br>正在跳转页面");
+                if (flag){
+                    $.cookie("phone",phone);
+                    $.cookie("pwd",pwd);
+                    $.cookie("savePwd",flag);
+                }else {
+                    $.removeCookie("phone");
+                    $.removeCookie("pwd");
+                    $.removeCookie("savePwd");
+                }
                 window.location.href = "${pageContext.request.contextPath}/toPage/oamain"
             } else if (data.code === "user") {
                 layer.msg("登录成功<br>正在跳转页面");

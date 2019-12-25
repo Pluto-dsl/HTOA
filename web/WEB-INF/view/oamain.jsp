@@ -47,9 +47,11 @@
             height: 40%;
 
         }
-        .layui-col-xs3{
+        .layui-col-xs3 {
             float: none;
             width: 100%;
+            height: 16%;
+            line-height: 2;
         }
         .layui-col-xs3:hover{
             background-color: #dddbe0;
@@ -287,6 +289,11 @@
                                data-url="${pageContext.request.contextPath}/controller/toUserList"
                                data-id="权限管理" data-title="权限管理">权限管理</a></dd>
                     </dl>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;"class="site-demo-active" data-type="tabAdd"
+                               data-url="${pageContext.request.contextPath}/log/toLogList"
+                               data-id="系统日志" data-title="系统日志">系统日志</a></dd>
+                    </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="tt" lay-tips="系统设置" lay-direction="2"><i class="layui-icon layui-icon-util"></i><cite>系统设置</cite></a>
@@ -337,12 +344,6 @@
                                                    data-id="考勤管理" data-title="考勤管理" >
                                                     <i class="layui-icon layui-icon-form"></i>
                                                     <cite>未打卡待审批(<span id="clock">0</span>)</cite>
-                                                </a>
-                                            </li>
-                                             <li class="layui-col-xs3">
-                                                <a lay-href="">
-                                                    <i class="layui-icon layui-icon-face-surprised"></i>
-                                                    <cite>未读通知公告(<span id="Notice">0</span>)</cite>
                                                 </a>
                                             </li>
                                             <li class="layui-col-xs3">

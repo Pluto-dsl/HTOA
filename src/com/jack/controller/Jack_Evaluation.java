@@ -2,6 +2,7 @@ package com.jack.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jack.service.Jack_Service;
+import com.publics.service.LoggingService;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.vo.empModel.evaluationVo;
 import com.publics.vo.empModel.teacherTotalVo;
@@ -39,6 +40,9 @@ public class Jack_Evaluation {
     @Resource
     Wtt_StudentService studentService;
 
+    @Resource
+    LoggingService log;
+
 
     @RequestMapping(value = "toEvaluationContext")
     public String toEvaluationContext(){
@@ -60,7 +64,6 @@ public class Jack_Evaluation {
     public Map teacherList(){
         Map map = new HashMap();
         List list = service.selTeacherList();
-         //System.out.println(list+"================");
         map.put("msg","提示");
         map.put("code","0");
         map.put("data",list);
@@ -69,22 +72,24 @@ public class Jack_Evaluation {
 
     @RequestMapping(value = "/addEvaluation")
     @ResponseBody
-    public String addEvaluation(String evaluationName,String evaluationType,String remark){
-         //System.out.println(evaluationName+evaluationType+remark+"---------------");
+    public String addEvaluation(HttpSession session,String evaluationName,String evaluationType,String remark){
         evaluationVo evaluation = new evaluationVo();
         evaluation.setEvaluationName(evaluationName);
         evaluation.setEvaluationType(Integer.parseInt(evaluationType));
         evaluation.setScore(10);
         evaluation.setIsOpen(2);
         int a = service.addAevaluation(evaluation);
-         //System.out.println(a+"-===-=-=-==-=-");
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"新增了评价");
         return "成功";
     }
 
     @RequestMapping(value = "/delEvaluation")
     @ResponseBody
-    public String delEvaluation(String evaluationid){
+    public String delEvaluation(HttpSession session,String evaluationid){
         service.delAevaluation(Integer.parseInt(evaluationid));
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"删除了评价");
         return "成功";
     }
 
@@ -99,7 +104,6 @@ public class Jack_Evaluation {
         int currPage = Integer.parseInt(request.getParameter("page"));
         int pageSize = Integer.parseInt(request.getParameter("limit"));
         response.setContentType("text/html;charset=utf-8");
-         //System.out.println(Name+"fwfewf"+duties+"---------------");
         List list = service.selTeacherListE(Name,duties,currPage,pageSize);
         PrintWriter out = response.getWriter();
         JSONObject json = new JSONObject();
@@ -296,7 +300,6 @@ public class Jack_Evaluation {
         for(Task task: mytask){
             //根据任务id取得单据id
             Object sid = taskService.getVariable(task.getId(),"holiday");
-            //System.out.println("sid"+sid);
             //如果有任务进入判断里面
             if(zero_service.mytask(Integer.parseInt((sid+""))).size()>0){
                 Map m = (Map) zero_service.mytask(Integer.parseInt((sid+""))).get(0);

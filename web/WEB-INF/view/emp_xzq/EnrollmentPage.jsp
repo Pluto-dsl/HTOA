@@ -26,7 +26,6 @@
 </script>
 <script type="text/javascript">
     function createTime(v){
-        console.log(v);
         if(v == undefined || v ==''){
             return "";
         }else {
@@ -46,6 +45,7 @@
     }
 </script>
 <script>
+    var dataE;
     layui.use([ 'element', 'table', 'layer', 'form' ,'laydate','upload'],function() {
         var element = layui.element;
         var layer = layui.layer;
@@ -53,6 +53,7 @@
         var form = layui.form;
         var laydate = layui.laydate;
         var upload = layui.upload;
+
 
         //执行一个laydate实例
         laydate.render({
@@ -75,14 +76,13 @@
                 ,{field:'school', title:'学校', width:120}
                 ,{field:'classes', title:'班级', width:120}
                 ,{field:'amount', title:'预定报名费', width:120}
-                ,{field:'testTime', title:'员工姓名', width:120}
-                ,{field:'startTime',templet:function (d){return createTime(d.startTime);}, title:'试学时间', width:120}
+                ,{field:'testTime',templet:function (d){return createTime(d.startTime);}, title:'试学时间', width:120}
+                ,{field:'enrollMoneyTime',templet:function (d){return createTime(d.startTime);}, title:'发放时间', width:120}
                 ,{field:'signdate',templet:function (d){return createTime(d.signdate);}, title:'录入时间', width:120}
                 ,{field:'empid', title:'录入人', width:120}
                 ,{field:'status', title:'学生状态', width:120}
                 ,{field:'remark', title:'员工姓名', width:120}
                 ,{field:'studType', title:'班级类别', width:120}
-                ,{field:'paymentTime', title:'员工姓名', width:120}
                 ,{field:'score', title:'学习成绩', width:120}
                 ,{field:'enrollMoneyTime',templet:function (d){return createTime(d.enrollMoneyTime);}, title:'发放时间', width:120}
                 ,{field:'reviewStatus', title:'报名费状态', width:120}
@@ -90,7 +90,7 @@
                 ,{field:'reviewer', title:'审核人', width:120}
                 ,{field:'reviewerTime',templet:function (d){return createTime(d.reviewerTime);}, title:'审核时间', width:120}
                 ,{field:'majorId', title:'学生专业', width:120}
-                ,{toolbar:'#toolDemo',fixed: 'right', title:'操作', width:100}
+                ,{toolbar:'#toolDemo',fixed:'right',unresize:true,sort: true, title:'操作', width:100}
             ]]
             ,page: true
             ,limit:15
@@ -107,27 +107,32 @@
 
         table.on('tool(test)',function (obj) {
             var data = obj.data;
-            if(obj.event === 'del'){
-                var cid = data.attId;
-                layer.confirm('真的删除行么', function(index){
-                    $.get("${pageContext.request.contextPath}/jack/delAtt?cid="+cid,function (d) {
-                        if(d > 0){
-                            layer.msg('删除成功');
-                            table.reload('test');
-                        }else if (d === null){
-                            layer.msg('删除失败');
-                            table.reload('test');
-                        }
+            dataE = obj.data;
+            if(obj.event === 'edit'){
+                layer.open({
+                    type: 2,
+                    title:'修改招生信息',
+                    skin: 'layui-layer-demo', //样式类名
+                    closeBtn: 1, //不显示关闭按钮
+                    area: ['750px', '600px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    shadeClose: false, //开启遮罩关闭
+                    content: ['${pageContext.request.contextPath}/jack/toEditEnrollment?id='+data.enrollmentid,'no'],
+                    cancel: function(index, layero){
+                        layer.close(index);
                         table.reload('test');
-                    });
-                    table.reload('test');
-                    layer.close(index);
+                        return false;
+                    }
                 });
+
             }
+
         });
 
-        //未打卡说明、我的审核   监听表格头的按钮'toolbar(test)'
+        //新增招生学生、批删 听表格头的按钮'toolbar(test)'
         table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus('test');
             var data = obj.data;
             if(obj.event == 'addEnr'){
                 layer.open({
@@ -146,23 +151,32 @@
                         return false;
                     }
                 });
-            }else if(obj.event == 'MyApproval'){
-                layer.open({
-                    type: 2,
-                    title:'我的审核',
-                    skin: 'layui-layer-demo', //样式类名
-                    closeBtn: 1, //不显示关闭按钮
-                    area: ['1000px', '450px'],
-                    fixed: false, //不固定
-                    maxmin: true,
-                    shadeClose: false, //开启遮罩关闭
-                    content: ['${pageContext.request.contextPath}/jack/xxx','no'],
-                    cancel: function(index, layero){
-                        table.reload('test');
-                    }
+            }else if(obj.event == 'del'){
+                var ids = [];
+                $(checkStatus.data).each(function (i, o) {//o即为表格中一行的数据
+                    ids.push(o.enrollmentid);
                 });
+                if (ids.length < 1) {
+                    layer.msg('无选中项');
+                    return false;
+                }
+                layer.confirm('真的删除行么', function(index){
+                    for(var a= 0;a<ids.length;a++){
+                        $.get("${pageContext.request.contextPath}/jack/delEnrollment?id="+ids[a],function (d) {
+                            layer.msg('删除成功');
+                            table.reload('test');
+                        });
+                    }
+                    table.reload('test');
+                    layer.close(index);
+                });
+
             }
         });
     });
+    function xxx() {
+        console.log("dfdfdf");
+        return dataE;
+    }
 </script>
 </html>
