@@ -14,7 +14,7 @@
 </head>
 <body>
 <%--未打卡弹出层--%>
-<div id="windows1" style="margin-left: 5%;display:none;">
+<div id="windows1" style="margin-left:11%;display:none;">
     <form id="Wfrom" class="layui-form" action="${pageContext.request.contextPath}/jack/Attadd" method="post" >
         <br><br>
         未打卡日期：<div style="margin-right:10px" class="layui-inline">
@@ -30,7 +30,7 @@
                 <option value="21:00">21:00</option>
             </select>
         </div>
-        <br><br>说明原因:<input type="text" name="cause" required lay-verify="required" placeholder="请输入说明原因" autocomplete="off" class="layui-input">
+        <br><br>说明原因:<input type="text" name="cause" style="width: 75%" required lay-verify="required" placeholder="请输入说明原因" autocomplete="off" class="layui-input">
         <br><br><br><button style="margin-left: 25%"  align="center" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
     </form>
 </div>
@@ -152,13 +152,13 @@
                 title:'未打卡说明',
                 skin: 'layui-layer-demo', //样式类名
                 closeBtn: 1, //不显示关闭按钮
-                area: ['700px', '450px'],
+                area: ['600px', '450px'],
                 fixed: false, //不固定
                 maxmin: true,
                 shadeClose: false, //开启遮罩关闭
                 //content: ['${pageContext.request.contextPath}/jack/test','no']
                 content: $('#windows1'),
-                cancel: function(index, layero){
+                cancel:function(index, layero){
                         $("#Wfrom")[0].reset();
                         layui.form.render();
                         layer.close(index);
@@ -167,7 +167,7 @@
                     }
                 });
             }else if(obj.event == 'MyApproval'){
-                layer.open({
+                var index = layer.open({
                     type: 2,
                     title:'我的审核',
                     skin: 'layui-layer-demo', //样式类名
@@ -181,6 +181,7 @@
                         table.reload('test');
                     }
                 });
+                layer.full(index);
             }
         });
     });

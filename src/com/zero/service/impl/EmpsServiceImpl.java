@@ -102,5 +102,10 @@ public class EmpsServiceImpl extends BaseDao implements EmpsService {
         super.executeSQL("delete from aduitLog where Empid ="+empId+"");
     }
 
+    @Override
+    public void deleteNotice(int empId) {
+        super.executeSQL("delete from recipient where type =1 and receiver="+empId+"");
+    }
+
 
 }

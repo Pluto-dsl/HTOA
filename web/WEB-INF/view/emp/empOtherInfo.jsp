@@ -82,44 +82,46 @@
                 <input type="hidden" id="jobid"  name="Jobid" value="0"/>
                 <label class="layui-form-label">公司名称:</label>
                 <div  class="layui-input-block">
-                    <input id="companyName" type="text" name="companyName" required lay-verify="required" class="layui-input">
+                    <input maxlength="20" autocomplete="off" placeholder="请输入公司名称" id="companyName" type="text" name="companyName" required lay-verify="required" class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">岗位:</label>
                 <div class="layui-input-block">
-                    <input id="degree" type="text" name="degree" required lay-verify="required" class="layui-input" <%--readonly="readonly"不可编辑--%>>
+                    <input maxlength="20" autocomplete="off" placeholder="请输入岗位" id="degree" type="text" name="degree" required lay-verify="required" class="layui-input" <%--readonly="readonly"不可编辑--%>>
                 </div>
 
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">入职时间:</label>
                 <div class="layui-input-block">
-                    <input id="startDate" type="text" name="startDate" required lay-verify="required" class="layui-input" >
+                    <input autocomplete="off" placeholder="选择入职时间"  id="startDate" type="text" name="startDate" required lay-verify="required" class="layui-input" >
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">离职时间:</label>
                 <div class="layui-input-block">
-                    <input id="endDate" type="text" name="endDate" required lay-verify="required" class="layui-input">
+                    <input autocomplete="off" placeholder="选择离职时间" id="endDate" type="text" name="endDate" required lay-verify="required" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">离职原因:</label>
                 <div class="layui-input-block">
-                    <input id="reason" type="text" name="reason"  class="layui-input">
+                    <input autocomplete="off" id="reason" type="text" name="reason" placeholder="输入离职原因" maxlength="50" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">说明:</label>
                 <div class="layui-input-block">
-                    <textarea id="Remark" name="Remark" class="layui-textarea"> </textarea>
+                    <textarea maxlength="100" id="Remark" name="Remark" class="layui-textarea"> </textarea>
                 </div>
             </div>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
-                    <button type="submit" class="layui-btn" lay-submit lay-filter="jobAction" >保存</button>
+                        <center>
+                            <button type="submit" class="layui-btn" lay-submit lay-filter="jobAction" >保存</button>
+                        </center>
                 </div>
             </div>
         </form>
@@ -132,38 +134,40 @@
                 <input type="hidden" id="collegeid"  name="collegeid" value="0"/>
                 <label class="layui-form-label">学校名称:</label>
                 <div  class="layui-input-block">
-                    <input id="collegeName" type="text" name="collegeName" required lay-verify="required" class="layui-input">
+                    <input placeholder="请输入学校名称" autocomplete="off" maxlength="20" id="collegeName" type="text" name="collegeName"  lay-verify="required" class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">学历:</label>
                 <div class="layui-input-block">
-                    <input id="edegree" type="text" name="degree" required lay-verify="required" class="layui-input" <%--readonly="readonly"不可编辑--%>>
+                    <input placeholder="请输入学历" autocomplete="off" maxlength="20" id="edegree" type="text" name="degree"  lay-verify="required" class="layui-input" <%--readonly="readonly"不可编辑--%>>
                 </div>
 
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">入校时间:</label>
                 <div class="layui-input-block">
-                    <input id="estartDate" type="text" name="startDate" required lay-verify="required" class="layui-input" >
+                    <input placeholder="请选择入校时间" autocomplete="off"  id="estartDate" type="text" name="startDate" required lay-verify="required" class="layui-input" >
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">离校时间:</label>
+                <label class="layui-form-label">毕业时间:</label>
                 <div class="layui-input-block">
-                    <input id="eendDate" type="text" name="endDate" required lay-verify="required" class="layui-input">
+                    <input placeholder="请选择毕业时间" autocomplete="off" id="eendDate" type="text" name="endDate" required lay-verify="required" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">说明:</label>
                 <div class="layui-input-block">
-                    <textarea id="eRemark" name="Remark" class="layui-textarea"> </textarea>
+                    <textarea placeholder="请输入说明" maxlength="100" id="eRemark" name="Remark" class="layui-textarea"> </textarea>
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button type="submit" class="layui-btn" lay-submit lay-filter="educationformAction" >保存</button>
+                    <center>
+                        <button type="submit" class="layui-btn" lay-submit lay-filter="educationformAction" >保存</button>
+                    </center>
                 </div>
             </div>
         </form>
@@ -176,30 +180,32 @@
                 <input type="hidden" id="familyid"  name="familyid" value="0"/>
                 <label class="layui-form-label">联系人名称:</label>
                 <div  class="layui-input-block">
-                    <input id="contactName" type="text" name="contactName" required lay-verify="required" class="layui-input">
+                    <input placeholder="请输入联系人名称" autocomplete="off" maxlength="20" id="contactName" type="text" name="contactName" required lay-verify="required" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">与员工关系:</label>
                 <div class="layui-input-block">
-                    <input id="relationship" type="text" name="relationship" required lay-verify="required" class="layui-input" <%--readonly="readonly"不可编辑--%>>
+                    <input placeholder="请输入与员工关系" autocomplete="off" maxlength="20" id="relationship" type="text" name="relationship" required lay-verify="required" class="layui-input" <%--readonly="readonly"不可编辑--%>>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">联系电话:</label>
                 <div class="layui-input-block">
-                    <input id="Phone" type="text" name="Phone" required lay-verify="required" class="layui-input" <%--readonly="readonly"不可编辑--%>>
+                    <input placeholder="请输入联系电话" autocomplete="off" maxlength="13" id="Phone" type="text" name="Phone" required lay-verify="required|phone" class="layui-input" <%--readonly="readonly"不可编辑--%>>
                 </div>
             </div>
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">说明:</label>
-                <div class="layui-input-block">
-                    <textarea id="fRemark" name="Remark" class="layui-textarea"> </textarea>
+                <div placeholder="请输入说明" class="layui-input-block">
+                    <textarea  maxlength="100" id="fRemark" name="Remark" class="layui-textarea"> </textarea>
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button type="submit" class="layui-btn" lay-submit lay-filter="familyInfoAction" >保存</button>
+                    <center>
+                        <button type="submit" class="layui-btn" lay-submit lay-filter="familyInfoAction" >保存</button>
+                    </center>
                 </div>
             </div>
         </form>
@@ -239,12 +245,14 @@
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">说明:</label>
                 <div class="layui-input-block">
-                    <textarea id="dRemark" name="Remark" class="layui-textarea"> </textarea>
+                    <textarea placeholder="请输入说明" maxlength="100" id="dRemark" name="Remark" class="layui-textarea"> </textarea>
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button type="submit" class="layui-btn" lay-submit lay-filter="aduitAction" >保存</button>
+                    <center>
+                        <button type="submit" class="layui-btn" lay-submit lay-filter="aduitAction" >保存</button>
+                    </center>
                 </div>
             </div>
         </form>
@@ -256,13 +264,13 @@
                 <input type="hidden"  name="Empid" value="${empId}"/><%--被操作员工id--%>
                 <label class="layui-form-label">证件名称:</label>
                 <div  class="layui-input-block">
-                    <input id="annexName" type="text" name="annexName" required lay-verify="required"/>
+                    <input  autocomplete="off" placeholder="请输入证件名称" maxlength="20" id="annexName" type="text" name="annexName" class="layui-input"  lay-verify="required"/>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">上传证件:</label>
                 <div class="layui-input-block">
-                        <input type="file" multiple name="annexPath" onchange="upload(this)"  required lay-verify="required"/>
+                        <input accept = 'image/*' type="file" multiple name="annexPath" onchange="upload(this)"   lay-verify="required"/>
                             <%--<div class="layui-upload uploadbuchong" style="margin-top: 20px;margin-left: 60px;">
                                 <button type="button" class="layui-btn layui-btn-normal" id="test8" name="face"><i class="layui-icon">&#xe67c;</i>上传图片</button>
                             </div>--%>
@@ -272,12 +280,14 @@
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">说明:</label>
                 <div class="layui-input-block">
-                    <textarea id="aRemark" name="Remark" class="layui-textarea"> </textarea>
+                    <textarea placeholder="请输入说明" maxlength="100" id="aRemark" name="Remark" class="layui-textarea"> </textarea>
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button type="submit" class="layui-btn" lay-submit lay-filter="annexAction" >上传</button>
+                    <center>
+                        <button type="submit" class="layui-btn" lay-submit lay-filter="annexAction" >上传</button>
+                    </center>
                 </div>
             </div>
         </form>
@@ -403,6 +413,10 @@
 
         //新增工作经历
         form.on('submit(jobAction)', function(data){
+            if(data.field.startDate>data.field.endDate){
+                layer.msg('入职时间不能大于离职时间!');
+                return false;
+            }
             $.ajax({
                 type: 'post',
                 url: "<%=request.getContextPath()%>/zeroEmpInfo/addjob", // ajax请求路径
@@ -554,6 +568,10 @@
         });
         //新增教育背景
         form.on('submit(educationformAction)', function(data){
+            if(data.field.startDate>data.field.endDate){
+                layer.msg('入校时间不能大于毕业时间!');
+                return false;
+            }
             $.ajax({
                 type: 'post',
                 url: "<%=request.getContextPath()%>/zeroEmpInfo/addeducation", // ajax请求路径

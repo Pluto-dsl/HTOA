@@ -87,10 +87,13 @@ public class Zhq_DataDocController {
 
     //文件上传
     @RequestMapping("/addDoc")
+    @ResponseBody
     public String addDoc(DataDocVo dataDocVo, MultipartFile file, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         response.setContentType("application/force-download");
         String remark = request.getParameter("remark");
         EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        System.out.println(remark);
+        System.out.println(file);
 
         dataDocVo.setRemark(remark);
         dataDocVo.setOpTime(new Date());
@@ -98,7 +101,7 @@ public class Zhq_DataDocController {
         zhq_dataDocService.addDoc(dataDocVo,file,request);
 
         log.addLog(empVo.getEmpId(),empVo.getEmpName()+"上传了文件");
-        return "redirect:/zhq/DataDoc";
+        return "1";
     }
 
     //删除

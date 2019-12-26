@@ -38,13 +38,13 @@
             <tr>
                 <th>开始时间：</th>
                 <td>
-                    <input autocomplete="off" type="text" class="layui-input" name="startTime" id="startDate" placeholder="选择开始时间">
+                    <input autocomplete="off" lay-verify="required" type="text" class="layui-input" name="startTime" id="startDate" placeholder="选择开始时间">
                 </td>
             </tr>
             <tr>
                 <th>结束时间：</th>
                 <td>
-                    <input autocomplete="off" type="text" class="layui-input" name="endTime" id="endDate" placeholder="选择结束时间">
+                    <input autocomplete="off" lay-verify="required" type="text" class="layui-input" name="endTime" id="endDate" placeholder="选择结束时间">
                 </td>
             </tr>
             <tr>
@@ -52,7 +52,7 @@
                     请假时长：
                 </th>
                 <td style="">
-                    <input type="text" id="days" name="holidayDay" style="width: 50px;height: 30px;" >天,
+                    <input type="text" id="days" name="holidayDay"  readonly="readonly" style="width: 50px;height: 30px;" >天,
                     <select name="hour" id="hour" style="width: 80px;height: 30px;" lay-ignore>
                         <option value="0">默认</option>
                         <option value="1">1</option>
@@ -89,7 +89,6 @@
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看批注</a>
 </script>
-<%-------------------------------------------------------------%>
 <script>
     var startdate = "";
     var enddate = "";
@@ -102,9 +101,13 @@
         var form = layui.form;
         var laydate = layui.laydate;
         //日期
-        laydate.render({
+        var day2 = new Date();
+        day2.setTime(day2.getTime());
+        var s2 = day2.getFullYear()+"-" + (day2.getMonth()+1) + "-" + day2.getDate();
+        laydate.render({//开始时间
             elem: '#startDate',
             type: 'date',
+            min:s2,
             done: function (value) {
                 startdate=value;
             }
@@ -113,6 +116,7 @@
         laydate.render({
             elem: '#endDate',
             type: 'date',
+            min:s2,
             done: function (value) {
                 enddate = value;
                 var day = getDaysBetween(startdate,enddate);
@@ -144,13 +148,15 @@
                 ,{field: 'Empid', title: 'id', width:100,hide:'true'}
                 ,{field: 'empName', title: '请假人', width:100}
                 ,{field: 'hour', title: '请假时长(小时)', width:150, sort: true, totalRow: true}
-                ,{field: 'startTime', title: '开始时间', width:150, sort: true,templet : "<div>{{layui.util.toDateString(d.startDate, 'yyyy年MM月dd日')}}</div>"}
+                ,{field: 'startTime', title: '开始时间', width:150, sort: true,templet : "<div>{{layui.util.toDateString(d.startTime,'yyyy年MM月dd日')}}</div>"}
                 ,{field: 'endTime', title: '结束时间', width: 150, sort: true, totalRow: true,templet : "<div>{{layui.util.toDateString(d.endTime, 'yyyy年MM月dd日')}}</div>"}
                 ,{field: 'status', title: '状态', width: 100}
                 ,{field: 'Remark', title: '内容', width: 100}
                 ,{fixed: '', title:'操作', width: 150, align:'center', toolbar: '#barDemo'}
             ]]
             ,page: true
+            ,page: {limit:20,limits:[10,20,30,50,100]
+                ,layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
             ,done: function(res, page, count){
                 $("[data-field='status']").children().each(function(){
                     if($(this).text()=='1'){
@@ -199,8 +205,12 @@
             }
         })
         form.on('submit(Action)', function(data){
+            //console.log(data.field);
+            if(data.field.startTime>data.field.endTime){
+                layer.msg('请假开始时间不能大于结束时间!')
+                return false;
+            }
             layer.msg('正在提交,请稍后!')
-            console.log(data.field);
             $.ajax({
                 type: 'post',
                 url: "<%=request.getContextPath()%>/zeroLeave/addLeave", // ajax请求路径

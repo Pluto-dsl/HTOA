@@ -19,7 +19,6 @@
 </head>
 <body>
 <form class="layui-form" action="${pageContext.request.contextPath}/student/updateStu" id="form1" method="post">
-
         <table id="td" border="0" style="border-collapse:separate; border-spacing:20px;" align="center">
             <input type="hidden" name="Studid" id="stuId" value="${s.studid}"/>
             <input type="hidden" name="password" value="${s.password}"/>

@@ -84,6 +84,7 @@ public class Pluto_StudentController {
     @RequestMapping("/updateStu")
     @ResponseBody
     public String updateStudent(StudentVo studentVo,HttpServletRequest request,int oldss){
+        System.out.println("aaaaa");
         String bir = request.getParameter("bir");
         String ent = request.getParameter("ent");
         Date bd=null;

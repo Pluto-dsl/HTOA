@@ -286,7 +286,7 @@ public class Jack_Evaluation {
     }
     @RequestMapping(value = "/MyMission")
     @ResponseBody
-    public Map MyMission(HttpSession session) {
+    public Map MyMission(HttpSession session){
         EmpVo emp = (EmpVo) session.getAttribute("admin");
         Map map = new HashMap();
         Map studentMap = new HashMap();
@@ -320,7 +320,7 @@ public class Jack_Evaluation {
         for(Task task:tasks){
             Object sid = taskService.getVariable(task.getId(),"holidayid");
             if(sid==null){
-                sid ="0";
+                sid="0";
             }
             //如果有任务进入判断里面
             if(studentService.studentleave(Integer.parseInt((sid+""))).size()>0){
@@ -333,7 +333,7 @@ public class Jack_Evaluation {
             }
         }
         //-------------------------------------------------------------------------------------------------
-        map.put("emp",0);
+        map.put("emp",holidays.size());
         map.put("stu",studentleave.size());
         map.put("clock",clock);
         map.put("Notice",Notice);

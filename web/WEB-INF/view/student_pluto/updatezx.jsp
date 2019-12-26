@@ -60,15 +60,18 @@
     </table>
     <script>
         layui.use(['laydate','form'], function() {
-
             var laydate = layui.laydate;
             var form = layui.form;
-
+            /*var day2 = new Date();
+            day2.setTime(day2.getTime());
+            var s2 = day2.getFullYear()+"-" + (day2.getMonth()+1) + "-" + day2.getDate();*/
             laydate.render({
+                /*type:'date',*/
                 elem: '#savetime'
+                /*,min: '1990-01-01'
+                ,max:s2*/
                 // ,format: 'yyyy年MM月dd日'
             });
-
 
             form.on('submit(sub)', function(data){
                 var data = data.field;

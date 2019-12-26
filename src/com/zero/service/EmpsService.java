@@ -29,6 +29,6 @@ public interface EmpsService {
     void deleteWeekArrange(int empId);//删除值班管理
     void deleteChatRecord(int empId);//删除谈心记录
     void deleteAssTotal(int empId);//删除考核
-
+    void deleteNotice(int empId);//删除通告中的内容
 
 }

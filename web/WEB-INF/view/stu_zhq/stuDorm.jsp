@@ -201,7 +201,7 @@
                     area: ['700px', '430px'],
                     fixed: false, //不固定
                     maxmin: true,
-                    shadeClose: true, //开启遮罩关闭
+                    shadeClose: false, //开启遮罩关闭
                     content: $('#windows')
                 });
             }else if(obj.event ==='detail'){//查看
@@ -227,7 +227,7 @@
                     area: ['600px', '430px'],
                     fixed: false, //不固定
                     maxmin: true,
-                    shadeClose: true, //开启遮罩关闭
+                    shadeClose: false, //开启遮罩关闭
                     content: $('#windows2')
                 })
             }

@@ -111,7 +111,7 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
     public List<Map> enroStu() {
         return super.listBySQL("select t.enrollmentid,t.studName,t.card,t.sex,t.tell,t.school,t.classes,t.studType,c.classTypeName,t.empid,e.empName from enrollment t" +
                 " left join emp e on e.empId = t.empid" +
-                " left join classType c on  c.classTypeId = t.studType where  t.status BETWEEN 1 and 3");
+                " left join classType c on  c.classTypeId = t.studType where  t.status = 4 and isClass = '否'");
     }
 
     @Override
@@ -129,8 +129,8 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
     @Override
     public EnrollmentVo enStu(int sid) {
         EnrollmentVo en=  (EnrollmentVo) super.getObject(EnrollmentVo.class,sid);
-        en.setStatus(4);
-        super.updObject(en);//改变为在读学生
+        en.setIsClass("是");//改变已经分班
+        super.updObject(en);
         return en;
     }
 
