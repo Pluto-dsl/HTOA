@@ -149,7 +149,7 @@
                         area: ['700px', '550px'],
                         fixed: false, //不固定
                         maxmin: true,
-                        shadeClose: true, //开启遮罩关闭
+                        shadeClose: false, //开启遮罩关闭
                         content: $('#windows')
                     });
                     setFormValue(datas);//动态向表单赋值

@@ -158,7 +158,7 @@
                         fixed: false, //不固定
                         maxmin: true,
                         content: $('#windows'),
-                        shadeClose: true, //开启遮罩关闭
+                        shadeClose: false, //开启遮罩关闭
                     });
                     break;
                 case 'all':

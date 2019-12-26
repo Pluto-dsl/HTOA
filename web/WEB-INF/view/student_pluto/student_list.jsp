@@ -134,7 +134,7 @@
                     ]]
                     ,id:'test'
                     ,page: true
-                    ,limits:[5,10,15,20,25]
+                    ,limit:[5,10,15,20,25]
                     ,done: function(res, page, count){
                         //如果是异步请求数据方式，res即为你接口返回的信息。
                         //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
