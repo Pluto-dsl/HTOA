@@ -92,7 +92,7 @@
                 ,{field:'auditDate', title:'考核时间',templet:function (d){return createTime(d.auditDate);}, unresize: true, sort: true}
                 ,{field:'auditPerson', title:'录入人员'}
                 ,{field:'Remark', title:'说明'}
-                ,{field:'Image', title:'说明',templet:function (d) {
+                ,{field:'Image', title:'图片',templet:function (d) {
                         return "单击此行显示图片"
                     }
                 }
