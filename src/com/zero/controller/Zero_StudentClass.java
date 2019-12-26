@@ -99,6 +99,16 @@ public class Zero_StudentClass {
         writer.flush();
         writer.close();
     }
+
+    @RequestMapping(value = "/judgeLevel")
+    @ResponseBody
+    public String judgeLevel(String level){//判断届别重复
+        if (service.judgeLevel(level).size()>0){
+            return "1";
+        }
+        return "0";
+    }
+
     @RequestMapping(value = "/seek")
     @ResponseBody
     public Map seek(int level,String grade,int ctype){//筛选届别
