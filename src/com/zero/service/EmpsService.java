@@ -4,7 +4,9 @@ package com.zero.service;
 import com.publics.vo.educ.WeekArrangeVo;
 import com.publics.vo.empModel.WeeklogVo;
 import com.publics.vo.empModel.emp.EmpVo;
+import com.publics.vo.empModel.emp.PostVo;
 import com.publics.vo.sys.DepVo;
+import org.jboss.logging.annotations.Pos;
 
 import java.util.List;
 import java.util.Map;
@@ -21,6 +23,10 @@ public interface EmpsService {
     int statue(int empId);//查询当前员工状态
     void status(int state,int empId);//修改员工状态
     void updatePwd(int empId,String pwd);//修改密码
+    List<Map> allpost();//所有岗位
+    void addpost(PostVo postVo);//添加岗位
+    List judgePost(String postName);//是否有此岗位
+    PostVo post(int postid);//查询此岗位
 
     int selDep(String name,String depName);//根据姓名和部门查询部门是否有职务
     int selStudentClass(int empId);//根据id查询班级表中的职务
