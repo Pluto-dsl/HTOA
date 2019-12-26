@@ -37,7 +37,6 @@
                             <option <c:if test="${emp.depName == d.depName}">selected="selected"</c:if> value="${d.depid}">${d.depName}</option>
                         </c:forEach>
                     </select>
-                    <font style="color: red;margin-left: 15.3%;margin-top: -30px;position: absolute;">&nbsp;*必填</font>
                 </td>
             </tr>
             <tr  style="height: 40px">
