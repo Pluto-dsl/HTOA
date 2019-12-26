@@ -35,7 +35,7 @@
             <form class="layui-form">
                 部门名称:
                 <div class="layui-inline" style="padding-right: 15px">
-                    <select name="depId" lay-verify="required">
+                    <select name="depId">
                         <option value="0" selected>所有部门</option>
                         <c:forEach items="${requestScope.depList}" var="dep">
                             <option value="${dep.depid}">${dep.depName}</option>
@@ -83,7 +83,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">选择学生</label>
             <div style="width: 480px;float: left;">
-                <select id="sayface" name="sayface" class="layui-select">
+                <select id="sayface" name="sayface" class="layui-select" required lay-verify="required">
+                    <option value="">请选择数据</option>
                     <c:forEach items="${requestScope.stuList}" var="stu">
                         <option value="${stu.studid}">${stu.stuname}</option>
                     </c:forEach>
@@ -224,10 +225,7 @@
                         //按钮
                     }, function(index){
                         $(data).each(function (index,elemnt) {
-                            delChatRecord(elemnt.chatId);
-                        });
-                        tableIns.reload({
-                            method:'post'
+                            delChatRecord(elemnt.chatId,tableIns);
                         });
                         layer.close(index);
                     },function (index) {
@@ -243,7 +241,7 @@
                 layer.confirm('是要删除这条记录吗', function(index){
                     obj.del();
                     layer.close(index);
-                    delChatRecord(obj.data.chatId)
+                    delChatRecord(obj.data.chatId,tableIns)
                 });
             } else if(obj.event === 'edit'){
                 console.log(data);
@@ -302,12 +300,13 @@
 </script>
 <script>
     //删除谈心记录的方法
-    function delChatRecord(id) {
+    function delChatRecord(id,tableIns) {
         var index = layer.load(0, {shade: false});
         var data = {id:id};
         $.post("${pageContext.request.contextPath}/ljw/delChatRecord",data,function (data) {
             layer.close(index);
             console.log(data);
+            tableIns.reload();
         },"json");
     }
 </script>

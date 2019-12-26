@@ -138,4 +138,9 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
     public MajorVo marjov(int marjorid) {
         return (MajorVo) super.getObject(MajorVo.class,marjorid);
     }
+
+    @Override
+    public List judgeLevel(String level) {
+        return super.listBySQL("SELECT * FROM `studentFall` where level = '"+level+"'");
+    }
 }

@@ -53,7 +53,7 @@
     layui.use(['table','form'], function(){
         var table = layui.table;
         var form = layui.form;
-        table.render({
+        var tableIns = table.render({
             elem: '#RepairList'
             ,url:'${pageContext.request.contextPath}/myRepair/getMyRepairData'
             ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
@@ -111,18 +111,19 @@
                 layer.confirm('是要删除此申请吗', function(index){
                     obj.del();
                     layer.close(index);
-                    delRepair(obj.data.equipmentId)
+                    delRepair(obj.data.equipmentId,tableIns)
                 });
             }
         })
     });
 </script>
 <script>
-    function delRepair(id) {
+    function delRepair(id,tableIns) {
         var index = layer.load(0, {shade: false});
         var data = {delRepairId:id};
         $.post("${pageContext.request.contextPath}/logs/delRepair",data,function (data) {
             layer.close(index);
+            tableIns.reload();
             console.log(data)
         },"json");
     }

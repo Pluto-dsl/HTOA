@@ -113,19 +113,20 @@
                 layer.confirm('是要删除此申请吗', function(index){
                     obj.del();
                     layer.close(index);
-                    delRepair(obj.data.equipmentId)
+                    delRepair(obj.data.equipmentId,tableIns)
                 });
             }
         })
     });
 </script>
 <script>
-    function delRepair(id) {
+    function delRepair(id,tableIns) {
         var index = layer.load(0, {shade: false});
         var data = {delRepairId:id};
         $.post("${pageContext.request.contextPath}/logs/delRepair",data,function (data) {
             layer.close(index);
             console.log(data)
+            tableIns.reload();
         },"json");
     }
 </script>

@@ -15,11 +15,11 @@
 <body>
 <%--添加弹出层--%>
 <div id="addWin" style="display:none;">
-    <form id="addfrom"class="layui-form" method="post" >
+    <form id="addfrom" class="layui-form" method="post" >
         <table align="center" style="margin-top: 5%;border-collapse: separate;border-spacing: 10px 30px;">
             <tr>
                 <td>课程名称:</td>
-                <td><input type="text" name="courseName" required lay-verify="required" placeholder="请输入课程类型" autocomplete="off" class="layui-input"></td>
+                <td><input type="text" name="courseName" id="courseName1" required lay-verify="required" placeholder="请输入课程类型" autocomplete="off" class="layui-input"></td>
             </tr>
             <tr>
                 <td>是否必修:</td>
@@ -44,7 +44,7 @@
             </tr>
             <tr>
                 <td align="center" colspan="2">
-                    <button class="layui-btn layui-btn-warm" lay-submit lay-filter="Csubmit"  type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
+                    <button class="layui-btn layui-btn-warm" id="addCourse" lay-submit lay-filter="Csubmit"  type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
                 </td>
             </tr>
         </table>
@@ -53,12 +53,12 @@
 
 <%--编辑弹层--%>
 <div id="editWin" style="display:none;">
-    <form id="editfrom" action="${pageContext.request.contextPath}/jack/editCourseMgt" class="layui-form" method="post" >
+    <form id="editfrom" class="layui-form" method="post" >
         <table align="center" style="margin-top: 5%;border-collapse: separate;border-spacing: 10px 30px;">
             <input type="hidden" name="courseId" id="cid" />
             <tr>
                 <td>课程名称:</td>
-                <td><input type="text" id="courseName" name="courseName" required lay-verify="required" placeholder="请输入课程类型" autocomplete="off" class="layui-input"></td>
+                <td><input type="text" id="courseName" name="courseName" required lay-verify="required" placeholder="请输入课程名称" autocomplete="off" class="layui-input"></td>
             </tr>
             <tr>
                 <td>是否必修:</td>
@@ -73,7 +73,7 @@
                 <td>课程类别:</td>
                 <td>
                     <select id="courseTypeId1" name="courseTypeId" lay-verify="required">
-                        <option value="" >请选择课程类型</option>
+                        <option value="" >请选择课程类别</option>
                     </select>
                 </td>
             </tr>
@@ -83,7 +83,7 @@
             </tr>
             <tr>
                 <td align="center" colspan="2">
-                    <button lay-submit lay-filter="Esubmit" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
+                    <button lay-submit lay-filter="Esubmit" id="editCourse"  class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
                 </td>
             </tr>
         </table>
@@ -127,12 +127,48 @@
 
         });
 
+        $("#courseName").change(function () {
+            $.get('${pageContext.request.contextPath}/jack/Norepeat?type=course',{Name:$("#courseName").val()},function (d1) {
+                console.log(d1);
+                if(d1 === '1'){
+                    $("#courseName").val("");
+                    layer.tips('抱歉！该课程已存在不可编辑同样的', '#courseName', {
+                        tips: [4, '#000000']
+                    });
+                    return false;
+                }
+            });
+        });
+
+        $("#courseName1").change(function () {
+            $.get('${pageContext.request.contextPath}/jack/Norepeat?type=course',{Name:$("#courseName1").val()},function (d1) {
+                console.log(d1);
+                if(d1 === '1'){
+                    $("#courseName1").val("");
+                    layer.tips('已有该课程了,请换一个吧~~~', '#courseName1', {
+                        tips: [4, '#000000']
+                    });
+                    return false;
+                }
+            });
+        });
+
         //添加按钮提交监听
         form.on('submit(Csubmit)',function (data) {
             $.post('${pageContext.request.contextPath}/jack/addCourseMgt',data.field,function (data) {
                 layer.msg("添加成功");
                 table.reload('Clist');
             },'json');
+            table.reload('Clist');
+        });
+
+        //修改
+        form.on('submit(Esubmit)',function (data) {
+            $.post('${pageContext.request.contextPath}/jack/editCourseMgt',data.field,function (data) {
+                layer.msg("添加成功");
+                table.reload('Clist');
+            },'json');
+            table.reload('Clist');
         });
 
         //动态生成下拉框
