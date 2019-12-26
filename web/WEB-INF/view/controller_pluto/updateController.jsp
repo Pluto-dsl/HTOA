@@ -58,20 +58,16 @@
                 let checkData = tree.getChecked('mytree');
                 let chekid = [];
                 for (var i = 0; i <checkData.length ; i++) {
-                    chekid.push(checkData[i].id);
-                    // console.log(checkData[i].id);
                     for (let j = 0; j < checkData[i].children.length; j++) {
-                        // console.log(checkData[i].children[j].id);
-                        chekid.push(checkData[i].children[j].id);
                         for (let k = 0; k < checkData[i].children[j].children.length ; k++) {
                             chekid.push(checkData[i].children[j].children[k].id)
-                            // console.log(checkData[i].children[j].children[k].id)
                         }
                     }
                 }
                 for (let i = 0; i < chekid.length; i++) {
                     console.log(chekid[i])
                 }
+                alert(chekid+"----------"+chekid.length)
 
                 let mid = $('#idd').val();
                 $.post("${pageContext.request.contextPath}/controller/updC",
@@ -84,6 +80,7 @@
                 // window.parent.location.reload();
                 let index = parent.layer.getFrameIndex(window.name);
                 parent.layer.close(index);//关闭当前页
+                return false;
             })
 
             //渲染

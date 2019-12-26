@@ -37,7 +37,7 @@
 
                 </td>
                 <td>
-                    <input class="layui-input" lay-verify="required" value="${s.stuname}" autocomplete="off" name="stuname" id="stuname"
+                    <input class="layui-input" maxlength="10"  lay-verify="required" value="${s.stuname}" autocomplete="off" name="stuname" id="stuname"
                            style="width:290px;">
                 </td>
                 <td>
@@ -57,14 +57,14 @@
                     <label class="label-top">担&nbsp;&nbsp;&nbsp;&nbsp;保&nbsp;&nbsp;&nbsp;人:</label>
                 </td>
                 <td>
-                    <input  name="guarantee" id="guarantee" value="${s.guarantee}" class="layui-input"
+                    <input  name="guarantee"  maxlength="10"  id="guarantee" value="${s.guarantee}" class="layui-input"
                             style="width:290px;">
                 </td>
                 <td>
                     <label class="label-top">毕业学校:</label>
                 </td>
                 <td>
-                    <input  name="middleschool" value="${s.guarantee}" id="middleschool" class="layui-input"
+                    <input  name="middleschool"  maxlength="20"  value="${s.guarantee}" id="middleschool" class="layui-input"
                             style="width:290px;">
                 </td>
             </tr>
@@ -82,7 +82,7 @@
                     <label class="label-top">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄:</label>
                 </td>
                 <td>
-                    <input class="layui-input" value="${s.age}" id="age" name="age"
+                    <input class="layui-input"  maxlength="3"  value="${s.age}" id="age" name="age"
                            style="width:290px;">
                 </td>
             </tr>
@@ -107,7 +107,7 @@
                     <label class="label-top">家&nbsp;庭&nbsp;地&nbsp;址:</label>
                 </td>
                 <td>
-                    <input  name="addr" id="addr" value="${s.addr}" class="layui-input" autocomplete="off"
+                    <input  name="addr" id="addr"  maxlength="20" value="${s.addr}" class="layui-input" autocomplete="off"
                             style="width:290px;">
                 </td>
                 <td>
@@ -124,7 +124,7 @@
                     <label class="label-top">介&nbsp;绍&nbsp;老&nbsp;师:</label>
                 </td>
                 <td>
-                    <input  name="introduretech" id="introduretech" value="${s.introduretech}" class="layui-input"
+                    <input  name="introduretech" maxlength="10"  id="introduretech" value="${s.introduretech}" class="layui-input"
                             style="width:290px;">
                 </td>
                 <td>
@@ -142,14 +142,14 @@
                     <label class="label-top">民&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;族:</label>
                 </td>
                 <td>
-                    <input  name="nation" id="nation" value="${s.nation}" class="layui-input"
+                    <input  name="nation"  maxlength="5"  id="nation" value="${s.nation}" class="layui-input"
                             style="width:290px;">
                 </td>
                 <td>
                     <label class="label-top">籍&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;贯:</label>
                 </td>
                 <td>
-                    <input  name="natives" id="natives" class="layui-input" value="${s.natives}" editable="false"
+                    <input  name="natives" id="natives"  maxlength="10" class="layui-input" value="${s.natives}" editable="false"
                             style="width:190px;">
                     <%--                    <button type="button" style="width: 100px;float: right;margin-top: -13%;" class="layui-btn layui-btn-primary">选择籍贯</button>--%>
                 </td>
@@ -207,7 +207,7 @@
                     <label class="label-top">家&nbsp;长&nbsp;姓&nbsp;名:</label>
                 </td>
                 <td>
-                    <input name="parents" id="parents" autocomplete="off" class="layui-input" value="${s.parents}"
+                    <input name="parents" id="parents"  maxlength="10"  autocomplete="off" class="layui-input" value="${s.parents}"
                            style="width:290px;">
                 </td>
                 <td>
@@ -230,7 +230,7 @@
                     <label class="label-top">&nbsp;面&nbsp;试&nbsp;人&nbsp;:</label>
                 </td>
                 <td>
-                    <input  name="audition"  id="audition" value="${s.audition}" class="layui-input"
+                    <input  name="audition"  maxlength="10"  id="audition" value="${s.audition}" class="layui-input"
                             style="width:290px;">
                 </td>
             </tr>
@@ -249,7 +249,7 @@
                     <label class="label-top">中专学校:</label>
                 </td>
                 <td>
-                    <input  name="vocationalsch" autocomplete="off" id="vocationalsch" class="layui-input" value="${s.vocationalsch}"
+                    <input  name="vocationalsch"  maxlength="10"  autocomplete="off" id="vocationalsch" class="layui-input" value="${s.vocationalsch}"
                             style="width:290px;">
                 </td>
             </tr>
@@ -273,7 +273,7 @@
                     <label class="label-top">省录取号:</label>
                 </td>
                 <td>
-                    <input  name="enrollno" id="enrollno" autocomplete="off" class="layui-input" value="${s.enrollno}"
+                    <input  name="enrollno"  maxlength="20"  id="enrollno" autocomplete="off" class="layui-input" value="${s.enrollno}"
                             style="width:290px;">
                 </td>
             </tr>
@@ -292,7 +292,7 @@
                     <label class="label-top">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</label>
                 </td>
                 <td>
-                    <input  name="stuno" id="stuno" autocomplete="off" value="${s.stuno}" class="layui-input"
+                    <input  name="stuno" id="stuno"  maxlength="20"  autocomplete="off" value="${s.stuno}" class="layui-input"
                             style="width:290px;">
                 </td>
             </tr>
@@ -301,7 +301,7 @@
                     <label class="label-top">报&nbsp;&nbsp;&nbsp;&nbsp;名&nbsp;&nbsp;号:&nbsp;</label>
                 </td>
                 <td>
-                    <input  name="registration" autocomplete="off" id="registration" value="${s.registration}" class="layui-input"
+                    <input  name="registration"  maxlength="20"  autocomplete="off" id="registration" value="${s.registration}" class="layui-input"
                             style="width:290px;">
                 </td>
                 <td>
@@ -425,7 +425,7 @@
                     <label class="label-top">欠&nbsp;款&nbsp;金&nbsp;额&nbsp;:</label>
                 </td>
                 <td>
-                    <input  name="qkMoney" autocomplete="off" id="qkMoney" value="${s.qkMoney}" class="layui-input"
+                    <input  name="qkMoney"  maxlength="10"  autocomplete="off" id="qkMoney" value="${s.qkMoney}" class="layui-input"
                             style="width:290px;">
                 </td>
             </tr>
@@ -434,7 +434,7 @@
                     <label class="label-top">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注:</label>
                 </td>
                 <td>
-                    <input  name="remark" autocomplete="off" id="remark" value="${s.remark}" class="layui-input"
+                    <input  name="remark" maxlength="50"  autocomplete="off" id="remark" value="${s.remark}" class="layui-input"
                             style="width:290px;">
                 </td>
             </tr>
@@ -479,10 +479,10 @@
                     data:data.field,
                     success: function(data){
                         document.getElementById("form1").reset();
-
                     }
                 });
-                window.parent.location.reload();
+                parent.location.reload();//刷新父页面，注意一定要在关闭当前iframe层之前执行刷新
+                // window.parent.location.reload();
                 var index = parent.layer.getFrameIndex(window.name);
                 parent.layer.close(index);//关闭当前页
                 // return false;

@@ -161,7 +161,7 @@
                     <label class="label-top">备注:</label>
                 </td>
                 <td>
-                    <textarea placeholder="请输入内容" name="Remark" class="layui-textarea">${p.remark}</textarea>
+                    <textarea placeholder="请输入内容"  maxlength="50" name="Remark" class="layui-textarea">${p.remark}</textarea>
                 </td>
             </tr>
 

@@ -77,7 +77,7 @@
                 <label class="label-top">考试成绩:</label>
             </td>
             <td>
-                <input name="score" id="score" autocomplete="off" class="layui-input" value="${sc.score}"
+                <input name="score" id="score" maxlength="10" autocomplete="off" class="layui-input" value="${sc.score}"
                        style="width:290px;">
             </td>
         </tr>
@@ -87,7 +87,7 @@
                 <label class="label-top">补考成绩:</label>
             </td>
             <td>
-                <input name="res" id="res" autocomplete="off" class="layui-input" value="${sc.Rescore}"
+                <input name="res" id="res"  maxlength="10"  autocomplete="off" class="layui-input" value="${sc.Rescore}"
                        style="width:290px;">
             </td>
             <td>
@@ -105,7 +105,7 @@
                 <label class="label-top">备注:</label>
             </td>
             <td>
-                <textarea placeholder="请输入内容" name="remark" class="layui-textarea">
+                <textarea placeholder="请输入内容"  maxlength="100"  name="remark" class="layui-textarea">
                     ${sc.remark}
                 </textarea>
             </td>
