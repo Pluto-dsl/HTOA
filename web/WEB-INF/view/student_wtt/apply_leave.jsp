@@ -23,7 +23,7 @@
             <tr>
                 <th>请假类型:</th>
                 <td>
-                    <select name="Title">
+                    <select name="Title" lay-verify="required">
                         <option value="">--请选择请假类型--</option>
                         <option value="事假">事假</option>
                         <option value="病假">病假</option>
@@ -33,30 +33,30 @@
             <tr>
                 <th>开始时间:</th>
                 <td>
-                    <input type="text" id="startTime" class="layui-input" name="startTime" autocomplete="off">
+                    <input type="text" id="startTime" class="layui-input" name="startTime" autocomplete="off" lay-verify="required">
                 </td>
             </tr>
             <tr>
                 <th>结束时间:</th>
                 <td>
-                    <input type="text" id="endTime" class="layui-input" name="endTime" autocomplete="off">
+                    <input type="text" id="endTime" class="layui-input" name="endTime" autocomplete="off" lay-verify="required">
                 </td>
             </tr>
             <tr>
                 <th>请假天数:</th>
                 <td>
-                    <input type="text" class="layui-input" name="holidayDay" autocomplete="off">
+                    <input type="text" class="layui-input" name="holidayDay" autocomplete="off" lay-verify="required">
                 </td>
             </tr>
             <tr>
                 <th>请假事由:</th>
                 <td>
-                    <textarea rows="5" cols="50" name="Remark" /></textarea>
+                    <textarea rows="5" cols="50" name="Remark" lay-verify="required"/></textarea>
                 </td>
             </tr>
             <tr align="center">
                 <td colspan="2">
-                    <button id="tijiao" style="text-align: center" style="margin-left: 25%" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>申请</button>
+                    <button id="tijiao" style="text-align: center" style="margin-left: 25%" class="layui-btn layui-btn-warm" type="submit" lay-submit><i class="layui-icon layui-icon-ok" ></i>申请</button>
                 </td>
             </tr>
         </table>
@@ -82,6 +82,7 @@
         var form = layui.form;
         var laypage = layui.laypage;
         var laydate = layui.laydate;
+        var $ = layui.jquery;
         table.render({
             elem:'#test',
             height:500,
@@ -131,22 +132,32 @@
                 location.href='<%=request.getContextPath()%>/studentduan/pizhu/'+id;
             }
         });
+
         //时间选择器
-        laydate.render({
+        var start = laydate.render({
             elem: '#startTime',
             type: 'datetime',
             format:'yyyy/MM/dd',
-            done: function (value) {
-                startdate=value;
+            done: function (date,value) {
+                /*startdate=value;*/
+                endMax = end.config.max;
+                end.config.min = date;
+                end.config.min.month = date.month -1;
             }
         });
         //时间选择器
-        laydate.render({
+        var end = laydate.render({
             elem: '#endTime',
             type: 'datetime',
             format:'yyyy/MM/dd',
-            done: function (value) {
-                startdate=value;
+            done: function (date,value) {
+                /*startdate=value;*/
+                if($.trim(value) == ''){
+                    var curDate = new Date();
+                    date = {'date': curDate.getDate(), 'month': curDate.getMonth()+1, 'year': curDate.getFullYear()};
+                }
+                start.config.max = date;
+                start.config.max.month = date.month -1;
             }
         });
     })
