@@ -23,16 +23,16 @@
         <form id="fallform" class="layui-form" style="margin-right: 100px;margin-top: 35px;" method="post">
             <div class="layui-form-item">
                 <input type="hidden" id="fallid"  name="fallid" value="0"/>
-                <label class="layui-form-label">届别名称:</label>
+                <label class="layui-form-label">届别:</label>
                 <div  class="layui-input-block">
-                    <input id="level" type="text" name="level" required lay-verify="required" class="layui-input">
+                    <input maxlength="4" id="level" type="text" name="level" onchange="judgelevel()"  lay-verify="required|number" class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">说明:</label>
                 <div class="layui-input-block">
-                    <textarea id="remark" name="remark" class="layui-textarea"> </textarea>
+                    <textarea maxlength="100" id="remark" name="remark" class="layui-textarea"> </textarea>
                 </div>
             </div>
             <div class="layui-form-item">
@@ -44,6 +44,7 @@
     </div>
 </body>
 <script>
+    var yuan;
     layui.use(['table','form'],function() {
         var form = layui.form;
         var table = layui.table;
@@ -70,6 +71,7 @@
             switch(obj.event){
                 case 'add':
                     $("#fallid").val(0);
+                    yuan=0;
                     win = layer.open({
                         type: 1,
                         title:'新增届别',
@@ -105,6 +107,7 @@
                                 $(data).each(function (index,elemnt) {
                                     $("#fallid").val(elemnt.fallid);
                                     $("#level").val(elemnt.level);
+                                    yuan = elemnt.level;
                                     $("#remark").val(elemnt.remark);
                                 });
                             },
@@ -129,6 +132,9 @@
                     success: function(data){
                         if(data='yes'){
                             table.reload('t1')
+                        }else if(data='no'){
+                            layer.msg('届别名称重复!');
+                            return false;
                         }
                         layer.close(win);
                         layer.msg('保存成功!');
@@ -139,5 +145,17 @@
             });
         });
     })
+
+    function judgelevel() {
+         let level = $("#level").val();
+         if(level!=yuan){
+             $.post("<%=request.getContextPath()%>/zeroStudent/judgeLevel",{level:level},function (data) {
+                 if(data=="1"){
+                     $("#level").val("");
+                     layer.msg("已有此届别，请重新输入！")
+                 }
+             },"text")
+         }
+    }
 </script>
 </html>
