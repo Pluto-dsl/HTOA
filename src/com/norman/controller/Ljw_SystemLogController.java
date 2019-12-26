@@ -139,7 +139,7 @@ public class Ljw_SystemLogController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/getHolidayByEmp")//通过员工id获取对应的员工请假记录
+    @RequestMapping(value = "/getHolidayByEmp")//通过员工id获取对应的员工考核
     public void getHolidayBayEmp(HttpServletRequest request,HttpServletResponse response,int page,int limit) throws IOException {
         response.setContentType("text/html;charset=utf-8");
         JSONObject result = new JSONObject();

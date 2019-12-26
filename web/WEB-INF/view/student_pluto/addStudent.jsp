@@ -99,7 +99,7 @@
                     <label class="label-top">学生电话:</label>
                 </td>
                 <td>
-                    <input class="layui-input" lay-verify="required|phone" onchange="judgePhone()" autocomplete="off" value="" name="phone" id="phone"
+                    <input class="layui-input" lay-verify="required|phone" onchange="judgePhone(),judgeParen(this)" autocomplete="off" value="" name="phone" id="phone"
                            style="width:290px;">
                 </td>
             </tr>
@@ -172,7 +172,7 @@
                     <label class="label-top">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</label>
                 </td>
                 <td>
-                    <input  name="stuno" id="stuno"  maxlength="20"  autocomplete="off" value="" class="layui-input"
+                    <input  name="stuno" id="stuno" lay-verify="number" maxlength="20"  autocomplete="off" value="" class="layui-input"
                             style="width:290px;">
                 </td>
                 <input type="hidden" name="studytype" value="1">
@@ -189,7 +189,7 @@
                     <label class="label-top">家长电话:</label>
                 </td>
                 <td>
-                    <input class="layui-input"  autocomplete="off" lay-verify="required|phone" placeholder="  请输入家长电话" name="parentsphone" id="parentsphone" value=""
+                    <input class="layui-input" onchange="judgeParen(this)" autocomplete="off" lay-verify="phone" placeholder="  请输入家长电话" name="parentsphone" id="parentsphone" value=""
                            style="width:290px;">
                 </td>
             </tr>
@@ -285,6 +285,15 @@
                 }
             },"text")
 
+        }
+
+        function judgeParen(obj) {
+            var stu = $("#phone").val();
+            var prent = $("#parentsphone").val();
+            if(stu==prent){
+                layer.msg("学生号码不可跟家长号码相同！");
+                $(obj).val("");
+            }
         }
     </script>
 </form>

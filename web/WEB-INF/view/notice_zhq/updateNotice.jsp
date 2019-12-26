@@ -55,7 +55,19 @@
         var laydate = layui.laydate;
         var layedit =layui.layedit;
 
-        var cor = layedit.build('demo'); //建立编辑器
+        var cor = layedit.build('demo',{
+            tool:[
+                'strong' //加粗
+                ,'italic' //斜体
+                ,'underline' //下划线
+                ,'del' //删除线
+                ,'|' //分割线
+                ,'left' //左对齐
+                ,'center' //居中对齐
+                ,'right' //右对齐
+                ,'face' //表情
+            ]
+        }); //建立编辑器
 
 
 
