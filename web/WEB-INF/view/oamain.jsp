@@ -350,7 +350,7 @@
                         <%--内容主体--%>
                         <div class="layui-col-md6" style="margin: 1% 15%;float:right;">
                             <div class="layui-card">
-                                <div class="layui-card-header" style="background-color:#333333;font-size: 20px;color: #fffaf5">我的任务 <i class="layui-icon layui-icon-refresh-3" style="cursor: pointer;float: right" id="flush"></i></div>
+                                <div class="layui-card-header" style="background-color:#bc593b;font-size: 20px;color: #fffaf5">我的任务 <i class="layui-icon layui-icon-refresh-3" style="cursor: pointer;float: right" id="flush"></i></div>
                                 <div class="layui-card-body">
                                     <div class="layui-carousel layadmin-carousel layadmin-shortcut">
                                         <ul class="layui-row layui-col-space10">
@@ -422,7 +422,9 @@
         <div class="layui-card-body layui-text" style="height: 60%;">
             <ul class="layui-row layui-col-space10" style="margin-left: 20px;">
                 <li class="layui-col-xs32">
-                    <a href="javascript:void(0)">
+                    <a href="javascript:void(0)" class="site-demo-active" data-type="tabAdd"
+                       data-url="${pageContext.request.contextPath}/training/rehearsal_trainingPage"
+                       data-id="试讲培训" data-title="试讲培训" >
                         <span>您今天有试讲培训哦~</span>
                     </a>
                 </li>
@@ -449,11 +451,11 @@
         var currentTime = year+"-"+month+"-"+date;
 
         //5秒后自动关闭
-        setTimeout(function () {
+        var time1 = setTimeout(function () {
             $("#message").animate({
                 top:'40%',
             },'hide');
-        },5000);
+        },3500);
 
         //查询今天是否有试讲培训  。。。。。
         $.get('${pageContext.request.contextPath}/jack/MessageWin',{date:currentTime},function (data) {
@@ -466,14 +468,17 @@
 
         //点击铃铛按钮再次显示消息
         $("#btnMessage").click(function () {
+            window.clearTimeout(time1);
             $("#message").animate({
                 top:'8.3%',
             },'show');
-            setTimeout(function () {
+            time1 = setTimeout(function () {
                 $("#message").animate({
                     top:'40%',
                 },'hide');
-            },5000);
+
+            },3500);
+
         });
 
         //消息关闭
