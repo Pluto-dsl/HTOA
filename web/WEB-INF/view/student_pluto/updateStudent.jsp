@@ -97,7 +97,7 @@
                     <label class="label-top">学生电话:</label>
                 </td>
                 <td>
-                    <input class="layui-input" lay-verify="required|phone" autocomplete="off" value="${s.phone}" name="phone" id="phone"
+                    <input class="layui-input" lay-verify="required|phone" onchange="judgePhone()" autocomplete="off" value="${s.phone}" name="phone" id="phone"
                            style="width:290px;">
                 </td>
             </tr>
@@ -171,9 +171,9 @@
                     <select class="layui-form-label" name="stat" id="stat" editable="false" value="1" ditable="false"
                             style="width:290px;">
 <%--                        //    状态名称：1意向学生、2预定报名学生、3试学学生、4在读学生、5已毕业学生--%>
-                        <option value="1" <c:if test="${s.stat == 1}">selected="selected"</c:if> >意向学生</option>
-                        <option value="2" <c:if test="${s.stat == 2}">selected="selected"</c:if> >预定报名学生</option>
-                        <option value="3" <c:if test="${s.stat == 3}">selected="selected"</c:if> >试学学生</option>
+<%--                        <option value="1" <c:if test="${s.stat == 1}">selected="selected"</c:if> >意向学生</option>--%>
+<%--                        <option value="2" <c:if test="${s.stat == 2}">selected="selected"</c:if> >预定报名学生</option>--%>
+<%--                        <option value="3" <c:if test="${s.stat == 3}">selected="selected"</c:if> >试学学生</option>--%>
                         <option value="4" <c:if test="${s.stat == 4}">selected="selected"</c:if> >在读学生</option>
                         <option value="5" <c:if test="${s.stat == 5}">selected="selected"</c:if> >已毕业学生</option>
                         <option value="6" <c:if test="${s.stat == 5}">selected="selected"</c:if> >退学</option>
@@ -487,6 +487,18 @@
                 // return false;
             })
         })
+
+        function judgePhone() {
+            var phone = $("#phone").val();
+            if(phone!=${s.phone}){
+                $.post("<%=request.getContextPath()%>/student/judgePhone",{iphone:phone},function (data) {
+                    if(data=="1"){
+                        $("#phone").val(${s.phone});
+                        layer.msg("已有此号码，请重新输入！")
+                    }
+                },"text")
+            }
+        }
     </script>
 </form>
 </body>
