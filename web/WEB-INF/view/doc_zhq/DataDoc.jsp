@@ -91,11 +91,8 @@
                 data:formData,
                 success:function (data) {
                     layer.close(lod);
-                    layer.msg('上传成功',{
-                        time:2000
-                    },function(){
-                        location.reload();
-                    });
+                    layer.msg('上传成功');
+                    location.reload();
                 },
                 error:function () {
                     layer.close(lod);

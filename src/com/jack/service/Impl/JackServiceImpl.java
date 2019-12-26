@@ -413,6 +413,11 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
         updObject(enroll);
     }
 
+    @Override
+    public List selMessage(int empid, String date) {
+        return listBySQL("SELECT * FROM trial where empId = "+empid+" and date = '"+date+"'");
+    }
+
 
     //根据公告id查询已读的人数
     @Override

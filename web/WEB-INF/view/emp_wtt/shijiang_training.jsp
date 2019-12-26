@@ -29,7 +29,8 @@
                 <tr>
                     <th>时间:</th>
                     <td>
-                        <select name="time">
+                        <input class="layui-input" id="times" name="time" disabled="disabled"/>
+                        <%--<select name="time">
                             <option value="星期一">星期一</option>
                             <option value="星期二">星期二</option>
                             <option value="星期三">星期三</option>
@@ -37,7 +38,8 @@
                             <option value="星期五">星期五</option>
                             <option value="星期六">星期六</option>
                             <option value="星期日">星期日</option>
-                        </select>
+                        </select>--%>
+
                     </td>
                 </tr>
 
@@ -144,7 +146,7 @@
                         type: 1,
                         skin: 'layui-layer-demo', //样式类名
                         closeBtn: 1, //不显示关闭按钮
-                        area: ['700px', '650px'],
+                        area: ['48%', '80%'],
                         fixed: false, //不固定
                         maxmin: true,
                         content: $('#windows'),
@@ -189,13 +191,24 @@
             }
         });
 
+        var time = new Date();
+        time.setTime(time.getTime());
+        var s2 = time.getFullYear()+"-" + (time.getMonth()+1) + "-" + time.getDate();
         //日期
-        laydate.render({
+        var trail = laydate.render({
             elem: '#riqi',
             type: 'datetime',
             format:'yyyy/MM/dd',
             done: function (value) {
                 startdate=value;
+            },
+            min:'1990-01-01',
+            max: s2,
+            change: function(value, date, endDate){
+                var today =new Array('星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六');
+                var a = new Date(value);
+                var week = today[a.getDay()];
+                $("#times").val(week);
             }
         });
 

@@ -31,13 +31,19 @@
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button type="submit" class="layui-btn" lay-submit="" lay-filter="sub">保存</button>
-                    <button type="button" class="layui-btn" lay-submit="" lay-filter="demo1">重置</button>
+                    <button type="button" class="layui-btn layui-btn-primary" onclick="qx()">取消</button>
                 </div>
             </div>
         </form>
     </div>
 </body>
     <script>
+
+        function qx() {
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);//关闭当前页
+            window.location.reload();
+        }
         layui.use([ 'element', 'table', 'layer', 'form' ,'laydate'],function() {
             var element = layui.element;
             var layer = layui.layer;

@@ -26,7 +26,7 @@
 <body>
 <div id="window" style="padding-right:5%;display: none">
     <br><br>
-    <form class="layui-form" method="post" action="${pageContext.request.contextPath}/logs/manageRepair"  onsubmit="layer.load(0, {shade: false});">
+    <form id="MyForm" class="layui-form" method="post" action="${pageContext.request.contextPath}/logs/manageRepair"  onsubmit="layer.load(0, {shade: false});">
         <div class="layui-form-item">
             <label class="layui-form-label">处理结果：</label>
             <div class="layui-input-block">
@@ -169,6 +169,7 @@
                     shadeClose: false, //是否点击遮罩时关闭
                     content: $('#window'),
                     cancel: function(index, layero){
+                        $("#MyForm")[0].reset();
                         layui.form.render();
                         layer.close(index);
                         return false;
@@ -176,24 +177,6 @@
                 });
             }
         });
-        /*//点击提交按钮触发的方法
-        $('button[name="submit"]').click(function (obj) {
-            var index = layer.load(0, {shade: false});
-            var repairId = $('input[name="repairId"]').val();
-            var result = $('input[name="result"]').val();
-            var data = {
-                repairId:repairId,
-                result:result
-            };
-            $.post("${pageContext.request.contextPath}/logs/manageRepair",data,function (data) {
-                layer.close(index);
-                console.log(data);
-                layer.closeAll();
-                tableIns.reload({
-                    method:'post'
-                });
-            },"json")
-        });*/
         //点击取消按钮触发的方法
         $('button[name="close"]').click(function (obj) {
             layer.closeAll();

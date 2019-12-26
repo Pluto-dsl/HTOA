@@ -111,6 +111,8 @@ public interface Jack_Service {
     void delEnrollment(int id);
     void editEnrollment(EnrollmentVo enroll);
 
+    /** 消息提醒 */
+    List selMessage(int empid,String date);
 
     //根据公告id查询已读的人数
     int trueCount(int noticeId);
