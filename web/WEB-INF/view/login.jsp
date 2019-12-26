@@ -251,9 +251,9 @@
             } else if (data.code === "admin") {
                 layer.msg("登录成功<br>正在跳转页面");
                 if (flag){
-                    $.cookie("phone",phone);
-                    $.cookie("pwd",pwd);
-                    $.cookie("savePwd",flag);
+                    $.cookie("phone",phone,{ expires: 7 });
+                    $.cookie("pwd",pwd,{ expires: 7 });
+                    $.cookie("savePwd",flag,{ expires: 7 });
                 }else {
                     $.removeCookie("phone");
                     $.removeCookie("pwd");
@@ -263,9 +263,9 @@
             } else if (data.code === "user") {
                 layer.msg("登录成功<br>正在跳转页面");
                 if (flag){
-                    $.cookie("phone",phone);
-                    $.cookie("pwd",pwd);
-                    $.cookie("savePwd",flag);
+                    $.cookie("phone",phone,{ expires: 7 });
+                    $.cookie("pwd",pwd,{ expires: 7 });
+                    $.cookie("savePwd",flag,{ expires: 7 });
                 }else {
                     $.removeCookie("phone");
                     $.removeCookie("pwd");

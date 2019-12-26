@@ -19,7 +19,7 @@
         <table align="center" style="margin-top: 5%;border-collapse: separate;border-spacing: 10px 30px;">
             <tr>
                 <td>课程类型:</td>
-                <td><input type="text" name="courseTypeName" required lay-verify="required" placeholder="请输入课程类型" autocomplete="off" class="layui-input"></td>
+                <td><input type="text" name="courseTypeName" id="courseTypeName1" required lay-verify="required" placeholder="请输入课程类型" autocomplete="off" class="layui-input"></td>
             </tr>
             <tr>
                 <td>说明：</td>
@@ -92,6 +92,32 @@
 
         });
 
+        $("#courseTypeName1").change(function () {
+            $.get('${pageContext.request.contextPath}/jack/Norepeat?type=courseType',{Name:$("#courseTypeName1").val()},function (d1) {
+                console.log(d1);
+                if(d1 === '2'){
+                    $("#courseTypeName1").val("");
+                    layer.tips('已有该课程类型了,请换一个吧~~~', '#courseTypeName1', {
+                        tips: [4, '#000000']
+                    });
+                    return false;
+                }
+            });
+        });
+
+        $("#courseTypeName").change(function () {
+            $.get('${pageContext.request.contextPath}/jack/Norepeat?type=courseType',{Name:$("#courseTypeName").val()},function (d1) {
+                console.log(d1);
+                if(d1 === '2'){
+                    $("#courseTypeName").val("");
+                    layer.tips('已有该课程类型了,请换一个吧~~~', '#courseTypeName', {
+                        tips: [4, '#000000']
+                    });
+                    return false;
+                }
+            });
+        });
+
         //post提交添加
         form.on('submit(Csubmit)',function (data) {
             $.post('${pageContext.request.contextPath}/jack/addCourse',data.field, function (data) {
@@ -103,6 +129,7 @@
                         layer.msg("添加失败！", {icon: 1});
                     }
                 },'json');
+            table.reload('Clist');
         });
 
         //post提交修改
@@ -111,7 +138,6 @@
                 '${pageContext.request.contextPath}/jack/editCourse',
                 data.field,
                 function (d) {
-                    alert(d);
                     if(d > 0){
                         //3.2  获得frame索引
                         var index = parent.layer.getFrameIndex(window.name);
@@ -122,6 +148,7 @@
                         layer.msg("修改失败！", {icon: 1});
                     }
                 });
+            table.reload('Clist');
         });
 
         /** 表格行按钮监听  编辑、删除*/

@@ -77,11 +77,14 @@
             padding-top: 10px;
             padding-left: 10px;
         }
-        .box{
-            width: 200px;
-            height: 200px;
-            display: none;
-            background-color: green;
+        #message{
+            width: 20%;
+            height: 30%;
+            margin-left: 80%;
+            margin-top: 30%;
+            z-index: 999;
+            box-shadow: #b5b5b5bf -3px -3px 4px 0px;
+            position: absolute;
         }
     </style>
 </head>
@@ -91,7 +94,7 @@
         <div class="layui-logo">HTOA</div>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item" lay-unselect="">
-                <a href="javascript:;" layui-event="flexible">
+                <a href="javascript:;" id="btnMessage">
                     <i class="layui-icon layui-icon-notice" style="color:#ff4242;font-size: 20px"></i>
                 </a>
             </li>
@@ -306,7 +309,7 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="tt" lay-tips="通知公告" lay-direction="2"><i class="layui-icon layui-icon-file"></i><cite>通知公告</cite></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;"class="site-demo-active" data-type="tabAdd"
+                        <dd><a href="javascript:;" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/zhq/Notice"
                                data-id="通知公告" data-title="通知公告">通知公告</a></dd>
                     </dl>
@@ -314,12 +317,12 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="tt" lay-tips="安全管理" lay-direction="2"><i class="layui-icon layui-icon-auz"></i><cite>安全管理</cite></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;"class="site-demo-active" data-type="tabAdd"
+                        <dd><a href="javascript:;" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/controller/toUserList"
                                data-id="权限管理" data-title="权限管理">权限管理</a></dd>
                     </dl>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;"class="site-demo-active" data-type="tabAdd"
+                        <dd><a href="javascript:;" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/log/toLogList"
                                data-id="系统日志" data-title="系统日志">系统日志</a></dd>
                     </dl>
@@ -346,7 +349,7 @@
                     <div class="layui-tab-item layui-show">
                         <%--内容主体--%>
                         <div class="layui-col-md6" style="margin: 1% 15%;float:right;">
-                            <div class="layui-card"style="border-radius: 5px;box-shadow: 2px 3px 7px 0px rgba(0, 0, 0, 0.49);">
+                            <div class="layui-card">
                                 <div class="layui-card-header" style="background-color:#333333;font-size: 20px;color: #fffaf5">我的任务 <i class="layui-icon layui-icon-refresh-3" style="cursor: pointer;float: right" id="flush"></i></div>
                                 <div class="layui-card-body">
                                     <div class="layui-carousel layadmin-carousel layadmin-shortcut">
@@ -398,7 +401,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <iframe frameborder="0" src="${pageContext.request.contextPath}/jack/toMyAnnoEmp" style="width:50%;height:80%;position: absolute;margin-left: 65px;" id="test1"></iframe>
                     </div>
                 </div>
@@ -408,9 +410,26 @@
 <%--    <iframe align="right" style="height: 100%;width: 1193px;" name="iframe1" class="layui-layer-iframe">--%>
 <%--        --%>
 <%--    </iframe>--%>
-
 </div>
-<div class="box"></div>
+<div id="message" class="layui-anim layui-anim-up">
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <span style="font-size: 20px;">提醒</span>
+            <a href="javascript:void(0);" id="close_1" style="float: right;color: red; font-size: 20px;">
+                <i class="layui-icon layui-icon-close" ></i>
+            </a>
+        </div>
+        <div class="layui-card-body layui-text" style="height: 60%;">
+            <ul class="layui-row layui-col-space10" style="margin-left: 20px;">
+                <li class="layui-col-xs32">
+                    <a href="javascript:void(0)">
+                        <span>您今天有试讲培训哦~</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 <script>
     //JavaScript代码区域
     layui.use([ 'element', 'table', 'layer', 'form' ,'laydate','upload'],function() {
@@ -422,22 +441,47 @@
         var upload = layui.upload;
         var $ = layui.jquery;
 
+        var myDate = new Date();
+        var year=myDate.getFullYear();
+        var month=myDate.getMonth()+1;
+        var date=myDate.getDate();
 
-        $("#message").on('click',function () {
-            layer.open({
-                type:1,
-                title:'招生新增',
-                skin: 'layui-layer-demo', //样式类名
-                closeBtn: 1, //不显示关闭按钮
-                area: ['750px', '600px'],
-                fixed: false, //不固定
-                maxmin: true,
-                shadeClose: true, //开启遮罩关闭
-                content:$(".box")
-            });
+        var currentTime = year+"-"+month+"-"+date;
+
+        //5秒后自动关闭
+        setTimeout(function () {
+            $("#message").animate({
+                top:'40%',
+            },'hide');
+        },5000);
+
+        //查询今天是否有试讲培训  。。。。。
+        $.get('${pageContext.request.contextPath}/jack/MessageWin',{date:currentTime},function (data) {
+            if(data === '1'){
+
+            }else if(data === '0'){
+                $("#message").css("display","none");
+            }
         });
 
+        //点击铃铛按钮再次显示消息
+        $("#btnMessage").click(function () {
+            $("#message").animate({
+                top:'8.3%',
+            },'show');
+            setTimeout(function () {
+                $("#message").animate({
+                    top:'40%',
+                },'hide');
+            },5000);
+        });
 
+        //消息关闭
+        $("#close_1").click(function () {
+            $("#message").animate({
+                top:'40%',
+            },'hide');
+        });
 
         yb();
         $("#flush").on('click',function () {
@@ -455,7 +499,6 @@
                 $("#weekly").text(data.weekly);
             });
         }
-
 
         //触发事件
         var active = {
