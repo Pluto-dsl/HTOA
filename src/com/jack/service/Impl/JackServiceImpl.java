@@ -111,6 +111,16 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
         return 1;
     }
 
+    @Override
+    public List selRepeatCourse(String Name) {
+        return listBySQL("SELECT * FROM `course` where courseName = '"+Name+"'");
+    }
+
+    @Override
+    public List selRepeatCourseType(String Name) {
+        return listBySQL("SELECT * FROM `courseType` where courseTypeName = '"+Name+"'");
+    }
+
 
     /**  考核管理 */
     @Override

@@ -129,13 +129,7 @@ public class Jack_courseController {
     }
     /**  编辑课程 */
     @RequestMapping(value = "/editCourseMgt")
-    public String editCourseMgt(HttpSession session,String courseId,String courseName,String isobligatory,String courseTypeId,String remark){
-        CourseVo courseVo = new CourseVo();
-        courseVo.setCourseId(Integer.parseInt(courseId));
-        courseVo.setCourseName(courseName);
-        courseVo.setIsobligatory(isobligatory);
-        courseVo.setCourseTypeId(Integer.parseInt(courseTypeId));
-        courseVo.setRemark(remark);
+    public String editCourseMgt(HttpSession session,CourseVo courseVo){
         service.updateCourseMgt(courseVo);
 
         EmpVo emp = (EmpVo) session.getAttribute("admin");
@@ -171,4 +165,20 @@ public class Jack_courseController {
         out.close();
     }
 
+    @RequestMapping(value = "/Norepeat")
+    @ResponseBody
+    public String Norepeat(String Name,String type){
+        if("course".equals(type)) {
+            List list = service.selRepeatCourse(Name);
+            if(list.size() > 0){
+                return "1";
+            }
+        }else if("courseType".equals(type)){
+            List list = service.selRepeatCourseType(Name);
+            if(list.size() > 0){
+                return "2";
+            }
+        }
+        return "0";
+    }
 }

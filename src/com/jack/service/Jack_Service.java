@@ -45,6 +45,8 @@ public interface Jack_Service {
     void addCourseMgt(CourseVo courseVo); //添加课程
     void updateCourseMgt(CourseVo courseVo); //修改课程
     int delCourseMgt(int cid); //删除课程
+    List selRepeatCourse(String Name);
+    List selRepeatCourseType(String Name);
 
     /** 考核管理业务 */
     List selAssessment(int currPage, int pageSize); //考核指标查询
