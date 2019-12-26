@@ -325,7 +325,7 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" class="tt" lay-tips="系统设置" lay-direction="2"><i class="layui-icon layui-icon-util"></i><cite>系统设置</cite></a>
+                    <a href="javascript:void(0)" class="tt" lay-tips="系统设置" lay-direction="2"><i class="layui-icon layui-icon-util"></i><cite>系统设置</cite></a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/system/systemPage"
@@ -346,7 +346,7 @@
                     <div class="layui-tab-item layui-show">
                         <%--内容主体--%>
                         <div class="layui-col-md6" style="margin: 1% 15%;float:right;">
-                            <div class="layui-card"style="border-radius: 5px;box-shadow: 2px 3px 7px 0px rgba(0, 0, 0, 0.49);">
+                            <div class="layui-card" style="border-radius: 5px;box-shadow: 2px 3px 7px 0px rgba(0, 0, 0, 0.49);">
                                 <div class="layui-card-header" style="background-color:#333333;font-size: 20px;color: #fffaf5">我的任务 <i class="layui-icon layui-icon-refresh-3" style="cursor: pointer;float: right" id="flush"></i></div>
                                 <div class="layui-card-body">
                                     <div class="layui-carousel layadmin-carousel layadmin-shortcut">
@@ -398,17 +398,12 @@
                                 </div>
                             </div>
                         </div>
-
                         <iframe frameborder="0" src="${pageContext.request.contextPath}/jack/toMyAnnoEmp" style="width:50%;height:80%;position: absolute;margin-left: 65px;" id="test1"></iframe>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-<%--    <iframe align="right" style="height: 100%;width: 1193px;" name="iframe1" class="layui-layer-iframe">--%>
-<%--        --%>
-<%--    </iframe>--%>
-
 </div>
 <div class="box"></div>
 <script>
