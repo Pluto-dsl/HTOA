@@ -132,6 +132,7 @@
                     console.log(result);
                     if (result === 0) {
                         layer.msg('保存成功', {icon: 1, time: 1000});
+                        $("#preview").attr("src","");
                         $("#addfrom")[0].reset();
                         layui.form.render();
                     }else {

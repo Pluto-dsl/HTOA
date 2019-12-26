@@ -46,7 +46,7 @@
                     <label class="label-top">情况记录:</label>
                 </td>
                 <td colspan="3">
-                    <textarea placeholder="请输入内容" name="content" class="layui-textarea" lay-verify="required"></textarea>
+                    <textarea placeholder="请输入内容"  maxlength="100"  name="content" class="layui-textarea"></textarea>
                 </td>
             </tr>
             <tr style="height: 40px">
@@ -63,8 +63,13 @@
                 var laydate = layui.laydate;
                 var form = layui.form;
 
+                var day2 = new Date();
+                day2.setTime(day2.getTime());
+                var s2 = day2.getFullYear()+"-" + (day2.getMonth()+1) + "-" + day2.getDate();
+
                 laydate.render({
                     elem: '#savetime'
+                    ,max:s2
                     // ,format: 'yyyy年MM月dd日'
                 });
 

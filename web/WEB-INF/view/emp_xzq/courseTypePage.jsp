@@ -81,34 +81,24 @@
             ,defaultToolbar:{}//自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
             ,title: '用户数据表'
             ,cols: [[
-                {type: 'checkbox', fixed: 'left'}
-                ,{field:'courseTypeId', title:'编号', width:300,unresize:true,sort: true}
+                {field:'courseTypeId', title:'编号', width:300,unresize:true,sort: true}
                 ,{field:'courseTypeName', title:'类别名称', width:300}
                 ,{field:'remark', title:'说明', width:300}
                 ,{title:'操作', toolbar:'#barDemo', width:200}
             ]]
             ,page: true
-            ,limit:5
-            ,limits: [5, 15, 20, 30, 40, 50]
+            ,limit:15
+            ,limits: [15, 20, 30, 40, 50]
 
         });
 
         //post提交添加
         form.on('submit(Csubmit)',function (data) {
-            $.post(
-                '${pageContext.request.contextPath}/jack/addCourse',
-                data.field,
-                function (data) {
-                    alert(data);
+            $.post('${pageContext.request.contextPath}/jack/addCourse',data.field, function (data) {
                     if(data > 0){
-                        //3.1   弹窗提示
-                        layer.msg("添加成功！", {icon: 1});
-                        //3.2  获得frame索引
                         var index = parent.layer.getFrameIndex(window.name);
-                        //3.3   关闭当前frame
                         parent.layer.close(index);
-                        //3.4   刷新页面
-                        window.parent.location.reload();
+                        table.reload('Clist');
                     }else {
                         layer.msg("添加失败！", {icon: 1});
                     }
@@ -123,14 +113,11 @@
                 function (d) {
                     alert(d);
                     if(d > 0){
-                        //3.1   弹窗提示
-                        layer.msg("修改成功！", {icon: 1});
                         //3.2  获得frame索引
                         var index = parent.layer.getFrameIndex(window.name);
                         //3.3   关闭当前frame
                         parent.layer.close(index);
-                        //3.4   刷新页面
-                        window.parent.location.reload();
+                        table.reload('Clist');
                     }else {
                         layer.msg("修改失败！", {icon: 1});
                     }
@@ -169,10 +156,10 @@
                     $.get("${pageContext.request.contextPath}/jack/delCourse?cid="+cid,function (d) {
                         if(d > 0){
                             layer.msg('删除成功');
-                            table.reload('Clist');
+                            window.location.reload();
                         }else if (d === null){
                             layer.msg('删除失败');
-                            table.reload('Clist');
+                            window.location.reload();
                         }
                     });
                     layer.close(index);
@@ -183,20 +170,20 @@
         /** 表格头部按钮监听  添加 */
         table.on('toolbar(Clist)',function (obj) {
             var data = obj.data;
-            table.reload('Clist');
             if(obj.event === 'add'){
                 layer.open({
                     type:1,
                     title:'新增课程类别',
                     skin: 'layui-layer-demo', //样式类名
-                    closeBtn: 1, //不显示关闭按钮
+                    closeBtn:2, //不显示关闭按钮
                     area: ['500px', '350px'],
                     fixed: false, //不固定
                     maxmin: true,
                     shadeClose: false, //开启遮罩关闭
-                    //content: ['${pageContext.request.contextPath}/jack/test','no']
                     content: $('#addWin'),
                     cancel: function(index, layero){
+                        $("#addfrom")[0].reset();
+                        layui.form.render();
                         table.reload('Clist');
                         layer.close(index);
                         return false;
@@ -204,6 +191,7 @@
                 });
             }
         });
+
     });
 
 </script>
