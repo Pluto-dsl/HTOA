@@ -77,6 +77,7 @@
                 // ,{fixed: 'right', title:'操作', toolbar: '#barDemo',width:250}
             ]]
             ,page: true
+            ,limit:[5,10,15,20,25,30]
         });
         table.on('row(log)',function(obj){
             var oo = obj.tr; //得到当前行元素对象

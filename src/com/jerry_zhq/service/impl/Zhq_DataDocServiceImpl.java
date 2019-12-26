@@ -48,7 +48,6 @@ public class Zhq_DataDocServiceImpl extends BaseDao implements Zhq_DataDocServic
         //构造文件写入位置
         String paht = request.getSession().getServletContext().getRealPath("\\");
         System.out.println("位置"+paht);
-        paht = paht.substring(7,paht.length());
 
         //给文件夹加上日期
         Calendar calendar = Calendar.getInstance();
@@ -59,7 +58,7 @@ public class Zhq_DataDocServiceImpl extends BaseDao implements Zhq_DataDocServic
         }
 
         paht +="WEB-INF\\"+"static\\"+ "upload\\" + calendar.get(Calendar.YEAR) + month2+ calendar.get(Calendar.DAY_OF_MONTH);
-         //System.out.println(paht);
+        // System.out.println(paht);
 
         //判断文件是否存在
         File dir = new File(paht);
@@ -77,7 +76,8 @@ public class Zhq_DataDocServiceImpl extends BaseDao implements Zhq_DataDocServic
         //保存文件
         file.transferTo(file1);
 
-        dataDocVo.setUrl(paht+"\\"+s+extName);
+        System.out.println("放进数据库中的路径是"+filePath);
+        dataDocVo.setUrl(filePath);
 
         dataDocVo.setDataName(oldName);//资料名称
         addObject(dataDocVo);

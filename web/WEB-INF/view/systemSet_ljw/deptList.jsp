@@ -134,7 +134,7 @@
             } else if (obj.event === 'del'){
                 layer.confirm('确定删除该院系吗', function(index){
                     layer.close(index);
-                    delDept(obj,obj.data.deptid)
+                    delDept(obj,obj.data.deptid,tableIns);
                 });
             }
         });
@@ -142,7 +142,7 @@
 </script>
 <script>
     //删除院系的方法
-    function delDept(obj,id) {
+    function delDept(obj,id,tableIns) {
         var index = layer.load(0, {shade: false});
         var data = {id:id};
         $.post("${pageContext.request.contextPath}/sysSet/delDept",data,function (data) {
@@ -152,7 +152,8 @@
                 layer.msg('删除失败，该院系正在被使用');
             }else {
                 obj.del();
-                layer.msg("删除成功")
+                tableIns.reload();
+                layer.msg("删除成功");
             }
         },"text");
     }

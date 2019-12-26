@@ -44,7 +44,7 @@
                 <label class="label-top">亲属姓名:</label>
             </td>
             <td colspan="3">
-                <input  name="familyname" value="${f.familyname}" id="familyname" class="layui-input"
+                <input  name="familyname"  maxlength="10" value="${f.familyname}" id="familyname" class="layui-input"
                         style="width:290px;">
             </td>
         </tr>
@@ -68,7 +68,7 @@
                 <label class="label-top">亲属号码:</label>
             </td>
             <td>
-                <input  name="familyhone" value="${f.familyhone}" id="familyhone" class="layui-input"
+                <input  name="familyhone" lay-verify="phone" value="${f.familyhone}" id="familyhone" class="layui-input"
                         style="width:290px;">
             </td>
         </tr>

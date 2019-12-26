@@ -92,8 +92,6 @@ public class Zhq_DataDocController {
         response.setContentType("application/force-download");
         String remark = request.getParameter("remark");
         EmpVo empVo = (EmpVo) session.getAttribute("admin");
-        System.out.println(remark);
-        System.out.println(file);
 
         dataDocVo.setRemark(remark);
         dataDocVo.setOpTime(new Date());
@@ -104,26 +102,16 @@ public class Zhq_DataDocController {
         return "1";
     }
 
-    //删除
-    @RequestMapping("/deleteDoc")
-    @ResponseBody
-    public String deleteDoc(int docId,HttpSession session){
-        DataDocVo docVo = new DataDocVo();
-        docVo.setDocId(docId);
-        zhq_dataDocService.delDoc(docVo);
-        EmpVo empVo = (EmpVo) session.getAttribute("admin");
-        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"删除了文件");
-        return "success";
-    }
 
     @RequestMapping("/download.do")
     public void download(Integer docId,DataDocVo dataDocVo,HttpServletResponse response,HttpSession session) throws Exception{
-         //System.out.println("获取到的id是"+docId);
+        //System.out.println("获取到的id是"+docId);
         DataDocVo dataDocVO1 = (DataDocVo) zhq_dataDocService.selDocId(dataDocVo.getClass(),docId);
 
          //System.out.println("要下载的路径是"+dataDocVO1.getUrl());
         // 指定要下载的文件所在路径
         String path = dataDocVO1.getUrl();
+        System.out.println("获取到的路径是"+path);
         // 创建该文件对象
         File file = new File(path);
 
@@ -133,6 +121,7 @@ public class Zhq_DataDocController {
 
         //打开本地文件流
         InputStream inputStream = new FileInputStream(file);
+
         //激活下载操作
         OutputStream os = response.getOutputStream();
 
@@ -148,6 +137,34 @@ public class Zhq_DataDocController {
         EmpVo empVo = (EmpVo) session.getAttribute("admin");
         log.addLog(empVo.getEmpId(),empVo.getEmpName()+"下载了文件");
 
+    }
+
+    //删除
+    @RequestMapping("/deleteDoc")
+    @ResponseBody
+    public String deleteDoc(int docId,HttpSession session){
+        DataDocVo docVo = new DataDocVo();
+        docVo.setDocId(docId);
+        zhq_dataDocService.delDoc(docVo);
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"删除了文件");
+        return "success";
+    }
+
+    //工具：将ins输入流写入已命名文件file
+    private void getInputStream(InputStream ins, File file) {
+        try {
+            OutputStream os = new FileOutputStream(file);
+            int bytesRead = 0;
+            byte[] buffer = new byte[8192];
+            while ((bytesRead = ins.read(buffer, 0, 8192)) != -1) {
+                os.write(buffer, 0, bytesRead);
+            }
+            os.close();
+            ins.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
