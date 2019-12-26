@@ -64,7 +64,7 @@
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button type="submit" class="layui-btn" lay-submit="" lay-filter="sub">确定</button>
-                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    <button type="button" class="layui-btn layui-btn-primary" onclick="qx()">取消</button>
                 </div>
             </div>
         </form>
@@ -81,6 +81,11 @@
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 <script>
+    function qx() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);//关闭当前页
+        window.location.reload();
+    }
     layui.use([ 'element', 'table', 'layer', 'form' ,'laydate'],function() {
         var element = layui.element;
         var layer = layui.layer;
