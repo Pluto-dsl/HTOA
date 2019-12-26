@@ -36,18 +36,18 @@
                 <tr>
                     <th>反馈问题:</th>
                     <td>
-                        <textarea rows="5" cols="50" name="remark" /></textarea>
+                        <textarea rows="5" cols="50" name="remark" lay-verify="required"/></textarea>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input type="file" name="images"  onchange="upload(this)">
-                            <div id="huixian" style="height:100px;width: 50px" ></div>
+                        <input type="file" name="images"  onchange="upload(this)" lay-verify="required">
+                            <div id="huixian" style="height:100px;width: 50px"></div>
                     </td>
                 </tr>
                 <tr align="center">
                     <td colspan="2">
-                        <button id="tijiao" style="text-align: center" style="margin-left: 25%" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>添加</button>
+                        <button id="tijiao" style="text-align: center" style="margin-left: 25%" class="layui-btn layui-btn-warm" type="submit" lay-submit><i class="layui-icon layui-icon-ok" ></i>添加</button>
                     </td>
                 </tr>
             </table>

@@ -298,6 +298,7 @@ public class Wtt_StudentController {
     @RequestMapping(value = "/addcate")
     public String addcate(ClassCategoryVo classCategoryVo,HttpSession session){
         EmpVo empVo = (EmpVo) session.getAttribute("admin");
+
         studentService.addcategory(classCategoryVo);
         log.addLog(empVo.getEmpId(),empVo.getEmpName()+"新增了班级类别,班级类别是:"+classCategoryVo.getClassTypeName());
         return "redirect:/student/classCategory";

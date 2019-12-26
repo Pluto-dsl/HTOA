@@ -64,11 +64,9 @@
                         }
                     }
                 }
-                for (let i = 0; i < chekid.length; i++) {
-                    console.log(chekid[i])
+                if(chekid.length==0){
+                    chekid.push(-1)
                 }
-                alert(chekid+"----------"+chekid.length)
-
                 let mid = $('#idd').val();
                 $.post("${pageContext.request.contextPath}/controller/updC",
                     {

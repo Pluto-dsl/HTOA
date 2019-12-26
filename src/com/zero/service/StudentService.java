@@ -26,4 +26,5 @@ public interface StudentService {
     List<Map> seekStu(String stuname,String Phone,int ctype);//搜索所有招生的学生
     EnrollmentVo enStu(int sid);//查询学生
     MajorVo marjov(int marjorid);//专业
+    List judgeLevel(String level);//是否有届别
 }
