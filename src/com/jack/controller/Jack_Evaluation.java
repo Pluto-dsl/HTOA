@@ -402,4 +402,15 @@ public class Jack_Evaluation {
 
         return noticeId;
     }
+
+    @RequestMapping(value = "/MessageWin")
+    @ResponseBody
+    public String MessageWin(String date,HttpSession session){
+        EmpVo empVo = (EmpVo) session.getAttribute("admin");
+        List list = service.selMessage(empVo.getEmpId(),date);
+        if(list.size() > 0){
+            return "1";
+        }
+        return "0";
+    }
 }
