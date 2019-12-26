@@ -77,6 +77,12 @@
             padding-top: 10px;
             padding-left: 10px;
         }
+        .box{
+            width: 200px;
+            height: 200px;
+            display: none;
+            background-color: green;
+        }
     </style>
 </head>
 <body class="layui-layout-body">
@@ -84,6 +90,11 @@
     <div class="layui-header">
         <div class="layui-logo">HTOA</div>
         <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item" lay-unselect="">
+                <a href="javascript:;" layui-event="flexible">
+                    <i class="layui-icon layui-icon-notice" style="color:#ff4242;font-size: 20px"></i>
+                </a>
+            </li>
             <li class="layui-nav-item">
                 <a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                    data-url="${pageContext.request.contextPath}/emp/selectusermessage"
@@ -335,7 +346,7 @@
                     <div class="layui-tab-item layui-show">
                         <%--内容主体--%>
                         <div class="layui-col-md6" style="margin: 1% 15%;float:right;">
-                            <div class="layui-card">
+                            <div class="layui-card"style="border-radius: 5px;box-shadow: 2px 3px 7px 0px rgba(0, 0, 0, 0.49);">
                                 <div class="layui-card-header" style="background-color:#333333;font-size: 20px;color: #fffaf5">我的任务 <i class="layui-icon layui-icon-refresh-3" style="cursor: pointer;float: right" id="flush"></i></div>
                                 <div class="layui-card-body">
                                     <div class="layui-carousel layadmin-carousel layadmin-shortcut">
@@ -399,7 +410,7 @@
 <%--    </iframe>--%>
 
 </div>
-
+<div class="box"></div>
 <script>
     //JavaScript代码区域
     layui.use([ 'element', 'table', 'layer', 'form' ,'laydate','upload'],function() {
@@ -410,6 +421,22 @@
         var laydate = layui.laydate;
         var upload = layui.upload;
         var $ = layui.jquery;
+
+
+        $("#message").on('click',function () {
+            layer.open({
+                type:1,
+                title:'招生新增',
+                skin: 'layui-layer-demo', //样式类名
+                closeBtn: 1, //不显示关闭按钮
+                area: ['750px', '600px'],
+                fixed: false, //不固定
+                maxmin: true,
+                shadeClose: true, //开启遮罩关闭
+                content:$(".box")
+            });
+        });
+
 
 
         yb();
@@ -438,7 +465,7 @@
                 //关于tabAdd的方法所传入的参数可看layui的开发文档中基础方法部分
                 element.tabAdd('demo', {
                     title: name,
-                    content: '<iframe data-frameid="'+id+'" frameborder="0" src="'+url+'" style="width:100%;height: 100%" id="test"></iframe>',
+                    content: '<iframe data-frameid="'+id+'" frameborder="0" src="'+url+'" style="width:100%;height: 100%" class="test"></iframe>',
                     id: id //规定好的id
                 });
                 element.render('tab');
@@ -463,10 +490,16 @@
             $(this).siblings().removeClass("layui-nav-itemed");
         });
 
+        element.on('tab(demo)', function(data){
+            var src=$(".layui-tab-item.layui-show").find("iframe").attr("src");
+            $(".layui-tab-item.layui-show").find("iframe").attr("src",src);
+
+        });
 
         //当点击有site-demo-active属性的标签时，即左侧菜单栏中内容 ，触发点击事件
         $('.site-demo-active').on('click', function() {
             var dataid = $(this);
+
             //这时会判断右侧.layui-tab-title属性下的有lay-id属性的li   的数目，即已经打开的tab项数目
             if ($(".layui-tab-title li[lay-id]").length <= 0) {
                 //如果比零小，则直接打开新的tab项
@@ -493,7 +526,7 @@
 
     <!--高度自适应-->
         function reinitIframe(){
-            var iframe = document.getElementById("test");
+            var iframe = document.getElementsByClassName("test");
             try{
                 var bHeight = iframe.contentWindow.document.body.scrollHeight;
                 var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;

@@ -33,7 +33,7 @@
             <tr>
                 <td>课程类别:</td>
                 <td>
-                    <select id="courseTypeId" name="courseTypeId" lay-filter="type">
+                    <select id="courseTypeId" name="courseTypeId" lay-verify="required">
                         <option value="" >请选择课程类型</option>
                     </select>
                 </td>
@@ -122,8 +122,8 @@
                 ,{title:'操作',width:180,toolbar:'#barDemo'}
             ]]
             ,page: true
-            ,limit:5
-            ,limits: [5, 15, 20, 30, 40, 50]
+            ,limit:15
+            ,limits: [15, 20, 30, 40, 50]
 
         });
 
@@ -193,10 +193,10 @@
                     $.get("${pageContext.request.contextPath}/jack/delCourseMgt?cid="+cid,function (d) {
                         if(d > 0){
                             layer.msg('删除成功');
-                            table.reload('Clist');
+                            window.location.reload();
                         }else if (d === null){
                             layer.msg('删除失败');
-                            table.reload('Clist');
+                            window.location.reload();
                         }
                     });
                     table.reload('Clist');

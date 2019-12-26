@@ -27,7 +27,9 @@
                 <input name="status" type="hidden" value="${emp.status}"/>
                 <td align="right">员工姓名:</td>
                 <td align="left"><input maxlength="10" class="layui-input" lay-verify="required"  id="empName" name="empName" placeholder="请输入员工姓名"
-                                        value="${emp.empName}" style="width:200px;float: left" οnkeyup="value=value.replace(/[\W]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"><font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font></td>
+                                        value="${emp.empName}" style="width:200px;float: left">
+                    <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
+                </td>
                 <td align="right">部门名称:</td>
                 <td align="left">
                     <select id="depId" name="depId" lay-verify="required" style="float: left;width:50px;">
@@ -72,7 +74,7 @@
                 </td>
                 <td align="right">籍贯:</td>
                 <td align="left">
-                    <input maxlength="20" class="layui-input" type="text" id="nation" name="nation" value="${emp.nation}"   style="width:200px;">
+                    <input maxlength="20" placeholder="请输入籍贯" class="layui-input" type="text" id="nation" name="nation" value="${emp.nation}"   style="width:200px;">
                     <%--<input class="layui-input" type="button"  onclick="addcity();" value="选择籍贯" style="height: 33px;width: 60px;">--%>
                 </td>
             </tr>

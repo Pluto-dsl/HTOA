@@ -83,6 +83,12 @@ public class Pluto_LcControllerImpl extends BaseDao implements Pluto_LcControlle
     }
 
     @Override
+    public List getListBySql(String sql) {
+        List list = super.listBySQL(sql);
+        return list;
+    }
+
+    @Override
     public void addcharModule(CharModuleVo charModuleVo) {
         super.addObject(charModuleVo);
     }

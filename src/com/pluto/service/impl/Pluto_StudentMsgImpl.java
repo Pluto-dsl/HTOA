@@ -147,6 +147,17 @@ public class Pluto_StudentMsgImpl extends BaseDao implements Pluto_StudentMsg {
     }
 
     @Override
+    public int judgePhone(String phone) {
+        List sList = super.listBySQL("select * from student where phone="+phone);
+        List eList = super.listByHql("from EmpVo where Phone="+phone);
+        if(sList.size()>0 || eList.size()>0){
+            return 1;
+        }else {
+            return 0;
+        }
+    }
+
+    @Override
     public StudentDormitoryVo getHourById(int id) {
         return (StudentDormitoryVo) super.getObject(new StudentDormitoryVo().getClass(),id);
     }

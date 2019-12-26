@@ -152,7 +152,7 @@
             } else if (obj.event === 'del'){
                 layer.confirm('确定删除该专业吗', function(index){
                     layer.close(index);
-                    delMajor(obj,obj.data.majorid)
+                    delMajor(obj,obj.data.majorid,tableIns)
                 });
             }
         });
@@ -174,7 +174,7 @@
 </script>
 <script>
     //删除专业的方法
-    function delMajor(obj,id) {
+    function delMajor(obj,id,tableIns) {
         var index = layer.load(0, {shade: false});
         var data = {id:id};
         $.post("${pageContext.request.contextPath}/sysSet/delMajor",data,function (data) {

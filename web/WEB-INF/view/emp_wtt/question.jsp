@@ -36,7 +36,6 @@
                     <br>
                 <span style="font-size: 20px;margin-left: 20px;">问题:<label id="remark" class="ques" style="display:inline-block;width:25%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height: 30px;
     font-size: 15px;position: absolute;" ></label></span>
-                    <%--提出时间:<input type="text" name="feedbackTime" style="border: none;width:80px" disabled="true">--%>
             </div>
             <div style="height:411.2px;width:100%;overflow-y:auto" id="contents">
 

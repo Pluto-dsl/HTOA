@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Array;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/controller")
@@ -103,12 +104,18 @@ public class Pluto_Controller {
     @RequestMapping("/toUpdC")
     public String toUpdC(int id,Model model){
         model.addAttribute("id",id);
-        List list = service.getListByHql("from CharModuleVo where characterId="+id);
+
+        List list = service.getListBySql("select * from charModule c where c.characterId="+id);
+
+//        for (int i = 0; i < list.size(); i++) {
+//            Map m = (Map) list.get(i);
+//            System.out.println("SQLlist查询的结果="+m.get("moduleId").toString());
+//        }
 
         JSONArray j = new JSONArray();
-        for (int i = 1; i < list.size(); i++) {
-            CharModuleVo c = (CharModuleVo) list.get(i);
-            j.add(c.getModuleId());
+        for (int i = 0; i < list.size(); i++) {
+            Map m = (Map) list.get(i);
+            j.add(m.get("moduleId"));
         }
 
         model.addAttribute("oldData",j);
@@ -136,16 +143,15 @@ public class Pluto_Controller {
     @ResponseBody
     public int updC(int mid, @RequestParam("checkIds[]")int[] cheks,HttpServletRequest request) throws IOException {
 
-        boolean flag = service.judge(mid);
-        if(flag){//true代表有数据
-            service.deleteCharModel(mid);
-        }
+        service.deleteCharModel(mid);
+
         for (int i = 0; i < cheks.length; i++) {
             CharModuleVo c = new CharModuleVo();
             c.setModuleId(cheks[i]);
             c.setCharacterId(mid);
             service.addcharModule(c);
         }
+
         EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
         log.addLog(emp.getEmpId(),emp.getEmpName()+"修改了角色权限。");
         return 0;

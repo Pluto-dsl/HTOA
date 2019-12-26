@@ -58,7 +58,7 @@
     layui.use(['table','form'], function(){
         var table = layui.table;
         var form = layui.form;
-        table.render({
+        var tableIns = table.render({
             elem: '#termList'
             ,url:'${pageContext.request.contextPath}/sysSet/getTermData'
             ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
@@ -134,7 +134,7 @@
             } else if (obj.event === 'del'){
                 layer.confirm('确定删除该学期吗', function(index){
                     layer.close(index);
-                    delTerm(obj,obj.data.termid)
+                    delTerm(obj,obj.data.termid,tableIns)
                 });
             }
         });
@@ -142,7 +142,7 @@
 </script>
 <script>
     //删除学期的方法
-    function delTerm(obj,id) {
+    function delTerm(obj,id,tableIns) {
         console.log(id);
         var index = layer.load(0, {shade: false});
         var data = {id:id};
@@ -153,6 +153,7 @@
                 layer.msg('删除失败，该专业正在被使用');
             }else {
                 obj.del();
+                tableIns.reload();
                 layer.msg("删除成功")
             }
         },"text");
