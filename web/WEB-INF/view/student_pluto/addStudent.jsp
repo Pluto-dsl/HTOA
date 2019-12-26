@@ -172,7 +172,7 @@
                     <label class="label-top">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</label>
                 </td>
                 <td>
-                    <input  name="stuno" id="stuno"  maxlength="20"  autocomplete="off" value="" class="layui-input"
+                    <input  name="stuno" id="stuno" lay-verify="number" maxlength="20"  autocomplete="off" value="" class="layui-input"
                             style="width:290px;">
                 </td>
                 <input type="hidden" name="studytype" value="1">
