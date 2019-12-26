@@ -36,6 +36,12 @@ public class ControllerInterceptor implements HandlerInterceptor {
         }
         String UriPath = uri.substring(0,temp);
         Object obj = httpServletRequest.getSession().getAttribute("admin");
+        if(obj!=null && "login".equals(uri)){
+            httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+"/toPage/oamain");
+            System.out.println("进来了！");
+            return false;
+        }
+
         if(obj==null && "/toPage/oamain".equals(uri)){
             httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+"/toPage/login");
             return false;

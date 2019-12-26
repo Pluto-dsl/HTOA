@@ -29,17 +29,8 @@
                 <tr>
                     <th>时间:</th>
                     <td>
-                        <input class="layui-input" id="times" name="time" disabled="disabled"/>
-                        <%--<select name="time">
-                            <option value="星期一">星期一</option>
-                            <option value="星期二">星期二</option>
-                            <option value="星期三">星期三</option>
-                            <option value="星期四">星期四</option>
-                            <option value="星期五">星期五</option>
-                            <option value="星期六">星期六</option>
-                            <option value="星期日">星期日</option>
-                        </select>--%>
-
+                        <input class="layui-input" id="times1"  disabled="disabled"/>
+                        <input type="hidden" id="times" name="time">
                     </td>
                 </tr>
 
@@ -149,8 +140,8 @@
                         area: ['48%', '80%'],
                         fixed: false, //不固定
                         maxmin: true,
-                        content: $('#windows'),
-                        shadeClose: true, //开启遮罩关闭
+                        shadeClose: false, //开启遮罩关闭
+                        content: $('#windows')
                     });
                     break;
                 case 'all':
@@ -168,7 +159,6 @@
                     ids=ids.substr(0,ids.length-1);
                     ids+="的用户吗?三思";
                     layer.confirm(ids,function(){
-                        /*layer.close(index);*/
                         //JQuery的循环
                         $(data).each(function (index,element) {
                             deletetrial(element.trialId);
@@ -195,7 +185,7 @@
         time.setTime(time.getTime());
         var s2 = time.getFullYear()+"-" + (time.getMonth()+1) + "-" + time.getDate();
         //日期
-        var trail = laydate.render({
+        laydate.render({
             elem: '#riqi',
             type: 'datetime',
             format:'yyyy/MM/dd',
@@ -209,6 +199,7 @@
                 var a = new Date(value);
                 var week = today[a.getDay()];
                 $("#times").val(week);
+                $("#times1").val(week);
             }
         });
 

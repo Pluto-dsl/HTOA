@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.publics.vo.empModel.emp.EmpVo" %><%--
   Created by IntelliJ IDEA.
   User: Pluto
   Date: 2019/12/2
@@ -89,6 +89,9 @@
     </style>
 </head>
 <body class="layui-layout-body">
+<div id="window" style="display: none;">
+    <table id="everyDay" lay-filter="every"></table>
+</div>
 <div layadmin-themealias="purple-red-header" class="layui-layout layui-layout-admin">
     <div class="layui-header">
         <div class="layui-logo">HTOA</div>
@@ -420,12 +423,17 @@
             </a>
         </div>
         <div class="layui-card-body layui-text" style="height: 60%;">
-            <ul class="layui-row layui-col-space10" style="margin-left: 20px;">
+            <ul id="message-ul" class="layui-row layui-col-space10" style="margin-left: 20px;">
                 <li class="layui-col-xs32">
                     <a href="javascript:void(0)" class="site-demo-active" data-type="tabAdd"
                        data-url="${pageContext.request.contextPath}/training/rehearsal_trainingPage"
                        data-id="试讲培训" data-title="试讲培训" >
                         <span>您今天有试讲培训哦~</span>
+                    </a>
+                </li>
+                <li class="layui-col-xs32">
+                    <a href="javascript:void(0);" onclick="showWindow()">
+                        <span>查看本月考核详情</span>
                     </a>
                 </li>
             </ul>
@@ -442,6 +450,42 @@
         var laydate = layui.laydate;
         var upload = layui.upload;
         var $ = layui.jquery;
+
+        var everyIns = table.render({
+            elem: '#everyDay'
+            ,method:"post"
+            ,url:'${pageContext.request.contextPath}/loa/getAduitData'
+            ,title: '员工考核详情报表'
+            ,cols: [[
+                {field:'aduitLogid', hide:true}
+                ,{field:'aduitName', title:'考核内容',width:200}
+                ,{field:'Scores', title:'分数',width:80, unresize: true, sort: true}
+                ,{field:'auditDate', title:'考核时间',width:140,templet:function (d){return createTime(d.auditDate);}, unresize: true, sort: true}
+                ,{field:'auditPerson', title:'录入人员',width:100,templet:function (d) {
+                        if (d.auditPerson =='' || d.auditPerson == null){
+                            return "- - -";
+                        }else {
+                            return d.auditPerson;
+                        }
+                    }}
+                ,{field:'Remark', title:'说明',width:251.8}
+                ,{field:'Image', title:'图片',width:143.8,templet:function (d) {
+                        return "单击此行显示图片"
+                    }
+                }
+            ]]
+        });
+
+        table.on('row(every)', function(obj){
+            var data = obj.data;//当前行数据
+            var tr = obj.tr;//当前行对象
+            $.getJSON('${pageContext.request.contextPath}/systemLog/getImg/'+data.aduitLogid, function(json){
+                layer.photos({
+                    photos: json
+                    ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+                });
+            });
+        });
 
         var myDate = new Date();
         var year=myDate.getFullYear();
@@ -561,7 +605,7 @@
                     if ($(this).attr("lay-id") == dataid.attr("data-id")) {
                         isData = true;
                     }
-                })
+                });
                 if (isData == false) {
                     //标志为false 新增一个tab项
                     active.tabAdd(dataid.attr("data-url"), dataid.attr("data-id"),dataid.attr("data-title"));
@@ -614,12 +658,12 @@
             var pwd1 = data.field.pwd1;
             var pwd2 = data.field.pwd2;
             if(pwd1!=pwd2){
-                layer.msg('两次输入的新密码不一样!请重新输入!')
-                $("#pwd1").focus()
+                layer.msg('两次输入的新密码不一样!请重新输入!');
+                $("#pwd1").focus();
                 return false;
             }
             if(pwd1.length<6||pwd1.length>16){
-                layer.msg('新密码的长度必须为6~16位!')
+                layer.msg('新密码的长度必须为6~16位!');
                 return false;
             }
             $.ajax({
@@ -630,21 +674,57 @@
                 data:data.field,
                 success:function (d) {
                     if(d=="error"){//原来密码错误
-                        layer.msg('您输入的原密码错误!请重新输入!')
+                        layer.msg('您输入的原密码错误!请重新输入!');
                         $("#pwd").focus()
                         return;
                     }
                     if(d=="ok"){
-                        layer.msg('修改成功!即将跳转到登录页面!')
+                        layer.msg('修改成功!即将跳转到登录页面!');
                         setTimeout(function () {
                             window.location.href="<%=request.getContextPath()%>/logout";
                         },1500)
                     }
                 }
-            })
+            });
             return false;
         })
     })
+</script>
+<script>
+    function createTime(v){
+        console.log(v);
+        if(v == undefined || v ==''){
+            return "";
+        }else {
+            var date = new Date(v);
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            m = m < 10 ? '0' + m : m;
+            var d = date.getDate();
+            d = d < 10 ? ("0" + d) : d;
+            var h = date.getHours();
+            h = h < 10 ? ("0" + h) : h;
+            var M = date.getMinutes();
+            M = M < 10 ? ("0" + M) : M;
+            var str = y + "-" + m + "-" + d;
+            return str;
+        }
+    }
+</script>
+<script>
+    function showWindow() {
+        layer.open({
+            type: 1,
+            title:'扣分详情',
+            skin: 'layui-layer-demo', //样式类名
+            closeBtn: 1, //是否显示关闭按钮
+            area: ['60%', '60%'],
+            fixed: false, //不固定
+            maxmin: true,
+            shadeClose: false, //是否点击遮罩时关闭
+            content: $('#window'),
+        });
+    }
 </script>
 </body>
 </html>

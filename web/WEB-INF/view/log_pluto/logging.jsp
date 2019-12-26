@@ -67,7 +67,7 @@
             ,title: '日志报表'
             ,cellMinWidth: 80
             ,cols: [[
-                {type: 'radio', fixed: 'left'}
+                // {type: 'radio', fixed: 'left'}
                 ,{field:'logId', title:'编号'}
                 ,{field:'ipAddr', title:'访问IP'}
                 // ,{field:'empId', title:'操作人ID'}
@@ -77,17 +77,18 @@
                 // ,{fixed: 'right', title:'操作', toolbar: '#barDemo',width:250}
             ]]
             ,page: true
-            ,limit:[5,10,15,20,25,30]
+            // ,limit:[5,10,15,20,25]
+            // ,limit:[5,10,15,20,25,30]
         });
-        table.on('row(log)',function(obj){
-            var oo = obj.tr; //得到当前行元素对象
-            var data = obj.data; //得到当前行数据
-            selected =  data;
-            //选中行样式
-            obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
-            //选中radio样式
-            obj.tr.find('i[class="layui-anim layui-icon"]').trigger("click");
-        });
+        // table.on('row(log)',function(obj){
+        //     var oo = obj.tr; //得到当前行元素对象
+        //     var data = obj.data; //得到当前行数据
+        //     selected =  data;
+        //     //选中行样式
+        //     obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+        //     //选中radio样式
+        //     obj.tr.find('i[class="layui-anim layui-icon"]').trigger("click");
+        // });
 
         form.on('submit(sub)', function(data){
             var data = data.field;
