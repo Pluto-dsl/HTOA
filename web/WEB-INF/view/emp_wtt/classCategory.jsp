@@ -20,7 +20,7 @@
                 <tr>
                     <td>班级类别名称:</td>
                     <td colspan="2">
-                        <input type="text" name="classTypeName" lay-verify="required" autocomplete="off"/>
+                        <input class="layui-input" name="classTypeName" lay-verify="required" autocomplete="off"  maxlength="10" placeholder="只能输入10字以内"/>
                     </td>
                 </tr>
                 <tr align="center">

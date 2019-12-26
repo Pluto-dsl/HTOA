@@ -259,7 +259,7 @@
             layer.msg('提交成功!')
             table.reload('etabe');
         }
-        $.post("${pageContext.request.contextPath}/zeroLeave/addLeave",params,back,"text");
+        $.post(${pageContext.request.contextPath}/zeroLeave/addLeave",params,back,"text");
 
     }*/
 </script>

@@ -30,7 +30,7 @@
                 </td>
                 <th>第几位值班:</th>
                 <td>
-                    <input type="text" class="layui-input" name="orderId" autocomplete="off" lay-verify="required">
+                    <input type="text" class="layui-input" name="orderId" autocomplete="off" lay-verify="required|number">
                 </td>
             </tr>
 
@@ -42,6 +42,17 @@
                 <th>值班要求:</th>
                 <td>
                     <input type="text" class="layui-input" name="ranges" autocomplete="off" lay-verify="required">
+                </td>
+            </tr>
+            <tr>
+                <th>开始时间:</th>
+                <td>
+                    <input type="text" id="startTime" class="layui-input" name="startTime" autocomplete="off" lay-verify="required">
+                </td>
+
+                <th>结束时间:</th>
+                <td>
+                    <input type="text" id="endTime" class="layui-input" name="endTime" autocomplete="off" lay-verify="required">
                 </td>
             </tr>
 
@@ -64,18 +75,6 @@
                         <option value="0">否</option>
                         <option value="1">是</option>
                     </select>
-                </td>
-            </tr>
-
-            <tr>
-                <th>开始时间:</th>
-                <td>
-                    <input type="text" id="startTime" class="layui-input" name="startTime" autocomplete="off" lay-verify="required">
-                </td>
-
-                <th>结束时间:</th>
-                <td>
-                    <input type="text" id="endTime" class="layui-input" name="endTime" autocomplete="off" lay-verify="required">
                 </td>
             </tr>
 
@@ -114,6 +113,7 @@
         var form = layui.form;
         var laypage = layui.laypage;
         var laydate = layui.laydate;
+        var $ = layui.jquery;
         table.render({
             elem:'#test',
             toolbar:'#toolbar',
@@ -201,14 +201,29 @@
 
 
         //时间选择器
-        laydate.render({
+        var start = laydate.render({
             elem: '#startTime',
-            type: 'time'
+            type: 'time',
+            done: function(value,date) {
+                endMax = end.config.max;
+                end.config.min = date;
+                end.config.min.month = date.month -1;
+                end.config.min.minutes = date.minutes+30
+            }
         });
 
-        laydate.render({
+        var end = laydate.render({
             elem:"#endTime",
-            type: 'time'
+            type: 'time',
+            done: function(value,date) {
+                if($.trim(value) == ''){
+                    var curDate = new Date();
+                    date = {'date': curDate.getDate(), 'month': curDate.getMonth()+1, 'year': curDate.getFullYear()};
+                }
+                start.config.max = date;
+                start.config.max.month = date.month -1;
+                start.config.min.minutes = date.minutes+30
+            }
         });
 
         //刷新
