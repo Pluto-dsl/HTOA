@@ -101,7 +101,7 @@
                 area: ['700px', '200px'],
                 fixed: false, //不固定
                 maxmin: true,
-                shadeClose: true, //开启遮罩关闭
+                shadeClose: false, //开启遮罩关闭
                 content: $('#windows')
             });
         });

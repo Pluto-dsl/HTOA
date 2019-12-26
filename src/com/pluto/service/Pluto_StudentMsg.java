@@ -47,4 +47,6 @@ public interface Pluto_StudentMsg {
     void deleteReplyScore(int stuid); //根据id删除学生答辩成绩
     //查询员工，暂时
     EmpVo getemp(int id);
+
+    int judgePhone(String phone);
 }

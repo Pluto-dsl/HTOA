@@ -56,6 +56,7 @@
                 // window.parent.location.reload();
                 let index = parent.layer.getFrameIndex(window.name);
                 parent.layer.close(index);//关闭当前页
+                return false;
             })
 
             //渲染

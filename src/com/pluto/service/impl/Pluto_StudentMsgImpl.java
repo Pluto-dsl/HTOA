@@ -132,16 +132,29 @@ public class Pluto_StudentMsgImpl extends BaseDao implements Pluto_StudentMsg {
 
     @Override
     public String getZxListJson(int stuid) {
-        List list = super.listBySQL("select s.stuname,h.happenid,h.happening,h.optime,e.empName from student s \n" +
+        String sql = "select s.stuname,h.happenid,h.happening,h.optime,e.empName from student s \n" +
                 "\tinner join studentHappening h on s.Studid = h.stuid\n" +
                 "\tinner join emp e on e.empId = h.Empid \n" +
-                "\twhere s.Studid="+stuid);
+                "\twhere s.Studid="+stuid;
+
+        List list = super.listBySQL(sql);
         JSONObject json = new JSONObject();
         json.put("code",0);
         json.put("msg","学生列表");
         json.put("count",10);
         json.put("data",list);
         return json.toJSONString();
+    }
+
+    @Override
+    public int judgePhone(String phone) {
+        List sList = super.listBySQL("select * from student where phone="+phone);
+        List eList = super.listByHql("from EmpVo where Phone="+phone);
+        if(sList.size()>0 || eList.size()>0){
+            return 1;
+        }else {
+            return 0;
+        }
     }
 
     @Override

@@ -84,6 +84,7 @@ public class Pluto_StudentController {
     @RequestMapping("/updateStu")
     @ResponseBody
     public String updateStudent(StudentVo studentVo,HttpServletRequest request,int oldss){
+        System.out.println("aaaaa");
         String bir = request.getParameter("bir");
         String ent = request.getParameter("ent");
         Date bd=null;
@@ -444,9 +445,18 @@ public class Pluto_StudentController {
         model.addAttribute("p",r);
         model.addAttribute("s",s);
         model.addAttribute("eList",elist);
-
-
         return "student_pluto/updateDb";
+    }
+
+    @RequestMapping("/judgePhone")
+    @ResponseBody
+    public String judgePhone(String iphone){
+        int flag = service.judgePhone(iphone);
+        if(flag==1){//当flag==1 ，说明已有用户
+            return "1";
+        }else {
+            return "0";
+        }
     }
 
 }

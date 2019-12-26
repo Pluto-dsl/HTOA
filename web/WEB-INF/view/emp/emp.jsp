@@ -97,7 +97,6 @@
             ,url: '<%=request.getContextPath()%>/zeroEmp/allemp' //数据接口
             ,id:"clientId"
             ,toolbar: '#top' //开启头部工具栏，并为其绑定左侧模板
-            ,page: true //开启分页
             ,cols: [[ //表头
                 {field: 'empId', title: '编号', width:80, sort: true, fixed: 'left'}
                 ,{field: 'empName', title: '员工姓名', width:100}
@@ -111,7 +110,8 @@
                 ,{field: 'reset', title: '初始密码',toolbar:'#pwd',width: 100}
                 ,{field: 'caozuo', title: '操作',toolbar:'#barDemo', width: 200}
             ]]
-            ,page: {limit:10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
+            ,page: {limit:50,limits:[50,100]
+            ,layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
             ,done: function(res, page, count){
                 //如果是异步请求数据方式，res即为你接口返回的信息。
                 //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度

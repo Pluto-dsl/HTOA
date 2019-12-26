@@ -64,7 +64,7 @@ public class Zero_EmpActiviti {
     public void responseData(HttpServletResponse response) throws IOException {
         response.setContentType("text/html;charset=utf-8");
         String json = service.getLeaveList("select h.*,e.empName from holiday h" +
-                " left join emp e on e.empId = h.Empid");
+                " left join emp e on e.empId = h.Empid ORDER BY holidayid desc");
         PrintWriter out = response.getWriter();
         out.print(json);
         out.close();
