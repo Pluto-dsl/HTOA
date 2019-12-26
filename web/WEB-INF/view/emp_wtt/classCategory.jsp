@@ -52,7 +52,7 @@
     </div>
 
     <script type="text/html" id="toolbar">
-        <button lay-event="add" class="layui-btn layui-btn-normal layui-btn-sm" style="margin-left: 50%;"><i class="layui-icon layui-icon-add-circle"></i>添加</button>
+        <button lay-event="add" class="layui-btn layui-btn-normal layui-btn-sm" style="margin-left: 50%;" ><i class="layui-icon layui-icon-add-circle"></i>添加</button>
     </script>
     <table class="layui-hide" lay-filter="test" id="test"></table>
     <script type="text/html" id="barDemo">
@@ -84,6 +84,20 @@
         table.on('toolbar(test)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id);
             var data =checkStatus.data;
+            /*$.ajax({
+                url: "${pageContext.request.contextPath}/student/addcate",
+                type: "post",
+                async:true,
+                dataType: "json",
+                data:{
+                    data:data.field
+                },
+                success: function (data) {
+                    if(data==0){
+                        layer.msg('有该班级类别,无法新增');
+                    }
+                }
+            });*/
             switch(obj.event){
                 case 'add':
                     layer.open({
@@ -94,7 +108,7 @@
                     fixed: false, //不固定
                     maxmin: true,
                     content: $('#windows'),
-                    shadeClose: true, //开启遮罩关闭
+                    shadeClose: false, //开启遮罩关闭
                 });
             };
         });
@@ -111,7 +125,7 @@
                     area: ['400px', '300px'],
                     fixed: false, //不固定
                     maxmin: true,
-                    shadeClose: true, //开启遮罩关闭
+                    shadeClose: false, //开启遮罩关闭
                     content: $('#updatewindows')
                 });
                 setFormValue(datas);//动态向表单赋值
@@ -126,6 +140,8 @@
             });
             form.render(null,'formTestFilter')
         }
+
+
     })
 </script>
 </html>

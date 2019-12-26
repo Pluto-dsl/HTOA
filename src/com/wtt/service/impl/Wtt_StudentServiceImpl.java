@@ -127,6 +127,11 @@ public class Wtt_StudentServiceImpl extends BaseDao implements Wtt_StudentServic
         return pageBySQL("select * from classType",currpage,pagesize);
     }
 
+    /*@Override
+    public ClassCategoryVo classcategoryvo() {
+        return (ClassCategoryVo) listBySQL("select * from classType");
+    }*/
+
     @Override
     public void addcategory(ClassCategoryVo classCategoryVo) {
         addObject(classCategoryVo);
