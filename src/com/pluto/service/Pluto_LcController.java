@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface Pluto_LcController {
     List getListByHql(String hql);
+    List getListBySql(String sql);
     void addUser(CharactersVo charactersVo);
     void delUser(int id);
     Object getObj(Class c,int id);//获取对象

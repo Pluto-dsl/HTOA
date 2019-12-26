@@ -53,7 +53,7 @@
 
                 </td>
                 <td>
-                    <input class="layui-input" lay-verify="required" value="" autocomplete="off" name="stuname" id="stuname"
+                    <input class="layui-input" lay-verify="required" maxlength="10"  value="" autocomplete="off" name="stuname" id="stuname"
                            style="width:290px;">
                 </td>
                 <td>
@@ -64,26 +64,11 @@
                            lay-verify="required"
                            name="cardid" id="cardid"
                            value=""
+                           maxlength="18"
                            autocomplete="off"
                            style="width:290px;">
                 </td>
             </tr>
-<%--            <tr style="height: 40px">--%>
-<%--                <td>--%>
-<%--                    <label class="label-top">担&nbsp;&nbsp;&nbsp;&nbsp;保&nbsp;&nbsp;&nbsp;人:</label>--%>
-<%--                </td>--%>
-<%--                <td>--%>
-<%--                    <input  name="guarantee" id="guarantee" value="" class="layui-input"--%>
-<%--                            style="width:290px;">--%>
-<%--                </td>--%>
-<%--                <td>--%>
-<%--                    <label class="label-top">毕业学校:</label>--%>
-<%--                </td>--%>
-<%--                <td>--%>
-<%--                    <input  name="middleschool" value="" id="middleschool" class="layui-input"--%>
-<%--                            style="width:290px;">--%>
-<%--                </td>--%>
-<%--            </tr>--%>
             <tr style="height: 40px">
                 <td>
                     <label class="label-top">&nbsp;性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别&nbsp;&nbsp;&nbsp;:</label>
@@ -98,7 +83,7 @@
                     <label class="label-top">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄:</label>
                 </td>
                 <td>
-                    <input class="layui-input" value="" id="age" name="age"
+                    <input class="layui-input" value=""  maxlength="3"  id="age" name="age"
                            style="width:290px;">
                 </td>
             </tr>
@@ -114,24 +99,15 @@
                     <label class="label-top">学生电话:</label>
                 </td>
                 <td>
-                    <input class="layui-input" lay-verify="required|phone" autocomplete="off" value="" name="phone" id="phone"
+                    <input class="layui-input" lay-verify="required|phone" onchange="judgePhone()" autocomplete="off" value="" name="phone" id="phone"
                            style="width:290px;">
                 </td>
             </tr>
             <tr style="height: 40px">
-<%--                <td>--%>
-<%--                    <label class="label-top">家&nbsp;庭&nbsp;地&nbsp;址:</label>--%>
-<%--                </td>--%>
-<%--                <td>--%>
-<%--                    <input  name="addr" id="addr" value="" class="layui-input" autocomplete="off"--%>
-<%--                            style="width:290px;">--%>
-<%--                </td>--%>
+
                 <td>
                     <label class="label-top">入学时间:</label>
-<%--                    <input type="text" class="layui-input" id="test1" placeholder="yyyy-MM-dd">--%>
                 </td>
-<%--    <input type="hidden" value="" name="birthday">--%>
-<%--    <input type="hidden" value="" name="entertime">--%>
                 <td>
                     <input class="layui-input" type="text" value="" placeholder="请选择入学时间" autocomplete="off" name="ents" id="ents"
                            editable="false"  style="width:290px;">
@@ -145,13 +121,6 @@
                 </td>
             </tr>
             <tr style="height: 40px">
-<%--                <td>--%>
-<%--                    <label class="label-top">介&nbsp;绍&nbsp;老&nbsp;师:</label>--%>
-<%--                </td>--%>
-<%--                <td>--%>
-<%--                    <input  name="introduretech" id="introduretech" value="" class="layui-input"--%>
-<%--                            style="width:290px;">--%>
-<%--                </td>--%>
                 <td>
                     <label class="label-top">添&nbsp;加&nbsp;宿&nbsp;舍:</label>
                 </td>
@@ -177,16 +146,15 @@
                     <label class="label-top">民&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;族:</label>
                 </td>
                 <td>
-                    <input  name="nation" id="nation" value="" class="layui-input"
+                    <input  name="nation" id="nation"  maxlength="5"  value="" class="layui-input"
                             style="width:290px;">
                 </td>
                 <td>
                     <label class="label-top">籍&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;贯:</label>
                 </td>
                 <td>
-                    <input  name="natives" id="natives" class="layui-input" value="" editable="false"
+                    <input  name="natives" id="natives"  maxlength="10"  class="layui-input" value="" editable="false"
                             style="width:190px;">
-<%--                    <button type="button" style="width: 100px;float: right;margin-top: -13%;" class="layui-btn layui-btn-primary">选择籍贯</button>--%>
                 </td>
             </tr>
             <tr style="height: 40px">
@@ -204,18 +172,9 @@
                     <label class="label-top">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</label>
                 </td>
                 <td>
-                    <input  name="stuno" id="stuno" autocomplete="off" value="" class="layui-input"
+                    <input  name="stuno" id="stuno"  maxlength="20"  autocomplete="off" value="" class="layui-input"
                             style="width:290px;">
                 </td>
-<%--                <td>--%>
-<%--                    <label class="label-top">学习类别:</label>--%>
-<%--                </td>--%>
-<%--                <td>--%>
-<%--                    <select class="layui-form-label" name="studytype" id="studytype" editable="false" value="1" ditable="false"--%>
-<%--                            style="width:290px;">--%>
-<%--                        <option value="1" selected="selected">全日制</option>--%>
-<%--                    </select>--%>
-<%--                </td>--%>
                 <input type="hidden" name="studytype" value="1">
             </tr >
             <tr style="height: 40px">
@@ -223,50 +182,20 @@
                     <label class="label-top">家&nbsp;长&nbsp;姓&nbsp;名:</label>
                 </td>
                 <td>
-                    <input name="parents" id="parents" autocomplete="off" class="layui-input" value=""
+                    <input name="parents" id="parents"  maxlength="5"  autocomplete="off" class="layui-input" value=""
                            style="width:290px;">
                 </td>
                 <td>
                     <label class="label-top">家长电话:</label>
                 </td>
                 <td>
-                    <input class="layui-input" autocomplete="off" lay-verify="required|phone" placeholder="  请输入家长电话" name="parentsphone" id="parentsphone" value=""
+                    <input class="layui-input"  autocomplete="off" lay-verify="required|phone" placeholder="  请输入家长电话" name="parentsphone" id="parentsphone" value=""
                            style="width:290px;">
                 </td>
             </tr>
-<%--            <tr style="height: 40px">--%>
-
-<%--                <td>--%>
-<%--                    <label class="label-top">&nbsp;面&nbsp;试&nbsp;人&nbsp;:</label>--%>
-<%--                </td>--%>
-<%--                <td>--%>
-<%--                    <input  name="audition"  id="audition" value="" class="layui-input"--%>
-<%--                            style="width:290px;">--%>
-<%--                </td>--%>
-<%--            </tr>--%>
-<%--            <tr style="height: 40px">--%>
-                <input type="hidden" name="isvocational" value="1">
-<%--                <td>--%>
-<%--                    <label class="label-top">是&nbsp;否&nbsp;中&nbsp;专:</label>--%>
-<%--                </td>--%>
-<%--                <td>--%>
-<%--                    <select class="layui-form-label" name="isvocational" id="isvocational" editable="false" value="1" ditable="false"--%>
-<%--                            style="width:290px;">--%>
-<%--                        <option value="1" selected="selected">是</option>--%>
-<%--                        <option value="2">否</option>--%>
-<%--                    </select>--%>
-<%--                </td>--%>
-<%--                <td>--%>
-<%--                    <label class="label-top">中专学校:</label>--%>
-<%--                </td>--%>
-<%--                <td>--%>
-<%--                    <input  name="vocationalsch" autocomplete="off" id="vocationalsch" class="layui-input" value=""--%>
-<%--                            style="width:290px;">--%>
-<%--                </td>--%>
-<%--            </tr>--%>
-
             <tr style="height: 40px">
                 <td>
+                    <input type="hidden" name="isvocational" value="1">
                     <label class="label-top">中&nbsp;专&nbsp;学&nbsp;籍:</label>
                 </td>
                 <td>
@@ -280,42 +209,10 @@
                     <label class="label-top">省录取号:</label>
                 </td>
                 <td>
-                    <input  name="enrollno" id="enrollno" autocomplete="off" class="layui-input" value="0"
+                    <input  name="enrollno" id="enrollno" maxlength="20"  autocomplete="off" class="layui-input" value="0"
                             style="width:290px;">
                 </td>
             </tr>
-<%--            <tr style="height: 40px">--%>
-<%--                <td>--%>
-<%--                    <label class="label-top">面试人意见:</label>--%>
-<%--                </td>--%>
-<%--                <td>--%>
-<%--                    <select class="layui-input" name="auditionoption" id="auditionoption" editable="false" value="同意" ditable="false"--%>
-<%--                            style="width:290px;">--%>
-<%--                        <option value="同意" >同意</option>--%>
-<%--                        <option value="拒绝" selected="selected">拒绝</option>--%>
-<%--                    </select>--%>
-<%--                </td>--%>
-
-<%--            </tr>--%>
-<%--            <tr style="height: 40px">--%>
-<%--                <td>--%>
-<%--                    <label class="label-top">报&nbsp;&nbsp;&nbsp;&nbsp;名&nbsp;&nbsp;号:&nbsp;</label>--%>
-<%--                </td>--%>
-<%--                <td>--%>
-<%--                    <input  name="registration" autocomplete="off" id="registration" value="" class="layui-input"--%>
-<%--                            style="width:290px;">--%>
-<%--                </td>--%>
-<%--                <td>--%>
-<%--                    <label class="label-top">低&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;保:</label>--%>
-<%--                </td>--%>
-<%--                <td>--%>
-<%--                    <select class="layui-form-label" name="dibao" id="dibao" editable="false" value="" ditable="false"--%>
-<%--                            style="width:290px;">--%>
-<%--                        <option value="是" >是</option>--%>
-<%--                        <option value="否" selected="selected">否</option>--%>
-<%--                    </select>--%>
-<%--                </td>--%>
-<%--            </tr>--%>
             <tr style="height: 40px">
                 <td>
                     <label class="label-top">班&nbsp;级&nbsp;选&nbsp;择:&nbsp;</label>
@@ -332,7 +229,7 @@
                     <label class="label-top">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注:</label>
                 </td>
                 <td>
-                    <input  name="remark" autocomplete="off" id="remark" value="" class="layui-input"
+                    <input  name="remark" autocomplete="off"  maxlength="50"  id="remark" value="" class="layui-input"
                             style="width:290px;">
                 </td>
             </tr>
@@ -378,6 +275,17 @@
                 return false;
             })
         })
+
+        function judgePhone() {
+            var phone = $("#phone").val();
+            $.post("<%=request.getContextPath()%>/student/judgePhone",{iphone:phone},function (data) {
+                if(data=="1"){
+                    $("#phone").val("");
+                    layer.msg("已有此号码，请重新输入！")
+                }
+            },"text")
+
+        }
     </script>
 </form>
 </body>

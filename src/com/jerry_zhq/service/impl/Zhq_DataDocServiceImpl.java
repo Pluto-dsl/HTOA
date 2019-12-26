@@ -47,7 +47,8 @@ public class Zhq_DataDocServiceImpl extends BaseDao implements Zhq_DataDocServic
 
         //构造文件写入位置
         String paht = request.getSession().getServletContext().getRealPath("\\");
-         //System.out.println("位置"+paht);
+        System.out.println("位置"+paht);
+        paht = paht.substring(7,paht.length());
 
         //给文件夹加上日期
         Calendar calendar = Calendar.getInstance();

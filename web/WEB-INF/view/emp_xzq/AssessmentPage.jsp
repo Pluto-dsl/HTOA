@@ -19,19 +19,19 @@
         <table align="center" style="margin-top: 5%;border-collapse: separate;border-spacing: 10px 30px;">
             <input type="hidden" name="" value="">
             <tr>
-                <td>考核内容:</td>
-                <td><input type="text" id="aduitName" name="aduitName" required lay-verify="required" placeholder="请输入课程类型" autocomplete="off" class="layui-input"></td>
+                <td>考核指标:</td>
+                <td><input type="text" id="aduitName" name="aduitName" required lay-verify="required" maxlength="20" placeholder="请输入考核内容" autocomplete="off" class="layui-input"></td>
                 <td>考核分数:</td>
-                <td><input type="text" id="Scores" name="Scores" required lay-verify="number" placeholder="请输入课程类型" autocomplete="off" class="layui-input"></td>
+                <td><input type="text" id="Scores" name="Scores" lay-verify="number" maxlength="5"  placeholder="请输入考核分数" autocomplete="off" class="layui-input"></td>
             </tr>
             <tr>
-                <td>考核指标:</td>
+                <td>考核部门:</td>
                 <td>
                     <select id="Depid" name="Depid" lay-filter="type">
                     </select>
                 </td>
-                <td>说明:</td>
-                <td><input type="text" id="Remark" name="Remark" required lay-verify="required" placeholder="请输入课程类型" autocomplete="off" class="layui-input"></td>
+                <td>说明内容:</td>
+                <td><input type="text" id="Remark" name="Remark" required lay-verify="required" maxlength="20" placeholder="请输入说明内容" autocomplete="off" class="layui-input"></td>
             </tr>
             <tr>
                 <td align="center" colspan="4">
@@ -112,7 +112,7 @@
             ]]
             ,page: true
             ,limit:15
-            ,limits: [5, 15, 20, 30, 40, 50]
+            ,limits: [15, 20, 30, 40, 50]
         });
         //表头部新增按钮监听
         table.on('toolbar(AssList)',function (obj) {
@@ -163,10 +163,10 @@
                     for(var a= 0;a<ids.length;a++){
                         $.get("${pageContext.request.contextPath}/jack/delAss?type=duo&cid="+ids[a],function (d) {
                             layer.msg('删除成功');
-                            table.reload('AssList');
+                            window.location.reload();
                         });
                     }
-                    table.reload('AssList');
+                    window.location.reload();
                     layer.close(index);
                 });
 

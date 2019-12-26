@@ -102,6 +102,8 @@ public class Zero_EmpController {
             empService.deleteWeekArrange(empId);//删除值班管理
             empService.deleteChatRecord(empId);//删除谈心记录
             empService.deleteAssTotal(empId);//删除考核
+            empService.deleteNotice(empId);//删除通告中的内容
+
             empService.deleteEmp(empVo);//删除员工表中的数据
 
             //保存日志
