@@ -62,7 +62,7 @@
             <button id="seek"  class="layui-btn" onclick="seek()">搜索</button>
         </div>
         <div class="layui-input-inline">
-            <a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="add"> <i class="layui-icon">&#xe654;</i>录入学生成绩</a>
+            <a style="margin-left: 10px;" class="layui-btn layui-btn-primary layui-btn-sm" lay-event="add"> <i class="layui-icon">&#xe654;</i>录入学生成绩</a>
             <a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="edit"> <i class="layui-icon">&#xe642;</i>修改学生成绩</a>
         </div>
     </label>

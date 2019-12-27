@@ -198,4 +198,19 @@ public class StudentScoreImpl extends BaseDao implements StudentScoreService {
     public void editReply(ReplyScoreVo replyScoreVo) {
         super.updObject(replyScoreVo);
     }
+
+
+    @Override
+    public int judgeproject(String projectName) {
+        return super.listBySQL("select projectId from project  where  projectName ='"+projectName+"'").size();
+    }
+
+    @Override
+    public void addproject(ProjectNameVo p) {
+        if (p.getProjectId()==0){
+            super.addObject(p);
+        }else {
+            super.updObject(p);
+        }
+    }
 }

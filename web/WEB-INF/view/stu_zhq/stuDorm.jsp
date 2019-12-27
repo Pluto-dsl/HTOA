@@ -247,7 +247,7 @@
                 title:"添加宿舍",
                 type:2,
                 content:['${pageContext.request.contextPath}/zhq/addStuDormit'],
-                area:['500','400'],
+                area:['500px','400px'],
                 resize:false
             })
         })

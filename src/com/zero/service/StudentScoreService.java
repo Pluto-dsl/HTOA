@@ -32,4 +32,6 @@ public interface StudentScoreService {
     void editscore(String rescore,StudentScoreVo studentScoreVo);//修改学生成绩
     List<Map> toeditReplyscore(int classid,int projectId);//修改学生答辩成绩
     void editReply(ReplyScoreVo replyScoreVo);//修改学生答辩成绩
+    int judgeproject(String projectName);//答辩是否重复
+    void addproject(ProjectNameVo p);//答辩是否重复
 }

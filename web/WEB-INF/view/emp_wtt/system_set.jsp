@@ -94,7 +94,9 @@
                     </div>
                 </td>
                 <td align="center">
-                    <div style="height: 30px">
+                    <div style="height: 30px" onclick="" href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
+                         data-url="${pageContext.request.contextPath}/StudentScore/toproject"
+                         data-id="答辩项目" data-title="答辩项目">
                         <i class="layui-icon layui-icon-set" style="font-size:50px;color: #93D1FF"></i>
                         <br>
                         答辩项目

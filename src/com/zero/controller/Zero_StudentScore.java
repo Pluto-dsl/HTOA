@@ -4,6 +4,8 @@ package com.zero.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.publics.service.LoggingService;
 import com.publics.vo.empModel.emp.EmpVo;
+import com.publics.vo.empModel.emp.PostVo;
+import com.publics.vo.studentModel.ProjectNameVo;
 import com.publics.vo.studentModel.ReplyScoreVo;
 import com.publics.vo.studentModel.StudentScoreVo;
 import com.zero.service.StudentScoreService;
@@ -263,6 +265,45 @@ public class Zero_StudentScore {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter writer = response.getWriter();
         writer.write("ok");
+    }
+
+    @RequestMapping(value = "/toproject")
+    public String toproject(Model model) {//去岗位设置页面
+        return "student_zero/Project";
+    }
+
+    @RequestMapping(value = "/allproject")
+    @ResponseBody
+    public Map allproject(){//所有答辩项目
+        List plist =  service.allProject();
+        Map map = new TreeMap();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",plist.size());
+        map.put("data",plist);
+        return map;
+    }
+
+    @RequestMapping(value = "/addproject")
+    @ResponseBody
+    public String addproject(ProjectNameVo p,HttpSession session){//添加或修改答辩项目
+        service.addproject(p);
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        if(p.getProjectId()==0){
+            log.addLog(emp.getEmpId(),"添加了一个答辩项目,项目名"+p.getProjectName());
+        }else {
+            log.addLog(emp.getEmpId(),"修改了一个答辩项目,id:"+p.getProjectId()+",项目名"+p.getProjectName());
+        }
+        return "ok";
+    }
+
+    @RequestMapping(value = "/judgeproject")
+    @ResponseBody
+    public String judgeproject(String projectName){//判断答辩项目重复
+        if (service.judgeproject(projectName)>0){
+            return "1";
+        }
+        return "0";
     }
 
 

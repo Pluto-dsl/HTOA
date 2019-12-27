@@ -105,7 +105,7 @@
                                 $(data).each(function (index,elemnt) {
                                     $("#postId").val(elemnt.postId);
                                     $("#postName").val(elemnt.postName);
-                                    $("#dep").val(elemnt.depId);
+                                    //$("#dep").val(elemnt.depId);
                                     yuan = elemnt.postName;
                                     $("#remark").val(elemnt.remark);
                                 });

@@ -159,7 +159,7 @@
                     title:'查看公告',
                     skin: 'layui-layer-demo', //样式类名
                     closeBtn: 1, //不显示关闭按钮
-                    area: ['700px', '550px'],
+                    area: ['1000px', '600px'],
                     fixed: false, //不固定
                     maxmin: true,
                     shadeClose: false, //开启遮罩关闭
