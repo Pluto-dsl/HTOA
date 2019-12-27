@@ -166,9 +166,9 @@
         form.on('submit(Esubmit)',function (data) {
             $.post('${pageContext.request.contextPath}/jack/editCourseMgt',data.field,function (data) {
                 layer.msg("添加成功");
-                table.reload('Clist');
+                window.location.reload();
             },'json');
-            table.reload('Clist');
+            window.location.reload();
         });
 
         //动态生成下拉框

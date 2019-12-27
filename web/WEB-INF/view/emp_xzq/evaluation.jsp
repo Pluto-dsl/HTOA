@@ -188,10 +188,10 @@
                     $.get("${pageContext.request.contextPath}/jack/delEvaluation",{evaluationid:data.evaluationid},function (result) {
                         if(result === '成功'){
                             layer.msg("删除成功");
-                            table.reload('teacherList');
+                            window.location.reload();
                         }
                     },'text');
-                    table.reload('headmasterList');
+                    window.location.reload();
                     layer.close(index);
                 });
             }
