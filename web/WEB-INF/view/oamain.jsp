@@ -70,18 +70,18 @@
             margin-top: 10px;
         }
         #Seebbb{
-            width: 99%;
-            height: 335px;
+            width: 96%;
             font-size: 18px;
             text-indent: 2em;
             padding-top: 10px;
-            padding-left: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
         }
         #message{
             width: 20%;
             height: 30%;
             margin-left: 80%;
-            margin-top: 30%;
+            top:70%;
             z-index: 999;
             box-shadow: #b5b5b5bf -3px -3px 4px 0px;
             position: absolute;
@@ -416,7 +416,7 @@
 </div>
 <div id="message" class="layui-anim layui-anim-up">
     <div class="layui-card">
-        <div class="layui-card-header">
+        <div class="layui-card-header" style="background-color:#f1b2b2;">
             <span style="font-size: 20px;">提醒</span>
             <a href="javascript:void(0);" id="close_1" style="float: right;color: red; font-size: 20px;">
                 <i class="layui-icon layui-icon-close" ></i>
@@ -497,7 +497,7 @@
         //5秒后自动关闭
         var time1 = setTimeout(function () {
             $("#message").animate({
-                top:'40%',
+                top:'100%',
             },'hide');
         },3500);
 
@@ -515,11 +515,11 @@
         $("#btnMessage").click(function () {
             window.clearTimeout(time1);
             $("#message").animate({
-                top:'8.3%',
+                top:'70%',
             },'show');
             time1 = setTimeout(function () {
                 $("#message").animate({
-                    top:'40%',
+                    top:'100%',
                 },'hide');
 
             },3500);
@@ -529,7 +529,7 @@
         //消息关闭
         $("#close_1").click(function () {
             $("#message").animate({
-                top:'40%',
+                top:'100%',
             },'hide');
         });
 

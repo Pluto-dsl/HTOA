@@ -18,10 +18,11 @@
             font-size: 13px;
             color: #949494;
             margin-top: 5px;
-            width:60%;
-            white-space:nowrap;
-            overflow:hidden;
-            text-overflow:ellipsis;
+            width: 85%;
+            height: 66px;
+            white-space: nowrap;
+            text-overflow: clip;
+            overflow: hidden;
             margin-left: 20px;
         }
         .layui-text h3 {
@@ -88,7 +89,7 @@
                                 </div>
                                 <input type="hidden" class="noticeId" value="${list.noticeId}">
                                 <input type="hidden" class="isRead" value="${list.isRead}">
-                                <button type="button" style="float: right;margin-top: -40px;background-color: #553bbc;" class="layui-btn layui-btn-sm layui-btn-warm See">详情</button>
+                                <button type="button" style="float: right;margin-top:-12%;background-color: #553bbc;" class="layui-btn layui-btn-sm layui-btn-warm See">详情</button>
                             </div>
                         </li>
                     </c:forEach>
@@ -120,7 +121,7 @@
 
 
             $(".See").on('click',function () {
-                var content = $(this).siblings(".content").text();
+                var content = $(this).siblings(".content").html();
                 var title = $(this).siblings(".top").children(".title").text();
                 var noticeTime = $(this).siblings(".top").children(".noticeTime").text();
                 var empName = $(this).siblings(".top").children(".empName").text();

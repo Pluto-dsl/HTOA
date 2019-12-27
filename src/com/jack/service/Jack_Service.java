@@ -57,8 +57,9 @@ public interface Jack_Service {
     void delAssessment(int Aid); //删除
 
     /** 考核管理 */
-    List selAss(); //查询所有的考核指标
-    List selEmp();  //查询所有的员工
+    List selAss(int value); //查询所有的考核指标
+    List selEmp(int value);  //查询所有的员工
+    List selDepAll(); //查询所有的部门
     void addAduit(AduitLogVo aduitLogVo); //员工考核录入
     List selAduitLog(int currPage, int pageSize); //员工考核列表
     int selScores(int id); //查询考核分数
