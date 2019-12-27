@@ -74,7 +74,6 @@
                 ,{field:'sex', title:'性别', width:120}
                 ,{field:'tell', title:'手机号', width:120}
                 ,{field:'school', title:'学校', width:120}
-                ,{field:'classes', title:'班级', width:120}
                 ,{field:'amount', title:'预定报名费', width:120}
                 ,{field:'testTime',templet:function (d){return createTime(d.startTime);}, title:'试学时间', width:120}
                 ,{field:'enrollMoneyTime',templet:function (d){return createTime(d.startTime);}, title:'发放时间', width:120}
@@ -82,7 +81,6 @@
                 ,{field:'empid', title:'录入人', width:120}
                 ,{field:'statusName', title:'学生状态', width:120}
                 ,{field:'remark', title:'员工姓名', width:120}
-                ,{field:'studType', title:'班级类别', width:120}
                 ,{field:'score', title:'学习成绩', width:120}
                 ,{field:'enrollMoneyTime',templet:function (d){return createTime(d.enrollMoneyTime);}, title:'发放时间', width:120}
                 ,{field:'reviewStatus', title:'报名费状态', width:120}

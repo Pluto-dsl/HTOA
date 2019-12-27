@@ -51,7 +51,7 @@
         .layui-col-xs3 {
             float: none;
             width: 100%;
-            height: 16%;
+            height: 19%;
             line-height: 2;
         }
         .layui-col-xs3:hover{
@@ -365,7 +365,7 @@
                         <%--内容主体--%>
                         <div class="layui-col-md6" style="margin: 1% 15%;float:right;">
                             <div class="layui-card" style="box-shadow: 3px 4px 7px 1px rgba(0, 0, 0, 0.38);">
-                                <div class="layui-card-header" style="background-color:#333333;font-size: 20px;color: #fffaf5">我的任务 <i class="layui-icon layui-icon-refresh-3" style="cursor: pointer;float: right" id="flush"></i></div>
+                                <div class="layui-card-header" style="background-color:#bc593b;font-size: 20px;color: #fffaf5">我的任务 <i class="layui-icon layui-icon-refresh-3" style="cursor: pointer;float: right" id="flush"></i></div>
                                 <div class="layui-card-body">
                                     <div class="layui-carousel layadmin-carousel layadmin-shortcut">
                                         <ul class="layui-row layui-col-space10">
@@ -437,8 +437,10 @@
         <div class="layui-card-body layui-text" style="height: 60%;">
             <ul id="message-ul" class="layui-row layui-col-space10" style="margin-left: 20px;">
                 <li class="layui-col-xs32">
-                    <a href="javascript:void(0)">
-                        <span>您今天有试讲培训哦~</span>
+                    <a href="javascript:void(0)" class="site-demo-active" data-type="tabAdd"
+                       data-url="${pageContext.request.contextPath}/training/rehearsal_trainingPage"
+                       data-id="试讲培训" data-title="试讲培训" >
+                        <span id="title"></span>
                     </a>
                 </li>
                 <li class="layui-col-xs32">
@@ -505,31 +507,35 @@
         var currentTime = year+"-"+month+"-"+date;
 
         //5秒后自动关闭
-        setTimeout(function () {
+        var time1 = setTimeout(function () {
             $("#message").animate({
                 top:'40%',
             },'hide');
-        },5000);
+        },3500);
 
         //查询今天是否有试讲培训  。。。。。
         $.get('${pageContext.request.contextPath}/jack/MessageWin',{date:currentTime},function (data) {
             if(data === '1'){
-
+                $("#title").text("您今天有试讲培训哦~");
             }else if(data === '0'){
-                $("#message").css("display","none");
+                $("#title").text("您今天试讲培训没有任务哦~,看看其它任务吧~");
+                $("#title").css("color","#908d8d");
             }
         });
 
         //点击铃铛按钮再次显示消息
         $("#btnMessage").click(function () {
+            window.clearTimeout(time1);
             $("#message").animate({
                 top:'8.3%',
             },'show');
-            setTimeout(function () {
+            time1 = setTimeout(function () {
                 $("#message").animate({
                     top:'40%',
                 },'hide');
-            },5000);
+
+            },3500);
+
         });
 
         //消息关闭
