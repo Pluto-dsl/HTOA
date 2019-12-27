@@ -112,18 +112,18 @@ public class Jack_Assessment {
     /** 考核指标 */
     @RequestMapping(value = "/Ass")
     @ResponseBody
-    public Map Ass(){
+    public Map Ass(String value){
         Map Amap = new HashMap();
-        List list = service.selAss();
+        List list = service.selAss(Integer.parseInt(value));
         Amap.put("names",list);
         return Amap;
     }
     /** 查询员工列表 */
     @RequestMapping(value = "/emp")
     @ResponseBody
-    public Map emp(){
+    public Map emp(String value){
         Map emap = new HashMap();
-        List list = service.selEmp();
+        List list = service.selEmp(Integer.parseInt(value));
         emap.put("names",list);
         return emap;
     }
@@ -294,6 +294,15 @@ public class Jack_Assessment {
          //System.out.println(json.toJSONString());
         out.print(json);
         out.close();
+    }
+
+    @RequestMapping(value = "/selDepAll")
+    @ResponseBody
+    public Map selDepAll(){
+        List list = service.selDepAll();
+        Map map = new HashMap();
+        map.put("names",list);
+        return map;
     }
 }
 

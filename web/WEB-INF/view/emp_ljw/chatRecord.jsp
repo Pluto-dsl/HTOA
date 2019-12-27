@@ -125,6 +125,7 @@
 <script>
     layui.use(['table','form','laydate'], function(){
         var laydate = layui.laydate;
+        var form = layui.form;
         //执行一个laydate实例
         laydate.render({
             elem: '#startDay' //指定元素
@@ -193,6 +194,8 @@
             var checkStatus = table.checkStatus(obj.config.id);
             switch(obj.event){
                 case 'newChatRecord':
+                    $("#MyForm")[0].reset();
+                    layui.form.render();
                     layer.open({
                         type: 1,
                         title:'添加谈心记录',
@@ -262,7 +265,7 @@
                 });
 
                 $("#sayface").children().each(function (index,element) {
-                    if ($(element).text() === data.sayface) {
+                    if ($(element).text() === data.sayFace) {
                         $(element).attr("selected","selected");
                     }else {
                         $(element).removeAttr("selected")

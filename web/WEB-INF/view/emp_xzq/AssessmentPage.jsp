@@ -11,6 +11,11 @@
 <head>
     <title> </title>
     <jsp:include page="../include.jsp" />
+    <style>
+        .layui-form-select dl{
+            height: 500%;
+        }
+    </style>
 </head>
 <body>
 <%--添加弹层--%>
@@ -20,7 +25,7 @@
             <input type="hidden" name="" value="">
             <tr>
                 <td>考核指标:</td>
-                <td><input type="text" id="aduitName" name="aduitName" required lay-verify="required" maxlength="20" placeholder="请输入考核内容" autocomplete="off" class="layui-input"></td>
+                <td><input type="text" id="aduitName" name="aduitName" required lay-verify="required" maxlength="30" placeholder="请输入考核内容" autocomplete="off" class="layui-input"></td>
                 <td>考核分数:</td>
                 <td><input type="text" id="Scores" name="Scores" lay-verify="number" maxlength="5"  placeholder="请输入考核分数" autocomplete="off" class="layui-input"></td>
             </tr>
@@ -31,7 +36,7 @@
                     </select>
                 </td>
                 <td>说明内容:</td>
-                <td><input type="text" id="Remark" name="Remark" required lay-verify="required" maxlength="20" placeholder="请输入说明内容" autocomplete="off" class="layui-input"></td>
+                <td><input type="text" id="Remark" name="Remark" required lay-verify="required" maxlength="30" placeholder="请输入说明内容" autocomplete="off" class="layui-input"></td>
             </tr>
             <tr>
                 <td align="center" colspan="4">
@@ -91,7 +96,6 @@
         var table = layui.table;
         var form = layui.form;
         var laydate = layui.laydate;
-
 
         //考勤列表
         table.render({
