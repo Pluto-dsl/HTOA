@@ -352,7 +352,7 @@
                     <div class="layui-tab-item layui-show">
                         <%--内容主体--%>
                         <div class="layui-col-md6" style="margin: 1% 15%;float:right;">
-                            <div class="layui-card">
+                            <div class="layui-card" style="box-shadow: 3px 4px 7px 1px rgba(0, 0, 0, 0.38);">
                                 <div class="layui-card-header" style="background-color:#333333;font-size: 20px;color: #fffaf5">我的任务 <i class="layui-icon layui-icon-refresh-3" style="cursor: pointer;float: right" id="flush"></i></div>
                                 <div class="layui-card-body">
                                     <div class="layui-carousel layadmin-carousel layadmin-shortcut">
