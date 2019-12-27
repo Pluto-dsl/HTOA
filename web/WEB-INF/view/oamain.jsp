@@ -1,4 +1,5 @@
-<%@ page import="com.publics.vo.empModel.emp.EmpVo" %><%--
+<%@ page import="com.publics.vo.empModel.emp.EmpVo" %>
+<%--
   Created by IntelliJ IDEA.
   User: Pluto
   Date: 2019/12/2
@@ -50,7 +51,7 @@
         .layui-col-xs3 {
             float: none;
             width: 100%;
-            height: 16%;
+            height: 19%;
             line-height: 2;
         }
         .layui-col-xs3:hover{
@@ -243,39 +244,48 @@
                     <dl class="layui-nav-child">
                         <dd><a layadmin-event="refresh" href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toAssessmentPage"
-                               data-id="考核指标" data-title="考核指标">考核指标</a></dd>
+                               data-id="考核指标" data-title="考核指标">考核指标</a>
+                        </dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toCheckEntry"
-                               data-id="考核录入" data-title="考核录入">考核录入</a></dd>
+                               data-id="考核录入" data-title="考核录入">考核录入</a>
+                        </dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toAduitLogList"
-                               data-id="员工考核" data-title="员工考核">员工考核</a></dd>
+                               data-id="员工考核" data-title="员工考核">员工考核</a>
+                        </dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toEvaluationContext"
-                               data-id="考评内容" data-title="考评内容">考评内容</a></dd>
+                               data-id="考评内容" data-title="考评内容">考评内容</a>
+                        </dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toTeacherListE"
-                               data-id="教师考评" data-title="教师考评">教师考评</a></dd>
+                               data-id="教师考评" data-title="教师考评">教师考评</a>
+                        </dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" class="tt" lay-tips="问题反馈" lay-direction="2">
+                    <a href="javascript:void(0);" class="tt" lay-tips="问题反馈" lay-direction="2">
                         <i class="layui-icon layui-icon-chat"></i>
-                        <cite>问题反馈</cite></a>
+                        <cite>问题反馈</cite>
+                    </a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/student/questionPage"
-                               data-id="问题反馈" data-title="问题反馈" >问题反馈</a></dd>
+                               data-id="问题反馈" data-title="问题反馈" >问题反馈</a>
+                        </dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" class="tt" lay-tips="文件管理" lay-direction="2">
+                    <a href="javascript:void(0)" class="tt" lay-tips="文件管理" lay-direction="2">
                         <i class="layui-icon layui-icon-tabs"></i>
-                        <cite>文件管理</cite></a>
+                        <cite>文件管理</cite>
+                    </a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/zhq/DataDoc"
-                               data-id="资料文档" data-title="资料文档" >资料文档</a></dd>
+                               data-id="资料文档" data-title="资料文档" >资料文档</a>
+                        </dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -283,9 +293,11 @@
                         <i class="layui-icon layui-icon-tabs"></i>
                         <cite>招生管理</cite></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" class="site-demo-active" data-type="tabAdd"
+                        <dd>
+                            <a href="javascript:;" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toEnrollment"
-                               data-id="招生信息" data-title="招生信息" >招生信息</a></dd>
+                               data-id="招生信息" data-title="招生信息" >招生信息</a>
+                        </dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -352,8 +364,8 @@
                     <div class="layui-tab-item layui-show">
                         <%--内容主体--%>
                         <div class="layui-col-md6" style="margin: 1% 15%;float:right;">
-                            <div class="layui-card">
-                                <div class="layui-card-header" style="background-color:#333333;font-size: 20px;color: #fffaf5">我的任务 <i class="layui-icon layui-icon-refresh-3" style="cursor: pointer;float: right" id="flush"></i></div>
+                            <div class="layui-card" style="box-shadow: 3px 4px 7px 1px rgba(0, 0, 0, 0.38);">
+                                <div class="layui-card-header" style="background-color:#bc593b;font-size: 20px;color: #fffaf5">我的任务 <i class="layui-icon layui-icon-refresh-3" style="cursor: pointer;float: right" id="flush"></i></div>
                                 <div class="layui-card-body">
                                     <div class="layui-carousel layadmin-carousel layadmin-shortcut">
                                         <ul class="layui-row layui-col-space10">
@@ -425,8 +437,10 @@
         <div class="layui-card-body layui-text" style="height: 60%;">
             <ul id="message-ul" class="layui-row layui-col-space10" style="margin-left: 20px;">
                 <li class="layui-col-xs32">
-                    <a href="javascript:void(0)">
-                        <span>您今天有试讲培训哦~</span>
+                    <a href="javascript:void(0)" class="site-demo-active" data-type="tabAdd"
+                       data-url="${pageContext.request.contextPath}/training/rehearsal_trainingPage"
+                       data-id="试讲培训" data-title="试讲培训" >
+                        <span id="title"></span>
                     </a>
                 </li>
                 <li class="layui-col-xs32">
@@ -493,31 +507,35 @@
         var currentTime = year+"-"+month+"-"+date;
 
         //5秒后自动关闭
-        setTimeout(function () {
+        var time1 = setTimeout(function () {
             $("#message").animate({
                 top:'40%',
             },'hide');
-        },5000);
+        },3500);
 
         //查询今天是否有试讲培训  。。。。。
         $.get('${pageContext.request.contextPath}/jack/MessageWin',{date:currentTime},function (data) {
             if(data === '1'){
-
+                $("#title").text("您今天有试讲培训哦~");
             }else if(data === '0'){
-                $("#message").css("display","none");
+                $("#title").text("您今天试讲培训没有任务哦~,看看其它任务吧~");
+                $("#title").css("color","#908d8d");
             }
         });
 
         //点击铃铛按钮再次显示消息
         $("#btnMessage").click(function () {
+            window.clearTimeout(time1);
             $("#message").animate({
                 top:'8.3%',
             },'show');
-            setTimeout(function () {
+            time1 = setTimeout(function () {
                 $("#message").animate({
                     top:'40%',
                 },'hide');
-            },5000);
+
+            },3500);
+
         });
 
         //消息关闭

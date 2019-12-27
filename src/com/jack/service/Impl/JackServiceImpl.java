@@ -387,9 +387,8 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
 
     @Override
     public List selEnrollmentList(int currPage,int pageSize) {
-        return pageBySQL("select en.*,stu.statusName,ct.classTypeName,ma.majorName  from \n" +
-                "((enrollment en INNER JOIN studentSet stu on en.`status` = stu.statusid)\n" +
-                "INNER JOIN classType ct on en.studType = ct.classTypeId)\n" +
+        return pageBySQL("select en.*,stu.statusName,ma.majorName from (enrollment en \n" +
+                "INNER JOIN studentSet stu on en.`status` = stu.statusid) \n" +
                 "INNER JOIN major ma on ma.majorId = en.majorId",currPage,pageSize);
     }
 

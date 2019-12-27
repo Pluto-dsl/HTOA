@@ -157,6 +157,7 @@
 
         $.get('${pageContext.request.contextPath}/jack/emp',{},function (data) {
             for (var i = 0; i < data.names.length; i++) {
+                $(sessionStorage.admin)
                 $("#Empid").append("<option value='"+data.names[i].empId+"'>"+data.names[i].empName+"</option>");
             }
             form.render("select");

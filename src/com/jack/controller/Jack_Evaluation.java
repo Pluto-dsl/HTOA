@@ -178,18 +178,16 @@ public class Jack_Evaluation {
         if("Headmaster".equals(type)){
             List evaluate = service.selHeadmasterTest(stu.getStudid());
             List problem = service.selHeadmasterType();
-             //System.out.println(evaluate);
-            Map json = new HashMap();
+            Map json1 = new HashMap();
             for(int a=0;a<evaluate.size();a++){
                 Map map=(Map)evaluate.get(a);
-                json.put("empId",map.get("empId"));
-                json.put("classId",map.get("classId"));
-                json.put("className",map.get("className"));
-                json.put("empName",map.get("empName"));
+                json1.put("empId",map.get("empId"));
+                json1.put("classId",map.get("classId"));
+                json1.put("className",map.get("className"));
+                json1.put("empName",map.get("empName"));
             }
             request.setAttribute("teacher","班主任");
-            request.setAttribute("evaluate",json);
-             //System.out.println(problem);
+            request.setAttribute("evaluate",json1);
             request.setAttribute("problem",problem);
             return "emp_xzq/HeadmasterEva";
         }else if("Teachar".equals(type)){ //进入教师考评
@@ -205,7 +203,6 @@ public class Jack_Evaluation {
             }
             request.setAttribute("teacher","授课老师");
             request.setAttribute("evaluate",json);
-             //System.out.println(problem);
             request.setAttribute("problem",problem);
             return "emp_xzq/HeadmasterEva";
         }
@@ -257,8 +254,6 @@ public class Jack_Evaluation {
             for (int i = 0; i < list1.length; i++) {
                 number.add(list1[i]);
                 evaluationid.add(list2[i]);
-                 //System.out.println(number);
-                 //System.out.println(evaluationid);
                 evaluation = (String) evaluationid.get(i);
                 number1 = (String) number.get(i);
                 teacher.setTeacherScore(Integer.parseInt(number1));
@@ -332,7 +327,6 @@ public class Jack_Evaluation {
                 studentleave.add(maps);
             }
         }
-        //-------------------------------------------------------------------------------------------------
         map.put("emp",holidays.size());
         map.put("stu",studentleave.size());
         map.put("clock",clock);
