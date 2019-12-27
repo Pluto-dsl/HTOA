@@ -94,6 +94,7 @@
         table.render({
             elem: '#demo'
             ,height: 600
+            ,method:'post'
             ,url: '<%=request.getContextPath()%>/zeroEmp/allemp' //数据接口
             ,id:"clientId"
             ,toolbar: '#top' //开启头部工具栏，并为其绑定左侧模板

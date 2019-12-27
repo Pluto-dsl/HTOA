@@ -37,11 +37,23 @@ public class ProjectNameVo {
         return projectId;
     }
 
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
+    }
+
     public String getProjectName() {
         return projectName;
     }
 
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
     public String getRemark() {
         return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

@@ -213,8 +213,14 @@ public class Zero_EmpController {
 
     @RequestMapping(value = "/addPost")
     @ResponseBody
-    public String addpost(PostVo postVo){//添加或修改岗位
+    public String addpost(PostVo postVo,HttpSession session){//添加或修改岗位
         empService.addpost(postVo);
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        if(postVo.getPostId()==0){
+            log.addLog(emp.getEmpId(),"添加了一个岗位,岗位名"+postVo.getPostName());
+        }else {
+            log.addLog(emp.getEmpId(),"修改了一个岗位,id:"+postVo.getPostId()+",岗位名"+postVo.getPostName());
+        }
         return "ok";
     }
 
