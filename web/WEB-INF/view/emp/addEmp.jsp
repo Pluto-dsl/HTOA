@@ -61,7 +61,7 @@
                 </td>
                 <td align="right">身份证号:</td>
                 <td align="left">
-                    <input lay-verify="required|identity" type="text" class="layui-input" id="cardNo"  name="cardNo" value=""placeholder="请输入身份证号" style="float: left;width:200px;">
+                    <input lay-verify="required|identity" name="Cardno" type="text" class="layui-input" id="cardNo"   value=""placeholder="请输入身份证号" style="float: left;width:200px;">
                     <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
                 </td>
             </tr>
@@ -98,7 +98,7 @@
                 </td>
                 <td align="right">邮箱地址:</td>
                 <td align="left">
-                    <input maxlength="20" class="layui-input" lay-verify="email" type="text" id="email"  name="email" value="" placeholder="请输入邮箱地址" style="width:200px;">
+                    <input maxlength="20" class="layui-input"  type="text" id="email"  name="email" value="" placeholder="请输入邮箱地址" style="width:200px;">
                 </td>
             </tr>
 
@@ -122,7 +122,7 @@
             <tr style="height: 40px">
                 <td align="right">入职日期:</td>
                 <td align="left">
-                    <input placeholder="请输选择入职日期" autocomplete="off" type="text"  lay-verify="required" class="layui-input" id="joindate" style="float: left;width: 200px">
+                    <input placeholder="请输选择入职日期" name="fireDay" autocomplete="off" type="text"  lay-verify="required" class="layui-input" id="joindate" style="float: left;width: 200px">
                     <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
                 </td>
                 <td align="right">学历:</td>
