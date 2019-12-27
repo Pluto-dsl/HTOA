@@ -35,23 +35,13 @@
                 <td>QQ账号:</td>
                 <td><input type="text" name="qq" placeholder="请输入QQ账号" autocomplete="off" class="layui-input" /></td>
                 <td>就读学校:</td>
-                <td><input type="text" name="school" required lay-verify="required" placeholder="请输入身份证" autocomplete="off" class="layui-input" /></td>
+                <td><input type="text" name="school" required lay-verify="required" placeholder="请输入就读学校" autocomplete="off" class="layui-input" /></td>
             </tr>
             <tr align="center">
-                <td>所在班级:</td>
-                <td><input type="text" name="classes" id="classes"  required lay-verify="required" placeholder="请输入所在班级" autocomplete="off" class="layui-input" /></td>
                 <td>录取成绩:</td>
                 <td><input type="text" name="score" id="score"  required lay-verify="number" placeholder="请输入录取成绩" autocomplete="off" class="layui-input" /></td>
-            </tr>
-            <tr align="center">
                 <td>学生备注:</td>
                 <td><input type="text" name="remark" id="remark" placeholder="请输入学生备注" autocomplete="off" class="layui-input" /></td>
-                <td>班级类别:</td>
-                <td>
-                    <select id="studType" name="studType" lay-verify="required"/>
-                        <option value="">选择班级类别</option>
-                    </select>
-                </td>
             </tr>
             <tr align="center">
                 <td>学生专业:</td>
@@ -101,14 +91,7 @@
         index = layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
 
         $.ajaxSettings.async = false;
-        //班级类别
-        $.post('${pageContext.request.contextPath}/jack/toClassTypeList',{},function (data) {
 
-            for (var i = 0; i < data.names.length; i++) {
-                $("#studType").append("<option value='"+data.names[i].classTypeId+"'>"+data.names[i].classTypeName+"</option>");
-            }
-            form.render("select");
-        },"json");
         //学生专业
         $.post('${pageContext.request.contextPath}/jack/toMajorList',{},function (data) {
             for (var i = 0; i < data.names.length; i++) {
@@ -141,7 +124,6 @@
                 , "sex": aa.sex
                 , "tell": aa.tell
                 , "qq": aa.qq
-                , "classes": aa.classes
                 , "school": aa.school
                 , "score": aa.score
                 , "remark": aa.remark

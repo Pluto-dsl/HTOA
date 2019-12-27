@@ -86,7 +86,6 @@ public class Jack_Enrollment {
         enroll.setEmpid(empVo.getEmpId());
         enroll.setIsClass("否");
         enroll.setSigndate(new Date());
-        System.out.println(enroll);
         service.addEnrollment(enroll);
 
         EmpVo emp = (EmpVo) session.getAttribute("admin");

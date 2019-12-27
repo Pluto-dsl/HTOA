@@ -33,33 +33,23 @@
                 <td>QQ账号:</td>
                 <td><input type="text" name="qq" id="qq" placeholder="请输入QQ账号" autocomplete="off" class="layui-input" /></td>
                 <td>就读学校:</td>
-                <td><input type="text" name="school" required lay-verify="required" placeholder="请输入身份证" autocomplete="off" class="layui-input" /></td>
+                <td><input type="text" name="school" required lay-verify="required" placeholder="请输入就读学校" autocomplete="off" class="layui-input" /></td>
             </tr>
             <tr align="center">
-                <td>所在班级:</td>
-                <td><input type="text" name="classes" required lay-verify="required" placeholder="请输入所在班级" autocomplete="off" class="layui-input" /></td>
                 <td>录取成绩:</td>
                 <td><input type="text" name="score" required lay-verify="number" placeholder="请输入录取成绩" autocomplete="off" class="layui-input" /></td>
+                <td>招生老师:</td>
+                <td><input type="text" name="negativeName" required lay-verify="required" placeholder="请输入招生老师" autocomplete="off" class="layui-input"></td>
             </tr>
             <tr align="center">
                 <td>学生备注:</td>
                 <td><input type="text" name="remark" id="remark" placeholder="请输入学生备注" autocomplete="off" class="layui-input" /></td>
-                <td>班级类别:</td>
-                <td>
-                    <select id="studType" name="studType" lay-verify="required"/>
-                        <option value="">选择班级类别</option>
-                    </select>
-                </td>
-            </tr>
-            <tr align="center">
                 <td>学生专业:</td>
                 <td>
                     <select id="majorId" name="majorId" lay-verify="required">
                         <option value="">选择学生专业</option>
                     </select>
                 </td>
-                <td>招生老师:</td>
-                <td><input type="text" name="negativeName" required lay-verify="required" placeholder="请输入招生老师" autocomplete="off" class="layui-input"></td>
             </tr>
             <tr align="center">
                 <td>学生入学状态:</td>
@@ -108,14 +98,6 @@
         parent.table.reload('test');
         parent.layer.close(index);
         });
-
-        //班级类别
-        $.get('${pageContext.request.contextPath}/jack/toClassTypeList',{},function (data) {
-            for (var i = 0; i < data.names.length; i++) {
-                $("#studType").append("<option value='"+data.names[i].classTypeId+"'>"+data.names[i].classTypeName+"</option>");
-            }
-            form.render("select");
-        },"json");
 
         //学生专业
         $.get('${pageContext.request.contextPath}/jack/toMajorList',{},function (data) {
