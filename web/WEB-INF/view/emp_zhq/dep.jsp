@@ -49,7 +49,7 @@
                 <div class="layui-input-block">
                     <select name="chairman" id="empName">
                         <c:forEach items="${empList}" var="emp">
-                            <option value="${emp.empName}">${emp.empName}</option>
+                            <option value="${emp.empName}/${emp.empId}">${emp.empName}</option>
                         </c:forEach>
                     </select>
                 </div>
@@ -136,7 +136,7 @@
                                         depid:data.list.depid,
                                         depName:data.list.depName,
                                         parentIdName:data.list.parentId,
-                                        chairman:data.list.chairman,
+                                        chairman:data.list.chairman+'/'+data.list.personnel,
                                         remark:data.list.remark,
                                     });
                                     layer.open({
