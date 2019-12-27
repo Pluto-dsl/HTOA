@@ -37,14 +37,16 @@
                             <option <c:if test="${emp.depName == d.depName}">selected="selected"</c:if> value="${d.depid}">${d.depName}</option>
                         </c:forEach>
                     </select>
-                    <font style="color: red;margin-left: 15.3%;margin-top: -30px;position: absolute;">&nbsp;*必填</font>
                 </td>
             </tr>
             <tr  style="height: 40px">
                 <td align="right">职务名称:</td>
                 <td align="left">
-                    <input maxlength="20" type="text" class="layui-input" lay-verify="required" name="postName" id="postName" value="${emp.postName}" placeholder="请输入职务名称" style="float: left;width:200px;">
-                    <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
+                    <select id="post" name="postId" lay-verify="required" style="float: left;width:50px;">
+                        <c:forEach var="p" items="${post}">
+                            <option value="${p.postId}" <c:if test="${p.postId == emp.postId}">selected="selected"</c:if>>${p.postName}</option>
+                        </c:forEach>
+                    </select>
                 </td>
                 <td align="right">家庭地址:</td>
                 <td align="left">
