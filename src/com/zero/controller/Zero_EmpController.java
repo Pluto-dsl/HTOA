@@ -63,7 +63,7 @@ public class Zero_EmpController {
         empVo.setEmpId(0);
         empVo.setStatus(1);//设置启用状态
         empVo.setPassword("123456");
-        empVo.setPostName(empService.post(empVo.getPostId()).getPostName());
+        empVo.setPostName(empService.post(empVo.getPostId()).getPostName());//设置职位名称
         empService.addEmp(empVo);
         //保存日志
         EmpVo emp = (EmpVo) session.getAttribute("admin");
@@ -73,7 +73,7 @@ public class Zero_EmpController {
 
     @RequestMapping(value = "/updateEmp")//修改员工
     public String updateEmp(EmpVo empVo,HttpSession session){
-        empVo.setPostName(empService.post(empVo.getPostId()).getPostName());
+        empVo.setPostName(empService.post(empVo.getPostId()).getPostName());//设置职位名称
         empService.update(empVo);
         //保存日志
         EmpVo emp = (EmpVo) session.getAttribute("admin");

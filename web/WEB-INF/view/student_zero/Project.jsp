@@ -122,9 +122,6 @@
                 var projectId =$("#projectId").val();
                 var projectName =$("#projectName").val();
                 var remark =$("#remark").val();
-                console.log(projectId);
-                console.log(projectName);
-                console.log(remark);
                 $.ajax({
                     type: 'post',
                     url: "<%=request.getContextPath()%>/StudentScore/addproject", // ajax请求路径

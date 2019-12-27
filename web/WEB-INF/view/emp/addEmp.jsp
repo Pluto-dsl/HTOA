@@ -61,7 +61,7 @@
                 </td>
                 <td align="right">身份证号:</td>
                 <td align="left">
-                    <input lay-verify="required|identity" autocomplete="off" name="Cardno" type="text" maxlength="18" class="layui-input" id="cardNo"   value=""placeholder="请输入身份证号" style="float: left;width:200px;">
+                    <input lay-verify="required|identity" autocomplete="off" name="Cardno" id="Cardno" type="text" maxlength="18" class="layui-input" id="cardNo"   value=""placeholder="请输入身份证号" style="float: left;width:200px;">
                     <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
                 </td>
             </tr>
@@ -122,7 +122,7 @@
             <tr style="height: 40px">
                 <td align="right">入职日期:</td>
                 <td align="left">
-                    <input placeholder="请输选择入职日期" name="fireDay" autocomplete="off" type="text"  lay-verify="required" class="layui-input" id="joindate" style="float: left;width: 200px">
+                    <input placeholder="请选择入职日期" autocomplete="off" type="text"  lay-verify="required|date" class="layui-input" value="" name="fireDay" id="joindate" style="float: left;width:200px;"/>
                     <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
                 </td>
                 <td align="right">学历:</td>
