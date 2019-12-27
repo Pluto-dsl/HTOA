@@ -84,13 +84,13 @@ public class Ljw_EmpServiceImpl extends BaseDao implements Ljw_EmpService {
                 }
                  //System.out.println(empIds);
                 empIds = empIds.substring(0,empIds.length()-1);
-                hql +=" and sayface in ("+empIds+")";
+                hql +=" and teacher in ("+empIds+")";
             }else {
-                hql +=" and sayface in (0)";
+                hql +=" and teacher in (0)";
             }
         }
         if (depId!=0){
-            hql +=" and sayface in (SELECT empId FROM EmpVo where depId="+depId+")";
+            hql +=" and teacher in (SELECT empId FROM EmpVo where depId="+depId+")";
         }
         if (!("".equals(startDay) || null == startDay)){
             hql +=" and chatDate>='"+startDay+"'";
