@@ -1,4 +1,5 @@
-<%@ page import="com.publics.vo.empModel.emp.EmpVo" %><%--
+<%@ page import="com.publics.vo.empModel.emp.EmpVo" %>
+<%--
   Created by IntelliJ IDEA.
   User: Pluto
   Date: 2019/12/2
@@ -243,39 +244,48 @@
                     <dl class="layui-nav-child">
                         <dd><a layadmin-event="refresh" href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toAssessmentPage"
-                               data-id="考核指标" data-title="考核指标">考核指标</a></dd>
+                               data-id="考核指标" data-title="考核指标">考核指标</a>
+                        </dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toCheckEntry"
-                               data-id="考核录入" data-title="考核录入">考核录入</a></dd>
+                               data-id="考核录入" data-title="考核录入">考核录入</a>
+                        </dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toAduitLogList"
-                               data-id="员工考核" data-title="员工考核">员工考核</a></dd>
+                               data-id="员工考核" data-title="员工考核">员工考核</a>
+                        </dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toEvaluationContext"
-                               data-id="考评内容" data-title="考评内容">考评内容</a></dd>
+                               data-id="考评内容" data-title="考评内容">考评内容</a>
+                        </dd>
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toTeacherListE"
-                               data-id="教师考评" data-title="教师考评">教师考评</a></dd>
+                               data-id="教师考评" data-title="教师考评">教师考评</a>
+                        </dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" class="tt" lay-tips="问题反馈" lay-direction="2">
+                    <a href="javascript:void(0);" class="tt" lay-tips="问题反馈" lay-direction="2">
                         <i class="layui-icon layui-icon-chat"></i>
-                        <cite>问题反馈</cite></a>
+                        <cite>问题反馈</cite>
+                    </a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:void(0);" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/student/questionPage"
-                               data-id="问题反馈" data-title="问题反馈" >问题反馈</a></dd>
+                               data-id="问题反馈" data-title="问题反馈" >问题反馈</a>
+                        </dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" class="tt" lay-tips="文件管理" lay-direction="2">
+                    <a href="javascript:void(0)" class="tt" lay-tips="文件管理" lay-direction="2">
                         <i class="layui-icon layui-icon-tabs"></i>
-                        <cite>文件管理</cite></a>
+                        <cite>文件管理</cite>
+                    </a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/zhq/DataDoc"
-                               data-id="资料文档" data-title="资料文档" >资料文档</a></dd>
+                               data-id="资料文档" data-title="资料文档" >资料文档</a>
+                        </dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -283,9 +293,11 @@
                         <i class="layui-icon layui-icon-tabs"></i>
                         <cite>招生管理</cite></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" class="site-demo-active" data-type="tabAdd"
+                        <dd>
+                            <a href="javascript:;" class="site-demo-active" data-type="tabAdd"
                                data-url="${pageContext.request.contextPath}/jack/toEnrollment"
-                               data-id="招生信息" data-title="招生信息" >招生信息</a></dd>
+                               data-id="招生信息" data-title="招生信息" >招生信息</a>
+                        </dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
