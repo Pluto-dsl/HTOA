@@ -35,7 +35,9 @@ public class Wtt_ArrangeController {
     @RequestMapping(value = "/arrangePage")
     public String arrange(ModelMap modelMap){
         List list = wtt_arrangeService.emp();
+        List list1 = wtt_arrangeService.postvo();
         modelMap.addAttribute("emplist",list);
+        modelMap.addAttribute("postlist",list1);
         return "emp_wtt/zhibanarrange";
     }
 

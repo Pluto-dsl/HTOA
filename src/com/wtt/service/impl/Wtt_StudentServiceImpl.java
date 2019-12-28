@@ -4,6 +4,7 @@ import com.publics.dao.BaseDao;
 import com.publics.vo.feedback.Collect_OpinionsVo;
 import com.publics.vo.feedback.FeedbackVo;
 import com.publics.vo.studentModel.ClassCategoryVo;
+import com.publics.vo.studentModel.StudentClassVo;
 import com.publics.vo.studentModel.StudentLeaveVo;
 import com.publics.vo.studentModel.StudentVo;
 import com.wtt.service.Wtt_StudentService;
@@ -127,11 +128,6 @@ public class Wtt_StudentServiceImpl extends BaseDao implements Wtt_StudentServic
         return pageBySQL("select * from classType",currpage,pagesize);
     }
 
-    /*@Override
-    public ClassCategoryVo classcategoryvo() {
-        return (ClassCategoryVo) listBySQL("select * from classType");
-    }*/
-
     @Override
     public void addcategory(ClassCategoryVo classCategoryVo) {
         addObject(classCategoryVo);
@@ -145,5 +141,18 @@ public class Wtt_StudentServiceImpl extends BaseDao implements Wtt_StudentServic
     @Override
     public int pagecount(String sql) {
         return selTotalRow(sql);
+    }
+
+    @Override
+    public List<StudentClassVo> list(int classtypeid) {
+        String sql = "select s.classId,s.className,s.classNo,s.classTeacher,s.classType,s.count,s.deptId from studentClass s\n" +
+                "left join classType c on s.classType = c.classTypeId\n" +
+                "where s.classType = '"+classtypeid+"'";
+        return listBySQL(sql);
+    }
+
+    @Override
+    public void del(ClassCategoryVo classCategoryVo) {
+        delObject(classCategoryVo);
     }
 }

@@ -33,6 +33,8 @@ public interface Pluto_StudentMsg {
     void updFamily(StudentFamilyVo studentFamilyVo);//修改学生家庭信息
     void delFamily(StudentFamilyVo studentFamilyVo);//删除学生家庭信息
     String getExamData(int stuid);//获取学生成绩列表
+    int judgeStuStart(int id);//查看学生状态是否是退学或者毕业
+
 //    ModelAndView toUpdateExam(int scoreId);//修改学生成绩
     List getKemuList();//查询科目列表
     List getxueqiList();//查询学期列表

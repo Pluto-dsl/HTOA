@@ -45,7 +45,8 @@
             <tr>
                 <th>请假天数:</th>
                 <td>
-                    <input type="text" class="layui-input" name="holidayDay" autocomplete="off" lay-verify="required">
+                    <input type="text" class="layui-input" id="holidayDay"  autocomplete="off" d<%--isabled="disabled"--%>>
+                    <input type="hidden" id="holiday" name="holidayDay">
                 </td>
             </tr>
             <tr>
@@ -75,6 +76,8 @@
     </script>
 </body>
 <script>
+    var startdate = "";
+    var enddate = "";
     layui.use([ 'element', 'table', 'layer', 'form' ,'laydate','laypage'],function () {
         var element = layui.element;
         var layer = layui.layer;
@@ -133,33 +136,48 @@
             }
         });
 
+
         //时间选择器
         var start = laydate.render({
             elem: '#startTime',
-            type: 'datetime',
-            format:'yyyy/MM/dd',
+            type: 'date',
             done: function (date,value) {
-                /*startdate=value;*/
-                endMax = end.config.max;
-                end.config.min = date;
-                end.config.min.month = date.month -1;
+                startdate=value;
             }
-        });
+        })
+
         //时间选择器
-        var end = laydate.render({
+       var end = laydate.render({
             elem: '#endTime',
-            type: 'datetime',
-            format:'yyyy/MM/dd',
-            done: function (date,value) {
-                /*startdate=value;*/
-                if($.trim(value) == ''){
-                    var curDate = new Date();
-                    date = {'date': curDate.getDate(), 'month': curDate.getMonth()+1, 'year': curDate.getFullYear()};
-                }
-                start.config.max = date;
-                start.config.max.month = date.month -1;
-            }
+            type: 'date',
+           done: function (date,value) {
+               startdate=value;
+               var day = getDays(startdate,enddate);
+               day = Math.ceil(day);
+               alert(day)
+           }
         });
+    })
+    //开始时间和结束时间的天数
+    function getDays(startDate,endDate){
+        //根据年、月、日的值创建Date对象
+        var date1Obj = new Date(startDate[0],(startDate[1]-1),startDate[2]);
+        var date2Obj = new Date(endDate[0],(endDate[1]-1),endDate[2]);
+        var t1 = date1Obj.getTime();//返回从1970-1-1开始计算到Date对象中的时间之间的毫秒数
+        var t2 = date2Obj.getTime();//返回从1970-1-1开始计算到Date对象中的时间之间的毫秒数
+        var datetime=1000*60*60*24; //一天时间的毫秒值
+        var minusDays = Math.floor(((t2-t1)/datetime));//计算出两个日期天数差
+        var days = Math.abs(minusDays);//如果结果为负数，取绝对值
+        return days;
+    }
+
+    $("#tijiao").click(function () {
+        var startTime = $('input[name="startTime"]').val();
+        var endTime = $('input[name="endTime"]').val();
+        if(startTime>endTime){
+            layer.msg("请假开始时间不能大于结束时间");
+            return false;
+        }
     })
 </script>
 </html>

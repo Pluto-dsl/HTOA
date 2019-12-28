@@ -85,6 +85,8 @@ public class Pluto_StudentController {
     @ResponseBody
     public String updateStudent(StudentVo studentVo,HttpServletRequest request,int oldss){
         System.out.println("aaaaa");
+        System.out.println(studentVo.toString());
+        System.out.println(oldss);
         String bir = request.getParameter("bir");
         String ent = request.getParameter("ent");
         Date bd=null;
@@ -130,6 +132,19 @@ public class Pluto_StudentController {
         EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
         log.addLog(emp.getEmpId(),emp.getEmpName()+"删除了学生"+s.getStuname()+"资料。");
         return "1";
+    }
+
+    /**
+     *判断学生是否离校或者毕业
+     * @p
+     * aram id
+     * @return
+     */
+    @RequestMapping("/judgeStart")
+    @ResponseBody
+    public int judgeStart(int id){
+        int i = service.judgeStuStart(id);//i等于一说明学生已离校或者毕业
+        return i;
     }
 
     @RequestMapping("/tuixue")

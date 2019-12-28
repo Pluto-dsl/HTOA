@@ -351,6 +351,14 @@
                         if (data==null || data==""){
                             layer.msg('请选择你要调整宿舍的学生！', {icon: 1});
                         }else{
+                            $.post("${pageContext.request.contextPath}/student/judgeStart",{
+                                id:da[0].Studid
+                            },function (data) {
+                                if(1==data){
+                                    layer.msg("该学生已离校，此项无法设置！")
+                                    break;
+                                }
+                            })
                             //iframe层
                             layer.open({
                                 type: 2,
@@ -369,6 +377,14 @@
                         if (data==null || data==""){
                             layer.msg('请选择你要调整班级的学生！', {icon: 1});
                         }else{
+                            $.post("${pageContext.request.contextPath}/student/judgeStart",{
+                                id:da[0].Studid
+                            },function (data) {
+                                if(1==data){
+                                    layer.msg("该学生已离校，此项无法设置！")
+                                    break;
+                                }
+                            })
                             //iframe层
                             layer.open({
                                 type: 2,

@@ -450,13 +450,19 @@
             var laydate = layui.laydate;
             var form = layui.form;
 
+            var day2 = new Date();
+            day2.setTime(day2.getTime());
+            var s2 = day2.getFullYear()+"-" + (day2.getMonth()+1) + "-" + day2.getDate();
+
             //自定义格式
             laydate.render({
                 elem: '#entertime'
+                ,max:s2
                 // ,format: 'yyyy年MM月dd日'
             });
             laydate.render({
                 elem: '#birthday'
+                ,max:s2
                 // ,format: 'yyyy年MM月dd日'
             });
 

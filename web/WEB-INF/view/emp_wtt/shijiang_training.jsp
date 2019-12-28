@@ -17,7 +17,7 @@
     <!--点击新增弹出来的框-->
     <div id="windows" style="margin-left:5%; margin-top:1%; display: none;">
         <form class="layui-form" method="post" action="<%=request.getContextPath()%>/training/addtrial">
-        <table align="center" style="border-collapse:separate; border-spacing:0px 20px;">
+        <table align="center" style="border-collapse:separate; border-spacing:0px 20px;height: 70%">
                 <h1 align="center" >新增试讲培训</h1><br>
                 <tr>
                     <th>日期:</th>
@@ -202,7 +202,6 @@
                 $("#times1").val(week);
             }
         });
-
         //刷新
         function reurl(){
             url = location.href;

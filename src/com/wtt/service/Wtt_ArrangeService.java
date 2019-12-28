@@ -2,6 +2,7 @@ package com.wtt.service;
 
 import com.publics.vo.educ.WeekArrangeVo;
 import com.publics.vo.empModel.emp.EmpVo;
+import com.publics.vo.empModel.emp.PostVo;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface Wtt_ArrangeService {
     EmpVo emps(int id);
     //删除
     void delete(int id);
+    //查出所有岗位
+    List<PostVo> postvo();
 }
