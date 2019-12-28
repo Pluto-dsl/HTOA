@@ -4,6 +4,7 @@ import com.publics.dao.BaseDao;
 import com.publics.vo.educ.WeekArrangeVo;
 import com.publics.vo.empModel.WeeklogVo;
 import com.publics.vo.empModel.emp.EmpVo;
+import com.publics.vo.empModel.emp.PostVo;
 import com.zero.service.EmpsService;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -65,6 +66,30 @@ public class EmpsServiceImpl extends BaseDao implements EmpsService {
     @Override
     public void updatePwd(int empId, String pwd1) {
         super.executeSQL("UPDATE emp set `password` = '"+pwd1+"' where empId = "+empId);
+    }
+
+    @Override
+    public List<Map> allpost() {
+        return super.listBySQL("SELECT * FROM `post`");
+    }
+
+    @Override
+    public void addpost(PostVo postVo) {
+        if (postVo.getPostId()==0){//新增
+            super.addObject(postVo);
+        }else {//修改
+            super.updObject(postVo);
+        }
+    }
+
+    @Override
+    public List judgePost(String postName) {
+        return super.listBySQL("select * from post where postName = '"+postName+"'");
+    }
+
+    @Override
+    public PostVo post(int postid) {
+        return (PostVo) super.getObject(PostVo.class,postid);
     }
 
     @Override

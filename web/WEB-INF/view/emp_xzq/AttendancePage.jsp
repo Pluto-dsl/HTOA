@@ -152,7 +152,7 @@
                 title:'未打卡说明',
                 skin: 'layui-layer-demo', //样式类名
                 closeBtn: 1, //不显示关闭按钮
-                area: ['600px', '450px'],
+                area: ['700px', '340px'],
                 fixed: false, //不固定
                 maxmin: true,
                 shadeClose: false, //开启遮罩关闭

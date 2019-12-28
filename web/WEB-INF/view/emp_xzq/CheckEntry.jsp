@@ -18,10 +18,10 @@
     <form id="addfrom" action="${pageContext.request.contextPath}/jack/uploadImg" enctype="text/plain" class="layui-form" method="post" >
         <table align="center" style="margin-top: 5%;border-collapse: separate;border-spacing: 10px 30px;">
             <tr>
-                <td>考核指标:</td>
-                <td>
-                    <select id="aduitModelid" name="aduitModelid" lay-filter="kaohe" lay-verify="required">
-                        <option value="">请选择考核指标</option>
+                <td>部门:</td>
+                <td id="deptitle">
+                    <select id="depid" name="depid" lay-filter="depid" lay-verify="required">
+                        <option value="">请选择部门</option>
                     </select>
                 </td>
                 <td>员工:</td>
@@ -32,26 +32,33 @@
                 </td>
             </tr>
             <tr>
+                <td>考核指标:</td>
+                <td>
+                    <select id="aduitModelid" name="aduitModelid" lay-filter="kaohe" lay-verify="required">
+                        <option value="">请选择考核指标</option>
+                    </select>
+                </td>
                 <td>考核分数:</td>
                 <td>
                     <input type="text" id="Scores" readonly="readonly" name="Scores" required lay-verify="number" placeholder="请输入考核分数" autocomplete="off" class="layui-input">
                 </td>
+            </tr>
+            <tr>
                 <td>考核说明:</td>
                 <td>
                     <input type="text" id="Remark" name="Remark" required lay-verify="required" placeholder="请输入考核说明" autocomplete="off" class="layui-input">
                 </td>
-            </tr>
-            <tr>
                 <input type="hidden" name="auditDate" id="auditDate" value="" />
                 <td>录入人员:</td>
                 <td><input readonly="readonly" id="auditPerson" name="auditPerson" value="${sessionScope.admin.empName}" placeholder="请输入课程类型"  class="layui-input"></td>
+
+            </tr>
+            <tr>
                 <td align="center"  colspan="2" >
                     <button type="button" class="layui-btn" id="upload1">上传图片</button>
                     <input type="hidden" id="img_url" name="Image" value="" />
                 </td>
-            </tr>
-            <tr>
-                <td align="center"  colspan="4">
+                <td align="center"  colspan="2">
                     <div style="width:200px;height:200px;border:3px solid #0099CC;border-radius: 5px;padding: 3px;">
                         <img style="max-width: 200px;max-height:200px;" id="preview">
                         <div id="demoText"></div>
@@ -148,19 +155,41 @@
             return false;
         });
 
-        $.get('${pageContext.request.contextPath}/jack/Ass',{},function (data) {
+        $.get('${pageContext.request.contextPath}/jack/selDepAll',{},function (data) {
             for (var i = 0; i < data.names.length; i++) {
-                $("#aduitModelid").append("<option value='"+data.names[i].aduitModelid+"'>"+data.names[i].aduitName+"</option>");
+                $("#depid").append("<option value='"+data.names[i].depid+"'>"+data.names[i].depName+"</option>");
             }
             form.render("select");
         },"json");
 
-        $.get('${pageContext.request.contextPath}/jack/emp',{},function (data) {
-            for (var i = 0; i < data.names.length; i++) {
-                $("#Empid").append("<option value='"+data.names[i].empId+"'>"+data.names[i].empName+"</option>");
-            }
-            form.render("select");
-        },"json");
+        $("#deptitle").click(function () {
+            layer.tips('温馨提示:要先选择部门才有员工和针对部门的考核指标哦~', '#depid', {
+                tips: [4, '#000000']
+            });
+        });
+
+        form.on('select(depid)', function(data) {
+            $("#aduitModelid").empty();
+            $("#Empid").empty();
+            $.get('${pageContext.request.contextPath}/jack/Ass',{value:data.value},function (data) {
+                for (var i = 0; i < data.names.length; i++) {
+                    $("#aduitModelid").append("<option value='"+data.names[i].aduitModelid+"'>"+data.names[i].aduitName+"</option>");
+                }
+                form.render("select");
+            },"json");
+            $.get('${pageContext.request.contextPath}/jack/emp',{value:data.value},function (data) {
+                for (var i = 0; i < data.names.length; i++) {
+                    $(sessionStorage.admin)
+                    $("#Empid").append("<option value='"+data.names[i].empId+"'>"+data.names[i].empName+"</option>");
+                }
+                form.render("select");
+            },"json");
+        });
+
+
+
+
+
     });
 </script>
 </html>

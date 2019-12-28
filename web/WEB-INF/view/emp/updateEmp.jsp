@@ -26,7 +26,7 @@
                 <input name="empId" type="hidden" value="${emp.empId}"/>
                 <input name="status" type="hidden" value="${emp.status}"/>
                 <td align="right">员工姓名:</td>
-                <td align="left"><input maxlength="10" class="layui-input" lay-verify="required"  id="empName" name="empName" placeholder="请输入员工姓名"
+                <td align="left"><input autocomplete="off" maxlength="10" class="layui-input" lay-verify="required"  id="empName" name="empName" placeholder="请输入员工姓名"
                                         value="${emp.empName}" style="width:200px;float: left">
                     <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
                 </td>
@@ -37,18 +37,20 @@
                             <option <c:if test="${emp.depName == d.depName}">selected="selected"</c:if> value="${d.depid}">${d.depName}</option>
                         </c:forEach>
                     </select>
-                    <font style="color: red;margin-left: 15.3%;margin-top: -30px;position: absolute;">&nbsp;*必填</font>
                 </td>
             </tr>
             <tr  style="height: 40px">
                 <td align="right">职务名称:</td>
                 <td align="left">
-                    <input maxlength="20" type="text" class="layui-input" lay-verify="required" name="postName" id="postName" value="${emp.postName}" placeholder="请输入职务名称" style="float: left;width:200px;">
-                    <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
+                    <select id="post" autocomplete="off" name="postId" lay-verify="required" style="float: left;width:50px;">
+                        <c:forEach var="p" items="${post}">
+                            <option value="${p.postId}" <c:if test="${p.postId == emp.postId}">selected="selected"</c:if>>${p.postName}</option>
+                        </c:forEach>
+                    </select>
                 </td>
                 <td align="right">家庭地址:</td>
                 <td align="left">
-                    <input type="text" maxlength="30" class="layui-input" lay-verify="required" name="address" id="address" value="${emp.Address}" placeholder="请输入家庭地址"  style="float: left;width:200px;">
+                    <input type="text" autocomplete="off" maxlength="30" class="layui-input" lay-verify="required" name="address" id="address" value="${emp.Address}" placeholder="请输入家庭地址"  style="float: left;width:200px;">
                     <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
                 </td>
             </tr>
@@ -60,7 +62,7 @@
                 </td>
                 <td align="right">身份证号:</td>
                 <td align="left">
-                    <input lay-verify="required|identity" type="text" class="layui-input" id="Cardno"  name="Cardno" value="${emp.Cardno}" placeholder="请输入身份证号" style="float: left;width:200px;">
+                    <input lay-verify="required|identity" autocomplete="off" type="text"  maxlength="18" class="layui-input" id="Cardno"  name="Cardno" value="${emp.Cardno}" placeholder="请输入身份证号" style="float: left;width:200px;">
                     <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
                 </td>
             </tr>
@@ -74,7 +76,7 @@
                 </td>
                 <td align="right">籍贯:</td>
                 <td align="left">
-                    <input maxlength="20" placeholder="请输入籍贯" class="layui-input" type="text" id="nation" name="nation" value="${emp.nation}"   style="width:200px;">
+                    <input maxlength="20" autocomplete="off" placeholder="请输入籍贯" class="layui-input" type="text" id="nation" name="nation" value="${emp.nation}"   style="width:200px;">
                     <%--<input class="layui-input" type="button"  onclick="addcity();" value="选择籍贯" style="height: 33px;width: 60px;">--%>
                 </td>
             </tr>
@@ -82,7 +84,7 @@
             <tr style="height: 40px">
                 <td align="right">手机号码:</td>
                 <td align="left">
-                    <input lay-verify="required" onchange="judgePhone()" class="layui-input" type="text" id="phone" name="phone" value="${emp.Phone}" placeholder="请输入手机号"  style="float: left;width:200px;">
+                    <input lay-verify="required|phone" autocomplete="off" onchange="judgePhone()" class="layui-input" type="text" id="phone" name="phone" value="${emp.Phone}" placeholder="请输入手机号"  style="float: left;width:200px;">
                     <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
                 </td>
                 <td align="right">QQ号码:</td>
@@ -94,11 +96,11 @@
             <tr style="height: 40px">
                 <td align="right">微信号码:</td>
                 <td align="left">
-                    <input class="layui-input" maxlength="20" type="text" id="weixin" name="weixin" value="${emp.Weixin}" placeholder="请输入微信号码"  style="width:200px;">
+                    <input class="layui-input" autocomplete="off" maxlength="20" type="text" id="weixin" name="weixin" value="${emp.Weixin}" placeholder="请输入微信号码"  style="width:200px;">
                 </td>
                 <td align="right">邮箱地址:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="email"  name="email" value="${emp.Email}" placeholder="请输入邮箱地址" style="width:200px;">
+                    <input class="layui-input" autocomplete="off" type="text" id="email"  name="email" value="${emp.Email}" placeholder="请输入邮箱地址" style="width:200px;">
                 </td>
             </tr>
 
@@ -115,7 +117,7 @@
                 </td>
                 <td align="right">毕业学校:</td>
                 <td align="left">
-                    <input class="layui-input" maxlength="20" type="text" id="university"  name="university" value="${emp.University}" placeholder="请输入毕业学校" style="width:200px;">
+                    <input class="layui-input" autocomplete="off" maxlength="20" type="text" id="university"  name="university" value="${emp.University}" placeholder="请输入毕业学校" style="width:200px;">
                 </td>
             </tr>
 
@@ -141,7 +143,7 @@
             <tr style="height: 40px">
                 <td align="right">开户银行:</td>
                 <td align="left">
-                    <input maxlength="10" class="layui-input" type="text" id="bank"  name="bank" value="${emp.Bank}" placeholder="请输入开户银行" style="width:200px;">
+                    <input maxlength="10" autocomplete="off" class="layui-input" type="text" id="bank"  name="bank" value="${emp.Bank}" placeholder="请输入开户银行" style="width:200px;">
                 </td>
                 <td align="right">账户名称:</td>
                 <td align="left">

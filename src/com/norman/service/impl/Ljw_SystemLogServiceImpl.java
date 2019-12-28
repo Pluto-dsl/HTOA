@@ -67,11 +67,10 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
 
     @Override
     public List<Map> getEveryListById(int empId) {
-        return super.listBySQL("SELECT al.aduitLogid,e.empName,am.aduitName,al.Scores,al.auditDate,al.Image,ap.empName auditPerson,al.Remark FROM aduitLog al \n" +
-                "LEFT JOIN aduitModel am on al.aduitModelid=am.aduitModelid \n" +
-                "LEFT JOIN emp e on al.Empid=e.empId \n" +
-                "LEFT JOIN emp ap on al.auditPerson=ap.Empid\n" +
-                "WHERE al.Empid = "+empId);
+        return super.listBySQL("SELECT al.aduitLogid,e.empName,am.aduitName,al.Scores,al.auditDate,al.Image,al.auditPerson,al.Remark FROM aduitLog al\n" +
+                "                LEFT JOIN aduitModel am on al.aduitModelid=am.aduitModelid\n" +
+                "                LEFT JOIN emp e on al.Empid=e.empId\n" +
+                "                WHERE al.Empid = "+empId);
     }
 
     @Override

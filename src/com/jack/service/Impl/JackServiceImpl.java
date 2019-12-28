@@ -14,7 +14,6 @@ import com.publics.vo.notice.RecipientVo;
 import com.publics.vo.studentModel.StudentVo;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -150,13 +149,19 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
 
     /** 考核巡查管理 */
     @Override
-    public List selAss() {
-        return listBySQL("select aduitModelid,aduitName from aduitModel");
+    public List selAss(int value) {
+        return listBySQL("select aduitModelid,aduitName from aduitModel where Depid = "+value+"");
     }
     @Override
-    public List selEmp() {
-        return listBySQL("select empId,empName from emp where `status` = 1");
+    public List selEmp(int value) {
+        return listBySQL("select empId,empName from emp where `status` = 1 and Depid = "+value+"");
     }
+
+    @Override
+    public List selDepAll() {
+        return listBySQL("select * from dep");
+    }
+
     @Override
     public void addAduit(AduitLogVo aduitLogVo) {
         addObject(aduitLogVo);
@@ -387,9 +392,8 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
 
     @Override
     public List selEnrollmentList(int currPage,int pageSize) {
-        return pageBySQL("select en.*,stu.statusName,ct.classTypeName,ma.majorName  from \n" +
-                "((enrollment en INNER JOIN studentSet stu on en.`status` = stu.statusid)\n" +
-                "INNER JOIN classType ct on en.studType = ct.classTypeId)\n" +
+        return pageBySQL("select en.*,stu.statusName,ma.majorName from (enrollment en \n" +
+                "INNER JOIN studentSet stu on en.`status` = stu.statusid) \n" +
                 "INNER JOIN major ma on ma.majorId = en.majorId",currPage,pageSize);
     }
 

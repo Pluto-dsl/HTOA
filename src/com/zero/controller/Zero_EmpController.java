@@ -5,6 +5,7 @@ import com.publics.service.LoggingService;
 import com.publics.vo.empModel.WeeklogVo;
 import com.publics.vo.empModel.emp.EmpVo;
 import com.publics.utills.StringUtill;
+import com.publics.vo.empModel.emp.PostVo;
 import com.zero.service.EmpsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,10 +34,11 @@ public class Zero_EmpController {
         return "emp/emp";
     }
 
-    @RequestMapping(value = "/toaddemp")//去员工修改页
-    public String toaddemp(Model model) {//去新增员工页
+    @RequestMapping(value = "/toaddemp")//去新增员工页
+    public String toaddemp(Model model) {
         //查询所有部门
         model.addAttribute("dep",empService.allDep());
+        model.addAttribute("post",empService.allpost());//查询所有岗位
         return "emp/addEmp";
     }
 
@@ -61,7 +63,7 @@ public class Zero_EmpController {
         empVo.setEmpId(0);
         empVo.setStatus(1);//设置启用状态
         empVo.setPassword("123456");
-        empVo.setPostId(101);
+        empVo.setPostName(empService.post(empVo.getPostId()).getPostName());//设置职位名称
         empService.addEmp(empVo);
         //保存日志
         EmpVo emp = (EmpVo) session.getAttribute("admin");
@@ -71,6 +73,7 @@ public class Zero_EmpController {
 
     @RequestMapping(value = "/updateEmp")//修改员工
     public String updateEmp(EmpVo empVo,HttpSession session){
+        empVo.setPostName(empService.post(empVo.getPostId()).getPostName());//设置职位名称
         empService.update(empVo);
         //保存日志
         EmpVo emp = (EmpVo) session.getAttribute("admin");
@@ -118,6 +121,7 @@ public class Zero_EmpController {
         Map emp = empService.toemp(empId);//查询当前员工
         //查询所有部门
         model.addAttribute("dep",empService.allDep());
+        model.addAttribute("post",empService.allpost());//查询所有岗位
         model.addAttribute("emp",emp);
         return "emp/updateEmp";
     }
@@ -133,9 +137,8 @@ public class Zero_EmpController {
     }
     @RequestMapping(value = "/seek")
     @ResponseBody//根据条件搜索员工
-    public void seek(int depId,String empName,String Phone,int status,HttpServletResponse response) throws IOException {
+    public Map seek(int depId,String empName,String Phone,int status,HttpServletResponse response) throws IOException {
         String tiaojian = "where 1=1 ";
-        empName = StringUtill.tostring(empName);
         //拼装搜索条件
         if (depId!=0){
             tiaojian += " and e.depId = "+depId;
@@ -155,11 +158,7 @@ public class Zero_EmpController {
         map.put("msg","");
         map.put("count",tlist.size());
         map.put("data",tlist);
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter writer = response.getWriter();
-        writer.print(JSONArray.toJSONString(map));
-        writer.flush();
-        writer.close();
+        return map;
     }
     @RequestMapping(value = "/status")
     @ResponseBody
@@ -193,9 +192,64 @@ public class Zero_EmpController {
         writer.close();
     }
 
+    @RequestMapping(value = "/topost")
+    public String topost(Model model) {//去岗位设置页面
+        model.addAttribute("dep",empService.allDep());
+        return "emp/post";
+    }
+
+    @RequestMapping(value = "/allPost")
+    @ResponseBody
+    public Map allPost(){//所有岗位
+        List plist =  empService.allpost();
+        Map map = new TreeMap();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",plist.size());
+        map.put("data",plist);
+        return map;
+    }
+
+    @RequestMapping(value = "/addPost")
+    @ResponseBody
+    public String addpost(PostVo postVo,HttpSession session){//添加或修改岗位
+        empService.addpost(postVo);
+        EmpVo emp = (EmpVo) session.getAttribute("admin");
+        if(postVo.getPostId()==0){
+            log.addLog(emp.getEmpId(),"添加了一个岗位,岗位名"+postVo.getPostName());
+        }else {
+            log.addLog(emp.getEmpId(),"修改了一个岗位,id:"+postVo.getPostId()+",岗位名"+postVo.getPostName());
+        }
+        return "ok";
+    }
+
+    @RequestMapping(value = "/judgePost")
+    @ResponseBody
+    public String judgeLevel(String postName){//判断岗位重复
+        if (empService.judgePost(postName).size()>0){
+            return "1";
+        }
+        return "0";
+    }
 
     @RequestMapping("/toNo")
     public String toNo(){
         return "controller_pluto/NO";
     }
+
+    /*public static void main(String[] args) {
+        String name = "ding/12";
+        int gang = 0;
+        for (int i = 0; i < name.length(); i++) {
+            char ss = name.charAt(i);
+            if('/'==ss){
+                gang=i;
+                break;
+            }
+        }
+        System.out.println(gang);
+        System.out.println(name.substring(0,gang));
+        System.out.println(name.substring(gang+1,name.length()));
+
+    }*/
 }

@@ -124,7 +124,7 @@ public class Zhq_StuDormController {
         response.setContentType("text/html;charset=utf-8");
         List<Map> l = zhq_stuDormService.selDormFloor(studentDormitoryVo.getFloorId());
         String fname = l.get(0).get("floorName").toString();
-        String name = studentDormitoryVo.getHuorName().substring(2,6);
+        String name = studentDormitoryVo.getHuorName();
         name = fname+name;
         studentDormitoryVo.setHuorName(name);
 
