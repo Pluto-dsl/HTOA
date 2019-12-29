@@ -63,5 +63,10 @@ public class Zhq_DepServiceImpl extends BaseDao implements Zhq_DepService {
         return getObject(clazz,id);
     }
 
+    @Override
+    public int selDepEmp(int depId) {
+        return selTotalRow("select count(*) jl from emp where depid="+depId);
+    }
+
 
 }
