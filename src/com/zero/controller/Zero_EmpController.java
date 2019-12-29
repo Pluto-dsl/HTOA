@@ -139,7 +139,6 @@ public class Zero_EmpController {
     @ResponseBody//根据条件搜索员工
     public Map seek(int depId,String empName,String Phone,int status,HttpServletResponse response) throws IOException {
         String tiaojian = "where 1=1 ";
-        empName = StringUtill.tostring(empName);
         //拼装搜索条件
         if (depId!=0){
             tiaojian += " and e.depId = "+depId;
@@ -237,4 +236,20 @@ public class Zero_EmpController {
     public String toNo(){
         return "controller_pluto/NO";
     }
+
+    /*public static void main(String[] args) {
+        String name = "ding/12";
+        int gang = 0;
+        for (int i = 0; i < name.length(); i++) {
+            char ss = name.charAt(i);
+            if('/'==ss){
+                gang=i;
+                break;
+            }
+        }
+        System.out.println(gang);
+        System.out.println(name.substring(0,gang));
+        System.out.println(name.substring(gang+1,name.length()));
+
+    }*/
 }

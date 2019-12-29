@@ -20,7 +20,7 @@
                 <tr>
                     <td>班级类别名称:</td>
                     <td colspan="2">
-                        <input class="layui-input" name="classTypeName" lay-verify="required" autocomplete="off"  maxlength="10" placeholder="只能输入10字以内"/>
+                        <input class="layui-input" name="classTypeName" lay-verify="required" autocomplete="off"  maxlength="16" placeholder="只能输入10字以内"/>
                     </td>
                 </tr>
                 <tr align="center">
@@ -39,7 +39,7 @@
                 <tr>
                     <td>班级类别名称:</td>
                     <td colspan="2">
-                        <input type="text" name="classTypeName" autocomplete="off"/>
+                        <input type="text" name="classTypeName" autocomplete="off" maxlength="16"/>
                     </td>
                 </tr>
                 <tr align="center">
@@ -58,6 +58,8 @@
     <script type="text/html" id="barDemo">
         <!--编辑-->
         <button type="button" lay-event="edit" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon"></i>编辑</button>
+        <!--删除-->
+        <button type="button" id="del" lay-event="del" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon"></i>删除</button>
     </script>
 </body>
 <script>
@@ -129,6 +131,32 @@
                     content: $('#updatewindows')
                 });
                 setFormValue(datas);//动态向表单赋值
+            }
+            if(event == 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    $.ajax({
+                        url:"${pageContext.request.contextPath}/student/delcate",
+                        type:"post",
+                        data:{
+                            classTypeId:obj.data.classTypeId
+                        },
+                        dataType:"json",
+                        success: function (data){
+                            if(data==1){
+                                obj.del();
+                                layer.close(index);
+                                layer.msg('删除成功');
+                                table.reload("test");
+                            }
+                            if(data==0){
+                                obj.del();
+                                layer.close(index);
+                                layer.msg('删除失败,该班级类别中有班级呢,不能删哦！');
+                                table.reload("test");
+                            }
+                        }
+                    })
+                });
             }
         });
         //获取该id的数据

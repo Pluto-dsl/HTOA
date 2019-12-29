@@ -38,6 +38,14 @@ public class PostVo {
         this.remark = remark;
     }
 
+    public PostVo(int postId,String postName, String remark) {
+        this.postId = postId;
+        this.postName = postName;
+        this.remark = remark;
+    }
+    public PostVo() {
+    }
+
 
     @Override
     public String toString() {

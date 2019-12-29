@@ -3,6 +3,7 @@ package com.wtt.service;
 import com.publics.vo.feedback.Collect_OpinionsVo;
 import com.publics.vo.feedback.FeedbackVo;
 import com.publics.vo.studentModel.ClassCategoryVo;
+import com.publics.vo.studentModel.StudentClassVo;
 import com.publics.vo.studentModel.StudentLeaveVo;
 import com.publics.vo.studentModel.StudentVo;
 
@@ -48,4 +49,8 @@ public interface Wtt_StudentService {
     void updatecate(ClassCategoryVo classCategoryVo);
     //总页数
     int pagecount(String sql);
+    //根据班级类别id查找宿舍
+    List<StudentClassVo> list(int classtypeid);
+    //删除班级类别
+    void del(ClassCategoryVo classCategoryVo);
 }

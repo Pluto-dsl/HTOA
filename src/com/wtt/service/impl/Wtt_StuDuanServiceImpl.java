@@ -50,8 +50,8 @@ public class Wtt_StuDuanServiceImpl extends BaseDao implements Wtt_StuDuanServic
     }
 
     @Override
-    public List<StudentLeaveVo> studentleave(int currpage, int pagesize) {
-       String sql="select * from holidayStudent h left join student s on h.StudentId = s.Studid";
+    public List<StudentLeaveVo> studentleave(int studentid,int currpage, int pagesize) {
+       String sql="select * from holidayStudent h left join student s on h.StudentId = s.Studid where s.Studid = '"+studentid+"'";
       return pageBySQL(sql,currpage,pagesize);
     }
 
