@@ -139,6 +139,21 @@
             }
         });
     });
+    $("input[name='deptName']").blur(function () {
+        var termName = $(this).val();
+        var patt = /^[\u4e00-\u9fa5]+$/;
+        if (!patt.test(termName)){
+            $(this).val("");
+            layer.msg("院系名字只能为中文");
+            return;
+        }
+        $("td[data-field='deptName']").each(function (index,element) {
+            if($(element).children(":first").text() === $("input[name='deptName']").val()){
+                $("input[name='deptName']").val("");
+                layer.msg("专业名字重复");
+            }
+        });
+    });
 </script>
 <script>
     //删除院系的方法

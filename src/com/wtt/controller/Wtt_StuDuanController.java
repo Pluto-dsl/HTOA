@@ -141,11 +141,12 @@ public class Wtt_StuDuanController {
 
     //查询学生请假
     @RequestMapping(value = "studentselectleave")
-    public void studentselectleave(int page,int limit,HttpServletResponse response){
+    public void studentselectleave(int page,int limit,HttpServletResponse response,HttpSession session){
         //获取存在session中的用户(电话号码)
-
+        StudentVo studentVo = (StudentVo) session.getAttribute("user");
+        int stuid = studentVo.getStudid();
         response.setContentType("text/html;charset=utf-8");
-        List<StudentLeaveVo> list = wtt_stuDuanService.studentleave(page,limit);
+        List<StudentLeaveVo> list = wtt_stuDuanService.studentleave(stuid,page,limit);
         //获取总行数
         int rows =wtt_stuDuanService.leavepagecount();
         JSONObject jsonObjects = new JSONObject();

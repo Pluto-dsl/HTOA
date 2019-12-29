@@ -49,7 +49,7 @@
                 <div class="layui-input-block">
                     <select name="chairman" id="empName">
                         <c:forEach items="${empList}" var="emp">
-                            <option value="${emp.empName}">${emp.empName}</option>
+                            <option value="${emp.empName}/${emp.empId}">${emp.empName}</option>
                         </c:forEach>
                     </select>
                 </div>
@@ -100,23 +100,41 @@
                             console.log(type);
                            if(type === 'del'){ //删除节点
                                 var lod = layer.load();
-                                $.ajax({
+
+                               $.post("${pageContext.request.contextPath}/zhq/delDept",{depId:data.id},function (d) {
+                                   if(d==1){
+                                       layer.msg('删除成功');
+                                       window.location.reload();
+                                   }
+                                   if(d==0){
+                                       layer.msg('删除失败，该部门还有员工，请妥善处置好删除');
+                                       window.location.reload();
+                                   }
+                               },"text");
+                                /*$.ajax({
                                     url: "${pageContext.request.contextPath}/zhq/delDept",
                                     type: "post",
                                     async:true,
                                     dataType: "json",
                                     data:{
-                                        depId:data.id
+                                        depId:data.id,
                                     },
                                     success: function (data) {
-                                        layer.close(lod);
-                                        layer.msg('删除成功');
+                                        alert(data);
+                                        if(data==0){
+                                            layer.close(lod);
+                                            layer.msg('删除失败，该部门还有员工，请妥善处置好删除');
+                                        }else if(data==1){
+                                            layer.close(lod);
+                                            layer.msg('删除成功');
+                                        }
                                     },
-                                    error:function () {
+                                    error:function (data) {
+
                                         layer.close(lod);
-                                        layer.msg('删除成功');
+                                        layer.msg('数据异常');
                                     }
-                                });
+                                });*/
                             };
                         },
 
@@ -136,7 +154,7 @@
                                         depid:data.list.depid,
                                         depName:data.list.depName,
                                         parentIdName:data.list.parentId,
-                                        chairman:data.list.chairman,
+                                        chairman:data.list.chairman+'/'+data.list.personnel,
                                         remark:data.list.remark,
                                     });
                                     layer.open({

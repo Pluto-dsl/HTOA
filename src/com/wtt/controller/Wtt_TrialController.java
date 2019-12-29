@@ -49,11 +49,7 @@ public class Wtt_TrialController {
         JSONArray jsonArray = new JSONArray();
         for (TrialVo trialVo:list){
             EmpVo empVo = wtt_trialService.emp(trialVo.getEmpId());
-             //System.out.println(empVo);
             CourseVo courseVo =wtt_trialService.courseid(trialVo.getCourseId());
-            /* //System.out.println(courseVo);
-             //System.out.println("课程名称:"+courseVo.getCourseName());
-             //System.out.println("员工名称:"+empVo.getEmpName());*/
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("trialId",trialVo.getTrialId());
             jsonObject.put("date",trialVo.getDate());

@@ -199,4 +199,16 @@ public class Ljw_SystemSettingController {
         out.flush();
         out.close();
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/getTeamName")
+    public String getTeamName(String teamName , HttpServletResponse response){
+        response.setContentType("text/html;charset=utf-8");
+        int size = service.selTermName(teamName);
+        if (size >= 1){
+            return "true";
+        }else {
+            return "false";
+        }
+    }
 }

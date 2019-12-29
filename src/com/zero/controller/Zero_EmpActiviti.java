@@ -94,7 +94,7 @@ public class Zero_EmpActiviti {
         holidayVo.setStartTime(startDate);
         holidayVo.setEndTime(endDate);
         holidayVo.setHolidayDay(Integer.parseInt(day));
-        holidayVo.setHour((endday-startday)*24+Integer.parseInt(hour));
+        holidayVo.setHour((Integer.valueOf(day))*24+Integer.parseInt(hour));
         holidayVo.setRemark(Remark);
         holidayVo.setStatus(1);//状态 1:审批中 2：已完成 3：不批准
         holidayVo.setEmpid(emp.getEmpId());//设置请假员工
@@ -107,6 +107,14 @@ public class Zero_EmpActiviti {
         variables.put("hour",holidayVo.getHour());//小时
         //variables.put("depperson",depperson);//是否部门管理人
         variables.put("holiday",holidayVo.getHolidayid());//单据ID
+
+        if(emp.getEmpId()==1001){
+            PrintWriter out = response.getWriter();
+            out.print("yes");
+            out.flush();
+            out.close();
+            return;
+        }
 
         if(depperson.equals("yes")){//是部门负责人
             String id = service.assignDep(emp.getDepId());

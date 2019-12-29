@@ -138,7 +138,15 @@ public class Zhq_DepController {
     public String delUpdate(HttpServletResponse response,HttpServletRequest request,HttpSession session){
         response.setContentType("text/html;charset=utf-8");
         String chairman = request.getParameter("chairman");
-        System.out.println("获取到的"+chairman);
+        int gang = 0;
+        for (int i = 0; i < chairman.length(); i++) {
+            char ss = chairman.charAt(i);
+            if('/'==ss){
+                gang=i;
+                break;
+            }
+        }
+        int depid = Integer.parseInt(chairman.substring(gang+1,chairman.length()));
         int depId= Integer.valueOf(request.getParameter("depid"));
         String remark= request.getParameter("remark");
         String depName = request.getParameter("depName");
@@ -151,9 +159,9 @@ public class Zhq_DepController {
         depVo.setDepid(depId);
         depVo.setDepName(depName);
         depVo.setParentId(parentId);
-        depVo.setChairman(chairman);
+        depVo.setChairman(chairman.substring(0,gang));
         depVo.setRemark(remark);
-        depVo.setPersonnel(0);
+        depVo.setPersonnel(depid);
 
 
         zhqDepService.updateDep(depVo);
@@ -167,14 +175,22 @@ public class Zhq_DepController {
     @ResponseBody
     public String delDept(HttpServletRequest request,HttpSession session){
         int depId = Integer.valueOf(request.getParameter("depId"));
-        DepVo depVo1 = new DepVo();
-        depVo1.setDepid(depId);
-        zhqDepService.deleteDep(depVo1);
+
+        int i =zhqDepService.selDepEmp(depId);
+        System.out.println(i);
+        i = i-1;
+        if(i>0){
+            return "0";
+        }else {
+            DepVo depVo1 = new DepVo();
+            depVo1.setDepid(depId);
+            zhqDepService.deleteDep(depVo1);
+            EmpVo empVo = (EmpVo) session.getAttribute("admin");
+            log.addLog(empVo.getEmpId(),empVo.getEmpName()+"删除了部门");
+            return "1";
+        }
 
 
-        EmpVo empVo = (EmpVo) session.getAttribute("admin");
-        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"删除了部门");
-        return "success";
     }
 
 

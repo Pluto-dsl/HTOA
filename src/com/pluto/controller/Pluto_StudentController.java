@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @Controller
 @RequestMapping("/student")
@@ -85,6 +86,8 @@ public class Pluto_StudentController {
     @ResponseBody
     public String updateStudent(StudentVo studentVo,HttpServletRequest request,int oldss){
         System.out.println("aaaaa");
+        System.out.println(studentVo.toString());
+        System.out.println(oldss);
         String bir = request.getParameter("bir");
         String ent = request.getParameter("ent");
         Date bd=null;
@@ -130,6 +133,19 @@ public class Pluto_StudentController {
         EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
         log.addLog(emp.getEmpId(),emp.getEmpName()+"删除了学生"+s.getStuname()+"资料。");
         return "1";
+    }
+
+    /**
+     *判断学生是否离校或者毕业
+     * @p
+     * aram id
+     * @return
+     */
+    @RequestMapping("/judgeStart")
+    @ResponseBody
+    public int judgeStart(int id){
+        int i = service.judgeStuStart(id);//i等于一说明学生已离校或者毕业
+        return i;
     }
 
     @RequestMapping("/tuixue")
@@ -249,11 +265,27 @@ public class Pluto_StudentController {
         }
         studentVo.setBirthday(bd);
         studentVo.setEntertime(ed);
-         //System.out.println(studentVo.toString());
+
+//        studentVo.setStuno(""+getRandom());
+
         service.addStudent(studentVo);
         EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
         log.addLog(emp.getEmpId(),emp.getEmpName()+"新增了一个学生，学生名："+studentVo.getStuname());
         return "1";
+    }
+
+    public int getRandom(){
+        int id = 0;
+        do{
+            Random random = new Random();
+            int i = (int) (random.nextFloat()*1000000);
+            boolean flag = service.judgeStuId(i);
+            if(flag){
+                id=i;
+                break;
+            }
+        }while(true);
+        return id;
     }
 
     @RequestMapping("/toAddStu")
@@ -457,6 +489,16 @@ public class Pluto_StudentController {
         }else {
             return "0";
         }
+    }
+
+    @RequestMapping("/judgeCardid")
+    @ResponseBody
+    public String judgeCardid(String cardid){
+        boolean flag = service.judgeCardid(cardid);
+        if(flag){
+            return "1";
+        }
+        return "0";
     }
 
 }

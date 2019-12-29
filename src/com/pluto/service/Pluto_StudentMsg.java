@@ -33,6 +33,8 @@ public interface Pluto_StudentMsg {
     void updFamily(StudentFamilyVo studentFamilyVo);//修改学生家庭信息
     void delFamily(StudentFamilyVo studentFamilyVo);//删除学生家庭信息
     String getExamData(int stuid);//获取学生成绩列表
+    int judgeStuStart(int id);//查看学生状态是否是退学或者毕业
+
 //    ModelAndView toUpdateExam(int scoreId);//修改学生成绩
     List getKemuList();//查询科目列表
     List getxueqiList();//查询学期列表
@@ -48,5 +50,7 @@ public interface Pluto_StudentMsg {
     //查询员工，暂时
     EmpVo getemp(int id);
 
-    int judgePhone(String phone);
+    int judgePhone(String phone);//判断学生电话是否重复，或者跟老师的相同
+    boolean judgeStuId(int stuid);//判断学生学号是否重复
+    boolean judgeCardid(String cardid);//判断身份证号是否重复
 }
