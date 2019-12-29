@@ -47,6 +47,7 @@
                            lay-verify="required|identity"
                            name="cardid" id="cardid"
                            value="${s.cardid}"
+                           onchange="judgeIdentity()"
                            autocomplete="off"
                            style="width:290px;">
                 </td>
@@ -97,7 +98,7 @@
                     <label class="label-top">学生电话:</label>
                 </td>
                 <td>
-                    <input class="layui-input" lay-verify="required|phone" onchange="judgePhone()" autocomplete="off" value="${s.phone}" name="phone" id="phone"
+                    <input class="layui-input" lay-verify="required|phone" onchange="judgePhone(),judgeParen(this)" autocomplete="off" value="${s.phone}" name="phone" id="phone"
                            style="width:290px;">
                 </td>
             </tr>
@@ -213,7 +214,7 @@
                     <label class="label-top">家长电话:</label>
                 </td>
                 <td>
-                    <input class="layui-input" autocomplete="off" lay-verify="required|phone" placeholder="  请输入家长电话" name="parentsphone" id="parentsphone" value="${s.parentsphone}"
+                    <input class="layui-input" autocomplete="off" onchange="judgeParen(this)" lay-verify="required|phone" placeholder="  请输入家长电话" name="parentsphone" id="parentsphone" value="${s.parentsphone}"
                            style="width:290px;">
                 </td>
             </tr>
@@ -222,7 +223,7 @@
                     <label class="label-top">老&nbsp;师&nbsp;电&nbsp;话:</label>
                 </td>
                 <td>
-                    <input  name="intrphone" lay-verify="phone" id="intrphone" value="${s.intrphone}" class="layui-input"
+                    <input  name="intrphone" lay-verify="phone" onchange="judgeTeacherParen(this)" id="intrphone" value="${s.intrphone}" class="layui-input"
                             style="width:290px;">
                 </td>
                 <td>
@@ -233,25 +234,25 @@
                             style="width:290px;">
                 </td>
             </tr>
-            <tr style="height: 40px">
-                <td>
-                    <label class="label-top">是&nbsp;否&nbsp;中&nbsp;专:</label>
-                </td>
-                <td>
-                    <select class="layui-form-label" name="isvocational" id="isvocational" editable="false" value="1" ditable="false"
-                            style="width:290px;">
-                        <option value="1" <c:if test="${s.isvocational == 1}">selected="selected"</c:if>>是</option>
-                        <option value="2" <c:if test="${s.isvocational == 2}">selected="selected"</c:if>>否</option>
-                    </select>
-                </td>
-                <td>
-                    <label class="label-top">中专学校:</label>
-                </td>
-                <td>
-                    <input  name="vocationalsch"  maxlength="10"  autocomplete="off" id="vocationalsch" class="layui-input" value="${s.vocationalsch}"
-                            style="width:290px;">
-                </td>
-            </tr>
+<%--            <tr style="height: 40px">--%>
+<%--                <td>--%>
+<%--                    <label class="label-top">是&nbsp;否&nbsp;中&nbsp;专:</label>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <select class="layui-form-label" onchange="judgeSchool()" name="isvocational" id="isvocational" editable="false" value="1" ditable="false"--%>
+<%--                            style="width:290px;">--%>
+<%--                        <option value="1" <c:if test="${s.isvocational == 1}">selected="selected"</c:if>>是</option>--%>
+<%--                        <option value="2" <c:if test="${s.isvocational == 2}">selected="selected"</c:if>>否</option>--%>
+<%--                    </select>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <label class="label-top">中专学校:</label>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <input  name="vocationalsch"  maxlength="10" disabled="disabled" autocomplete="off" id="vocationalsch" class="layui-input" value="${s.vocationalsch}"--%>
+<%--                            style="width:290px;">--%>
+<%--                </td>--%>
+<%--            </tr>--%>
 
             <ul>
                 <li></li>
@@ -291,7 +292,7 @@
                     <label class="label-top">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</label>
                 </td>
                 <td>
-                    <input  name="stuno" id="stuno" lay-verify="number" maxlength="20"  autocomplete="off" value="${s.stuno}" class="layui-input"
+                    <input  name="stuno" id="stuno" lay-verify="number" disabled="disabled" maxlength="20"  autocomplete="off" value="${s.stuno}" class="layui-input"
                             style="width:290px;">
                 </td>
             </tr>
@@ -505,6 +506,51 @@
                 },"text")
             }
         }
+
+        function judgeIdentity() {
+            var cardid = $("#cardid").val();
+            $.post("<%=request.getContextPath()%>/student/judgeCardid",{cid:cardid},function (data) {
+                if(data=="0"){
+                    $("#cardid").val("");
+                    layer.msg("此身份证号已存在，请重新输入！")
+                }
+            },"text")
+
+        }
+
+        function judgeParen(obj) {
+            var stu = $("#phone").val();
+            var prent = $("#parentsphone").val();
+            var teacherPhone = $("#intrphone").val()
+            if(stu==prent || stu==teacherPhone){
+                layer.msg("学生号码不可跟家长或老师号码相同！");
+                $(obj).val("");
+            }
+        }
+
+        function judgeTeacherParen(obj) {
+            var stu = $("#phone").val();
+            var teacherPhone = $("#intrphone").val()
+            if(stu==teacherPhone){
+                layer.msg("老师号码不可跟学生号码相同！");
+                $(obj).val("");
+            }
+        }
+        function judgeSchool() {
+            var isvocational = $("#isvocational").val();
+            if(isvocational!="1"){
+                $("#vocationalsch").removeAttr('disabled')
+                // document.getElementById('isvocational').removeAttribute('disabled')
+            }
+        }
+
+        layui.use(['table','element','form'], function() {
+            var form = layui.form;
+            form.on('select(isvocational)',function (data) {
+                judgeSchool();
+            })
+        })
+
     </script>
 </form>
 </body>

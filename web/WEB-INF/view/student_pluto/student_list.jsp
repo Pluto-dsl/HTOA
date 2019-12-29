@@ -351,25 +351,39 @@
                         if (data==null || data==""){
                             layer.msg('请选择你要调整宿舍的学生！', {icon: 1});
                         }else{
-                            $.post("${pageContext.request.contextPath}/student/judgeStart",{
-                                id:da[0].Studid
-                            },function (data) {
-                                if(1==data){
-                                    layer.msg("该学生已离校，此项无法设置！")
-                                    break;
+                            let temp = 0;
+
+                            $.ajax({
+                                url:"${pageContext.request.contextPath}/student/judgeStart"
+                                ,data:{
+                                    id:da[0].Studid
+                                }
+                                ,datatype: 'text'
+                                ,async:false
+                                ,type:'post'
+                                ,success:function (data) {
+                                    if(1==data){
+                                        layer.msg("该学生已离校，此项无法设置！")
+                                        temp=1;
+                                    }
                                 }
                             })
-                            //iframe层
-                            layer.open({
-                                type: 2,
-                                title: '调整宿舍',
-                                shadeClose: true,
-                                shade: 0.4,
-                                shadeclose:true,
-                                area: ['520px', '370px'],
-                                content: '${pageContext.request.contextPath}/student/toUpdateHour?id='+da[0].Studid //iframe的url
-                            });
-                            table.reload('test')
+
+
+                            if(temp!=1){
+                                //iframe层
+                                layer.open({
+                                    type: 2,
+                                    title: '调整宿舍',
+                                    shadeClose: true,
+                                    shade: 0.4,
+                                    shadeclose:true,
+                                    area: ['520px', '370px'],
+                                    content: '${pageContext.request.contextPath}/student/toUpdateHour?id='+da[0].Studid //iframe的url
+                                });
+                                table.reload('test')
+                            }
+
                         }
 
                         break;
@@ -377,25 +391,38 @@
                         if (data==null || data==""){
                             layer.msg('请选择你要调整班级的学生！', {icon: 1});
                         }else{
-                            $.post("${pageContext.request.contextPath}/student/judgeStart",{
-                                id:da[0].Studid
-                            },function (data) {
-                                if(1==data){
-                                    layer.msg("该学生已离校，此项无法设置！")
-                                    break;
+                            let temp=0;
+                            $.ajax({
+                                url:"${pageContext.request.contextPath}/student/judgeStart"
+                                ,data:{
+                                    id:da[0].Studid
+                                }
+                                ,datatype: 'text'
+                                ,async:false
+                                ,type:'post'
+                                ,success:function (data) {
+                                    if(1==data){
+                                        layer.msg("该学生已离校，此项无法设置！")
+                                        temp=1;
+                                    }
                                 }
                             })
-                            //iframe层
-                            layer.open({
-                                type: 2,
-                                title: '调整班级',
-                                shadeClose: true,
-                                shade: 0.4,
-                                shadeclose:true,
-                                area: ['600px', '370px'],
-                                content: '${pageContext.request.contextPath}/student/toUpdateClass?id='+da[0].Studid //iframe的url
-                            });
-                            table.reload('test')
+
+
+                            if(temp!=1){
+                                //iframe层
+                                layer.open({
+                                    type: 2,
+                                    title: '调整班级',
+                                    shadeClose: true,
+                                    shade: 0.4,
+                                    shadeclose:true,
+                                    area: ['600px', '370px'],
+                                    content: '${pageContext.request.contextPath}/student/toUpdateClass?id='+da[0].Studid //iframe的url
+                                });
+                                table.reload('test')
+                            }
+
                         }
                         break;
 
