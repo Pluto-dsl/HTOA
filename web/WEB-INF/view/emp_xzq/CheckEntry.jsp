@@ -127,8 +127,13 @@
         });
 
 
+
         form.on('submit(Asubmit)', function (data) {
-            console.log(data);
+            var session = "${sessionScope.admin.empName}";
+            if(session === ""){
+                window.parent.location.href="${pageContext.request.contextPath}/logout";
+                return false;
+            }
             $.ajax({
                 type: 'POST',
                 url: '${pageContext.request.contextPath}/jack/addAduitLog',
@@ -171,15 +176,18 @@
         form.on('select(depid)', function(data) {
             $("#aduitModelid").empty();
             $("#Empid").empty();
+            $("#Scores").val("");
+            var sc;
             $.get('${pageContext.request.contextPath}/jack/Ass',{value:data.value},function (data) {
+                $("#aduitModelid").append("<option value=''>请选择</option>");
                 for (var i = 0; i < data.names.length; i++) {
                     $("#aduitModelid").append("<option value='"+data.names[i].aduitModelid+"'>"+data.names[i].aduitName+"</option>");
+                    sc = data.names[i].aduitModelid[0];
                 }
                 form.render("select");
             },"json");
             $.get('${pageContext.request.contextPath}/jack/emp',{value:data.value},function (data) {
                 for (var i = 0; i < data.names.length; i++) {
-                    $(sessionStorage.admin)
                     $("#Empid").append("<option value='"+data.names[i].empId+"'>"+data.names[i].empName+"</option>");
                 }
                 form.render("select");
