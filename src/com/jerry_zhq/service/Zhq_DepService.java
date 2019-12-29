@@ -31,6 +31,8 @@ public interface Zhq_DepService {
 
     Object selObjId(Class clazz, Integer id);
 
+    int selDepEmp(int depId);
+
 
 
 

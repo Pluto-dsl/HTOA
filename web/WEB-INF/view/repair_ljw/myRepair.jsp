@@ -77,7 +77,7 @@
                     }else {
                         return '<button type="button" class="layui-btn layui-btn layui-btn-xs layui-btn-disabled" title="已处理的报修单不可删除">删除</button>'
                     }
-                    }, width:80}
+                }, width:80}
             ]]
             ,page: {limit: 10,limits:[5,10,15,20],layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']}
         });
@@ -118,6 +118,10 @@
             }
         })
     });
+    $("#MyForm").submit(function () {
+        $("button[type='submit']").addClass("layui-btn-disabled");
+        $("button[type='submit']").attr("disabled","disabled");
+    })
 </script>
 <script>
     function delRepair(id,tableIns) {
@@ -125,7 +129,7 @@
         var data = {delRepairId:id};
         $.post("${pageContext.request.contextPath}/logs/delRepair",data,function (data) {
             layer.close(index);
-            console.log(data)
+            console.log(data);
             tableIns.reload();
         },"json");
     }

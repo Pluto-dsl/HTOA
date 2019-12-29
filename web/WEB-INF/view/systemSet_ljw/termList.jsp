@@ -139,6 +139,21 @@
             }
         });
     });
+    $("input[name='termName']").blur(function () {
+        var termName = $(this).val();
+        var patt = /^[\u4e00-\u9fa5]+$/;
+        if (!patt.test(termName)){
+            $(this).val("");
+            layer.msg("学期名字只能为中文");
+            return;
+        }
+        $("td[data-field='termName']").each(function (index,element) {
+            if($(element).children(":first").text() === $("input[name='termName']").val()){
+                $("input[name='termName']").val("");
+                layer.msg("学期名字重复");
+            }
+        });
+    });
 </script>
 <script>
     //删除学期的方法

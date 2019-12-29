@@ -36,6 +36,17 @@ public class Pluto_StudentMsgImpl extends BaseDao implements Pluto_StudentMsg {
     }
 
     @Override
+    public int judgeStuStart(int id) {
+        List list = super.listBySQL("select * from student where stat in (5,6) and Studid ="+id);
+        int i = list.size();
+        if(i>0){
+            return 1;
+        }
+        return 0;
+    }
+
+
+    @Override
     public List getClassList(String hql) {
         return super.listByHql(hql);
     }
@@ -155,6 +166,24 @@ public class Pluto_StudentMsgImpl extends BaseDao implements Pluto_StudentMsg {
         }else {
             return 0;
         }
+    }
+
+    @Override
+    public boolean judgeCardid(String cardid) {
+        List list = super.listBySQL("select * from student where cardid='"+cardid+"'");
+        if(list.size()>0){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean judgeStuId(int stuid) {
+        List list = super.listBySQL("select * from student where stuno='"+stuid+"'");
+        if(list.size()>0){
+            return false;
+        }
+        return true;
     }
 
     @Override

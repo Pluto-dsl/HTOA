@@ -53,7 +53,7 @@
 
                 </td>
                 <td>
-                    <input class="layui-input" lay-verify="required" maxlength="10"  value="" autocomplete="off" name="stuname" id="stuname"
+                    <input class="layui-input" lay-verify="required" lay-verify="stuname" maxlength="10"  value="" autocomplete="off" name="stuname" id="stuname"
                            style="width:290px;">
                 </td>
                 <td>
@@ -64,6 +64,7 @@
                            lay-verify="required"
                            name="cardid" id="cardid"
                            value=""
+                           onchange="judgeIdentity()"
                            maxlength="18"
                            autocomplete="off"
                            style="width:290px;">
@@ -116,7 +117,7 @@
                     <label class="label-top">老&nbsp;师&nbsp;电&nbsp;话:</label>
                 </td>
                 <td>
-                    <input  name="intrphone" lay-verify="phone" id="intrphone" value="" class="layui-input"
+                    <input  name="intrphone" lay-verify="phone" id="intrphone" onchange="judgeTeacherParen(this)" value="" class="layui-input"
                             style="width:290px;">
                 </td>
             </tr>
@@ -172,7 +173,7 @@
                     <label class="label-top">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</label>
                 </td>
                 <td>
-                    <input  name="stuno" id="stuno" lay-verify="number" maxlength="20"  autocomplete="off" value="" class="layui-input"
+                    <input  name="stuno" id="stuno" lay-verify="number" disabled="disabled" <%--placeholder="学号将自动生成"--%> maxlength="20"  autocomplete="off" value="" class="layui-input"
                             style="width:290px;">
                 </td>
                 <input type="hidden" name="studytype" value="1">
@@ -209,7 +210,7 @@
                     <label class="label-top">省录取号:</label>
                 </td>
                 <td>
-                    <input  name="enrollno" id="enrollno" maxlength="20"  autocomplete="off" class="layui-input" value="0"
+                    <input  name="enrollno" id="enrollno" maxlength="20" onchange="judgeEnr()" autocomplete="off" class="layui-input" value="0"
                             style="width:290px;">
                 </td>
             </tr>
@@ -247,13 +248,19 @@
             var laydate = layui.laydate;
             var form = layui.form;
 
+            var day2 = new Date();
+            day2.setTime(day2.getTime());
+            var s2 = day2.getFullYear()+"-" + (day2.getMonth()+1) + "-" + day2.getDate();
+
             //自定义格式
             laydate.render({
                 elem: '#ents'
+                ,max:s2
                 // ,format: 'yyyy年MM月dd日'
             });
             laydate.render({
                 elem: '#birt'
+                ,max:s2
                 // ,format: 'yyyy年MM月dd日'
             });
 
@@ -274,6 +281,24 @@
                 parent.layer.close(index);//关闭当前页
                 return false;
             })
+
+            // 表单验证
+            form.verify({
+                stuname: function(value, item){ //value：表单的值、item：表单的DOM对象
+                    if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)){
+                        // layui.msg('用户名不能有特殊字符')
+                        // itme.val("");
+                        return '用户名不能有特殊字符';
+                    }
+                    if(/(^\_)|(\__)|(\_+$)/.test(value)){
+                        return;
+                    }
+                    if(/^\d+\d+\d$/.test(value)){
+                        return;
+                    }
+                }
+            });
+
         })
 
         function judgePhone() {
@@ -281,19 +306,63 @@
             $.post("<%=request.getContextPath()%>/student/judgePhone",{iphone:phone},function (data) {
                 if(data=="1"){
                     $("#phone").val("");
-                    layer.msg("已有此号码，请重新输入！")
+                    layer.msg("此号码已存在，请重新输入！")
                 }
             },"text")
-
         }
+
 
         function judgeParen(obj) {
             var stu = $("#phone").val();
             var prent = $("#parentsphone").val();
-            if(stu==prent){
-                layer.msg("学生号码不可跟家长号码相同！");
+            var teacherPhone = $("#intrphone").val()
+            if(stu==prent || stu==teacherPhone){
+                layer.msg("学生号码不可跟家长或老师号码相同！");
                 $(obj).val("");
             }
+        }
+
+        function judgeTeacherParen(obj) {
+            var stu = $("#phone").val();
+            var teacherPhone = $("#intrphone").val()
+            if(stu==teacherPhone){
+                layer.msg("老师号码不可跟学生号码相同！");
+                $(obj).val("");
+            }
+        }
+
+        function judgeEnr(){
+            let num = $("#stuno").val();
+
+            if(num=='' || num==undefined ||num==null) {
+                alert("请输入省录取号！！！");
+                $("#stuno").val("");
+            }else if(num.indexOf(" ")>=0) {
+                alert("输入中有空格！！！");
+                $("#stuno").val("");
+            }else if(isNaN(num)) {
+                alert("请输入纯数字！！！");
+                $("#stuno").val("");
+            }else if(num.charAt(0)==0) {
+                alert("首位不能为0！！！");
+                $("#stuno").val("");
+            }else if (parseInt(num)!=num) {
+                alert("输入的数字中不能为小数！！！");
+                $("#stuno").val("");
+            }else if(num<10000 || num>999999999) {
+                alert("输入的数字必须在5位以上、10位以内");
+                $("#stuno").val("");
+            }
+        }
+        function judgeIdentity() {
+            var cardid = $("#cardid").val();
+            $.post("<%=request.getContextPath()%>/student/judgeCardid",{cid:cardid},function (data) {
+                if(data=="0"){
+                    $("#cardid").val("");
+                    layer.msg("此身份证号已存在，请重新输入！")
+                }
+            },"text")
+
         }
     </script>
 </form>

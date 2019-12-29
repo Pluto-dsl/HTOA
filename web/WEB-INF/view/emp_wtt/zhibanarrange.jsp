@@ -37,7 +37,12 @@
             <tr>
                 <th>排班名称:</th>
                 <td>
-                    <input type="text" class="layui-input" name="weekArrangeName" autocomplete="off" lay-verify="required">
+                    <select name="weekArrangeName">
+                        <c:forEach items="${postlist}" var="list">
+                            <option value="${list.postName}">${list.postName}</option>
+                        </c:forEach>
+                    </select>
+                    <%--<input type="text" class="layui-input" name="weekArrangeName" autocomplete="off" lay-verify="required">--%>
                 </td>
                 <th>值班要求:</th>
                 <td>
@@ -239,6 +244,10 @@
         $.post("<%=request.getContextPath()%>/arrange/deletearrange",data,function (data) {
 
         },"json");
+    }
+    
+    function duty() {
+        
     }
 </script>
 </html>
