@@ -18,7 +18,7 @@
     </style>
 </head>
 <body>
-<form  id="form1" class="layui-form" action="${pageContext.request.contextPath}/student/addStu" <%--onSubmit="return beforeSubmit(this);"--%> method="post">
+<form  id="form1" class="layui-form" lay-filter="form1" action="${pageContext.request.contextPath}/student/addStu" method="post">
     <div >
         <center>
             <table id="td" border="0" style="border-collapse:separate; border-spacing:20px;" >
@@ -128,7 +128,7 @@
                     <td>
                         <select class="layui-form-label" name="huor" id="hour" editable="false" value="1" ditable="false" style="width:290px;">
                             <c:forEach items="${hList}" var="ss" >
-                                <option value="${ss.hourid}" <c:if test="${s.huor == ss.hourid}">selected="selected"</c:if>>${ss.huorName}</option>
+                                <option value="${ss.Hourid}">${ss.huorName}</option>
                             </c:forEach>
                         </select>
                     </td>
@@ -239,8 +239,7 @@
                     <td colspan="4">
                         <center>
 <%--                            <button type="submit" class="layui-btn layui-btn-normal">提交</button>--%>
-                            <button class="layui-btn" id="submit" lay-submit lay-filter="sub">保存</button>
-
+                            <button class="layui-btn" id="submit" lay-submit lay-filter="sub">提交</button>
                         </center>
                     </td>
                 </tr>
@@ -270,12 +269,11 @@
             // ,format: 'yyyy年MM月dd日'
         });
 
-        form.on('submit(sub)', function(data){
-            console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
-            console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
-            console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
-            // return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
-        });
+        // form.on('submit(form1)', function(data){
+        //     console.log(data);
+        //     parent.location.reload();
+        //     return true;
+        // });
 
 
         <%--//新增教育背景--%>

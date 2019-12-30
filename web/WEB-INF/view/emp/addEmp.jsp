@@ -39,7 +39,7 @@
                 </td>
             </tr>
             <tr  style="height: 40px">
-                <td align="right">职务名称:</td>
+                <td align="right">职务:</td>
                 <td align="left">
                     <select id="post" name="postId" lay-verify="required" style="float: left;width:50px;">
                         <c:forEach var="p" items="${post}">

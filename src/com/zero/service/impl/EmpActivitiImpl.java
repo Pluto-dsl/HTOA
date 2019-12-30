@@ -85,4 +85,16 @@ public class EmpActivitiImpl extends BaseDao implements EmpActivitiService {
         }
         return res;
     }
+
+    @Override
+    public String isper(int empid) {
+        List list =  super.listBySQL("select * from dep where  personnel = "+empid);
+        String res ="";
+        if (list.size()==1){
+            res = "yes";
+        }else {
+            res = "no";
+        }
+        return res;
+    }
 }
