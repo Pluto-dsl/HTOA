@@ -85,8 +85,7 @@ public class Pluto_StudentController {
     @RequestMapping("/updateStu")
     @ResponseBody
     public String updateStudent(StudentVo studentVo,HttpServletRequest request,int oldss){
-
-
+        int olds = oldss;
         String bir = request.getParameter("bir");
         String ent = request.getParameter("ent");
         Date bd=null;
@@ -102,12 +101,12 @@ public class Pluto_StudentController {
         studentVo.setEntertime(ed);
 
         StudentVo sss = service.getStudentById(studentVo.getStudid());
-        oldss = sss.getHuor();
+        olds = sss.getHuor();
 
         int newss = studentVo.getHuor();
-        if(newss!=oldss){
+        if(newss!=olds){
             StudentDormitoryVo s1 = service.getHourById(newss);
-            StudentDormitoryVo s2 = service.getHourById(oldss);
+            StudentDormitoryVo s2 = service.getHourById(olds);
             s1.setCount(s1.getCount()+1);
             s2.setCount(s2.getCount()-1);
             service.updateHour(s1);
@@ -125,7 +124,6 @@ public class Pluto_StudentController {
         StudentVo s = service.getStudentById(id);
         int ssid = s.getHuor();
         service.deleteStudent(s);
-
 
         service.deleteScore(id);//student_score删除学生成绩
         service.deleteReplyScore(id);//studentReplyScore删除答辩学生成绩
@@ -258,6 +256,7 @@ public class Pluto_StudentController {
 
     @RequestMapping("/addStu")
     public String addStudent(StudentVo studentVo,String birt,String ents, HttpServletRequest request){
+        System.out.println(studentVo.toString());
         Date bd=null;
         Date ed=null;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
