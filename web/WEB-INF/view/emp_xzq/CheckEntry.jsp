@@ -134,6 +134,8 @@
                 window.parent.location.href="${pageContext.request.contextPath}/logout";
                 return false;
             }
+            $("#aduitModelid").empty();
+            $("#Empid").empty();
             $.ajax({
                 type: 'POST',
                 url: '${pageContext.request.contextPath}/jack/addAduitLog',

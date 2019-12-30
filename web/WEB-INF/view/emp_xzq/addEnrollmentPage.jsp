@@ -59,8 +59,6 @@
                         <option value="1">意向学生</option>
                         <option value="2">预定报名学生</option>
                         <option value="3">试学学生</option>
-                        <option value="4">在读学生</option>
-                        <option value="6">退学</option>
                     </select>
                 </td>
                 <td>是否送电脑:</td>

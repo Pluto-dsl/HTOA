@@ -29,7 +29,7 @@
     <div class="layui-form-item">
 
         <div class="layui-inline ">
-            <form class="layui-form">
+            <form class="layui-form" id="Sou">
                 <label class="layui-form-label">员工姓名:</label>
                 <div class="layui-input-inline">
                     <input type="text" id="empName" placeholder="请输入员工姓名搜索" autocomplete="off" class="layui-input">
@@ -62,6 +62,7 @@
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
         <button lay-event="batchDel" class="layui-btn layui-btn-sm layui-btn-danger" ><i class="layui-icon layui-icon-prev" style="font-size: 30px;"></i>批量删除</button>
+        <button lay-event="clearSs" class="layui-btn layui-btn-sm layui-btn-danger" style="background-color: #1d8ec4;" ><i class="layui-icon layui-icon-refresh" style="font-size: 30px;"></i>清除搜索内容</button>
     </div>
 </script>
 <script type="text/html" id="barDemo">
@@ -76,23 +77,39 @@
         var form = layui.form;
         var laydate = layui.laydate;
         var upload = layui.upload;
-
         // var date = new Date();
         // var EndDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate(); //获取当天的下一天
         // date.setDate(1);
         // var startDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate(); //获取当月的第一天
 
-
-        //执行一个laydate实例
-        laydate.render({
-            elem: '#startDate', //指定元素
-            //value:startDate
+        var start = laydate.render({
+            elem: '#startDate',
+            type: 'datetime',
+            format:'yyyy/MM/dd',
+            done: function (value,date) {
+                /*startdate=value;*/
+                endMax = end.config.max;
+                end.config.min = date;
+                end.config.min.month = date.month -1;
+            }
         });
 
-        laydate.render({
-            elem: '#EndDate', //指定元素
-           //value:EndDate
+        var end = laydate.render({
+            elem: '#EndDate',
+            type: 'datetime',
+            format:'yyyy/MM/dd',
+            done: function (value,date) {
+                /*startdate=value;*/
+                if($.trim(value) == ''){
+                    var curDate = new Date();
+                    date = {'date': curDate.getDate(), 'month': curDate.getMonth()+1, 'year': curDate.getFullYear()};
+                }
+                start.config.max = date;
+                start.config.max.month = date.month -1;
+            }
         });
+
+
 
         //查询部门列表
         $.get('${pageContext.request.contextPath}/jack/depList',{},function (datas) {
@@ -181,6 +198,10 @@
                     window.location.reload();
                     layer.close(index);
                 });
+            }
+            if(obj.event === 'clearSs'){
+                $("#Sou")[0].reset();
+                layui.form.render();
             }
         });
 
