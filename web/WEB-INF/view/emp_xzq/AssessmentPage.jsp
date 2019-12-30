@@ -56,7 +56,7 @@
                 <td>考核内容:</td>
                 <td><input type="text" id="aduitName1" name="aduitName" required lay-verify="required" placeholder="请输入课程类型" autocomplete="off" class="layui-input"></td>
                 <td>考核分数:</td>
-                <td><input type="text" id="Scores1" name="Scores" required lay-verify="number" placeholder="请输入课程类型" autocomplete="off" class="layui-input"></td>
+                <td><input type="text" id="Scores1" name="Scores" required lay-verify="number" maxlength="5" placeholder="请输入课程类型" autocomplete="off" class="layui-input"></td>
             </tr>
             <tr>
                 <td>考核指标:</td>
@@ -69,7 +69,7 @@
             </tr>
             <tr>
                 <td align="center" colspan="4">
-                    <button lay-submit lay-filter="Esubmit" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
+                    <button lay-submit lay-filter="Esubmit" id="Esubmit" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
                 </td>
             </tr>
         </table>
@@ -177,12 +177,10 @@
             }
         });
 
-        $("#Asubmit").click(function () {
-            window.location.reload();
-        });
-
         //考核添加
         form.on('submit(Asubmit)',function (data) {
+            $("#Asubmit").removeClass("layui-btn-warm");
+            $("#Asubmit").addClass("layui-btn-disabled");
             $.post('${pageContext.request.contextPath}/jack/addAss',data.field,function (d) {
                 alert(d);
             },"json");
@@ -247,6 +245,8 @@
         });
         //编辑
         form.on('submit(Esubmit)',function (data) {
+            $("#Esubmit").removeClass("layui-btn-warm");
+            $("#Esubmit").addClass("layui-btn-disabled");
             $.post('${pageContext.request.contextPath}/jack/editAss',data.field,function (d) {
             },"json");
             table.reload('AssList');

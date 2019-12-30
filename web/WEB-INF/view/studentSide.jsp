@@ -140,7 +140,7 @@
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
-                        欢迎进入学生端
+                        <img style="height: 100%;width: 100%;" src="${pageContext.request.contextPath}/imgs/test/index.jpg" alt="" />
                     </div>
                 </div>
             </div>
