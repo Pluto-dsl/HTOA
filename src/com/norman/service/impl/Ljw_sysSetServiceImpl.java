@@ -117,4 +117,9 @@ public class Ljw_sysSetServiceImpl extends BaseDao implements Ljw_sysSetService 
         super.delObject(termVo);
         return "success";
     }
+
+    @Override
+    public int selTermName(String termName) {
+        return super.listByHql("from TermVo where termName = '"+termName+"'").size();
+    }
 }

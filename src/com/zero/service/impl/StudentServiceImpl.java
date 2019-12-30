@@ -143,4 +143,24 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
     public List judgeLevel(String level) {
         return super.listBySQL("SELECT * FROM `studentFall` where level = '"+level+"'");
     }
+
+    @Override
+    public Boolean RClassName(String classname) {
+        int res = super.listBySQL("select * from studentClass where className = '"+classname+"'").size();
+        if (res==0){
+            return  false;
+        }else {
+            return true;
+        }
+    }
+
+    @Override
+    public Boolean RClassNo(String classno) {
+        int res = super.listBySQL("select * from studentClass where classNo = '"+classno+"'").size();
+        if (res==0){
+            return  false;
+        }else {
+            return true;
+        }
+    }
 }

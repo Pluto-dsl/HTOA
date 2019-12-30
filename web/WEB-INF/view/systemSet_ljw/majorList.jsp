@@ -79,7 +79,7 @@
             ,title: '用户数据表'
             ,cols: [[
                 {field:'majorid', title:'专业编号', width:120, fixed: 'left', unresize: true, sort: true}
-                ,{field:'majorName', title:'专业设置', width:160}
+                ,{field:'majorName', title:'专业名称', width:160}
                 ,{field:'deptName', title:'院系名称', width:160}
                 ,{field:'deptid',hide:true}
                 ,{field:'remark', title:'备注', width:769}
@@ -169,6 +169,21 @@
         laydate.render({
             elem: '#endDay' //指定元素
             ,format:'yyyy/MM/dd'
+        });
+    });
+    $("input[name='majorName']").blur(function () {
+        var termName = $(this).val();
+        var patt = /^[\u4e00-\u9fa5]+$/;
+        if (!patt.test(termName)){
+            $(this).val("");
+            layer.msg("专业名字只能为中文");
+            return;
+        }
+        $("td[data-field='majorName']").each(function (index,element) {
+            if($(element).children(":first").text() === $("input[name='majorName']").val()){
+                $("input[name='majorName']").val("");
+                layer.msg("专业名字重复");
+            }
         });
     });
 </script>

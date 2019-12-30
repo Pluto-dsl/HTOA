@@ -79,8 +79,16 @@
 
         //执行一个laydate实例
         laydate.render({
-            elem: '#clockDate' //指定元素
+            elem: '#clockDate', //指定元素
+            max:minDate()
         });
+
+        console.log(minDate());
+
+        function minDate(){
+            var now = new Date();
+            return now.getFullYear()+"-" + (now.getMonth()+1) + "-" + now.getDate();
+        }
 
         //考勤列表
         table.render({

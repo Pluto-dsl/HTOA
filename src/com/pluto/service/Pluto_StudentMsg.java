@@ -41,7 +41,7 @@ public interface Pluto_StudentMsg {
     Map getStudentScoreVoById(int id);//根据id查询学生成绩
     String getDbData(int stuid);//获取学生的答辩成绩表数据
     List getListByHql(String hql);//根据hql查询列表
-    Object getObjById(Class cla,int id);//根据id获取对象
+    Object getObjById(Class cla,int id);//根据id获取    对象
     String seekStuList(HttpServletRequest request);//根据查询学生列表
 
 

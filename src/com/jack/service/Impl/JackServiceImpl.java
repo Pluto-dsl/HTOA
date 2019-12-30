@@ -361,6 +361,14 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
                 "LEFT join recipient re on n.noticeId = re.noticeId\n" +
                 "where re.type in (2,3) and n.noticeType in(2,3) and re.receiver = "+id+" ORDER BY n.noticeTime desc");
     }
+
+    @Override
+    public int selUnreadCountStu(int id) {
+        return selTotalRow("select count(*) from notice n \n" +
+                "LEFT join recipient re on n.noticeId = re.noticeId\n" +
+                "where re.isRead = 2 and re.type in (2,3) and n.noticeType in(2,3) and re.receiver = "+id+"");
+    }
+
     @Override
     public void UpdateRead(int stuid,int notid) {
         executeSQL("UPDATE recipient set isRead = 1 where receiver = "+stuid+" and noticeId = "+notid+"");
@@ -432,7 +440,7 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
         return listBySQL("SELECT * FROM trial where empId = "+empid+" and date = '"+date+"'");
     }
 
-
+    /** 员工公告修改已读 */
     //根据公告id查询已读的人数
     @Override
     public int trueCount(int noticeId) {
@@ -446,6 +454,24 @@ public class JackServiceImpl extends BaseDao implements Jack_Service {
     //根据查询出来的已读未读人数修改Notice表中的已读未读人数
     @Override
     public void updateCountNotice(int trueCount, int falseCount,int noticeId) {
+        executeSQL("update notice set trueContent="+trueCount+",falseContent="+falseCount+" where noticeId="+noticeId);
+    }
+
+
+    /** 学生公告修改已读 */
+    //根据公告id查询已读的人数
+    @Override
+    public int trueCountStu(int noticeId) {
+        return selTotalRow("select count(*) from recipient where type=2 and isRead=1 and noticeId="+noticeId);
+    }
+    //根据公告id查询未读的人数
+    @Override
+    public int falseCountStu(int noticeId) {
+        return selTotalRow("select count(*) from recipient where type=2 and isRead=2 and noticeId="+noticeId);
+    }
+    //根据查询出来的已读未读人数修改Notice表中的已读未读人数
+    @Override
+    public void updateCountNoticeStu(int trueCount, int falseCount,int noticeId) {
         executeSQL("update notice set trueContent="+trueCount+",falseContent="+falseCount+" where noticeId="+noticeId);
     }
 
