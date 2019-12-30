@@ -166,15 +166,16 @@ public class Wtt_StudentController {
         //设置备注信息（任务ID,实例ID,备注的信息）
         taskService.addComment(taskid, processinstanceid, comment);
         //判断当前审批人是否为班主任
-        String assignee = "";
+        String assignee ="";
         List clist = studentService.selclassteacher("select * from emp where postName like '班主任'");
+       /* System.out.println(clist);*/
         for (int i = 0; i < clist.size(); i++) {
             Map map = (Map) clist.get(i);
-            System.out.println("----" + map.get("empName"));
+            /*System.out.println("----" + map.get("empName"));*/
             if (name_bl.equals(map.get("empName"))) {
-                String name = studentService.chairman(empid);
-                System.out.println("部门负责人：" + name);
-                assignee = name;
+                String depid = ((studentService.chairman(empid)));
+                System.out.println("部门负责人：" + depid);
+                assignee = depid;
                 break;
             }
         }
@@ -187,7 +188,7 @@ public class Wtt_StudentController {
             Map studnetmap = studentService.studentid(id);
             int studentid = (int) studnetmap.get("Studid");
             Map map1 = wtt_stuDuanService.selectteacher(studentid);
-            String names = (String) map1.get("classTeacher");
+            int names = (int) map1.get("classTeacher");
             map.put("assignee", names);
         }
 
