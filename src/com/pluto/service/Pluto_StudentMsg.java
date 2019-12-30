@@ -41,16 +41,17 @@ public interface Pluto_StudentMsg {
     Map getStudentScoreVoById(int id);//根据id查询学生成绩
     String getDbData(int stuid);//获取学生的答辩成绩表数据
     List getListByHql(String hql);//根据hql查询列表
-    Object getObjById(Class cla,int id);//根据id获取对象
+    Object getObjById(Class cla,int id);//根据id获取    对象
     String seekStuList(HttpServletRequest request);//根据查询学生列表
-
+    List ListBySql(String sql);//根据SQL查询List
 
     void deleteScore(int stuid); //根据id删除学生成绩
     void deleteReplyScore(int stuid); //根据id删除学生答辩成绩
-    //查询员工，暂时
-    EmpVo getemp(int id);
 
     int judgePhone(String phone);//判断学生电话是否重复，或者跟老师的相同
     boolean judgeStuId(int stuid);//判断学生学号是否重复
     boolean judgeCardid(String cardid);//判断身份证号是否重复
+
+    boolean judgeHuor(int id);//判断宿舍是否满员
+
 }

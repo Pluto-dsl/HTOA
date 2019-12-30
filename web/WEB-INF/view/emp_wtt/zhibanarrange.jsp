@@ -30,7 +30,7 @@
                 </td>
                 <th>第几位值班:</th>
                 <td>
-                    <input type="text" class="layui-input" name="orderId" autocomplete="off" lay-verify="required|number">
+                    <input type="text" class="layui-input" name="orderId" id="order" autocomplete="off" lay-verify="required|number" onblur="numduty()">
                 </td>
             </tr>
 
@@ -146,7 +146,7 @@
                 ,{fixed: '', width:180, title:'操作', align:'center', toolbar: '#barDemo'}
             ]]
             ,page:true,
-            limits:[5,10,15,25]
+            limits:[5,10,15,25,30,35,40,45,50]
         });
 
         //头工具栏事件
@@ -245,9 +245,14 @@
 
         },"json");
     }
-    
-    function duty() {
-        
+
+    function numduty() {
+        var num = $("#order").val();
+        var first = num.substr(0,1);
+        if("-"==first || "0"==first){
+            layer.msg('不能以0开头和-');
+            $("#order").val('');
+        }
     }
 </script>
 </html>

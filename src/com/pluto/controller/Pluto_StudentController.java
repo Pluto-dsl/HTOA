@@ -85,9 +85,7 @@ public class Pluto_StudentController {
     @RequestMapping("/updateStu")
     @ResponseBody
     public String updateStudent(StudentVo studentVo,HttpServletRequest request,int oldss){
-        System.out.println("aaaaa");
-        System.out.println(studentVo.toString());
-        System.out.println(oldss);
+        int olds = oldss;
         String bir = request.getParameter("bir");
         String ent = request.getParameter("ent");
         Date bd=null;
@@ -102,10 +100,13 @@ public class Pluto_StudentController {
         studentVo.setBirthday(bd);
         studentVo.setEntertime(ed);
 
+        StudentVo sss = service.getStudentById(studentVo.getStudid());
+        olds = sss.getHuor();
+
         int newss = studentVo.getHuor();
-        if(newss!=oldss){
+        if(newss!=olds){
             StudentDormitoryVo s1 = service.getHourById(newss);
-            StudentDormitoryVo s2 = service.getHourById(oldss);
+            StudentDormitoryVo s2 = service.getHourById(olds);
             s1.setCount(s1.getCount()+1);
             s2.setCount(s2.getCount()-1);
             service.updateHour(s1);
@@ -123,7 +124,6 @@ public class Pluto_StudentController {
         StudentVo s = service.getStudentById(id);
         int ssid = s.getHuor();
         service.deleteStudent(s);
-
 
         service.deleteScore(id);//student_score删除学生成绩
         service.deleteReplyScore(id);//studentReplyScore删除答辩学生成绩
@@ -178,11 +178,15 @@ public class Pluto_StudentController {
     @RequestMapping("/updateHour")
     @ResponseBody
     public String updateHour(int Studid,int hour,HttpServletRequest request){
+
         StudentVo studentVo = service.getStudentById(Studid);
+
+        StudentDormitoryVo olds = service.getHourById(studentVo.getHuor());
+
         studentVo.setHuor(hour);
         service.updateStudent(studentVo);
         StudentDormitoryVo s = service.getHourById(hour);
-        StudentDormitoryVo olds = service.getHourById(studentVo.getHuor());
+//        StudentDormitoryVo olds = service.getHourById(studentVo.getHuor());
 
         olds.setCount(olds.getCount()-1);
         s.setCount(s.getCount()+1);
@@ -210,7 +214,6 @@ public class Pluto_StudentController {
     @RequestMapping("/biye")
     @ResponseBody
     public String setBiye(int Studid,HttpServletRequest request){
-         //System.out.println("shezhibiye");
         StudentVo studentVo = service.getStudentById(Studid);
         studentVo.setStat(5);
         service.updateStudent(studentVo);
@@ -243,17 +246,17 @@ public class Pluto_StudentController {
         StudentDormitoryVo s = service.getHourById(studentVo.getHuor());
         String sushe = s.getHuorName();
         List hList = service.getHourList("from StudentDormitoryVo");
-
+//        List hList = service.ListBySql("select * from studentHuor");
         model.addAttribute("hourname",sushe);
         model.addAttribute("ssList",hList);
         model.addAttribute("s",studentVo);
         return "student_pluto/updateHour";
     }
 
-    @RequestMapping("/addStu")
-    @ResponseBody
-    public String addStudent(StudentVo studentVo,String birt,String ents, HttpServletRequest request){
 
+    @RequestMapping("/addStu")
+    public String addStudent(StudentVo studentVo,String birt,String ents, HttpServletRequest request){
+        System.out.println(studentVo.toString());
         Date bd=null;
         Date ed=null;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -266,13 +269,17 @@ public class Pluto_StudentController {
         studentVo.setBirthday(bd);
         studentVo.setEntertime(ed);
 
-//        studentVo.setStuno(""+getRandom());
+        StudentDormitoryVo s = service.getHourById(studentVo.getHuor());
+//        System.out.println(s.toString());
+        s.setCount(s.getCount()+1);
+        service.updateHour(s);
 
         service.addStudent(studentVo);
         EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
         log.addLog(emp.getEmpId(),emp.getEmpName()+"新增了一个学生，学生名："+studentVo.getStuname());
-        return "1";
+        return "student_pluto/winAdd";
     }
+
 
     public int getRandom(){
         int id = 0;
@@ -288,11 +295,12 @@ public class Pluto_StudentController {
         return id;
     }
 
+
     @RequestMapping("/toAddStu")
     public String toAddStudentPage(Model model){
         List clist = service.getClassList("from StudentClassVo");
         List mList = service.getMajor("from MajorVo");
-        List hList = service.getHourList("from StudentDormitoryVo");
+        List hList = service.ListBySql("select * from studentHuor where `count`!= numberBeds");
         model.addAttribute("hList",hList);
         model.addAttribute("zyList",mList);
         model.addAttribute("classList",clist);
@@ -355,7 +363,7 @@ public class Pluto_StudentController {
     @RequestMapping("/toUpdateZx")
     public String toUpdateZx(int zid,Model model){
         StudentHappeningVo sh = service.getHappeningById(zid);
-         //System.out.println(sh.toString());
+         //
         StudentVo s = service.getStudentById(sh.getStuid());
         model.addAttribute("zx",sh);
         model.addAttribute("s",s);

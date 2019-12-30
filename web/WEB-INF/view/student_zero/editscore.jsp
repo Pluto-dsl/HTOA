@@ -88,10 +88,19 @@
                     var oldData = table.cache[layTableId];
                     for(var i=0, row; i < oldData.length; i++){
                         row = oldData[i];
-                        if (row.score==''){
+                        if (row.score==undefined){
                             layer.msg('请将所有学生的成绩补全后即可保存!')
                             return;
                         }
+                        if (row.score>100){
+                            layer.msg('学生成绩最高为100分,请核对后保存!')
+                            return;
+                        }
+                        if (row.Rescore>100){
+                            layer.msg('学生补考分数最高为100分,请核对后保存!')
+                            return;
+                        }
+
                     }
                     //验证通过后保存
                      for(var i=0, row; i < oldData.length; i++){

@@ -39,7 +39,7 @@
                 </td>
             </tr>
             <tr  style="height: 40px">
-                <td align="right">职务名称:</td>
+                <td align="right">职务:</td>
                 <td align="left">
                     <select id="post" name="postId" lay-verify="required" style="float: left;width:50px;">
                         <c:forEach var="p" items="${post}">
@@ -82,7 +82,7 @@
             <tr style="height: 40px">
                 <td align="right">手机号码:</td>
                 <td align="left">
-                    <input lay-verify="required|phone" autocomplete="off" onchange="judgePhone()" class="layui-input" type="text" id="phone" name="phone" value="" placeholder="请输入手机号"  style="float: left;width:200px;">
+                    <input lay-verify="required|phone" maxlength="11" autocomplete="off" onchange="judgePhone()" class="layui-input" type="text" id="phone" name="phone" value="" placeholder="请输入手机号"  style="float: left;width:200px;">
                     <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
                 </td>
                 <td align="right">QQ号码:</td>

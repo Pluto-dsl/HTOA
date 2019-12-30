@@ -20,12 +20,12 @@
                 <tr>
                     <td>班级类别名称:</td>
                     <td colspan="2">
-                        <input class="layui-input" name="classTypeName" lay-verify="required" autocomplete="off"  maxlength="16" placeholder="只能输入10字以内"/>
+                        <input class="layui-input" id="classTypeName" onchange="judge()" name="classTypeName" lay-verify="required" autocomplete="off"  maxlength="16" placeholder="只能输入10字以内"/>
                     </td>
                 </tr>
                 <tr align="center">
                    <td colspan="2">
-                       <button style="text-align: center;" class="layui-btn layui-btn-xs" type="submit" lay-submit  ><i class="layui-icon layui-icon-ok" ></i>添加</button>
+                       <button style="text-align: center;" class="layui-btn layui-btn-xs" type="submit" lay-submit  lay-filter="sub"><i class="layui-icon layui-icon-ok" ></i>添加</button>
                    </td>
                 </tr>
             </table>
@@ -39,7 +39,7 @@
                 <tr>
                     <td>班级类别名称:</td>
                     <td colspan="2">
-                        <input type="text" name="classTypeName" autocomplete="off" maxlength="16"/>
+                        <input type="text" name="classTypeName" id="classTypeName2" onchange="judge2()" autocomplete="off" maxlength="16"/>
                     </td>
                 </tr>
                 <tr align="center">
@@ -79,27 +79,13 @@
                 ,{fixed: 'right', width:300, title:'操作', align:'center', toolbar: '#barDemo'}
             ]]
             ,page:true,
-            limits:[5,10,15,25]
+            limits:[5,10,15,25,30,35,40,45,50]
         });
 
         //头工具栏事件
         table.on('toolbar(test)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id);
             var data =checkStatus.data;
-            /*$.ajax({
-                url: "${pageContext.request.contextPath}/student/addcate",
-                type: "post",
-                async:true,
-                dataType: "json",
-                data:{
-                    data:data.field
-                },
-                success: function (data) {
-                    if(data==0){
-                        layer.msg('有该班级类别,无法新增');
-                    }
-                }
-            });*/
             switch(obj.event){
                 case 'add':
                     layer.open({
@@ -168,8 +154,41 @@
             });
             form.render(null,'formTestFilter')
         }
-
-
     })
+
+    function judge() {
+        var name = $("#classTypeName").val();
+        $.ajax({
+                type: 'post',
+                url: "${pageContext.request.contextPath}/student/judgeCate", // ajax请求路径
+                dataType: "text",
+                data:{
+                    name:name
+                },
+                success: function(data){
+                    if(data==1){
+                        layer.msg("这个名字已经存在！")
+                        $("#classTypeName").val("");
+                    }
+                }
+            });
+    }
+    function judge2() {
+        var name = $("#classTypeName2").val();
+        $.ajax({
+            type: 'post',
+            url: "${pageContext.request.contextPath}/student/judgeCate", // ajax请求路径
+            dataType: "text",
+            data:{
+                name:name
+            },
+            success: function(data){
+                if(data==1){
+                    layer.msg("这个名字已经存在！")
+                    $("#classTypeName2").val("");
+                }
+            }
+        });
+    }
 </script>
 </html>

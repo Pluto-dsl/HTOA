@@ -40,7 +40,7 @@
                 </td>
             </tr>
             <tr  style="height: 40px">
-                <td align="right">职务名称:</td>
+                <td align="right">职务:</td>
                 <td align="left">
                     <select id="post" autocomplete="off" name="postId" lay-verify="required" style="float: left;width:50px;">
                         <c:forEach var="p" items="${post}">
@@ -84,7 +84,7 @@
             <tr style="height: 40px">
                 <td align="right">手机号码:</td>
                 <td align="left">
-                    <input lay-verify="required|phone" autocomplete="off" onchange="judgePhone()" class="layui-input" type="text" id="phone" name="phone" value="${emp.Phone}" placeholder="请输入手机号"  style="float: left;width:200px;">
+                    <input lay-verify="required|phone" maxlength="11" autocomplete="off" onchange="judgePhone()" class="layui-input" type="text" id="phone" name="phone" value="${emp.Phone}" placeholder="请输入手机号"  style="float: left;width:200px;">
                     <font style="color: red;float: left;margin-top: 5px">&nbsp;*必填</font>
                 </td>
                 <td align="right">QQ号码:</td>
@@ -158,7 +158,7 @@
                 </td>
                 <td align="right">支付宝号:</td>
                 <td align="left">
-                    <input class="layui-input" type="text" id="alipay"  name="alipay" value="${emp.alipay}" placeholder="请输入支付宝账号" style="width:200px;">
+                    <input class="layui-input" maxlength="15" type="text" id="alipay"  name="alipay" value="${emp.alipay}" placeholder="请输入支付宝账号" style="width:200px;">
                 </td>
             </tr>
 
@@ -177,7 +177,7 @@
             <tr style="height: 40px">
                 <td align="right">说明:</td>
                 <td align="left" colspan="3">
-                    <textarea maxlength="20" name="remark"  placeholder="请输入说明" class="layui-textarea"style="width:500px; height: 60px;" >${emp.Remark}</textarea>
+                    <textarea maxlength="20" name="remark"  placeholder="请输入说明" class="layui-textarea"style="width:500px; height: 60px;" >${emp.remark}</textarea>
                 </td>
             </tr>
             <tr style="height:90px">

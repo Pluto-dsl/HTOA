@@ -27,12 +27,12 @@
     </style>
 </head>
 <body>
-    <form lay-filter="formTestFilter" class="layui-form" action="<%=request.getContextPath()%>/student/addcollect/">
+    <form lay-filter="formTestFilter" method="post" class="layui-form" action="<%=request.getContextPath()%>/student/addcollect/">
         <div id="windows" style="display: none;height:95%;" >
             <input type="hidden" name="feedbackId" id="feedbackId" >
             <div style="background-color: #ffffff;height: 12%;width: 100%;border-bottom: solid 2px #de76b1;">
                 <span style="font-size: 20px;margin-right: 20px;float: right;margin-top: 5px;">发问人:<label id="stuname"></label></span>
-                <label style="float: right;margin-top: 40px; margin-right: -128px;" id="feedbackTime"></label>
+                <label style="float: right;margin-top: 40px; margin-right: -121px;" id="feedbackTime"></label>
                     <br>
                 <span style="font-size: 20px;margin-left: 20px;">问题:<label id="remark" class="ques" style="display:inline-block;width:25%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height: 30px;
     font-size: 15px;position: absolute;" ></label></span>
@@ -104,7 +104,7 @@
                 ,{fixed: '', width:163, title:'操作', align:'center', toolbar: '#barDemo'}
             ]]
             , page: true,
-            limits: [5, 10, 15, 25]
+            limits: [5,10,15,25,30,35,40,45,50]
         });
 
         //行工具栏
@@ -148,7 +148,7 @@
                     title:'提出意见',
                     skin: 'layui-layer-demo', //样式类名
                     closeBtn: 1, //不显示关闭按钮
-                    area: ['700px', '600px'],
+                    area: ['710px', '600px'],
                     fixed: false, //不固定
                     maxmin: true,
                     shadeClose: false, //开启遮罩关闭

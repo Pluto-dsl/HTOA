@@ -18,7 +18,7 @@
 </head>
 <body>
     <div>
-        <i class="layui-icon layui-icon-face-surprised" style="font-size: 600px; color: #1E9FFF;margin-left: 33%;"></i>
+        <i class="layui-icon layui-icon-face-surprised" style="font-size: 600px; color: #ff1721;margin-left: 33%;"></i>
 <%--        <i class="layui-icon-face-surprised"></i>--%>
         <br>
         <font style="font-size: 30px;margin-left: 40%;">

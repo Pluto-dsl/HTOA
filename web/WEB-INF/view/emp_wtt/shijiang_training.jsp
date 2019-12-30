@@ -124,7 +124,7 @@
                 ,{fixed: '', width:300, title:'操作', align:'center', toolbar: '#barDemo'}
             ]]
             ,page:true,
-            limits:[5,10,15,25]
+            limits:[5,10,15,25,30,35,40,45,50]
         });
 
         //头工具栏事件
@@ -192,8 +192,7 @@
             done: function (value) {
                 startdate=value;
             },
-            min:'1990-01-01',
-            max: s2,
+            min:s2,
             change: function(value, date, endDate){
                 var today =new Array('星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六');
                 var a = new Date(value);

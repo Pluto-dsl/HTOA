@@ -38,13 +38,13 @@
             <tr>
                 <th>开始时间：</th>
                 <td>
-                    <input autocomplete="off" lay-verify="required" type="text" class="layui-input" name="startTime" id="startDate" placeholder="选择开始时间">
+                    <input autocomplete="off"  lay-verify="required" type="text" class="layui-input" name="startTime" id="startDate" placeholder="选择开始时间">
                 </td>
             </tr>
             <tr>
                 <th>结束时间：</th>
                 <td>
-                    <input autocomplete="off" lay-verify="required" type="text" class="layui-input" name="endTime" id="endDate" placeholder="选择结束时间">
+                    <input autocomplete="off"  lay-verify="required" type="text" class="layui-input" name="endTime" id="endDate" placeholder="选择结束时间">
                 </td>
             </tr>
             <tr>
@@ -103,11 +103,11 @@
         //日期
         var day2 = new Date();
         day2.setTime(day2.getTime());
-        var s2 = day2.getFullYear()+"-" + (day2.getMonth()+1) + "-" + day2.getDate();
+        //var s2 = day2.getFullYear()+"-" + (day2.getMonth()+1) + "-" + day2.getDate();
         laydate.render({//开始时间
             elem: '#startDate',
             type: 'date',
-            min:s2,
+            //min:s2,
             done: function (value) {
                 startdate=value;
             }
@@ -116,18 +116,22 @@
         laydate.render({
             elem: '#endDate',
             type: 'date',
-            min:s2,
+            //min:s2,
             done: function (value) {
                 enddate = value;
                 var day = getDaysBetween(startdate,enddate);
                 day = Math.ceil(day)
-                document.getElementById("days").value=day;
+                if (isNaN(parseInt(day))) {
+                    document.getElementById("days").value= "";
+                } else{
+                    document.getElementById("days").value=day;
+                }
             }
         })
         function getDaysBetween(dateString1,dateString2){
             var  startDate = Date.parse(dateString1);
             var  endDate = Date.parse(dateString2);
-            var days=(endDate - startDate)/(1*24*60*60*1000);
+            var days=(endDate - startDate)/(1*24*60*60*1000)
             return  days;
         }
 
@@ -175,6 +179,10 @@
             var checkStatus = table.checkStatus(obj.config.id);
             switch(obj.event){
                 case 'add':
+                    if(${admin.empId}==1001){
+                        layer.msg("您都是老板了,还用请假吗!")
+                        return;
+                    }
                     win = layer.open({
                         type: 1,
                         title:'员工请假',
@@ -192,7 +200,6 @@
                     window.location.href="<%=request.getContextPath()%>/zeroLeave/mytask"
                     break;
                 case 'history'://历史任务
-
                     break;
             };
         });
@@ -207,7 +214,7 @@
         form.on('submit(Action)', function(data){
             //console.log(data.field);
             if(data.field.startTime>data.field.endTime){
-                layer.msg('请假开始时间不能大于结束时间!')
+                layer.msg('请假开始时间不能大于结束时间,请重新选择!')
                 return false;
             }
             layer.msg('正在提交,请稍后!')

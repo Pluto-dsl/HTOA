@@ -16,4 +16,5 @@ public interface EmpActivitiService {
     void updateholiday(HolidayVo holidayVo);//修改
     List<Map> mytask(int holidayid);//我的任务
     String isper(int depid,int empid);//是否部门负责人
+    String isper(int empid);//是否部门负责人
 }

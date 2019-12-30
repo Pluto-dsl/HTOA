@@ -184,10 +184,10 @@ public class Wtt_StuDuanController {
         Map map1 = wtt_stuDuanService.selectteacher(studentid);
         /*System.out.println(map1);*/
         int teacherid = (int) map1.get("teacher");
-        System.out.println("授课老师Id:"+teacherid);
+//        System.out.println("授课老师Id:"+teacherid);
         map.put("assignee",teacherid);
         //启动实例(通过流程定义的Key来启动一个实例)
-        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(studentLeaveVo.getTitle(),map);
+        ProcessInstance processInstance = runtimeService. startProcessInstanceByKey(studentLeaveVo.getTitle(),map);
         /* //System.out.println(studentLeaveVo.getTitle());*/
         //根据流程实例ID获取当前实例正在执行的任务
         Task task =taskService.createTaskQuery().processInstanceId(processInstance.getId()).orderByProcessInstanceId().desc().singleResult();
@@ -199,8 +199,6 @@ public class Wtt_StuDuanController {
     //查看我的批注
     @RequestMapping(value = "/pizhu/{id}")
     public String selectmypizhu(@PathVariable(value = "id") int id, Model model){
-        /* //System.out.println("Saaaaaaa");*/
-        /* //System.out.println("id:"+holidayid);*/
         //根据单据id查询历史变量对象
         HistoricVariableInstance historicVariableInstance = historyService.createHistoricVariableInstanceQuery().variableValueEquals("holidayid",id).singleResult();
         //查询历史批注
