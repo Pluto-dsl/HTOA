@@ -97,28 +97,20 @@ public class Zero_EmpActiviti {
         holidayVo.setHour((Integer.valueOf(day))*24+Integer.parseInt(hour));
         holidayVo.setRemark(Remark);
         holidayVo.setStatus(1);//状态 1:审批中 2：已完成 3：不批准
-        holidayVo.setEmpid(emp.getEmpId());//设置请假员工
-        String depperson = service.isper(emp.getDepId(),emp.getEmpId());//是否部门负责人
-        // //System.out.println("是否部门负责人"+depperson);
+        holidayVo.setEmpid(emp.getEmpId());//设置请假员工id
+        String depperson = service.isper(emp.getEmpId());//是否部门负责人
+        //System.out.println("是否部门负责人"+depperson);
         service.addLeave(holidayVo);//上传员工请假
         //设置流程实例变量集合
         Map<String,Object> variables = new HashMap<>();
         variables.put("userid",emp.getEmpId());//用户id
         variables.put("hour",holidayVo.getHour());//小时
-        //variables.put("depperson",depperson);//是否部门管理人
         variables.put("holiday",holidayVo.getHolidayid());//单据ID
 
-        if(emp.getEmpId()==1001){
-            PrintWriter out = response.getWriter();
-            out.print("yes");
-            out.flush();
-            out.close();
-            return;
-        }
 
         if(depperson.equals("yes")){//是部门负责人
             String id = service.assignDep(emp.getDepId());
-            //System.out.println("是部门负责人"+id);
+            ///System.out.println("是部门负责人"+id);
             variables.put("assignee",id);
         }else {//不是部门负责人
             //动态办理人 根据用户设置第一个办理人

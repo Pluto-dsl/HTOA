@@ -86,10 +86,12 @@
         <th>批注内容</th>
     </tr>
     <c:forEach items="${commentList}" var="t" varStatus="xh">
-        <td>${t.id }</td>
-        <td><fmt:formatDate timeStyle="yyyy年MM月dd日"  value="${t.time}"></fmt:formatDate></td>
-        <td>${username[xh.index]}</td>
-        <td>${t.fullMessage}</td>
+        <tr>
+            <td>${t.id }</td>
+            <td><fmt:formatDate timeStyle="yyyy年MM月dd日"  value="${t.time}"></fmt:formatDate></td>
+            <td>${username[xh.index]}</td>
+            <td>${t.fullMessage}</td>
+        </tr>
     </c:forEach>
 </table>
 </body>

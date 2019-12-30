@@ -38,13 +38,13 @@
             <tr>
                 <th>开始时间：</th>
                 <td>
-                    <input autocomplete="off" lay-verify="required" type="text" class="layui-input" name="startTime" id="startDate" placeholder="选择开始时间">
+                    <input autocomplete="off"  lay-verify="required" type="text" class="layui-input" name="startTime" id="startDate" placeholder="选择开始时间">
                 </td>
             </tr>
             <tr>
                 <th>结束时间：</th>
                 <td>
-                    <input autocomplete="off" lay-verify="required" type="text" class="layui-input" name="endTime" id="endDate" placeholder="选择结束时间">
+                    <input autocomplete="off"  lay-verify="required" type="text" class="layui-input" name="endTime" id="endDate" placeholder="选择结束时间">
                 </td>
             </tr>
             <tr>
@@ -179,6 +179,10 @@
             var checkStatus = table.checkStatus(obj.config.id);
             switch(obj.event){
                 case 'add':
+                    if(${admin.empId}==1001){
+                        layer.msg("您都是老板了,还用请假吗!")
+                        return;
+                    }
                     win = layer.open({
                         type: 1,
                         title:'员工请假',

@@ -229,18 +229,18 @@
                 <label class="layui-form-label">考核分数:</label>
                 <div class="layui-input-block">
                     <select id="feng" name="Scores">
-                        <c:if test="${end>0}">
+
                             <c:if test="${scores>0}">
                                 <c:forEach  begin="1" end="${scores}" varStatus="index">
                                     <option value="${index.count}">+${index.count}</option>
                                 </c:forEach>
                             </c:if>
                             <c:if test="${scores<0}">
-                                <c:forEach  begin="1" end="${scores}" varStatus="index">
+                                <c:forEach  begin="1" end="${-scores}" varStatus="index">
                                     <option value="-${index.count}">-${index.count}</option>
                                 </c:forEach>
                             </c:if>
-                        </c:if>
+
                     </select>
                 </div>
             </div>
