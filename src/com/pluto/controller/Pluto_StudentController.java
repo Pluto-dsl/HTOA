@@ -271,6 +271,7 @@ public class Pluto_StudentController {
         studentVo.setEntertime(ed);
 
         StudentDormitoryVo s = service.getHourById(studentVo.getHuor());
+        System.out.println(s.toString());
         s.setCount(s.getCount()+1);
         service.updateHour(s);
 
