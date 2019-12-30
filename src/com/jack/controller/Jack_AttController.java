@@ -49,9 +49,9 @@ public class Jack_AttController {
      * */
     @RequestMapping("/AttUpdata")
     public String AttUpdata(String eid,String state,String specification,HttpSession session){
-        System.out.println(state);
-        System.out.println(eid);
-        System.out.println(specification);
+//        System.out.println(state);
+//        System.out.println(eid);
+//        System.out.println(specification);
         AttendanceVo avo = new AttendanceVo();
         avo.setExamineTime(new Date());
         avo.setAttId(Integer.parseInt(eid));
@@ -77,7 +77,7 @@ public class Jack_AttController {
         json.put("msg","提示");
         json.put("code","0");
         json.put("data",list);
-        System.out.println(json.toJSONString());
+//        System.out.println(json.toJSONString());
         out.print(json);
         out.close();
 
@@ -90,17 +90,17 @@ public class Jack_AttController {
      * **/
     @RequestMapping("/Attadd")
     public String Attadd(HttpSession session,String punckClockTime,String cause,String timeing) throws ParseException {
-        System.out.println("进来了");
+//        System.out.println("进来了");
         EmpVo empVo = (EmpVo) session.getAttribute("admin");
         String ptime = punckClockTime +" "+ timeing;
 
-        System.out.println(ptime);
+//        System.out.println(ptime);
         //日期转换
         DateFormat format  = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date date = null;
         date = format.parse(ptime);
 
-        System.out.println(date+"--------");
+//        System.out.println(date+"--------");
         AttendanceVo attVo = new AttendanceVo();
         attVo.setEmpId(empVo.getEmpId());
         String Auditor = service.selDepChairman(empVo.getEmpId()); //查询审核人
@@ -141,9 +141,9 @@ public class Jack_AttController {
         int pageSize = Integer.parseInt(request.getParameter("limit"));
         EmpVo empVo = (EmpVo) session.getAttribute("admin");//获取当前登入的名称
         response.setContentType("text/html;charset=utf-8");
-        System.out.println(currPage+"----"+pageSize);
+//        System.out.println(currPage+"----"+pageSize);
         List list = service.selAtt(empVo.getEmpId(),currPage,pageSize);
-        System.out.println(empVo.getEmpId()+"当前用户id");
+//        System.out.println(empVo.getEmpId()+"当前用户id");
         int pageCount = service.selAttCount(empVo.getEmpId());
         PrintWriter out = response.getWriter();
         JSONObject json = new JSONObject();
@@ -151,7 +151,7 @@ public class Jack_AttController {
         json.put("code","0");
         json.put("data",list);
         json.put("count",pageCount);
-        System.out.println(json.toJSONString());
+//        System.out.println(json.toJSONString());
         out.print(json);
         out.close();
 

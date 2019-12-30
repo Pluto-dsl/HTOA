@@ -35,7 +35,7 @@ public class LoggingController {
         String sql = "select s.*,e.empName from systemLog s INNER JOIN emp e on s.empId = e.empId\n" +
                 " where s.optime BETWEEN '"+stime+"' and '"+etime+" 23:59:59'" +
                 " GROUP BY(s.logId) desc ";
-        System.out.println(sql);
+//        System.out.println(sql);
         if((stime!=null || !stime.equals("")) || (etime!=null || !etime.equals(""))){
             m = service.getLogData(sql,page,limit);
         }else {

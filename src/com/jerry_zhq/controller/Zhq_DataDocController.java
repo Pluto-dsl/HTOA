@@ -111,7 +111,7 @@ public class Zhq_DataDocController {
          //System.out.println("要下载的路径是"+dataDocVO1.getUrl());
         // 指定要下载的文件所在路径
         String path = dataDocVO1.getUrl();
-        System.out.println("获取到的路径是"+path);
+//        System.out.println("获取到的路径是"+path);
         // 创建该文件对象
         File file = new File(path);
 

@@ -42,7 +42,7 @@ public class Jack_Enrollment {
         int currPage = Integer.parseInt(request.getParameter("page"));
         int pageSize = Integer.parseInt(request.getParameter("limit"));
         response.setContentType("text/html;charset=utf-8");
-        System.out.println(currPage+"----"+pageSize);
+//        System.out.println(currPage+"----"+pageSize);
         List list = service.selEnrollmentList(currPage,pageSize);
         int pageCount = service.selEnrollmentCount();
         PrintWriter out = response.getWriter();
@@ -51,7 +51,7 @@ public class Jack_Enrollment {
         json.put("code","0");
         json.put("data",list);
         json.put("count",pageCount);
-        System.out.println(json.toJSONString());
+//        System.out.println(json.toJSONString());
         out.print(json);
         out.close();
     }
