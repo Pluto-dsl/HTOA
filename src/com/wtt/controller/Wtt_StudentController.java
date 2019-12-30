@@ -77,6 +77,10 @@ public class Wtt_StudentController {
             //根据任务id取得单据id
             Object sid = taskService.getVariable(task.getId(), "holidayid");
             //如果有任务进入判断里面
+            if(sid==null){
+                sid ="0";
+            }
+            //如果有任务进入判断里面
             if (studentService.studentleave(Integer.parseInt((sid + ""))).size() > 0) {
                 Map map = (Map) studentService.studentleave(Integer.parseInt((sid + ""))).get(0);
                 //任务Id
@@ -300,11 +304,21 @@ public class Wtt_StudentController {
         }
     }
 
+    @RequestMapping("/judgeCate")
+    @ResponseBody
+    public String judgeCate(String name){
+        System.out.println("进来了，name="+name);
+        int i = studentService.JudgeName(name);
+        //当该方法返回1说明数据重复
+        return ""+i;
+    }
+
     //新增班级类别
     @RequestMapping(value = "/addcate")
     public String addcate(ClassCategoryVo classCategoryVo, HttpSession session) {
+        System.out.println(classCategoryVo.getClassTypeName());
         EmpVo empVo = (EmpVo) session.getAttribute("admin");
-
+        /*Map map = studentService.classcate();*/
         studentService.addcategory(classCategoryVo);
         log.addLog(empVo.getEmpId(), empVo.getEmpName() + "新增了班级类别,班级类别是:" + classCategoryVo.getClassTypeName());
         return "redirect:/student/classCategory";
