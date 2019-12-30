@@ -17,7 +17,7 @@
     <jsp:include page="../include.jsp" />
 </head>
 <body>
-<form class="layui-form"  id="form1"  method="post">
+<form class="layui-form"  id="form1" action="${pageContext.request.contextPath}/controller/addUser" lay-filter="form1"  method="post">
 
     <table id="td" border="0" style="border-collapse:separate; border-spacing:20px;" align="center">
         <input type="hidden" name="characterId" id="characterId" value="0"/>
@@ -58,23 +58,28 @@
             });
 
 
-            form.on('submit(sub)', function(data){
-                var data = data.field;
-
+            form.on('submit(form1)', function(data){
+                // var data = data.field;
+                var name = $("#characterName").val();
                 $.ajax({
                     type: 'post',
                     url: "${pageContext.request.contextPath}/controller/addUser", // ajax请求路径
                     async:true,
                     dataType: "text",
-                    data:data,
+                    data:{
+                        characterName:name
+                    },
                     success: function(data){
                         document.getElementById("form1").reset();
                         layer.msg('新增成功！');
                     }
                 });
+                // document.getElementById("form1").reset();
+                // layer.msg('新增成功！');
                 window.parent.location.reload();
                 var index = parent.layer.getFrameIndex(window.name);
                 parent.layer.close(index);//关闭当前页
+                return false;
             })
         })
     </script>
