@@ -19,8 +19,8 @@
         <property name="password" value="${jdbc.password}"/>
 
         <!--连接池-->
-        <property name="maxPoolSize" value="50"/>      <!--最大连接数-->
-        <property name="minPoolSize" value="20"/>       <!--最小连接数-->
+        <property name="maxPoolSize" value="10"/>      <!--最大连接数-->
+        <property name="minPoolSize" value="5"/>       <!--最小连接数-->
         <property name="initialPoolSize" value="5"/>      <!--初始化连接池内的数据库连接-->
         <property name="maxIdleTime" value="20"/>  <!--最大空闲时间-->
     </bean>
@@ -41,15 +41,6 @@
                 <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>     <!--在控制台显示执行的数据哭操作语句（格式）-->
             </props>
         </property>
-
-
-
-        <!--引入映射文件
-        <property name="mappingResources">
-            <list>
-                <value>com/ht/vo/Emp.hbm.xml</value>
-            </list>
-        </property>-->
     </bean>
 
     <!-- 5、事物管理器配置  -->
