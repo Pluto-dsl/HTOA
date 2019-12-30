@@ -18,7 +18,7 @@
                 <td>新生姓名:</td>
                 <td><input type="text" name="studName" required lay-verify="required" placeholder="请输入新生姓名" autocomplete="off" class="layui-input"/></td>
                 <td>身份证:</td>
-                <td><input type="text" name="card" required lay-verify="identity" placeholder="请输入身份证" autocomplete="off" class="layui-input"/></td>
+                <td><input type="text" name="card" required lay-verify="identity" placeholder="请输入身份证" maxlength="18" autocomplete="off" class="layui-input"/></td>
             </tr>
             <tr align="center">
                 <td>性别:</td>
@@ -27,7 +27,7 @@
                     <input type="radio" name="sex" value="女" title="女" />
                 </td>
                 <td>手机号:</td>
-                <td><input type="text" name="tell" required lay-verify="phone" placeholder="请输入手机号" autocomplete="off" class="layui-input" /></td>
+                <td><input type="text" name="tell" required lay-verify="phone" placeholder="请输入手机号" maxlength="11" autocomplete="off" class="layui-input" /></td>
             </tr>
             <tr align="center">
                 <td>QQ账号:</td>

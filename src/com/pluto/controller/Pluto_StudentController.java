@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @Controller
 @RequestMapping("/student")
@@ -264,11 +265,27 @@ public class Pluto_StudentController {
         }
         studentVo.setBirthday(bd);
         studentVo.setEntertime(ed);
-         //System.out.println(studentVo.toString());
+
+//        studentVo.setStuno(""+getRandom());
+
         service.addStudent(studentVo);
         EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
         log.addLog(emp.getEmpId(),emp.getEmpName()+"新增了一个学生，学生名："+studentVo.getStuname());
         return "1";
+    }
+
+    public int getRandom(){
+        int id = 0;
+        do{
+            Random random = new Random();
+            int i = (int) (random.nextFloat()*1000000);
+            boolean flag = service.judgeStuId(i);
+            if(flag){
+                id=i;
+                break;
+            }
+        }while(true);
+        return id;
     }
 
     @RequestMapping("/toAddStu")
@@ -472,6 +489,16 @@ public class Pluto_StudentController {
         }else {
             return "0";
         }
+    }
+
+    @RequestMapping("/judgeCardid")
+    @ResponseBody
+    public String judgeCardid(String cardid){
+        boolean flag = service.judgeCardid(cardid);
+        if(flag){
+            return "1";
+        }
+        return "0";
     }
 
 }

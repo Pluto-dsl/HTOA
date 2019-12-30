@@ -87,7 +87,7 @@
     <div  id="swindow"  style="display: none;">
         <table id="student" lay-filter="test"></table>
     </div>
-    <!--新增班级-->
+    <!--新增修改班级-->
     <div  id="addclasswindows"  style="margin-left: 5%;display: none;">
         <form id="classform" action="<%=request.getContextPath()%>/zeroStudent/addClass" class="layui-form"  style="margin-right: 100px;margin-top: 35px;" method="post">
             <table style="border-collapse:separate; border-spacing:20px;margin-left: 73px;">
@@ -97,11 +97,11 @@
                         班级编号:
                     </td>
                     <td>
-                        <input placeholder="请输入班级编号" maxlength="10" class="layui-input" id="classno" type="text" name="classno"  lay-verify="required"  onkeyup="value=value.replace(/\D/g,'')" onafterpaste="value=value.replace(/\D/g,'')"/>
+                        <input onchange="rrcno()" autocomplete="off" placeholder="请输入班级编号" maxlength="10" class="layui-input" id="classno" type="text" name="classno"  lay-verify="required"  onkeyup="value=value.replace(/\D/g,'')" onafterpaste="value=value.replace(/\D/g,'')"/>
                     </td>
                     <td>班级名称:</td>
                     <td>
-                        <input placeholder="请输入班级名称" maxlength="20" autocomplete="off" class="layui-input" id="className" type="text" name="className"  lay-verify="required" οnkeyup="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5]/g,'')" οnpaste="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5]/g,'')" oncontextmenu = "value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5]/g,'')"/>
+                        <input onchange="rrcname()" autocomplete="off" placeholder="请输入班级名称" maxlength="20" autocomplete="off" class="layui-input" id="className" type="text" name="className"  lay-verify="required" οnkeyup="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5]/g,'')" οnpaste="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5]/g,'')" oncontextmenu = "value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5]/g,'')"/>
                     </td>
                 </tr>
                 <tr>
@@ -174,6 +174,8 @@
     </div>
 </body>
 <script>
+    var rcname="";
+    var rcno="";
     layui.use(['table', 'form'], function(){
         var form = layui.form;
         table = layui.table;
@@ -251,6 +253,8 @@
                     },"text")
                 });
             } else if(layEvent === 'edit'){ //修改
+                rcname = $("#className").val;
+                rcno= $("#classno").val;
                 layer.open({
                     type: 1,
                     title:'修改'+data.className+'的班级信息',
@@ -337,6 +341,30 @@
         $("#level").val(level);
         $("#grade").val(grade);
         $("#ctype").val(ctype);
+    }
+
+    function rrcname() {
+        let classname = $("#className").val();
+        if(classname!=rcname){
+            $.post("<%=request.getContextPath()%>/zeroStudent/rcname",{classname:classname},function (data) {
+                if(data=="1"){
+                    $("#className").val(rcname);
+                    layer.msg("已有此班级名称，请重新输入！")
+                }
+            },"text")
+        }
+    }
+
+    function rrcno() {
+        let classno = $("#classno").val();
+        if(classno!=rcno){
+            $.post("<%=request.getContextPath()%>/zeroStudent/rcno",{classno:classno},function (data) {
+                if(data=="1"){
+                    $("#classno").val(rcno);
+                    layer.msg("已有此班级编号，请重新输入！")
+                }
+            },"text")
+        }
     }
 </script>
 </html>

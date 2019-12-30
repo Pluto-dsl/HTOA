@@ -27,4 +27,6 @@ public interface StudentService {
     EnrollmentVo enStu(int sid);//查询学生
     MajorVo marjov(int marjorid);//专业
     List judgeLevel(String level);//是否有届别
+    Boolean RClassName(String classname);//是否有班级名称
+    Boolean RClassNo(String classno);//是否有班级编号
 }

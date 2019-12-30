@@ -238,4 +238,25 @@ public class Zero_StudentClass {
         log.addLog(emp.getEmpId(),emp.getEmpName()+"分配了学生到"+cid+"班级id,招生id"+sid);
         return "ok";
     }
+
+    @RequestMapping("/rcname")//班级名称是否重复
+    @ResponseBody
+    public String rcname(String classname){
+       if(service.RClassName(classname)){
+           return "1";
+       }else {
+           return "0";
+       }
+    }
+
+    @RequestMapping("/rcno")//班级编号是否重复
+    @ResponseBody
+    public String rcno(String classno){
+        if(service.RClassNo(classno)){
+            return "1";
+        }else {
+            return "0";
+        }
+    }
+
 }

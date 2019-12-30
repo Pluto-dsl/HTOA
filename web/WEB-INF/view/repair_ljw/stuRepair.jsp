@@ -75,7 +75,7 @@
                         if (d.status==='待处理'){
                             return '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
                         }else {
-                            return ''
+                            return '<button type="button" class="layui-btn layui-btn layui-btn-xs layui-btn-disabled" title="已处理的报修单不可删除">删除</button>'
                         }
                     }, width:80}
             ]]
@@ -116,6 +116,10 @@
             }
         })
     });
+    $("#MyForm").submit(function () {
+        $("button[type='submit']").addClass("layui-btn-disabled");
+        $("button[type='submit']").attr("disabled","disabled");
+    })
 </script>
 <script>
     function delRepair(id,tableIns) {

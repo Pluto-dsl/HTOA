@@ -50,5 +50,7 @@ public interface Pluto_StudentMsg {
     //查询员工，暂时
     EmpVo getemp(int id);
 
-    int judgePhone(String phone);
+    int judgePhone(String phone);//判断学生电话是否重复，或者跟老师的相同
+    boolean judgeStuId(int stuid);//判断学生学号是否重复
+    boolean judgeCardid(String cardid);//判断身份证号是否重复
 }

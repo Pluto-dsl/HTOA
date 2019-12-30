@@ -40,7 +40,7 @@
             </tr>
             <tr>
                 <td align="center" colspan="4">
-                    <button lay-submit lay-filter="Asubmit" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
+                    <button lay-submit lay-filter="Asubmit" id="Asubmit" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
                 </td>
             </tr>
         </table>
@@ -175,6 +175,10 @@
                 });
 
             }
+        });
+
+        $("#Asubmit").click(function () {
+            window.location.reload();
         });
 
         //考核添加

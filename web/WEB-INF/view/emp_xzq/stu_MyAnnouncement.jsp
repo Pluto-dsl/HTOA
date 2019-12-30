@@ -25,11 +25,23 @@
             overflow: hidden;
         }
         .layui-text h3 {
-            font-size: 18px;
+            font-size: 20px;
             color: #222;
+            margin-left: 20px;
         }
         #myTitle{
             color: #ff0000;
+        }
+        .layui-card-header {
+            position: relative;
+            height: 42px;
+            line-height: 42px;
+            padding: 0 15px;
+            border-top: solid;
+            border-bottom: 10px solid #f6f6f6;
+            color: #333;
+            border-radius: 2px 2px 0 0;
+            font-size: 14px;
         }
         li:hover{
             background-color: #EEE;
@@ -44,8 +56,10 @@
                 <div class="layui-card layadmin-serach-main">
                     <div class="layui-card-header">
                         <p style="font-size: 22px;color: #333;text-indent: 0em;">
-                            查询到<span id="count"></span>个结果
+                            查询到<span id="count"></span>个公告
+                            <span style="font-size: 12px;float: right;">未读取<span id="UnreadCount">14</span>条公告</span>
                         </p>
+
                     </div>
                     <div class="layui-card-body">
                         <ul class="layadmin-serach-list layui-text">
@@ -54,7 +68,7 @@
                                     <input type="hidden" class="noticeId" value="${list.noticeId}">
                                     <input type="hidden" class="isRead" value="${list.isRead}">
                                     <div class="layui-serachlist-text">
-                                        <h3 style="border-bottom:solid 1px #82828245;">
+                                        <h3 style="border-bottom:solid 1px #82828245;height: 30px;padding-top: 10px;">
                                             <span class="title">${list.title}</span>
                                             <c:if test="${list.isRead == 2}">
                                                 <i class="layui-icon layui-icon-notice" id="myTitle" style="margin-left:10px;"></i>
@@ -85,8 +99,9 @@
         count();
 
         function count(){
-            $.post('${pageContext.request.contextPath}/jack/MyAnno',{},function (data) {
+            $.post('${pageContext.request.contextPath}/jack/MyAnnoStu',{},function (data) {
                $("#count").text(data.count);
+               $("#UnreadCount").text(data.unreadStu);
             },'json');
         }
 
@@ -98,7 +113,10 @@
             if(isRead === '2'){
                 $.get('${pageContext.request.contextPath}/jack/MyAddRead',{noticeId:noticeId},function (da) {
                     layer.msg("已读取");
-                    window.location.reload()
+                    count();
+                    setTimeout(function () {
+                        window.location.reload();
+                    },900);
 
                 },"text");
             }
