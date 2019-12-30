@@ -300,7 +300,7 @@ public class Pluto_StudentController {
     public String toAddStudentPage(Model model){
         List clist = service.getClassList("from StudentClassVo");
         List mList = service.getMajor("from MajorVo");
-        List hList = service.getHourList("from StudentDormitoryVo");
+        List hList = service.ListBySql("select * from studentHuor where `count`!= numberBeds");
         model.addAttribute("hList",hList);
         model.addAttribute("zyList",mList);
         model.addAttribute("classList",clist);

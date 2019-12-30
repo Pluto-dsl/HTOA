@@ -84,7 +84,7 @@
                         <label class="label-top">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄:</label>
                     </td>
                     <td>
-                        <input class="layui-input" value=""  maxlength="3"  id="age" name="age"
+                        <input class="layui-input" value="" autocomplete="off" maxlength="3"  id="age" name="age"
                                style="width:290px;">
                     </td>
                 </tr>
@@ -213,7 +213,7 @@
 <%--                        <input  name="enrollno" id="enrollno" lay-verify="number" maxlength="20" onchange="judgeEnr()" autocomplete="off" class="layui-input" value="0"--%>
 <%--                                style="width:290px;">--%>
 <%--                    </td>--%>
-                    <input type="hidden" name="enrollno" value="0"/>
+                    <input type="hidden" id="enrollno" name="enrollno" value="0"/>
                     <td>
                         <label class="label-top">班&nbsp;级&nbsp;选&nbsp;择:&nbsp;</label>
                     </td>
