@@ -44,11 +44,11 @@
                 </div>
                 <label class="layui-form-label" style="width: 90px">员工姓名:</label>
                 <div class="layui-input-inline">
-                    <input class="layui-input" id="empName" name="empName" value=""/>
+                    <input class="layui-input" id="empName" maxlength="15" name="empName" value=""/>
                 </div>
                 <label class="layui-form-label" style="width: 90px">手机号码:</label>
                 <div class="layui-input-inline">
-                    <input class="layui-input"  name="Phone" id="Phone" value=""/>
+                    <input class="layui-input"  name="Phone" id="Phone" maxlength="11" value=""/>
                 </div>
                 <label class="layui-form-label">状态:</label>
                 <div class="layui-input-inline">

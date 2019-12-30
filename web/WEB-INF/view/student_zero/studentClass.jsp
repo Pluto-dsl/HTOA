@@ -174,10 +174,11 @@
     </div>
 </body>
 <script>
-    var rcname="";
-    var rcno="";
+    var rcname;
+    var rcno;
+    var from;
     layui.use(['table', 'form'], function(){
-        var form = layui.form;
+        form = layui.form;
         table = layui.table;
         //第一个实例
         table.render({
@@ -253,8 +254,8 @@
                     },"text")
                 });
             } else if(layEvent === 'edit'){ //修改
-                rcname = $("#className").val;
-                rcno= $("#classno").val;
+                rcname = data.className;
+                rcno= data.classNo;
                 layer.open({
                     type: 1,
                     title:'修改'+data.className+'的班级信息',
@@ -277,7 +278,6 @@
                         $("#remark").val(data.remark);
                         $("#deptName").val(data.deptId);
                         $("#majorName").val(data.majorId);
-
                         form.render();
                     },
                     cancel: function(index, layero){
@@ -294,6 +294,8 @@
             var checkStatus = table.checkStatus(obj.config.id);
             var data = checkStatus.data;
             if(obj.event=='add'){//添加班级
+                rcname="";
+                rcno="";
                 layer.open({
                     type: 1,
                     title: '新增班级',
@@ -345,9 +347,11 @@
 
     function rrcname() {
         let classname = $("#className").val();
+        console.log("rcname2"+rcname)
         if(classname!=rcname){
             $.post("<%=request.getContextPath()%>/zeroStudent/rcname",{classname:classname},function (data) {
                 if(data=="1"){
+                    $("#className").focus();
                     $("#className").val(rcname);
                     layer.msg("已有此班级名称，请重新输入！")
                 }
@@ -357,9 +361,11 @@
 
     function rrcno() {
         let classno = $("#classno").val();
+        console.log("rcno2"+rcno)
         if(classno!=rcno){
             $.post("<%=request.getContextPath()%>/zeroStudent/rcno",{classno:classno},function (data) {
                 if(data=="1"){
+                    $("#classno").focus();
                     $("#classno").val(rcno);
                     layer.msg("已有此班级编号，请重新输入！")
                 }
