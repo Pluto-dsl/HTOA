@@ -128,6 +128,16 @@ public class Wtt_StudentServiceImpl extends BaseDao implements Wtt_StudentServic
         return pageBySQL("select * from classType",currpage,pagesize);
     }
 
+    /*@Override
+    public String classtypename() {
+        String sql="select classTypeName from classType";
+        List<Map> list = listBySQL(sql);
+        for (Map map:list) {
+            return map.get("classTypeName").toString();
+        }
+        return null;
+    }*/
+
     @Override
     public void addcategory(ClassCategoryVo classCategoryVo) {
         addObject(classCategoryVo);
@@ -154,5 +164,17 @@ public class Wtt_StudentServiceImpl extends BaseDao implements Wtt_StudentServic
     @Override
     public void del(ClassCategoryVo classCategoryVo) {
         delObject(classCategoryVo);
+    }
+
+    @Override
+    public int JudgeName(String name) {
+        String sql = "select * from classType where classTypeName = '"+name+"'";
+        List list= super.listBySQL(sql);
+        int i = list.size();
+        //当该方法返回1说明有该数据
+        if(i>0){
+            return 1;
+        }
+        return 0;
     }
 }

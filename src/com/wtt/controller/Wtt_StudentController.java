@@ -77,6 +77,10 @@ public class Wtt_StudentController {
             //根据任务id取得单据id
             Object sid = taskService.getVariable(task.getId(), "holidayid");
             //如果有任务进入判断里面
+            if(sid==null){
+                sid ="0";
+            }
+            //如果有任务进入判断里面
             if (studentService.studentleave(Integer.parseInt((sid + ""))).size() > 0) {
                 Map map = (Map) studentService.studentleave(Integer.parseInt((sid + ""))).get(0);
                 //任务Id
@@ -183,9 +187,7 @@ public class Wtt_StudentController {
             Map studnetmap = studentService.studentid(id);
             int studentid = (int) studnetmap.get("Studid");
             Map map1 = wtt_stuDuanService.selectteacher(studentid);
-            /*System.out.println("班主任姓名："+map1);*/
             String names = (String) map1.get("classTeacher");
-            System.out.println("names");
             map.put("assignee", names);
         }
 
@@ -251,6 +253,7 @@ public class Wtt_StudentController {
     //新增意见
     @RequestMapping(value = "/addcollect")
     public String addcollect(Collect_OpinionsVo collect_opinionsVo, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws UnsupportedEncodingException {
+        request.setCharacterEncoding("utf-8");
         int id = Integer.parseInt(request.getParameter("feedbackId"));
         collect_opinionsVo.setWid(id);
         collect_opinionsVo.setPuttime(new Date());
@@ -258,7 +261,6 @@ public class Wtt_StudentController {
         EmpVo empVo = (EmpVo) session.getAttribute("admin");
         String username = empVo.getEmpName();
         collect_opinionsVo.setEmpname(username);
-        System.out.println(collect_opinionsVo.getContent());
         collect_opinionsVo.setContent(collect_opinionsVo.getContent());
         //根据问题反馈Id去查找数据
         FeedbackVo feedbackVo = studentService.feedbackvo(id);
@@ -300,11 +302,19 @@ public class Wtt_StudentController {
         }
     }
 
+    @RequestMapping("/judgeCate")
+    @ResponseBody
+    public String judgeCate(String name){
+        int i = studentService.JudgeName(name);
+        //当该方法返回1说明数据重复
+        return ""+i;
+    }
+
     //新增班级类别
     @RequestMapping(value = "/addcate")
     public String addcate(ClassCategoryVo classCategoryVo, HttpSession session) {
         EmpVo empVo = (EmpVo) session.getAttribute("admin");
-
+        /*Map map = studentService.classcate();*/
         studentService.addcategory(classCategoryVo);
         log.addLog(empVo.getEmpId(), empVo.getEmpName() + "新增了班级类别,班级类别是:" + classCategoryVo.getClassTypeName());
         return "redirect:/student/classCategory";

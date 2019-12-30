@@ -16,7 +16,7 @@
 <form class="layui-form" action="${pageContext.request.contextPath}/student/updateHour" id="form1" method="post">
 
     <table id="td" border="0" style="border-collapse:separate; border-spacing:20px;" align="center">
-        <input type="hidden" name="Studid" id="stuId" value="${s.studid}"/>
+        <input type="hidden" name="Studid" id="Studid" value="${s.studid}"/>
         <tr>
             <th colspan="4">
                 <font style="font-size: 25px;">
@@ -82,6 +82,7 @@
                 var index = parent.layer.getFrameIndex(window.name);
                 parent.layer.close(index);//关闭当前页
             })
+            return false;
         })
     </script>
 </form>

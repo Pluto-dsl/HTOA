@@ -192,8 +192,7 @@
             done: function (value) {
                 startdate=value;
             },
-            min:'1990-01-01',
-            max: s2,
+            min:s2,
             change: function(value, date, endDate){
                 var today =new Array('星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六');
                 var a = new Date(value);
