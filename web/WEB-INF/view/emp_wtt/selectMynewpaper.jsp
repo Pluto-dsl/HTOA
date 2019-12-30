@@ -101,7 +101,7 @@
                 ,{fixed: 'right', width:300, title:'操作', align:'center', toolbar: '#barDemo'}
             ]]
             ,page:true,
-            limits:[5,10,15,25]
+            limits:[5,10,15,25,30,35,40,45,50]
         });
 
         //头工具栏事件
@@ -206,7 +206,7 @@
                 /*startdate=value;*/
                 if($.trim(value) == ''){
                     var curDate = new Date();
-                    date = {'date': curDate.getDate(), 'month': curDate.getMonth()+1, 'year': curDate.getFullYear()};
+                    date = {'date': curDate.getDat-e(), 'month': curDate.getMonth()+1, 'year': curDate.getFullYear()};
                 }
                 start.config.max = date;
                 start.config.max.month = date.month -1;

@@ -104,7 +104,7 @@
                 ,{fixed: '', width:163, title:'操作', align:'center', toolbar: '#barDemo'}
             ]]
             , page: true,
-            limits: [5, 10, 15, 25]
+            limits: [5,10,15,25,30,35,40,45,50]
         });
 
         //行工具栏

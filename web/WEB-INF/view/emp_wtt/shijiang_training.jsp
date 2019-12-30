@@ -124,7 +124,7 @@
                 ,{fixed: '', width:300, title:'操作', align:'center', toolbar: '#barDemo'}
             ]]
             ,page:true,
-            limits:[5,10,15,25]
+            limits:[5,10,15,25,30,35,40,45,50]
         });
 
         //头工具栏事件
