@@ -96,6 +96,18 @@ public class Wtt_StudentServiceImpl extends BaseDao implements Wtt_StudentServic
 
     @Override
     public String chairman(int empid) {
+        String sql = "select d.personnel from emp e\n" +
+                "left join dep d on e.depId = d.depid\n" +
+                "where e.empId = '"+empid+"'";
+        List<Map> list1 = listBySQL(sql);
+        for (Map map:list1) {
+            return map.get("personnel").toString();
+        }
+        return null;
+    }
+
+    /*@Override
+    public String chairman(int empid) {
         String sql = "select d.chairman from emp e\n" +
                 "left join dep d on e.depId = d.depid\n" +
                 "where e.empId = '"+empid+"'";
@@ -104,7 +116,7 @@ public class Wtt_StudentServiceImpl extends BaseDao implements Wtt_StudentServic
             return map.get("chairman").toString();
         }
         return null;
-    }
+    }*/
 
     @Override
     public Map studentid(int jobid) {

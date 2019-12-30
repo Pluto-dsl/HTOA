@@ -18,12 +18,12 @@
     </style>
 </head>
 <body>
-<form class="layui-form" action="${pageContext.request.contextPath}/student/updateStu" id="form1" method="post">
+<form class="layui-form" action="${pageContext.request.contextPath}/student/updateStu" id="form1" lay-filter="sub" method="post">
     <table id="td" border="0" style="border-collapse:separate; border-spacing:20px;" align="center">
         <input type="hidden" name="Studid" id="stuId" value="${s.studid}"/>
         <input type="hidden" name="password" value="${s.password}"/>
         <input type="hidden" name="oldss" value="${s.huor}"/>
-        <input type="hidden" name="huor" id="huor">
+<%--        <input type="hidden" name="huor" id="huor">--%>
         <tr>
             <th colspan="4">
                 <font style="font-size: 25px;">
@@ -160,7 +160,7 @@
                 <label class="label-top">修&nbsp;改&nbsp;宿&nbsp;舍:</label>
             </td>
             <td>
-                <select class="layui-form-label" name="huora" id="huora" editable="false" ditable="false" style="width:290px;">
+                <select class="layui-form-label" name="huor" id="huor" editable="false" ditable="false" style="width:290px;">
                     <c:forEach items="${ssList}" var="ss" >
                         <option value="${ss.hourid}" <c:if test="${s.huor == ss.hourid}">selected="selected"</c:if>>${ss.huorName}</option>
                     </c:forEach>
@@ -235,30 +235,6 @@
                         style="width:290px;">
             </td>
         </tr>
-        <%--            <tr style="height: 40px">--%>
-        <%--                <td>--%>
-        <%--                    <label class="label-top">是&nbsp;否&nbsp;中&nbsp;专:</label>--%>
-        <%--                </td>--%>
-        <%--                <td>--%>
-        <%--                    <select class="layui-form-label" onchange="judgeSchool()" name="isvocational" id="isvocational" editable="false" value="1" ditable="false"--%>
-        <%--                            style="width:290px;">--%>
-        <%--                        <option value="1" <c:if test="${s.isvocational == 1}">selected="selected"</c:if>>是</option>--%>
-        <%--                        <option value="2" <c:if test="${s.isvocational == 2}">selected="selected"</c:if>>否</option>--%>
-        <%--                    </select>--%>
-        <%--                </td>--%>
-        <%--                <td>--%>
-        <%--                    <label class="label-top">中专学校:</label>--%>
-        <%--                </td>--%>
-        <%--                <td>--%>
-        <%--                    <input  name="vocationalsch"  maxlength="10" disabled="disabled" autocomplete="off" id="vocationalsch" class="layui-input" value="${s.vocationalsch}"--%>
-        <%--                            style="width:290px;">--%>
-        <%--                </td>--%>
-        <%--            </tr>--%>
-
-        <ul>
-            <li></li>
-        </ul>
-
         <tr style="height: 40px">
             <td>
                 <label class="label-top">中&nbsp;专&nbsp;学&nbsp;籍:</label>
@@ -274,7 +250,7 @@
                 <label class="label-top">省录取号:</label>
             </td>
             <td>
-                <input  name="enrollno"  maxlength="20"  id="enrollno" autocomplete="off" class="layui-input" value="${s.enrollno}"
+                <input  name="enrollno"  maxlength="20" lay-verify="number" id="enrollno" autocomplete="off" class="layui-input" value="${s.enrollno}"
                         style="width:290px;">
             </td>
         </tr>
@@ -470,7 +446,8 @@
 
             //新增教育背景
             form.on('submit(sub)', function(data){
-                $("#huor").val(data.field.huora)
+                // console.log(data);
+                // $("#huor").val(data.field.huora);
                 <%--$.ajax({--%>
                 <%--    type: 'post',--%>
                 <%--    url: "${pageContext.request.contextPath}/student/updateStu", // ajax请求路径--%>
@@ -481,14 +458,16 @@
                 <%--        document.getElementById("form1").reset();--%>
                 <%--    }--%>
                 <%--});--%>
-                document.getElementById("form1").reset();
+                // document.getElementById("form1").reset();
                 parent.location.reload();//刷新父页面，注意一定要在关闭当前iframe层之前执行刷新
                 // window.parent.location.reload();
-                var index = parent.layer.getFrameIndex(window.name);
-                parent.layer.close(index);//关闭当前页
+                // var index = parent.layer.getFrameIndex(window.name);
+                // parent.layer.close(index);//关闭当前页
                 // return false;
+                return true;
+
             })
-        })
+        });
 
         function judgePhone() {
             var phone = $("#phone").val();

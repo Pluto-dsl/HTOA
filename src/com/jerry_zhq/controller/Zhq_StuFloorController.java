@@ -25,6 +25,10 @@ public class Zhq_StuFloorController {
     @Resource
     private LoggingService log;
 
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
 
     @RequestMapping("/stuFloor")
     public String stuFloor(){
