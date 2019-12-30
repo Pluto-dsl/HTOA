@@ -26,8 +26,7 @@
             <tr bgcolor="white">
                 <td>${list.id}</td>
                 <td>
-                        <%--${list.time}--%>
-                    <fmt:formatDate value="${list.time}" type="both"></fmt:formatDate>
+                    <fmt:formatDate value="${list.time}" type="time"></fmt:formatDate>
                 </td>
                 <td>
                         ${list.userId}

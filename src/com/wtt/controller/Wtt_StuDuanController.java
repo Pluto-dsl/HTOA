@@ -199,8 +199,6 @@ public class Wtt_StuDuanController {
     //查看我的批注
     @RequestMapping(value = "/pizhu/{id}")
     public String selectmypizhu(@PathVariable(value = "id") int id, Model model){
-        /* //System.out.println("Saaaaaaa");*/
-        /* //System.out.println("id:"+holidayid);*/
         //根据单据id查询历史变量对象
         HistoricVariableInstance historicVariableInstance = historyService.createHistoricVariableInstanceQuery().variableValueEquals("holidayid",id).singleResult();
         //查询历史批注
