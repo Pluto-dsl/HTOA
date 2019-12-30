@@ -14,7 +14,8 @@ public interface Zhq_StuFloorService {
     int selCount();
 
     //删除
-    void deleteStuBiu(StudntBuildingVo studntBuildingVoId);
+    void
+    deleteStuBiu(StudntBuildingVo studntBuildingVoId);
 
     //添加
     void  addStuBiu(StudntBuildingVo studntBuildingVo);

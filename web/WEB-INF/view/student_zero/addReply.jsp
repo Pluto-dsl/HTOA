@@ -92,8 +92,8 @@
                             layer.msg('功能完善分最高为50!请重新输输入!')
                             return;
                         }
-                        if (row.score2>20||row.score3>20||row.score4>20||row.score5>20||row.score6>20){
-                            layer.msg('技术难度,界面完美,回答问题,演示方法,语言表达中每个最高为20分!请重新输输入!')
+                        if (row.score2>10||row.score3>10||row.score4>10||row.score5>10||row.score6>10){
+                            layer.msg('技术难度,界面完美,回答问题,演示方法,语言表达中每个最高为10分!请重新输输入!')
                             return;
                         }
                     }

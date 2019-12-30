@@ -33,19 +33,19 @@
             <tr>
                 <th>开始时间:</th>
                 <td>
-                    <input type="text" id="startTime" class="layui-input" name="startTime" autocomplete="off" lay-verify="required">
+                    <input type="text" id="startDate" class="layui-input" name="startTime" autocomplete="off" lay-verify="required">
                 </td>
             </tr>
             <tr>
                 <th>结束时间:</th>
                 <td>
-                    <input type="text" id="endTime" class="layui-input" name="endTime" autocomplete="off" lay-verify="required">
+                    <input type="text" id="endDate" class="layui-input" name="endTime" autocomplete="off" lay-verify="required">
                 </td>
             </tr>
             <tr>
                 <th>请假天数:</th>
                 <td>
-                    <input type="text" class="layui-input" id="holidayDay"  autocomplete="off" d<%--isabled="disabled"--%>>
+                    <input type="text" class="layui-input" id="holidayDay"  autocomplete="off" disabled="disabled">
                     <input type="hidden" id="holiday" name="holidayDay">
                 </td>
             </tr>
@@ -86,6 +86,38 @@
         var laypage = layui.laypage;
         var laydate = layui.laydate;
         var $ = layui.jquery;
+
+        //时间选择器
+        laydate.render({
+            elem: '#startDate',
+            type: 'datetime',
+            format:'yyyy/MM/dd',
+            done: function (date,value) {
+                startdate=date;
+            }
+        })
+
+        //时间选择器
+        laydate.render({
+            elem: '#endDate',
+            type: 'datetime',
+            format:'yyyy/MM/dd',
+            done: function (date,value) {
+                var day = getDays(startdate,date);
+                day = Math.ceil(day);
+                document.getElementById("holidayDay").value=day;
+                document.getElementById("holiday").value=day;
+            }
+        });
+
+        //开始时间和结束时间的天数
+        function getDays(startTime,endTime){
+            var startDate = Date.parse(startTime);
+            var  endDate = Date.parse(endTime);
+            var days=(endDate - startDate)/(1*24*60*60*1000);
+            return days;
+        }
+
         table.render({
             elem:'#test',
             height:500,
@@ -136,40 +168,7 @@
             }
         });
 
-
-        //时间选择器
-        var start = laydate.render({
-            elem: '#startTime',
-            type: 'date',
-            done: function (date,value) {
-                startdate=value;
-            }
-        })
-
-        //时间选择器
-       var end = laydate.render({
-            elem: '#endTime',
-            type: 'date',
-           done: function (date,value) {
-               startdate=value;
-               var day = getDays(startdate,enddate);
-               day = Math.ceil(day);
-               alert(day)
-           }
-        });
     })
-    //开始时间和结束时间的天数
-    function getDays(startDate,endDate){
-        //根据年、月、日的值创建Date对象
-        var date1Obj = new Date(startDate[0],(startDate[1]-1),startDate[2]);
-        var date2Obj = new Date(endDate[0],(endDate[1]-1),endDate[2]);
-        var t1 = date1Obj.getTime();//返回从1970-1-1开始计算到Date对象中的时间之间的毫秒数
-        var t2 = date2Obj.getTime();//返回从1970-1-1开始计算到Date对象中的时间之间的毫秒数
-        var datetime=1000*60*60*24; //一天时间的毫秒值
-        var minusDays = Math.floor(((t2-t1)/datetime));//计算出两个日期天数差
-        var days = Math.abs(minusDays);//如果结果为负数，取绝对值
-        return days;
-    }
 
     $("#tijiao").click(function () {
         var startTime = $('input[name="startTime"]').val();

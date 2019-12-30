@@ -27,11 +27,12 @@ public interface Ljw_sysSetService {
     String delMajor(int id);//删除专业
 
     /*
-     * 院系设置
+     * 学期设置
      * */
     List<TermVo> selTermList(int page, int limit);//获取院系数据
     int selTermSize();//获取院系数据大小
     void insTerm(TermVo vo);//新增院系
     void updTerm(TermVo vo);//修改院系
     String delTerm(int id);//删除院系
+    int selTermName(String termName);
 }

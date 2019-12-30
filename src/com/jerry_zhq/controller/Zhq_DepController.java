@@ -175,14 +175,20 @@ public class Zhq_DepController {
     @ResponseBody
     public String delDept(HttpServletRequest request,HttpSession session){
         int depId = Integer.valueOf(request.getParameter("depId"));
-        DepVo depVo1 = new DepVo();
-        depVo1.setDepid(depId);
-        zhqDepService.deleteDep(depVo1);
+
+        int i =zhqDepService.selDepEmp(depId);
+        if(i>0){
+            return "0";
+        }else {
+            DepVo depVo1 = new DepVo();
+            depVo1.setDepid(depId);
+            zhqDepService.deleteDep(depVo1);
+            EmpVo empVo = (EmpVo) session.getAttribute("admin");
+            log.addLog(empVo.getEmpId(),empVo.getEmpName()+"删除了部门");
+            return "1";
+        }
 
 
-        EmpVo empVo = (EmpVo) session.getAttribute("admin");
-        log.addLog(empVo.getEmpId(),empVo.getEmpName()+"删除了部门");
-        return "success";
     }
 
 

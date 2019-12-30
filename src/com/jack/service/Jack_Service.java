@@ -97,6 +97,7 @@ public interface Jack_Service {
     /** 学生公告 */
     List selNoticeList(int id);
     int selNoticeCount(int id);
+    int selUnreadCountStu(int id);
     void UpdateRead(int stuid, int notid);
 
     /** 员工公告 */
@@ -123,5 +124,12 @@ public interface Jack_Service {
     int falseCount(int noticeId);
     //根据查询出来的已读未读人数修改Notice表中的已读未读人数
     void updateCountNotice(int trueCount,int falseCount,int noticeId);
+
+    //根据公告id查询已读的人数
+    int trueCountStu(int noticeId);
+    //根据公告id查询未读的人数
+    int falseCountStu(int noticeId);
+    //根据查询出来的已读未读人数修改Notice表中的已读未读人数
+    void updateCountNoticeStu(int trueCount,int falseCount,int noticeId);
 
 }

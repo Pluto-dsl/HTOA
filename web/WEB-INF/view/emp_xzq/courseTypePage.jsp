@@ -27,7 +27,7 @@
             </tr>
             <tr>
                 <td align="center" colspan="2">
-                    <button lay-submit lay-filter="Csubmit" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
+                    <button lay-submit lay-filter="Csubmit" id="Csubmit" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
                 </td>
             </tr>
         </table>
@@ -49,7 +49,7 @@
             </tr>
             <tr>
                 <td align="center" colspan="2">
-                    <button lay-submit lay-filter="Esubmit"  class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
+                    <button lay-submit lay-filter="Esubmit" class="layui-btn layui-btn-warm" type="submit" ><i class="layui-icon layui-icon-ok" ></i>提交</button>
                 </td>
             </tr>
         </table>
@@ -116,6 +116,10 @@
                     return false;
                 }
             });
+        });
+
+        $("#Csubmit").click(function () {
+            window.location.reload();
         });
 
         //post提交添加
