@@ -344,13 +344,15 @@ public class Jack_Evaluation {
         model.addAttribute("list",list);
         return "emp_xzq/stu_MyAnnouncement";
     }
-    @RequestMapping(value = "/MyAnno")
+    @RequestMapping(value = "/MyAnnoStu")
     @ResponseBody
     public Map MyAnno(HttpSession session){
         Map map = new HashMap();
         StudentVo stu = (StudentVo) session.getAttribute("user");
         int count = service.selNoticeCount(stu.getStudid());
+        int unreadStu = service.selUnreadCountStu(stu.getStudid());
         map.put("count",count);
+        map.put("unreadStu",unreadStu);
         return map;
     }
     @RequestMapping(value = "/MyAddRead")
@@ -358,6 +360,11 @@ public class Jack_Evaluation {
     public String MyAnno(String noticeId,HttpSession session,HttpServletResponse response){
         StudentVo stu = (StudentVo) session.getAttribute("user");
         service.UpdateRead(stu.getStudid(),Integer.parseInt(noticeId));
+
+        int trueCount = service.trueCountStu(Integer.parseInt(noticeId));//查询已读
+        int falseCount =service.falseCountStu(Integer.parseInt(noticeId));//查询未读
+        service.updateCountNoticeStu(trueCount,falseCount,Integer.parseInt(noticeId));//更改已读未读状态
+
         return noticeId;
     }
 
@@ -383,6 +390,7 @@ public class Jack_Evaluation {
 
         return map;
     }
+
     @RequestMapping(value = "/MyAddReadEmp")
     @ResponseBody
     public String MyAddReadEmp(String noticeId,HttpSession session,HttpServletResponse response){

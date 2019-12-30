@@ -77,7 +77,7 @@
                         <li class="readWin">
                             <div class="layui-serachlist-text">
                                 <h3 class="top" style="border-bottom: solid 1px #82828245;height: 25px;">
-                                    <span class="title" style="margin-left: 10px;">${list.title}</span>
+                                    <span class="title" style="margin-left: 10px;margin-left: 10px;float: left;width: 45%;overflow: hidden;white-space: pre;text-overflow: ellipsis;">${list.title}</span>
                                     <c:if test="${list.isRead == 2}">
                                         <i class="layui-icon layui-icon-notice" id="myTitle" style="margin-left:10px;"></i>
                                     </c:if>

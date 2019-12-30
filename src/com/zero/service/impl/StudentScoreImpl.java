@@ -132,7 +132,7 @@ public class StudentScoreImpl extends BaseDao implements StudentScoreService {
     public List<Map> stu(int classid) {
         return super.listBySQL("select s.Studid,s.stuno,s.stuname,sc.className from student s" +
                 " left join studentClass sc on sc.classId = s.clazz " +
-                " where s.clazz = "+classid);
+                " where s.stat != 6 and s.clazz = "+classid);
     }
 
     @Override

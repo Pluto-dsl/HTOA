@@ -42,7 +42,6 @@ public interface Wtt_StudentService {
     List selclassteacher(String sql);
     //查询班级类别
     List<ClassCategoryVo> selectclasscate(int currpage, int pagesize);
-   /* ClassCategoryVo classcategoryvo();*/
     //新增班级类别
     void addcategory(ClassCategoryVo classCategoryVo);
     //修改班级类别
@@ -53,4 +52,5 @@ public interface Wtt_StudentService {
     List<StudentClassVo> list(int classtypeid);
     //删除班级类别
     void del(ClassCategoryVo classCategoryVo);
+    int JudgeName(String name);//查询数据库有没有该名字
 }

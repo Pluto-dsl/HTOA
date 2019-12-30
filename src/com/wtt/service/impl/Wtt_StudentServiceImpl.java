@@ -96,6 +96,18 @@ public class Wtt_StudentServiceImpl extends BaseDao implements Wtt_StudentServic
 
     @Override
     public String chairman(int empid) {
+        String sql = "select d.personnel from emp e\n" +
+                "left join dep d on e.depId = d.depid\n" +
+                "where e.empId = '"+empid+"'";
+        List<Map> list1 = listBySQL(sql);
+        for (Map map:list1) {
+            return map.get("personnel").toString();
+        }
+        return null;
+    }
+
+    /*@Override
+    public String chairman(int empid) {
         String sql = "select d.chairman from emp e\n" +
                 "left join dep d on e.depId = d.depid\n" +
                 "where e.empId = '"+empid+"'";
@@ -104,7 +116,7 @@ public class Wtt_StudentServiceImpl extends BaseDao implements Wtt_StudentServic
             return map.get("chairman").toString();
         }
         return null;
-    }
+    }*/
 
     @Override
     public Map studentid(int jobid) {
@@ -127,6 +139,16 @@ public class Wtt_StudentServiceImpl extends BaseDao implements Wtt_StudentServic
     public List<ClassCategoryVo> selectclasscate(int currpage, int pagesize) {
         return pageBySQL("select * from classType",currpage,pagesize);
     }
+
+    /*@Override
+    public String classtypename() {
+        String sql="select classTypeName from classType";
+        List<Map> list = listBySQL(sql);
+        for (Map map:list) {
+            return map.get("classTypeName").toString();
+        }
+        return null;
+    }*/
 
     @Override
     public void addcategory(ClassCategoryVo classCategoryVo) {
@@ -154,5 +176,17 @@ public class Wtt_StudentServiceImpl extends BaseDao implements Wtt_StudentServic
     @Override
     public void del(ClassCategoryVo classCategoryVo) {
         delObject(classCategoryVo);
+    }
+
+    @Override
+    public int JudgeName(String name) {
+        String sql = "select * from classType where classTypeName = '"+name+"'";
+        List list= super.listBySQL(sql);
+        int i = list.size();
+        //当该方法返回1说明有该数据
+        if(i>0){
+            return 1;
+        }
+        return 0;
     }
 }

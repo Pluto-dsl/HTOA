@@ -78,9 +78,9 @@
                 ,{field:'testTime',templet:function (d){return createTime(d.startTime);}, title:'试学时间', width:120}
                 ,{field:'enrollMoneyTime',templet:function (d){return createTime(d.startTime);}, title:'发放时间', width:120}
                 ,{field:'signdate',templet:function (d){return createTime(d.signdate);}, title:'录入时间', width:120}
-                ,{field:'empid', title:'录入人', width:120}
+                ,{field:'empName', title:'录入人', width:120}
                 ,{field:'statusName', title:'学生状态', width:120}
-                ,{field:'remark', title:'员工姓名', width:120}
+                ,{field:'remark', title:'学生备注', width:120}
                 ,{field:'score', title:'学习成绩', width:120}
                 ,{field:'enrollMoneyTime',templet:function (d){return createTime(d.enrollMoneyTime);}, title:'发放时间', width:120}
                 ,{field:'reviewStatus', title:'报名费状态', width:120}

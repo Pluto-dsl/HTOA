@@ -82,6 +82,7 @@
         var form = layui.form;
         var laypage = layui.laypage;
         var laydate = layui.laydate;
+        var $ = layui.jquery;
         var table_overloading =  table.render({
             elem:'#test',
             height:500,
@@ -185,21 +186,30 @@
         }
 
         //时间选择器
-        laydate.render({
+        var start = laydate.render({
             elem: '#startTime',
             type: 'datetime',
             format:'yyyy/MM/dd',
-            done: function (value) {
-                startdate=value;
+            done: function (value,date) {
+                /*startdate=value;*/
+                endMax = end.config.max;
+                end.config.min = date;
+                end.config.min.month = date.month -1;
             }
         });
         //时间选择器
-        laydate.render({
+        var end = laydate.render({
             elem: '#endTime',
             type: 'datetime',
             format:'yyyy/MM/dd',
-            done: function (value) {
-                startdate=value;
+            done: function (value,date) {
+                /*startdate=value;*/
+                if($.trim(value) == ''){
+                    var curDate = new Date();
+                    date = {'date': curDate.getDate(), 'month': curDate.getMonth()+1, 'year': curDate.getFullYear()};
+                }
+                start.config.max = date;
+                start.config.max.month = date.month -1;
             }
         });
 
