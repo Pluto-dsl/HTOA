@@ -187,7 +187,7 @@ public class Wtt_StuDuanController {
         System.out.println("授课老师Id:"+teacherid);
         map.put("assignee",teacherid);
         //启动实例(通过流程定义的Key来启动一个实例)
-        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(studentLeaveVo.getTitle(),map);
+        ProcessInstance processInstance = runtimeService. startProcessInstanceByKey(studentLeaveVo.getTitle(),map);
         /* //System.out.println(studentLeaveVo.getTitle());*/
         //根据流程实例ID获取当前实例正在执行的任务
         Task task =taskService.createTaskQuery().processInstanceId(processInstance.getId()).orderByProcessInstanceId().desc().singleResult();

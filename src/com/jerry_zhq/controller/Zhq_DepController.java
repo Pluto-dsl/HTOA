@@ -177,8 +177,6 @@ public class Zhq_DepController {
         int depId = Integer.valueOf(request.getParameter("depId"));
 
         int i =zhqDepService.selDepEmp(depId);
-        System.out.println(i);
-        i = i-1;
         if(i>0){
             return "0";
         }else {
