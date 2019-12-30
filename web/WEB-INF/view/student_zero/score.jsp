@@ -72,6 +72,12 @@
 <div  id="addscore"  style="margin-left: 5%;display: none;">
     <form id="scoreform" class="layui-form"  style="margin-right: 100px;margin-top: 35px;" method="post">
         <div class="layui-form-item">
+            <label class="layui-form-label">考试时间:</label>
+            <div  class="layui-input-block">
+                <input lay-verify="required|date" id="scoreTime" name="scoreTime" value="" class="layui-input" type="text" placeholder="请选择考试时间"  autocomplete="off"  editable="false"  style="width:265px;">
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">班级名称:</label>
             <div  class="layui-input-block">
                 <select  name="classid" id ="classid" style="width:290px;">
@@ -109,12 +115,6 @@
                         <option value="${t.termid}">${t.termName}</option>
                     </c:forEach>
                 </select>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">考试时间:</label>
-            <div  class="layui-input-block">
-                <input lay-verify="required|date" id="scoreTime" name="scoreTime" value="" class="layui-input" type="text" placeholder="请选择考试时间"  autocomplete="off"  editable="false"  style="width:290px;">
             </div>
         </div>
         <div class="layui-form-item">
@@ -239,7 +239,7 @@
                         title:'录入学生成绩',
                         skin: 'layui-layer-demo', //样式类名
                         closeBtn: 1, //不显示关闭按钮
-                        area: ['600px', '650px'],
+                        area: ['500px', '400px'],
                         fixed: false, //不固定
                         maxmin: true,
                         shadeClose: true, //开启遮罩关闭
@@ -252,7 +252,7 @@
                         title:'修改学生成绩',
                         skin: 'layui-layer-demo', //样式类名
                         closeBtn: 1, //不显示关闭按钮
-                        area: ['600px', '400px'],
+                        area: ['500px', '400px'],
                         fixed: false, //不固定
                         maxmin: true,
                         shadeClose: true, //开启遮罩关闭
@@ -278,7 +278,7 @@
                 },
                 success: function(d){
                     if(d=='no'){
-                        layer.msg('此班已有此成绩,你可以修改此班级此的成绩!')
+                        layer.msg('该班已有此成绩,你可以修改该班级的此成绩!')
                     }else if(d=='ok'){
                         window.location.href="<%=request.getContextPath()%>/StudentScore/toaddscore?classid="+data.field.classid+"&courseid="+data.field.courseid+"&scoreType="+data.field.scoreType +
                             "&termid="+data.field.termid+
@@ -305,7 +305,7 @@
                             "&termid="+data.field.termid;
                         return true;
                     }else if(d=='ok'){
-                        layer.msg('还没有此班该成绩,请先新增后再做修改!')
+                        layer.msg('还没有该班的此成绩,请先新增后再做修改!')
                     }
                 }
             });
