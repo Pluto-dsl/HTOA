@@ -66,7 +66,6 @@ public class Pluto_StudentController {
         model.addAttribute("xList",xList);
         model.addAttribute("ssList",hList);
         model.addAttribute("s",s);
-        System.out.println("去之前的信息="+s.toString());
         return "student_pluto/updateStudent";
     }
 
@@ -86,8 +85,7 @@ public class Pluto_StudentController {
     @RequestMapping("/updateStu")
     @ResponseBody
     public String updateStudent(StudentVo studentVo,HttpServletRequest request,int oldss){
-        System.out.println("aaaaa");
-        System.out.println(studentVo.toString());
+
 
         String bir = request.getParameter("bir");
         String ent = request.getParameter("ent");
@@ -105,7 +103,7 @@ public class Pluto_StudentController {
 
         StudentVo sss = service.getStudentById(studentVo.getStudid());
         oldss = sss.getHuor();
-        System.out.println("原来的宿舍id="+oldss);
+
         int newss = studentVo.getHuor();
         if(newss!=oldss){
             StudentDormitoryVo s1 = service.getHourById(newss);
@@ -218,7 +216,6 @@ public class Pluto_StudentController {
     @RequestMapping("/biye")
     @ResponseBody
     public String setBiye(int Studid,HttpServletRequest request){
-         //System.out.println("shezhibiye");
         StudentVo studentVo = service.getStudentById(Studid);
         studentVo.setStat(5);
         service.updateStudent(studentVo);
@@ -258,34 +255,9 @@ public class Pluto_StudentController {
         return "student_pluto/updateHour";
     }
 
-    /*@RequestMapping("/addStu")
-    @ResponseBody
-    public String addStudent(StudentVo studentVo,String birt,String ents, HttpServletRequest request){
-        System.out.println(studentVo.toString());
-        Date bd=null;
-        Date ed=null;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            bd = sdf.parse(birt);
-            ed = sdf.parse(ents);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        studentVo.setBirthday(bd);
-        studentVo.setEntertime(ed);
 
-        StudentDormitoryVo huor = service.getHourById(studentVo.getHuor());
-        huor.setCount(huor.getCount()+1);
-        service.updateHour(huor);
-
-        service.addStudent(studentVo);
-        EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
-        log.addLog(emp.getEmpId(),emp.getEmpName()+"新增了一个学生，学生名："+studentVo.getStuname());
-        return "1";
-    }*/
     @RequestMapping("/addStu")
     public String addStudent(StudentVo studentVo,String birt,String ents, HttpServletRequest request){
-        System.out.println(studentVo.toString());
         Date bd=null;
         Date ed=null;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -298,7 +270,9 @@ public class Pluto_StudentController {
         studentVo.setBirthday(bd);
         studentVo.setEntertime(ed);
 
-//        studentVo.setStuno(""+getRandom());
+        StudentDormitoryVo s = service.getHourById(studentVo.getHuor());
+        s.setCount(s.getCount()+1);
+        service.updateHour(s);
 
         service.addStudent(studentVo);
         EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
@@ -321,17 +295,6 @@ public class Pluto_StudentController {
         return id;
     }
 
-   /* @RequestMapping("/toAddStu")
-    public String toAddStudentPage(Model model){
-        List clist = service.getClassList("from StudentClassVo");
-        List mList = service.getMajor("from MajorVo");
-//        List hList = service.getHourList("from StudentDormitoryVo where count<numberBeds");
-        List hList = service.ListBySql("select * from studentHuor where `count` < numberBeds");
-        model.addAttribute("hList",hList);
-        model.addAttribute("zyList",mList);
-        model.addAttribute("classList",clist);
-        return "student_pluto/addStudent";
-    }*/
 
     @RequestMapping("/toAddStu")
     public String toAddStudentPage(Model model){
@@ -400,7 +363,7 @@ public class Pluto_StudentController {
     @RequestMapping("/toUpdateZx")
     public String toUpdateZx(int zid,Model model){
         StudentHappeningVo sh = service.getHappeningById(zid);
-         //System.out.println(sh.toString());
+         //
         StudentVo s = service.getStudentById(sh.getStuid());
         model.addAttribute("zx",sh);
         model.addAttribute("s",s);
