@@ -49,5 +49,8 @@ public class LoggingController {
         return "log_pluto/logging";
     }
 
-
+    @RequestMapping("/toNo")
+    public String toNo(){
+        return "controller_pluto/NO";
+    }
 }
