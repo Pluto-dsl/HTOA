@@ -258,10 +258,10 @@ public class Pluto_StudentController {
         return "student_pluto/updateHour";
     }
 
-    @RequestMapping("/addStu")
+    /*@RequestMapping("/addStu")
     @ResponseBody
     public String addStudent(StudentVo studentVo,String birt,String ents, HttpServletRequest request){
-
+        System.out.println(studentVo.toString());
         Date bd=null;
         Date ed=null;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -282,6 +282,28 @@ public class Pluto_StudentController {
         EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
         log.addLog(emp.getEmpId(),emp.getEmpName()+"新增了一个学生，学生名："+studentVo.getStuname());
         return "1";
+    }*/
+    @RequestMapping("/addStu")
+    public String addStudent(StudentVo studentVo,String birt,String ents, HttpServletRequest request){
+        System.out.println(studentVo.toString());
+        Date bd=null;
+        Date ed=null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            bd = sdf.parse(birt);
+            ed = sdf.parse(ents);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        studentVo.setBirthday(bd);
+        studentVo.setEntertime(ed);
+
+//        studentVo.setStuno(""+getRandom());
+
+        service.addStudent(studentVo);
+        EmpVo emp = (EmpVo) request.getSession().getAttribute("admin");
+        log.addLog(emp.getEmpId(),emp.getEmpName()+"新增了一个学生，学生名："+studentVo.getStuname());
+        return "student_pluto/winAdd";
     }
 
 
@@ -299,12 +321,23 @@ public class Pluto_StudentController {
         return id;
     }
 
-    @RequestMapping("/toAddStu")
+   /* @RequestMapping("/toAddStu")
     public String toAddStudentPage(Model model){
         List clist = service.getClassList("from StudentClassVo");
         List mList = service.getMajor("from MajorVo");
 //        List hList = service.getHourList("from StudentDormitoryVo where count<numberBeds");
         List hList = service.ListBySql("select * from studentHuor where `count` < numberBeds");
+        model.addAttribute("hList",hList);
+        model.addAttribute("zyList",mList);
+        model.addAttribute("classList",clist);
+        return "student_pluto/addStudent";
+    }*/
+
+    @RequestMapping("/toAddStu")
+    public String toAddStudentPage(Model model){
+        List clist = service.getClassList("from StudentClassVo");
+        List mList = service.getMajor("from MajorVo");
+        List hList = service.getHourList("from StudentDormitoryVo");
         model.addAttribute("hList",hList);
         model.addAttribute("zyList",mList);
         model.addAttribute("classList",clist);

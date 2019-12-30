@@ -274,7 +274,7 @@
                 <label class="label-top">省录取号:</label>
             </td>
             <td>
-                <input  name="enrollno"  maxlength="20"  id="enrollno" autocomplete="off" class="layui-input" value="${s.enrollno}"
+                <input  name="enrollno"  maxlength="20" lay-verify="number" id="enrollno" autocomplete="off" class="layui-input" value="${s.enrollno}"
                         style="width:290px;">
             </td>
         </tr>
