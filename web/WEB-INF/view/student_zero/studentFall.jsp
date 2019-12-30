@@ -148,7 +148,7 @@
          if(level!=yuan){
              $.post("<%=request.getContextPath()%>/zeroStudent/judgeLevel",{level:level},function (data) {
                  if(data=="1"){
-                     $("#level").val(level);
+                     $("#level").val(yuan);
                      layer.msg("已有此届别，请重新输入！")
                  }
              },"text")

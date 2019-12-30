@@ -90,17 +90,14 @@
                         row = oldData[i];
                         if (row.score==undefined){
                             layer.msg('请将所有学生的成绩补全后即可保存!')
-                            break;
                             return;
                         }
                         if (row.score>100){
                             layer.msg('学生成绩最高为100分,请核对后保存!')
-                            break;
                             return;
                         }
                         if (row.Rescore>100){
                             layer.msg('学生补考分数最高为100分,请核对后保存!')
-                            break;
                             return;
                         }
 
