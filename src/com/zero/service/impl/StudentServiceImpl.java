@@ -111,7 +111,7 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
     public List<Map> enroStu() {
         return super.listBySQL("select t.enrollmentid,t.studName,t.card,t.sex,t.tell,t.school,t.classes,t.studType,c.classTypeName,t.empid,e.empName from enrollment t" +
                 " left join emp e on e.empId = t.empid" +
-                " left join classType c on  c.classTypeId = t.studType where  t.status = 4 and isClass = '否'");
+                " left join classType c on  c.classTypeId = t.studType where  isClass = '否'");
     }
 
     @Override
