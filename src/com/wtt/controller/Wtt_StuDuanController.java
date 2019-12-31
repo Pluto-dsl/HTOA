@@ -184,7 +184,7 @@ public class Wtt_StuDuanController {
         Map map1 = wtt_stuDuanService.selectteacher(studentid);
         /*System.out.println(map1);*/
         int teacherid = (int) map1.get("teacher");
-        System.out.println("授课老师Id:"+teacherid);
+//        System.out.println("授课老师Id:"+teacherid);
         map.put("assignee",teacherid);
         //启动实例(通过流程定义的Key来启动一个实例)
         ProcessInstance processInstance = runtimeService. startProcessInstanceByKey(studentLeaveVo.getTitle(),map);

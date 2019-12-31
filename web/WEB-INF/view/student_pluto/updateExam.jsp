@@ -19,7 +19,7 @@
     <jsp:include page="../include.jsp" />
 </head>
 <body>
-<form class="layui-form" action="${pageContext.request.contextPath}/StudentScore/editscore" id="form1" method="post">
+<form class="layui-form" lay-filter="sub" action="${pageContext.request.contextPath}/StudentScore/editscore" <%--onsubmit="sub()"--%> id="form1" method="post">
     <table id="td" border="0" style="border-collapse:separate; border-spacing:20px;" align="center">
         <input type="hidden" name="scoreId" id="scoreId" value="${sc.scoreId}"/>
         <input type="hidden" name="stuid" id="stuid" value="${sc.stuid}"/>
@@ -133,23 +133,13 @@
         });
 
 
-        form.on('submit(sub)', function(data){
-            var data = data.field;
 
-            $.ajax({
-                type: 'post',
-                url: "${pageContext.request.contextPath}/StudentScore/editscore", // ajax请求路径
-                async:true,
-                dataType: "text",
-                data:data.field,
-                success: function(data){
-                    document.getElementById("form1").reset();
-                    layer.msg('修改成功！');
-                }
-            });
+        form.on('submit(sub)', function(data){
+
+            layer.msg('修改成功！');
             window.parent.location.reload();
-            var index = parent.layer.getFrameIndex(window.name);
-            parent.layer.close(index);//关闭当前页
+
+            return true;
         })
     })
 </script>

@@ -174,7 +174,7 @@ public class Wtt_StudentController {
             /*System.out.println("----" + map.get("empName"));*/
             if (name_bl.equals(map.get("empName"))) {
                 String depid = ((studentService.chairman(empid)));
-                System.out.println("部门负责人：" + depid);
+//                System.out.println("部门负责人：" + depid);
                 assignee = depid;
                 break;
             }
@@ -199,7 +199,7 @@ public class Wtt_StudentController {
         if (processInstance == null) {
             if (opinion.equals("拒绝")) {
                 studentLeaveVo.setStatus("审批不通过");
-                System.out.println("审批不通过");
+//                System.out.println("审批不通过");
             } else {
                 studentLeaveVo.setStatus("审批通过");
             }

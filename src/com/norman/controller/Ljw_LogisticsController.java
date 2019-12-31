@@ -105,7 +105,7 @@ public class Ljw_LogisticsController {
     @ResponseBody
     @RequestMapping(value = "/getMyRepairData")
     public void getMyRepairData(HttpServletResponse response,HttpServletRequest request,int page,int limit) throws IOException {
-        System.out.println(page);
+//        System.out.println(page);
         HttpSession session = request.getSession();
         EmpVo vo = (EmpVo) session.getAttribute("admin");
         int user = vo.getEmpId();

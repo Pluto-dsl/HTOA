@@ -39,7 +39,7 @@
                 <tr>
                     <td>班级类别名称:</td>
                     <td colspan="2">
-                        <input type="text" name="classTypeName" id="classTypeName2" onchange="judge2()" autocomplete="off" maxlength="16"/>
+                        <input  class="layui-input" name="classTypeName" id="classTypeName2" onchange="judge2()" autocomplete="off" maxlength="16"/>
                     </td>
                 </tr>
                 <tr align="center">
@@ -147,7 +147,6 @@
         });
         //获取该id的数据
         function setFormValue(data){
-            console.log(data)
             form.val("formTestFilter", {
                 "classTypeId":data.classTypeId,
                 "classTypeName":data.classTypeName

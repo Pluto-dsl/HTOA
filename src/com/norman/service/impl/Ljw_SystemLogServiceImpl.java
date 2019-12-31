@@ -105,11 +105,20 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
         }
         if (!("".equals(month) || null == month)) {
             int mon = Integer.parseInt(month);
+            System.out.println(mon);
             if (mon != 0){
-                Calendar cal = Calendar.getInstance();
+                /*Calendar cal = Calendar.getInstance();
                 sql += " and h.startTime >= '"+cal.get(Calendar.YEAR)+"-"+mon+"-01 00:00:00'";
-                mon++;
-                sql += " and h.startTime < '"+cal.get(Calendar.YEAR)+"-"+mon+"-01 00:00:00'";
+                cal.set(Calendar.MONTH,mon);
+                cal.add(Calendar.MONTH,1);
+                sql += " and h.startTime < '"+cal.get(Calendar.YEAR)+"-"+cal.get(Calendar.MONTH)+"-01 00:00:00'";*/
+                Calendar cal = Calendar.getInstance();
+                if (mon == 1 || mon == 3 || mon == 5 || mon == 7 || mon == 8 || mon == 10 || mon == 12){
+                    sql += " and h.startTime >= '"+cal.get(Calendar.YEAR)+"-"+mon+"-01 00:00:00'";
+                    sql += " and h.startTime < '"+cal.get(Calendar.YEAR)+"-"+mon+"-31 23:59:59'";
+                }else {
+
+                }
             }
         }else {
             Calendar cal = Calendar.getInstance();
@@ -120,7 +129,7 @@ public class Ljw_SystemLogServiceImpl extends BaseDao implements Ljw_SystemLogSe
             sql += " and h.startTime < '"+cal.get(Calendar.YEAR)+"-"+mon+"-01 00:00:00'";
         }
         sql +=" GROUP BY e.empId,e.empName";
-         //System.out.println(sql);
+        System.out.println(sql);
         return super.pageBySQL(sql,page,limit);
     }
 
